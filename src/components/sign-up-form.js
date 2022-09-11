@@ -2,6 +2,11 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
+import PropTypes from 'prop-types';
+
+SignUpForm.propTypes = {
+  onLogin: PropTypes.func,
+};
 
 export default function SignUpForm(props) {
   const [code, setCode] = useState(false);
@@ -20,13 +25,13 @@ export default function SignUpForm(props) {
   const onSubmit = (data) => {
     if (!code) {
       // enviar PIN de activación
-      setCode(true)
-      console.log(data)
+      setCode(true);
+      console.log(data);
     } else {
       // enviar datos al servicio para registrar usuario
-      console.log(data)
-      props.onLogin(true)
-      //props.onLogin(true)
+      console.log(data);
+      props.onLogin(true);
+      // props.onLogin(true)
     }
   };
 
