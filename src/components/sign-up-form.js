@@ -1,18 +1,32 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
 export default function SignUpForm() {
+  const [code, setCode] = useState(false);
+  const [hidePassword, sethidePassword] = useState(true);
+
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       name: '',
       email: '',
+      phone: '',
       password: '',
+      code: '',
     },
   });
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    if (!code) {
+      // enviar PIN de activación
+      setCode(true);
+      console.log(data);
+    } else {
+      // enviar datos al servicio para registrar usuario
+      console.log(data);
+    }
+  };
 
   return (
 
@@ -76,9 +90,31 @@ export default function SignUpForm() {
             onChangeText={onChange}
             value={value}
             mode="outlined"
+            label="Número de teléfono"
+            placeholder="Número de teléfono"
+          />
+        )}
+        name="phone"
+      />
+      <Controller control={control}
+        rules={{
+          required: true,
+          maxLength: constraints.password.max,
+          minLength: constraints.password.min}}
+        render={({field: {onChange, onBlur, value}}) => (
+          <TextInput
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            mode="outlined"
             label="Contraseña"
             placeholder="Contraseña"
-            right={<TextInput.Affix text={'/' + constraints.password.max} />}
+            secureTextEntry={hidePassword}
+            right={
+              <TextInput.Icon
+                icon="eye"
+                onPress={() => sethidePassword(!hidePassword)}
+              />}
           />
         )}
         name="password"
@@ -89,6 +125,26 @@ export default function SignUpForm() {
       <Text>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
       <Text>Mínimo {constraints.password.min}</Text>}
+      { code &&
+        <Controller control={control}
+          rules={{
+            required: code,
+          }}
+          render={({field: {onChange, onBlur, value}}) => (
+            <TextInput
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              mode="outlined"
+              label="PIN de activación"
+              placeholder="XXXX"
+            />
+          )}
+          name="code"
+        />
+      }
+      {code && errors.code?.type === 'required' &&
+      <Text>Campo requerido</Text>}
       <Button
         style={signUpStyle.button}
         mode="contained"
@@ -96,7 +152,16 @@ export default function SignUpForm() {
       >
           Registrarse
       </Button>
-
+      <Text variant="bodyLarge"
+        style={{marginTop: 10, textAlign: 'center'}}
+      >
+        ¿Ya tenés cuenta?
+        <Text variant="bodyLarge"
+          style={{textDecorationLine: 'underline'}}
+        >
+          Inicia sesión
+        </Text>
+      </Text>
     </View>
   );
 };
