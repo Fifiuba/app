@@ -1,10 +1,12 @@
-import React from "react";
+import { React, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { TextInput, Button, Colors } from 'react-native-paper';
+import CheckBox from 'expo-checkbox';
 
 const App = () => {
 
-  return (
+    const [isSelected, setSelection] = useState(false);
+    return (
         <View style={loginStyle.container}>
             <Text style={loginStyle.title}>Login</Text>
             <TextInput style={loginStyle.input}
@@ -20,6 +22,12 @@ const App = () => {
                 placeholder="Contraseña"
             />
             <View style={loginStyle.checkboxContainer}>
+                <CheckBox
+                    color={Colors.blue800}
+                    value={isSelected}
+                    onValueChange={setSelection}
+                    style={loginStyle.checkbox}
+                />
                 <Text style={loginStyle.label}>Recordarme</Text>
             </View>
             <Button style={loginStyle.button} color={Colors.blue800} mode="contained" onPress={() => console.log('Pressed')}>
