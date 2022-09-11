@@ -41,6 +41,14 @@ const App = () => {
                 WhatsApp
             </Button>
         </View>
+        <View style={{margin: 20}}>
+            <Text style={{marginTop: 10, textAlign:'center'}}>
+                ¿Olvidaste la contraseña?
+                <Text style={{textDecorationLine: 'underline'}}>
+                    Registrate
+                </Text>
+            </Text>
+        </View>
     </View>
   );
 };
