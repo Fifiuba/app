@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { View, StyleSheet,CheckBox, Text } from 'react-native';
-import { TextInput, Button, Colors, Title } from 'react-native-paper';
+import React from "react";
+import { View, StyleSheet, Text } from 'react-native';
+import { TextInput, Button, Colors } from 'react-native-paper';
 
 const App = () => {
-  const [isSelected, setSelection] = useState(false);
 
   return (
         <View style={loginStyle.container}>
@@ -21,12 +20,6 @@ const App = () => {
                 placeholder="Contraseña"
             />
             <View style={loginStyle.checkboxContainer}>
-                <CheckBox
-                    color={Colors.blue800}
-                    value={isSelected}
-                    onValueChange={setSelection}
-                    style={loginStyle.checkbox}
-                />
                 <Text style={loginStyle.label}>Recordarme</Text>
             </View>
             <Button style={loginStyle.button} color={Colors.blue800} mode="contained" onPress={() => console.log('Pressed')}>
@@ -57,14 +50,14 @@ const loginStyle = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignContent: 'center',
+        padding: 60,
         margin: 30,
-        padding: 100,
+        marginTop: 110,
         backgroundColor: '#f5f5f5',
     },
     title: {
-        fontSize: 50,
-        fontStyle: 'bold',
-        paddingLeft: 450,
+        fontSize: 40,
+        paddingLeft: 55,
         paddingBottom: 30,
     },
     input: {
