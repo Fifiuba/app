@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { View, StyleSheet } from 'react-native';
-import SignUpView from './src/views/sign-up-view'
+import SignUpView from './src/views/login-view'
 
 export default function App() {
   return (
