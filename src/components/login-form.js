@@ -150,7 +150,7 @@ const loginStyle = StyleSheet.create({
   },
   label: {
     margin: 8,
-    fontSize: 'medium',
+    fontSize: 12,
   },
   button: {
     marginTop: 7,
