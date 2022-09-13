@@ -1,4 +1,7 @@
 # app
 Aplicación móvil
 
-Dependencias: npm install @react-native-community/checkbox
+Instalar dependencias: npm install
+Ejecuta: npm run start
+
+
