@@ -41,11 +41,8 @@ const LoginForm = () => {
             <Text>Ingrese un correo electrónico válido</Text>}
 
       <View style={{marginTop: 25}}>
-        <Text style={{textAlign: 'right'}}>
-                    ¿Olvidaste la contraseña?{' '}
-          <Text style={{textDecorationLine: 'underline'}}>
-                      Registrate
-          </Text>
+        <Text style={{textAlign: 'right', textDecorationLine: 'underline'}}>
+            ¿Olvidaste la contraseña?
         </Text>
       </View>
       <Controller control={control}
@@ -79,7 +76,6 @@ const LoginForm = () => {
             <Text>Mínimo {constraints.password.min}</Text>}
       <View style={loginStyle.checkboxContainer}>
         <CheckBox
-          color={Colors.blue800}
           value={isSelected}
           onValueChange={setSelection}
           style={loginStyle.checkbox}
