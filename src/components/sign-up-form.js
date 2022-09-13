@@ -2,11 +2,6 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
-import PropTypes from 'prop-types';
-
-SignUpForm.propTypes = {
-  onLogin: PropTypes.func,
-};
 
 export default function SignUpForm(props) {
   const [code, setCode] = useState(false);
@@ -165,6 +160,7 @@ export default function SignUpForm(props) {
         ¿Ya tenés cuenta?
         <Text variant="bodyLarge"
           style={{textDecorationLine: 'underline'}}
+          onPress={() => props.onNavigation.navigate('Login')}
         >
           Inicia sesión
         </Text>

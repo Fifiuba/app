@@ -1,13 +1,9 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SignUpView from '../views/sign-up-view';
-import PropTypes from 'prop-types';
+import LoginView from '../views/login-view';
 
 const Stack = createNativeStackNavigator();
-
-UnloggedNav.propTypes = {
-  onLogin: PropTypes.func,
-};
 
 export default function UnloggedNav(props) {
   return (
@@ -15,12 +11,16 @@ export default function UnloggedNav(props) {
       <Stack.Screen
         name="Signup"
         options={{title: 'Registrarse'}}>
-        {() => <SignUpView onLogin={props.onLogin} />}
+        {(navigation) =>
+          <SignUpView onLogin={props.onLogin} onNavigation={navigation}/>
+        }
       </Stack.Screen>
       <Stack.Screen
         name="Login"
         options={{title: 'Ingresar'}}>
-        {() => <SignUpView onLogin={props.onLogin} />}
+        {(navigation) =>
+          <LoginView onLogin={props.onLogin} onNavigation={navigation}/>
+        }
       </Stack.Screen>
     </Stack.Navigator>
   );
