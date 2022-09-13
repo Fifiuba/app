@@ -4,7 +4,7 @@ import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import CheckBox from 'expo-checkbox';
 
-const LoginForm = () => {
+const LoginForm = (props) => {
   const [isSelected, setSelection] = useState(false);
   const [hidePassword, sethidePassword] = useState(true);
   const {control, formState: {errors}} = useForm({
@@ -13,6 +13,8 @@ const LoginForm = () => {
       password: '',
     },
   });
+
+  console.log('AAAA\n\n', props.onLogin, 'holaa\n', props.onNavigation);
 
   return (
     <View style={loginStyle.container}>
@@ -36,18 +38,9 @@ const LoginForm = () => {
         name="email"
       />
       {errors.email?.type === 'required' &&
-            <Text>Campo obligatorio</Text>}
+            <Text>Campo requerido</Text>}
       {errors.email?.type === 'validate' &&
             <Text>Ingrese un correo electrónico válido</Text>}
-
-      <View style={{marginTop: 25}}>
-        <Text style={{textAlign: 'right'}}>
-                    ¿Olvidaste la contraseña?{' '}
-          <Text style={{textDecorationLine: 'underline'}}>
-                      Registrate
-          </Text>
-        </Text>
-      </View>
       <Controller control={control}
         rules={{
           required: true,
@@ -72,7 +65,7 @@ const LoginForm = () => {
         name="password"
       />
       {errors.password?.type === 'required' &&
-            <Text>Campo obligatorio</Text>}
+            <Text>Campo requerido</Text>}
       {errors.password?.type === 'maxLength' &&
             <Text>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
@@ -90,26 +83,37 @@ const LoginForm = () => {
         style={loginStyle.button}
         color={Colors.blue800}
         mode="contained"
-        onPress={() => console.log('Pressed')}>
-          Iniciar sesión
+        onPress={() => props.onLogin(true)}>
+            Iniciar sesión
       </Button>
       <View style={loginStyle.subcontainerRedes}>
-        <Text style={loginStyle.label}>
-          --------- O iniciar sesión con ---------
-        </Text>
-        <Button style={loginStyle.buttonRedes}
+        <Text style={loginStyle.label}>O iniciar sesión con</Text>
+        <Button
+          style={loginStyle.button}
           color={Colors.red800}
           mode="contained"
-          onPress={() => console.log('Pressed')}>
-          Google
+          onPress={() => console.log('Pressed')}
+        >
+            Google
         </Button>
         <Button
-          style={loginStyle.buttonRedes}
+          style={loginStyle.button}
           color={Colors.green800}
-          mode="contained" onPress={() =>
-            console.log('Pressed')}>
-          WhatsApp
+          mode="contained"
+          onPress={() => console.log('Pressed')}
+        >
+            WhatsApp
         </Button>
+      </View>
+      <View style={{margin: 20}}>
+        <Text style={{marginTop: 10, textAlign: 'center'}}>
+                    ¿Olvidaste la contraseña?
+          <Text
+            style={{textDecorationLine: 'underline'}}
+            onPress={() => props.onNavigation.navigate('Signup')}>
+                        Registrate
+          </Text>
+        </Text>
       </View>
     </View>
   );
@@ -122,7 +126,7 @@ const constraints = {
 };
 
 const isValidEmail = (email) =>
-  /*eslint-disable*/
+/*eslint-disable*/
   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
       email,
   );
@@ -131,42 +135,38 @@ const loginStyle = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignContent: 'center',
-    padding: 50,
-    margin: 20,
-    marginTop: 140,
+    padding: 60,
+    margin: 30,
+    marginTop: 110,
     backgroundColor: '#f5f5f5',
   },
   title: {
     fontSize: 40,
-    paddingLeft: 80,
+    paddingLeft: 55,
     paddingBottom: 30,
+  },
+  input: {
+    marginTop: 5,
+    marginBottom: 5,
   },
   checkboxContainer: {
     flexDirection: 'row',
-    margin: 5,
+    margin: 10,
   },
   checkbox: {
-    marginTop: 7,
+    alignSelf: 'center',
   },
   label: {
     margin: 8,
-    fontSize: 12,
-  },
-  button: {
-    marginTop: 7,
-    height: 45,
-    justifyContent: 'center',
+    fontSize: 16,
   },
   subcontainerRedes: {
     marginTop: 20,
     alignItems: 'center',
   },
-  buttonRedes: {
-    marginTop: 10,
+  button: {
+    marginTop: 15,
     padding: 5,
-    width: 190,
-    height: 50,
-    justifyContent: 'center'
   },
 });
 
