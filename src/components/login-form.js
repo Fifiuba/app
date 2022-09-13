@@ -36,9 +36,18 @@ const LoginForm = () => {
         name="email"
       />
       {errors.email?.type === 'required' &&
-            <Text>Campo requerido</Text>}
+            <Text>Campo obligatorio</Text>}
       {errors.email?.type === 'validate' &&
             <Text>Ingrese un correo electrónico válido</Text>}
+
+      <View style={{marginTop: 25}}>
+        <Text style={{textAlign: 'right'}}>
+                    ¿Olvidaste la contraseña?{' '}
+          <Text style={{textDecorationLine: 'underline'}}>
+                      Registrate
+          </Text>
+        </Text>
+      </View>
       <Controller control={control}
         rules={{
           required: true,
@@ -63,7 +72,7 @@ const LoginForm = () => {
         name="password"
       />
       {errors.password?.type === 'required' &&
-            <Text>Campo requerido</Text>}
+            <Text>Campo obligatorio</Text>}
       {errors.password?.type === 'maxLength' &&
             <Text>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
@@ -85,28 +94,22 @@ const LoginForm = () => {
           Iniciar sesión
       </Button>
       <View style={loginStyle.subcontainerRedes}>
-        <Text style={loginStyle.label}>O iniciar sesión con</Text>
-        <Button style={loginStyle.button}
+        <Text style={loginStyle.label}>
+          --------- O iniciar sesión con ---------
+        </Text>
+        <Button style={loginStyle.buttonRedes}
           color={Colors.red800}
           mode="contained"
           onPress={() => console.log('Pressed')}>
           Google
         </Button>
         <Button
-          style={loginStyle.button}
+          style={loginStyle.buttonRedes}
           color={Colors.green800}
           mode="contained" onPress={() =>
             console.log('Pressed')}>
           WhatsApp
         </Button>
-      </View>
-      <View style={{margin: 20}}>
-        <Text style={{marginTop: 10, textAlign: 'center'}}>
-                    ¿Olvidaste la contraseña?
-          <Text style={{textDecorationLine: 'underline'}}>
-                        Registrate
-          </Text>
-        </Text>
       </View>
     </View>
   );
@@ -128,38 +131,42 @@ const loginStyle = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignContent: 'center',
-    padding: 60,
-    margin: 30,
-    marginTop: 110,
+    padding: 50,
+    margin: 20,
+    marginTop: 140,
     backgroundColor: '#f5f5f5',
   },
   title: {
     fontSize: 40,
-    paddingLeft: 55,
+    paddingLeft: 80,
     paddingBottom: 30,
-  },
-  input: {
-    marginTop: 5,
-    marginBottom: 5,
   },
   checkboxContainer: {
     flexDirection: 'row',
-    margin: 10,
+    margin: 5,
   },
   checkbox: {
-    alignSelf: 'center',
+    marginTop: 7,
   },
   label: {
     margin: 8,
     fontSize: 'medium',
   },
+  button: {
+    marginTop: 7,
+    height: 45,
+    justifyContent: 'center',
+  },
   subcontainerRedes: {
     marginTop: 20,
     alignItems: 'center',
   },
-  button: {
-    marginTop: 15,
+  buttonRedes: {
+    marginTop: 10,
     padding: 5,
+    width: 190,
+    height: 50,
+    justifyContent: 'center'
   },
 });
 

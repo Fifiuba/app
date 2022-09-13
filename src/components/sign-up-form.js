@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {TextInput, Button} from 'react-native-paper';
+import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
 export default function SignUpForm() {
-  const [code, setCode] = useState(false);
+  const [code] = useState(false);
   const [hidePassword, sethidePassword] = useState(true);
 
-  const {control, handleSubmit, formState: {errors}} = useForm({
+  const {control, formState: {errors}} = useForm({
     defaultValues: {
       name: '',
       email: '',
@@ -17,6 +17,7 @@ export default function SignUpForm() {
     },
   });
 
+  /*
   const onSubmit = (data) => {
     if (!code) {
       // enviar PIN de activación
@@ -27,11 +28,11 @@ export default function SignUpForm() {
       console.log(data);
     }
   };
+  */
 
   return (
-
-    <View style={signUpStyle.container}>
-
+    <View style={loginStyle.container}>
+      <Text style={loginStyle.title}>Registrar</Text>
       <Controller control={control}
         rules={{
           required: true,
@@ -51,7 +52,7 @@ export default function SignUpForm() {
         name="name"
       />
       {errors.name?.type === 'required' &&
-      <Text>Campo requerido</Text>}
+      <Text>Campo obligatorio</Text>}
       {errors.name?.type === 'maxLength' &&
       <Text>Máximo {constraints.name.max}</Text>}
       {errors.name?.type === 'minLength' &&
@@ -76,7 +77,7 @@ export default function SignUpForm() {
         name="email"
       />
       {errors.email?.type === 'required' &&
-      <Text>Campo requerido</Text>}
+      <Text>Campo obligatorio</Text>}
       {errors.email?.type === 'validate' &&
       <Text>Ingrese un correo electrónico válido</Text>}
       <Controller control={control}
@@ -120,7 +121,7 @@ export default function SignUpForm() {
         name="password"
       />
       {errors.password?.type === 'required' &&
-      <Text>Campo requerido</Text>}
+      <Text>Campo obligatorio</Text>}
       {errors.password?.type === 'maxLength' &&
       <Text>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
@@ -144,38 +145,62 @@ export default function SignUpForm() {
         />
       }
       {code && errors.code?.type === 'required' &&
-      <Text>Campo requerido</Text>}
+      <Text>Campo obligatorio</Text>}
       <Button
-        style={signUpStyle.button}
+        style={loginStyle.button}
+        color={Colors.blue800}
         mode="contained"
-        onPress={handleSubmit(onSubmit)}
-      >
+        onPress={() => console.log('Pressed')}>
           Registrarse
       </Button>
-      <Text variant="bodyLarge"
-        style={{marginTop: 10, textAlign: 'center'}}
-      >
-        ¿Ya tenés cuenta?
-        <Text variant="bodyLarge"
-          style={{textDecorationLine: 'underline'}}
-        >
-          Inicia sesión
+      <View style={{margin: 20}}>
+        <Text style={{marginTop: 7, textAlign: 'center'}}>
+                    ¿Ya tenes cuenta?{'\n'}
+          <Text style={{textDecorationLine: 'underline'}}>
+                      Iniciar sesión
+          </Text>
         </Text>
-      </Text>
+      </View>
     </View>
   );
 };
 
-const signUpStyle = StyleSheet.create({
+const loginStyle = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignContent: 'center',
-    padding: 15,
+    padding: 50,
+    margin: 20,
+    marginTop: 160,
+    backgroundColor: '#f5f5f5',
+  },
+  title: {
+    fontSize: 40,
+    paddingLeft: 60,
+    paddingBottom: 30,
+  },
+  input: {
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    margin: 10,
+  },
+  checkbox: {
+    alignSelf: 'center',
+  },
+  label: {
+    margin: 8,
+    fontSize: 'medium',
+  },
+  subcontainerRedes: {
+    marginTop: 20,
+    alignItems: 'center',
   },
   button: {
-    marginTop: 5,
-    padding: 7,
+    marginTop: 15,
+    padding: 5,
   },
 });
 
@@ -189,5 +214,5 @@ const isValidEmail = (email) =>
   /*eslint-disable*/
   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
       email,
-  );
+);
 
