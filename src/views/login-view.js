@@ -1,11 +1,14 @@
-import * as React from 'react';
+import React from 'react';
 import {View} from 'react-native';
 import LoginForm from '../components/login-form';
 
-export default function LoginView() {
+export default function LoginView(props) {
   return (
     <View style={{flex: 1}}>
-      <LoginForm/>
+      <LoginForm
+        onLogin={props.onLogin}
+        onNavigation={props.onNavigation.navigation}
+      />
     </View>
   );
 }

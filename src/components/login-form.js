@@ -4,7 +4,7 @@ import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import CheckBox from 'expo-checkbox';
 
-const LoginForm = () => {
+const LoginForm = (props) => {
   const [isSelected, setSelection] = useState(false);
   const [hidePassword, sethidePassword] = useState(true);
   const {control, formState: {errors}} = useForm({
@@ -16,7 +16,7 @@ const LoginForm = () => {
 
   return (
     <View style={loginStyle.container}>
-      <Text style={loginStyle.title}>Login</Text>
+      <Text style={loginStyle.title}>Ingresar</Text>
       <Controller control={control}
         rules={{
           required: true,
@@ -24,6 +24,7 @@ const LoginForm = () => {
           maxLength: constraints.email.max}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            style={loginStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -39,10 +40,9 @@ const LoginForm = () => {
             <Text>Campo obligatorio</Text>}
       {errors.email?.type === 'validate' &&
             <Text>Ingrese un correo electrónico válido</Text>}
-
-      <View style={{marginTop: 25}}>
-        <Text style={{textAlign: 'right', textDecorationLine: 'underline'}}>
-            ¿Olvidaste la contraseña?
+        <View style={{marginTop: 10}}>
+        <Text style={{textAlign: 'right', fontSize: 16, textDecorationLine: 'underline'}}>
+                    ¿Olvidaste la contraseña?
         </Text>
       </View>
       <Controller control={control}
@@ -52,6 +52,7 @@ const LoginForm = () => {
           minLength: constraints.password.min}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            style={loginStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -86,25 +87,28 @@ const LoginForm = () => {
         style={loginStyle.button}
         color={Colors.blue800}
         mode="contained"
-        onPress={() => console.log('Pressed')}>
-          Iniciar sesión
+        onPress={() => props.onLogin(true)}>
+          <Text style={{fontSize: 18}}>Iniciar sesión</Text>
       </Button>
       <View style={loginStyle.subcontainerRedes}>
         <Text style={loginStyle.label}>
-          --------- O iniciar sesión con ---------
+          -------- O iniciar sesión con --------
         </Text>
-        <Button style={loginStyle.buttonRedes}
+        <Button
+          style={loginStyle.buttonRedes}
           color={Colors.red800}
           mode="contained"
-          onPress={() => console.log('Pressed')}>
-          Google
+          onPress={() => console.log('Pressed')}
+        >
+          <Text style={{fontSize: 16}}>Google</Text>
         </Button>
         <Button
           style={loginStyle.buttonRedes}
           color={Colors.green800}
-          mode="contained" onPress={() =>
-            console.log('Pressed')}>
-          WhatsApp
+          mode="contained"
+          onPress={() => console.log('Pressed')}
+        >
+          <Text style={{fontSize: 16}}>WhatsApp</Text>
         </Button>
       </View>
     </View>
@@ -118,7 +122,7 @@ const constraints = {
 };
 
 const isValidEmail = (email) =>
-  /*eslint-disable*/
+/*eslint-disable*/
   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
       email,
   );
@@ -127,42 +131,46 @@ const loginStyle = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignContent: 'center',
-    padding: 50,
-    margin: 20,
-    marginTop: 140,
-    backgroundColor: '#f5f5f5',
+    padding: 15,
+    margin: 40,
+    marginTop: 45,
   },
   title: {
     fontSize: 40,
-    paddingLeft: 80,
+    paddingLeft: 70,
     paddingBottom: 30,
+  },
+  input: {
+    marginTop: 5,
+    marginBottom: 5,
   },
   checkboxContainer: {
     flexDirection: 'row',
-    margin: 5,
+    margin: 10,
   },
   checkbox: {
-    marginTop: 7,
+    alignSelf: 'center',
   },
   label: {
     margin: 8,
-    fontSize: 12,
-  },
-  button: {
-    marginTop: 7,
-    height: 45,
-    justifyContent: 'center',
+    fontSize: 17,
   },
   subcontainerRedes: {
-    marginTop: 20,
+    margin: 15,
     alignItems: 'center',
   },
-  buttonRedes: {
-    marginTop: 10,
+  button: {
+    marginTop: 15,
     padding: 5,
-    width: 190,
+    width: 220,
     height: 50,
-    justifyContent: 'center'
+    marginLeft: 40,
+  },
+  buttonRedes: {
+    justifyContent: 'center',
+    margin: 5,
+    width: 200,
+    height: 50,
   },
 });
 

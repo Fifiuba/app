@@ -3,11 +3,11 @@ import {View, StyleSheet, Text} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
-export default function SignUpForm() {
-  const [code] = useState(false);
+export default function SignUpForm(props) {
+  const [code, setCode] = useState(false);
   const [hidePassword, sethidePassword] = useState(true);
 
-  const {control, formState: {errors}} = useForm({
+  const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       name: '',
       email: '',
@@ -17,22 +17,21 @@ export default function SignUpForm() {
     },
   });
 
-  /*
   const onSubmit = (data) => {
     if (!code) {
-      // enviar PIN de activación
+      // Send PIN of activation
       setCode(true);
       console.log(data);
     } else {
-      // enviar datos al servicio para registrar usuario
+      // Send data to the service for registrating users
       console.log(data);
+      props.onLogin(true);
     }
   };
-  */
 
   return (
-    <View style={loginStyle.container}>
-      <Text style={loginStyle.title}>Registrar</Text>
+    <View style={signUpStyle.container}>
+      <Text style={signUpStyle.title}>Crear usuario</Text>
       <Controller control={control}
         rules={{
           required: true,
@@ -40,6 +39,7 @@ export default function SignUpForm() {
           minLength: constraints.name.min}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            style={signUpStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -52,7 +52,7 @@ export default function SignUpForm() {
         name="name"
       />
       {errors.name?.type === 'required' &&
-      <Text>Campo obligatorio</Text>}
+      <Text>Campo requerido</Text>}
       {errors.name?.type === 'maxLength' &&
       <Text>Máximo {constraints.name.max}</Text>}
       {errors.name?.type === 'minLength' &&
@@ -65,6 +65,7 @@ export default function SignUpForm() {
           maxLength: constraints.email.max}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            style={signUpStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -87,6 +88,7 @@ export default function SignUpForm() {
           minLength: constraints.password.min}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            style={signUpStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -104,6 +106,7 @@ export default function SignUpForm() {
           minLength: constraints.password.min}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            style={signUpStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -121,7 +124,7 @@ export default function SignUpForm() {
         name="password"
       />
       {errors.password?.type === 'required' &&
-      <Text>Campo obligatorio</Text>}
+      <Text>Campo requerido</Text>}
       {errors.password?.type === 'maxLength' &&
       <Text>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
@@ -133,6 +136,7 @@ export default function SignUpForm() {
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <TextInput
+              style={signUpStyle.input}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -146,18 +150,21 @@ export default function SignUpForm() {
       }
       {code && errors.code?.type === 'required' &&
       <Text>Campo obligatorio</Text>}
-      <Button
-        style={loginStyle.button}
+      <Button 
         color={Colors.blue800}
+        style={signUpStyle.button}
         mode="contained"
-        onPress={() => console.log('Pressed')}>
-          Registrarse
+        onPress={handleSubmit(onSubmit)}
+      >
+      <Text style={{fontSize: 18}}>Registrarse</Text>
       </Button>
-      <View style={{margin: 20}}>
-        <Text style={{marginTop: 7, textAlign: 'center'}}>
-                    ¿Ya tenes cuenta?{'\n'}
-          <Text style={{textDecorationLine: 'underline'}}>
-                      Iniciar sesión
+      <View style={{margin: 15}}>
+        <Text style={{marginTop: 7, textAlign: 'center', fontSize: 16}}>
+                    ¿Ya tenes cuenta?{"\n"}
+          <Text
+            style={{textDecorationLine: 'underline'}}
+            onPress={() => props.onNavigation.navigate('Login')}>
+                        Iniciar sesión
           </Text>
         </Text>
       </View>
@@ -165,42 +172,33 @@ export default function SignUpForm() {
   );
 };
 
-const loginStyle = StyleSheet.create({
+const signUpStyle = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignContent: 'center',
-    padding: 50,
-    margin: 20,
-    marginTop: 160,
-    backgroundColor: '#f5f5f5',
+    padding: 40,
+    margin: 15,
+    marginTop: 60,
   },
   title: {
     fontSize: 40,
-    paddingLeft: 60,
-    paddingBottom: 30,
+    paddingLeft: 25,
+    paddingBottom: 40,
   },
   input: {
     marginTop: 5,
     marginBottom: 5,
   },
-  checkboxContainer: {
-    flexDirection: 'row',
-    margin: 10,
-  },
-  checkbox: {
-    alignSelf: 'center',
-  },
   label: {
     margin: 8,
-    fontSize: 'medium',
-  },
-  subcontainerRedes: {
-    marginTop: 20,
-    alignItems: 'center',
+    fontSize: 16,
   },
   button: {
-    marginTop: 15,
-    padding: 5,
+    marginTop: 30,
+    height: 55,
+    width: 200,
+    justifyContent: 'center',
+    marginLeft: 50,
   },
 });
 
@@ -214,5 +212,5 @@ const isValidEmail = (email) =>
   /*eslint-disable*/
   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
       email,
-);
+  );
 
