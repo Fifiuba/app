@@ -1,32 +1,32 @@
 Aplicación Móvil
 ===============
 
-### Instalar dependencias
-~~~
-`npm install`
-~~~
+## Install dependencies of the project
+```
+$ npm instalar
+```
 ---
 
-### Ejecutar aplicación
-~~~
-`npm run start`
-~~~
+## Run the app
+```
+$ npm run start
+```
 ---
-### Visualizar aplicación
+## Visualizing the app
 
-- #### Dispositivo móvil IOS
-    1. Instalar ExpoGo en el dispositivo móvil.
-    2. Escanear el código QR con la cámara del dispositivo móvil.  
+- #### Mobile
+    1. Install ExpoGo
+    2. Scan the QR code with the camera (IOS) or with ExpoGo (Android)
 
 - #### Web
-    1. Ingresar la letra 'w' en la terminal del editor.
-    2. Instalar la dependencia indicada en la terminal.
-    3. Ejecutar `npm run start`.
-    2. Ingresar la letra 'w' en la terminal del editor.  
-    
+    1. Write the letter 'w' in the terminal
+    2. For the fisrt timen, install the dependence indicated by the terminal
+    3. Execute `npm run start`
+    4. Write the letter 'w' in the terminal
+
 - #### Emulador Android
-    1. Crear un disposito móvil virtual con sistema operativo Android. Para esto instalar AndroidStudio en la máquina.
-    2. Ingresar la letra 'a' en la terminal del editor. 
+    1. Create a virtual device manager with AndroidStudio
+    2. Write the letter 'a' in the terminal
 
 
 
