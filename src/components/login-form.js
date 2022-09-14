@@ -14,11 +14,9 @@ const LoginForm = (props) => {
     },
   });
 
-  console.log('AAAA\n\n', props.onLogin, 'holaa\n', props.onNavigation);
-
   return (
     <View style={loginStyle.container}>
-      <Text style={loginStyle.title}>Login</Text>
+      <Text style={loginStyle.title}>Ingresar</Text>
       <Controller control={control}
         rules={{
           required: true,
@@ -26,6 +24,7 @@ const LoginForm = (props) => {
           maxLength: constraints.email.max}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            style={loginStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -38,9 +37,14 @@ const LoginForm = (props) => {
         name="email"
       />
       {errors.email?.type === 'required' &&
-            <Text>Campo requerido</Text>}
+            <Text>Campo obligatorio</Text>}
       {errors.email?.type === 'validate' &&
             <Text>Ingrese un correo electrónico válido</Text>}
+        <View style={{marginTop: 10}}>
+        <Text style={{textAlign: 'right', fontSize: 16, textDecorationLine: 'underline'}}>
+                    ¿Olvidaste la contraseña?
+        </Text>
+      </View>
       <Controller control={control}
         rules={{
           required: true,
@@ -48,6 +52,7 @@ const LoginForm = (props) => {
           minLength: constraints.password.min}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            style={loginStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -65,7 +70,7 @@ const LoginForm = (props) => {
         name="password"
       />
       {errors.password?.type === 'required' &&
-            <Text>Campo requerido</Text>}
+            <Text>Campo obligatorio</Text>}
       {errors.password?.type === 'maxLength' &&
             <Text>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
@@ -84,36 +89,28 @@ const LoginForm = (props) => {
         color={Colors.blue800}
         mode="contained"
         onPress={() => props.onLogin(true)}>
-            Iniciar sesión
+          <Text style={{fontSize: 18}}>Iniciar sesión</Text>
       </Button>
       <View style={loginStyle.subcontainerRedes}>
-        <Text style={loginStyle.label}>O iniciar sesión con</Text>
+        <Text style={loginStyle.label}>
+          -------- O iniciar sesión con --------
+        </Text>
         <Button
-          style={loginStyle.button}
+          style={loginStyle.buttonRedes}
           color={Colors.red800}
           mode="contained"
           onPress={() => console.log('Pressed')}
         >
-            Google
+          <Text style={{fontSize: 16}}>Google</Text>
         </Button>
         <Button
-          style={loginStyle.button}
+          style={loginStyle.buttonRedes}
           color={Colors.green800}
           mode="contained"
           onPress={() => console.log('Pressed')}
         >
-            WhatsApp
+          <Text style={{fontSize: 16}}>WhatsApp</Text>
         </Button>
-      </View>
-      <View style={{margin: 20}}>
-        <Text style={{marginTop: 10, textAlign: 'center'}}>
-                    ¿Olvidaste la contraseña?
-          <Text
-            style={{textDecorationLine: 'underline'}}
-            onPress={() => props.onNavigation.navigate('Signup')}>
-                        Registrate
-          </Text>
-        </Text>
       </View>
     </View>
   );
@@ -135,14 +132,13 @@ const loginStyle = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignContent: 'center',
-    padding: 60,
-    margin: 30,
-    marginTop: 110,
-    backgroundColor: '#f5f5f5',
+    padding: 15,
+    margin: 40,
+    marginTop: 45,
   },
   title: {
     fontSize: 40,
-    paddingLeft: 55,
+    paddingLeft: 70,
     paddingBottom: 30,
   },
   input: {
@@ -158,15 +154,24 @@ const loginStyle = StyleSheet.create({
   },
   label: {
     margin: 8,
-    fontSize: 16,
+    fontSize: 17,
   },
   subcontainerRedes: {
-    marginTop: 20,
+    margin: 15,
     alignItems: 'center',
   },
   button: {
     marginTop: 15,
     padding: 5,
+    width: 220,
+    height: 50,
+    marginLeft: 40,
+  },
+  buttonRedes: {
+    justifyContent: 'center',
+    margin: 5,
+    width: 200,
+    height: 50,
   },
 });
 
