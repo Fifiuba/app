@@ -40,9 +40,13 @@ const LoginForm = (props) => {
             <Text>Campo obligatorio</Text>}
       {errors.email?.type === 'validate' &&
             <Text>Ingrese un correo electrónico válido</Text>}
-        <View style={{marginTop: 10}}>
-        <Text style={{textAlign: 'right', fontSize: 16, textDecorationLine: 'underline'}}>
-                    ¿Olvidaste la contraseña?
+      <View style={{marginTop: 10}}>
+        <Text
+          style={{textAlign: 'right',
+            fontSize: 16,
+            textDecorationLine: 'underline'}}
+        >
+          ¿Olvidaste la contraseña?
         </Text>
       </View>
       <Controller control={control}
@@ -88,7 +92,7 @@ const LoginForm = (props) => {
         color={Colors.blue800}
         mode="contained"
         onPress={() => props.onLogin(true)}>
-          <Text style={{fontSize: 18}}>Iniciar sesión</Text>
+        <Text style={{fontSize: 18}}>Iniciar sesión</Text>
       </Button>
       <View style={loginStyle.subcontainerRedes}>
         <Text style={loginStyle.label}>

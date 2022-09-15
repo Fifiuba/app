@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
+import signup from '../services/sign-up';
 
 export default function SignUpForm(props) {
   const [code, setCode] = useState(false);
@@ -21,11 +22,11 @@ export default function SignUpForm(props) {
     if (!code) {
       // Send PIN of activation
       setCode(true);
-      console.log(data);
     } else {
       // Send data to the service for registrating users
-      console.log(data);
-      props.onLogin(true);
+      if (signup(data)) {
+        props.onLogin(true);
+      }
     }
   };
 
@@ -84,8 +85,7 @@ export default function SignUpForm(props) {
       <Controller control={control}
         rules={{
           required: true,
-          maxLength: constraints.password.max,
-          minLength: constraints.password.min}}
+        }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
             style={signUpStyle.input}
@@ -99,6 +99,8 @@ export default function SignUpForm(props) {
         )}
         name="phone"
       />
+      {errors.phone?.type === 'required' &&
+      <Text>Campo obligatorio</Text>}
       <Controller control={control}
         rules={{
           required: true,
@@ -150,17 +152,17 @@ export default function SignUpForm(props) {
       }
       {code && errors.code?.type === 'required' &&
       <Text>Campo obligatorio</Text>}
-      <Button 
+      <Button
         color={Colors.blue800}
         style={signUpStyle.button}
         mode="contained"
         onPress={handleSubmit(onSubmit)}
       >
-      <Text style={{fontSize: 18}}>Registrarse</Text>
+        <Text style={{fontSize: 18}}>Registrarse</Text>
       </Button>
       <View style={{margin: 15}}>
         <Text style={{marginTop: 7, textAlign: 'center', fontSize: 16}}>
-                    ¿Ya tenes cuenta?{"\n"}
+                    ¿Ya tenes cuenta?{'\n'}
           <Text
             style={{textDecorationLine: 'underline'}}
             onPress={() => props.onNavigation.navigate('Login')}>
