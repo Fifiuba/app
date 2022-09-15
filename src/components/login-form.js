@@ -3,16 +3,23 @@ import {View, StyleSheet, Text} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import CheckBox from 'expo-checkbox';
+import login from '../services/login';
 
 const LoginForm = (props) => {
   const [isSelected, setSelection] = useState(false);
   const [hidePassword, sethidePassword] = useState(true);
-  const {control, formState: {errors}} = useForm({
+  const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       email: '',
       password: '',
     },
   });
+
+  const onSubmit = (data) => {
+    if (login(data)) {
+      props.onLogin(true);
+    }
+  }
 
   return (
     <View style={loginStyle.container}>
@@ -91,7 +98,7 @@ const LoginForm = (props) => {
         style={loginStyle.button}
         color={Colors.blue800}
         mode="contained"
-        onPress={() => props.onLogin(true)}>
+        onPress={handleSubmit(onSubmit)}>
         <Text style={{fontSize: 18}}>Iniciar sesión</Text>
       </Button>
       <View style={loginStyle.subcontainerRedes}>

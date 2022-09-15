@@ -24,7 +24,7 @@ $ npm run start
     3. Execute `npm run start`
     4. Write the letter 'w' in the terminal
 
-- #### Emulador Android
+- #### Emulator Android
     1. Create a virtual device manager with AndroidStudio
     2. Write the letter 'a' in the terminal
 
