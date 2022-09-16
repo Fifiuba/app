@@ -24,6 +24,7 @@ const LoginForm = (props) => {
           maxLength: constraints.email.max}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            theme={{colors: {primary: 'blue'}, roundness: 10}}
             style={loginStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -57,6 +58,7 @@ const LoginForm = (props) => {
           minLength: constraints.password.min}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            theme={{colors: {primary: 'blue'}, roundness: 10}}
             style={loginStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -149,14 +151,15 @@ const loginStyle = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignContent: 'center',
-    padding: 15,
-    margin: 40,
-    marginTop: 45,
+    padding: 30,
+    margin: 30,
+    backgroundColor: 'white',
+    height: 660,
   },
   title: {
     fontSize: 40,
-    paddingLeft: 70,
-    paddingBottom: 30,
+    paddingLeft: 60,
+    margin: 10,
   },
   input: {
     marginTop: 5,
@@ -176,6 +179,7 @@ const loginStyle = StyleSheet.create({
   subcontainerRedes: {
     margin: 15,
     alignItems: 'center',
+    height: 200,
   },
   button: {
     marginTop: 15,

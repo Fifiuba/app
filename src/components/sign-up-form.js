@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, Image} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import signup from '../services/sign-up';
@@ -33,6 +33,10 @@ export default function SignUpForm(props) {
   return (
     <View style={signUpStyle.container}>
       <Text style={signUpStyle.title}>FIFIUBA</Text>
+      <Image
+        source={{uri: 'https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/512x512/plain/users.png'}}
+        style={signUpStyle.image}
+      />
       <Controller control={control}
         rules={{
           required: true,
@@ -67,6 +71,7 @@ export default function SignUpForm(props) {
           maxLength: constraints.email.max}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            theme={{colors: {primary: 'blue'}, roundness: 10}}
             style={signUpStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -168,8 +173,8 @@ export default function SignUpForm(props) {
       >
         <Text style={{fontSize: 18}}>Registrarse</Text>
       </Button>
-      <View style={{margin: 15}}>
-        <Text style={{marginTop: 7, textAlign: 'center', fontSize: 18}}>
+      <View style={{margin: 5}}>
+        <Text style={{marginTop: 5, textAlign: 'center', fontSize: 18}}>
                     ¿Ya tenes cuenta?{'\n'}
           <Text
             style={{textDecorationLine: 'underline',
@@ -188,25 +193,30 @@ const signUpStyle = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignContent: 'center',
-    padding: 40,
-    margin: 15,
-    marginTop: 15,
+    padding: 30,
+    margin: 30,
+    backgroundColor: 'white',
+    height: 670,
   },
   title: {
     fontSize: 40,
-    paddingLeft: 70,
-    paddingBottom: 30,
+    paddingLeft: 80,
+    marginBottom: 5,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    marginLeft: 100,
+    marginBottom: 10,
   },
   input: {
     marginTop: 5,
-    marginBottom: 5,
   },
   label: {
-    margin: 8,
     fontSize: 16,
   },
   button: {
-    marginTop: 30,
+    marginTop: 15,
     height: 55,
     width: 200,
     justifyContent: 'center',
