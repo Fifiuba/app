@@ -23,7 +23,7 @@ const LoginForm = (props) => {
 
   return (
     <View style={loginStyle.container}>
-      <Text style={loginStyle.title}>Ingresar</Text>
+      <Text style={loginStyle.title}>FIFIUBA</Text>
       <Controller control={control}
         rules={{
           required: true,
@@ -44,13 +44,14 @@ const LoginForm = (props) => {
         name="email"
       />
       {errors.email?.type === 'required' &&
-            <Text>Campo obligatorio</Text>}
+      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
       {errors.email?.type === 'validate' &&
-            <Text>Ingrese un correo electrónico válido</Text>}
+      <Text style={{color: 'red'}}>Ingrese un correo electrónico válido</Text>}
       <View style={{marginTop: 10}}>
         <Text
           style={{textAlign: 'right',
-            fontSize: 16,
+            fontSize: 18,
+            color: 'blue',
             textDecorationLine: 'underline'}}
         >
           ¿Olvidaste la contraseña?
@@ -81,16 +82,17 @@ const LoginForm = (props) => {
         name="password"
       />
       {errors.password?.type === 'required' &&
-            <Text>Campo obligatorio</Text>}
+      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
       {errors.password?.type === 'maxLength' &&
-            <Text>Máximo {constraints.password.max}</Text>}
+      <Text>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
-            <Text>Mínimo {constraints.password.min}</Text>}
+      <Text>Mínimo {constraints.password.min}</Text>}
       <View style={loginStyle.checkboxContainer}>
         <CheckBox
           value={isSelected}
           onValueChange={setSelection}
           style={loginStyle.checkbox}
+          color={Colors.blueGrey800}
         />
         <Text style={loginStyle.label}>Recordarme</Text>
       </View>
@@ -99,7 +101,7 @@ const LoginForm = (props) => {
         color={Colors.blue800}
         mode="contained"
         onPress={handleSubmit(onSubmit)}>
-        <Text style={{fontSize: 18}}>Iniciar sesión</Text>
+        <Text style={{fontSize: 20}}>Iniciar sesión</Text>
       </Button>
       <View style={loginStyle.subcontainerRedes}>
         <Text style={loginStyle.label}>
@@ -111,7 +113,7 @@ const LoginForm = (props) => {
           mode="contained"
           onPress={() => console.log('Pressed')}
         >
-          <Text style={{fontSize: 16}}>Google</Text>
+          <Text style={{fontSize: 18}}>Google</Text>
         </Button>
         <Button
           style={loginStyle.buttonRedes}
@@ -119,8 +121,18 @@ const LoginForm = (props) => {
           mode="contained"
           onPress={() => console.log('Pressed')}
         >
-          <Text style={{fontSize: 16}}>WhatsApp</Text>
+          <Text style={{fontSize: 18}}>WhatsApp</Text>
         </Button>
+        <View style={{margin: 15}}>
+          <Text style={{marginTop: 7, textAlign: 'center', fontSize: 18}}>
+                      ¿No tenes cuenta?{'\n'}
+            <Text
+              style={{textDecorationLine: 'underline', fontSize: 18, color: 'blue'}}
+              onPress={() => props.onNavigation.navigate('Signup')}>
+                          Registrarse
+            </Text>
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -164,7 +176,7 @@ const loginStyle = StyleSheet.create({
   },
   label: {
     margin: 8,
-    fontSize: 17,
+    fontSize: 18,
   },
   subcontainerRedes: {
     margin: 15,
@@ -180,7 +192,7 @@ const loginStyle = StyleSheet.create({
   buttonRedes: {
     justifyContent: 'center',
     margin: 5,
-    width: 200,
+    width: 150,
     height: 50,
   },
 });

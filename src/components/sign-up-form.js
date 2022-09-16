@@ -32,7 +32,7 @@ export default function SignUpForm(props) {
 
   return (
     <View style={signUpStyle.container}>
-      <Text style={signUpStyle.title}>Crear usuario</Text>
+      <Text style={signUpStyle.title}>FIFIUBA</Text>
       <Controller control={control}
         rules={{
           required: true,
@@ -40,6 +40,7 @@ export default function SignUpForm(props) {
           minLength: constraints.name.min}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            theme={{colors: { primary: 'blue' }, roundness: 10}}
             style={signUpStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -53,7 +54,7 @@ export default function SignUpForm(props) {
         name="name"
       />
       {errors.name?.type === 'required' &&
-      <Text>Campo requerido</Text>}
+      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
       {errors.name?.type === 'maxLength' &&
       <Text>Máximo {constraints.name.max}</Text>}
       {errors.name?.type === 'minLength' &&
@@ -79,15 +80,16 @@ export default function SignUpForm(props) {
         name="email"
       />
       {errors.email?.type === 'required' &&
-      <Text>Campo obligatorio</Text>}
+      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
       {errors.email?.type === 'validate' &&
-      <Text>Ingrese un correo electrónico válido</Text>}
+      <Text style={{color: 'red'}}>Correo electrónico inválido</Text>}
       <Controller control={control}
         rules={{
           required: true,
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            theme={{colors: { primary: 'blue' }, roundness: 10}}
             style={signUpStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -100,7 +102,7 @@ export default function SignUpForm(props) {
         name="phone"
       />
       {errors.phone?.type === 'required' &&
-      <Text>Campo obligatorio</Text>}
+      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
       <Controller control={control}
         rules={{
           required: true,
@@ -108,6 +110,7 @@ export default function SignUpForm(props) {
           minLength: constraints.password.min}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            theme={{colors: { primary: 'blue' }, roundness: 10}}
             style={signUpStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -126,7 +129,7 @@ export default function SignUpForm(props) {
         name="password"
       />
       {errors.password?.type === 'required' &&
-      <Text>Campo requerido</Text>}
+      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
       {errors.password?.type === 'maxLength' &&
       <Text>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
@@ -138,6 +141,7 @@ export default function SignUpForm(props) {
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <TextInput
+              theme={{colors: { primary: 'blue' }, roundness: 10}}
               style={signUpStyle.input}
               onBlur={onBlur}
               onChangeText={onChange}
@@ -151,7 +155,11 @@ export default function SignUpForm(props) {
         />
       }
       {code && errors.code?.type === 'required' &&
-      <Text>Campo obligatorio</Text>}
+      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+      {errors.code?.type === 'maxLength' &&
+      <Text>Máximo {constraints.code.max}</Text>}
+      {errors.code?.type === 'minLength' &&
+      <Text>Mínimo {constraints.code.min}</Text>}
       <Button
         color={Colors.blue800}
         style={signUpStyle.button}
@@ -161,10 +169,10 @@ export default function SignUpForm(props) {
         <Text style={{fontSize: 18}}>Registrarse</Text>
       </Button>
       <View style={{margin: 15}}>
-        <Text style={{marginTop: 7, textAlign: 'center', fontSize: 16}}>
+        <Text style={{marginTop: 7, textAlign: 'center', fontSize: 18}}>
                     ¿Ya tenes cuenta?{'\n'}
           <Text
-            style={{textDecorationLine: 'underline'}}
+            style={{textDecorationLine: 'underline', fontSize: 18, color: 'blue'}}
             onPress={() => props.onNavigation.navigate('Login')}>
                         Iniciar sesión
           </Text>
@@ -180,12 +188,12 @@ const signUpStyle = StyleSheet.create({
     alignContent: 'center',
     padding: 40,
     margin: 15,
-    marginTop: 60,
+    marginTop: 15,
   },
   title: {
     fontSize: 40,
-    paddingLeft: 25,
-    paddingBottom: 40,
+    paddingLeft: 70,
+    paddingBottom: 30,
   },
   input: {
     marginTop: 5,
@@ -208,6 +216,7 @@ const constraints = {
   name: {max: 15, min: 3},
   email: {max: 50},
   password: {min: 8, max: 20},
+  code: {min: 4, max: 4},
 };
 
 const isValidEmail = (email) =>
