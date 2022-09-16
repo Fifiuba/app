@@ -3,23 +3,16 @@ import {View, StyleSheet, Text} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import CheckBox from 'expo-checkbox';
-import login from '../services/login';
 
 const LoginForm = (props) => {
   const [isSelected, setSelection] = useState(false);
   const [hidePassword, sethidePassword] = useState(true);
-  const {control, handleSubmit, formState: {errors}} = useForm({
+  const {control, formState: {errors}} = useForm({
     defaultValues: {
       email: '',
       password: '',
     },
   });
-
-  const onSubmit = (data) => {
-    if (login(data)) {
-      props.onLogin(true);
-    }
-  }
 
   return (
     <View style={loginStyle.container}>
@@ -100,7 +93,7 @@ const LoginForm = (props) => {
         style={loginStyle.button}
         color={Colors.blue800}
         mode="contained"
-        onPress={handleSubmit(onSubmit)}>
+        onPress={() => props.onLogin(true)}>
         <Text style={{fontSize: 20}}>Iniciar sesión</Text>
       </Button>
       <View style={loginStyle.subcontainerRedes}>
@@ -127,7 +120,9 @@ const LoginForm = (props) => {
           <Text style={{marginTop: 7, textAlign: 'center', fontSize: 18}}>
                       ¿No tenes cuenta?{'\n'}
             <Text
-              style={{textDecorationLine: 'underline', fontSize: 18, color: 'blue'}}
+              style={{textDecorationLine: 'underline',
+                fontSize: 18,
+                color: 'blue'}}
               onPress={() => props.onNavigation.navigate('Signup')}>
                           Registrarse
             </Text>

@@ -40,7 +40,7 @@ export default function SignUpForm(props) {
           minLength: constraints.name.min}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
-            theme={{colors: { primary: 'blue' }, roundness: 10}}
+            theme={{colors: {primary: 'blue'}, roundness: 10}}
             style={signUpStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -89,7 +89,7 @@ export default function SignUpForm(props) {
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
-            theme={{colors: { primary: 'blue' }, roundness: 10}}
+            theme={{colors: {primary: 'blue'}, roundness: 10}}
             style={signUpStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -110,7 +110,7 @@ export default function SignUpForm(props) {
           minLength: constraints.password.min}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
-            theme={{colors: { primary: 'blue' }, roundness: 10}}
+            theme={{colors: {primary: 'blue'}, roundness: 10}}
             style={signUpStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -141,7 +141,7 @@ export default function SignUpForm(props) {
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <TextInput
-              theme={{colors: { primary: 'blue' }, roundness: 10}}
+              theme={{colors: {primary: 'blue'}, roundness: 10}}
               style={signUpStyle.input}
               onBlur={onBlur}
               onChangeText={onChange}
@@ -172,7 +172,9 @@ export default function SignUpForm(props) {
         <Text style={{marginTop: 7, textAlign: 'center', fontSize: 18}}>
                     ¿Ya tenes cuenta?{'\n'}
           <Text
-            style={{textDecorationLine: 'underline', fontSize: 18, color: 'blue'}}
+            style={{textDecorationLine: 'underline',
+              fontSize: 18,
+              color: 'blue'}}
             onPress={() => props.onNavigation.navigate('Login')}>
                         Iniciar sesión
           </Text>
