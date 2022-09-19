@@ -10,7 +10,6 @@ export default function LoggedNav() {
       <Stack.Screen
         name="Home"
         component={HomeView}
-        options={{title: 'Home'}}
       >
       </Stack.Screen>
     </Stack.Navigator>
