@@ -89,7 +89,14 @@ const LoginForm = (props) => {
           style={loginStyle.checkbox}
           color={Colors.blueGrey800}
         />
-        <Text style={loginStyle.label}>Recordarme</Text>
+        <Text style={loginStyle.label}>Pasajero</Text>
+        <CheckBox
+          value={isSelected}
+          onValueChange={setSelection}
+          style={loginStyle.checkbox}
+          color={Colors.blueGrey800}
+        />
+        <Text style={loginStyle.label}>Chofer</Text>
       </View>
       <Button
         style={loginStyle.button}
@@ -110,14 +117,6 @@ const LoginForm = (props) => {
         >
           <Text style={{fontSize: 18}}>Google</Text>
         </Button>
-        <Button
-          style={loginStyle.buttonRedes}
-          color={Colors.green800}
-          mode="contained"
-          onPress={() => console.log('Pressed')}
-        >
-          <Text style={{fontSize: 18}}>WhatsApp</Text>
-        </Button>
         <View style={{margin: 15}}>
           <Text style={{marginTop: 7, textAlign: 'center', fontSize: 18}}>
                       ¿No tenes cuenta?{'\n'}
@@ -126,7 +125,7 @@ const LoginForm = (props) => {
                 fontSize: 18,
                 color: 'blue'}}
               onPress={() => props.onNavigation.navigate('Signup')}>
-                          Registrarse
+                          Registrate
             </Text>
           </Text>
         </View>
@@ -154,7 +153,7 @@ const loginStyle = StyleSheet.create({
     padding: 30,
     margin: 30,
     backgroundColor: 'white',
-    height: 660,
+    height: 640,
   },
   title: {
     fontSize: 40,
@@ -180,6 +179,7 @@ const loginStyle = StyleSheet.create({
     margin: 15,
     alignItems: 'center',
     height: 200,
+    paddingTop: 10,
   },
   button: {
     marginTop: 15,
@@ -190,9 +190,10 @@ const loginStyle = StyleSheet.create({
   },
   buttonRedes: {
     justifyContent: 'center',
-    margin: 5,
+    margin: 15,
     width: 150,
     height: 50,
+
   },
 });
 

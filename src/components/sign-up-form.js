@@ -13,6 +13,7 @@ export default function SignUpForm(props) {
       name: '',
       email: '',
       phone: '',
+      age: '',
       password: '',
       code: '',
     },
@@ -23,7 +24,7 @@ export default function SignUpForm(props) {
       // Send PIN of activation
       setCode(true);
     } else {
-      // Send data to the service for registrating users
+      // Send data to the service for signing up users
       if (signup(data)) {
         props.onLogin(true);
       }
@@ -63,7 +64,6 @@ export default function SignUpForm(props) {
       <Text>Máximo {constraints.name.max}</Text>}
       {errors.name?.type === 'minLength' &&
       <Text>Mínimo {constraints.name.min}</Text>}
-
       <Controller control={control}
         rules={{
           required: true,
@@ -108,6 +108,32 @@ export default function SignUpForm(props) {
       />
       {errors.phone?.type === 'required' &&
       <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+      <Controller control={control}
+        rules={{
+          required: true,
+          maxLength: constraints.age.max,
+          minLength: constraints.age.min,
+        }}
+        render={({field: {onChange, onBlur, value}}) => (
+          <TextInput
+            theme={{colors: {primary: 'blue'}, roundness: 10}}
+            style={signUpStyle.input}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            mode="outlined"
+            label="Edad"
+            placeholder="Edad"
+          />
+        )}
+        name="age"
+      />
+      {errors.age?.type === 'required' &&
+      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+      {errors.age?.type === 'maxLength' &&
+      <Text>Máximo {constraints.age.max}</Text>}
+      {errors.name?.type === 'minLength' &&
+      <Text>Mínimo {constraints.age.min}</Text>}
       <Controller control={control}
         rules={{
           required: true,
@@ -171,7 +197,7 @@ export default function SignUpForm(props) {
         mode="contained"
         onPress={handleSubmit(onSubmit)}
       >
-        <Text style={{fontSize: 18}}>Registrarse</Text>
+        <Text style={{fontSize: 18}}>Registrar</Text>
       </Button>
       <View style={{margin: 5}}>
         <Text style={{marginTop: 5, textAlign: 'center', fontSize: 18}}>
@@ -196,7 +222,7 @@ const signUpStyle = StyleSheet.create({
     padding: 30,
     margin: 30,
     backgroundColor: 'white',
-    height: 670,
+    height: 700,
   },
   title: {
     fontSize: 40,
@@ -205,7 +231,7 @@ const signUpStyle = StyleSheet.create({
   },
   image: {
     width: 100,
-    height: 100,
+    height: 90,
     marginLeft: 100,
     marginBottom: 10,
   },
@@ -229,6 +255,7 @@ const constraints = {
   email: {max: 50},
   password: {min: 8, max: 20},
   code: {min: 4, max: 4},
+  age: {min: 18},
 };
 
 const isValidEmail = (email) =>

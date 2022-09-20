@@ -3,7 +3,7 @@ Aplicación Móvil
 
 ## Install dependencies of the project
 ```
-$ npm instalar
+$ npm install
 ```
 ---
 
@@ -12,6 +12,13 @@ $ npm instalar
 $ npm run start
 ```
 ---
+
+## Run the linter
+```
+$ npm run eslint
+```
+---
+
 ## Visualizing the app
 
 - #### Mobile

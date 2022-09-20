@@ -2,11 +2,13 @@ import axios from 'axios';
 
 export default function signup(data) {
   console.log('data:\n\n', data);
-  axios.post('http://10.0.2.2:8000/users/passenger/create', {
+  axios.post('http://10.0.2.2:8000/users', {
+    'user_type': 'pasajero',
     'name': data.name,
     'password': data.password,
     'phone_number': data.phone,
-    'age': 30,
+    // 'email': data.email,
+    'age': data.age,
   })
       .then(function(response) {
         console.log(response);
