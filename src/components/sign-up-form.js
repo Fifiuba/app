@@ -217,7 +217,7 @@ const constraints = {
   email: {max: 50},
   password: {min: 8, max: 20},
   code: {min: 4, max: 4},
-  age: {min: 18}
+  age: {min: 18},
 };
 
 const isValidEmail = (email) =>

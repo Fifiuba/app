@@ -17,18 +17,25 @@ const LoginForm = (props) => {
     },
   });
 
-  const onSubmit = (data) => {
-    if(isSelectedDriver)
-      data.type = 'Driver'
-    else
-      data.type = 'Passanger'
-    
-    // Send data to the service for loging users
-    if (login(data)) {
-      props.onLogin(true)
-      props.onNavigation.navigate('Home');
+  const PASSANGER = 'Passanger';
+  const DRIVER = 'Driver';
+
+  const setUserType = (data) => {
+    if (isSelectedDriver) {
+      data.type = DRIVER;
+    } else {
+      data.type = PASSANGER;
     }
   };
+
+  function onSubmit(data) {
+    setUserType(data);
+    // Send data to the service for loging users
+    if (login(data)) {
+      props.onLogin(true);
+      props.onNavigation.navigate('Home');
+    }
+  }
 
   return (
     <View style={loginStyle.container}>
