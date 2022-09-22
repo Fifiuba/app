@@ -7,7 +7,7 @@ export default function signup(data) {
     'name': data.name,
     'password': data.password,
     'phone_number': data.phone,
-    // 'email': data.email,
+    'email': data.email,
     'age': data.age,
   })
       .then(function(response) {

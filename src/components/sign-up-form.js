@@ -4,7 +4,7 @@ import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import signup from '../services/sign-up';
 
-export default function SignUpForm(props) {
+const SignUpForm = (props) => {
   const [code, setCode] = useState(false);
   const [hidePassword, sethidePassword] = useState(true);
 
@@ -13,7 +13,7 @@ export default function SignUpForm(props) {
       name: '',
       email: '',
       phone: '',
-      age: '',
+      age: 0,
       password: '',
       code: '',
     },
@@ -26,7 +26,7 @@ export default function SignUpForm(props) {
     } else {
       // Send data to the service for signing up users
       if (signup(data)) {
-        props.onLogin(true);
+        props.onNavigation.navigate('Login');
       }
     }
   };
@@ -111,8 +111,7 @@ export default function SignUpForm(props) {
       <Controller control={control}
         rules={{
           required: true,
-          maxLength: constraints.age.max,
-          minLength: constraints.age.min,
+          min: constraints.age.min,
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
@@ -130,9 +129,7 @@ export default function SignUpForm(props) {
       />
       {errors.age?.type === 'required' &&
       <Text style={{color: 'red'}}>Campo obligatorio</Text>}
-      {errors.age?.type === 'maxLength' &&
-      <Text>Máximo {constraints.age.max}</Text>}
-      {errors.name?.type === 'minLength' &&
+      {errors.age?.type === 'min' &&
       <Text>Mínimo {constraints.age.min}</Text>}
       <Controller control={control}
         rules={{
@@ -215,6 +212,20 @@ export default function SignUpForm(props) {
   );
 };
 
+const constraints = {
+  name: {max: 15, min: 3},
+  email: {max: 50},
+  password: {min: 8, max: 20},
+  code: {min: 4, max: 4},
+  age: {min: 18},
+};
+
+const isValidEmail = (email) =>
+  /*eslint-disable*/
+  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      email,
+  );
+
 const signUpStyle = StyleSheet.create({
   container: {
     justifyContent: 'center',
@@ -250,17 +261,4 @@ const signUpStyle = StyleSheet.create({
   },
 });
 
-const constraints = {
-  name: {max: 15, min: 3},
-  email: {max: 50},
-  password: {min: 8, max: 20},
-  code: {min: 4, max: 4},
-  age: {min: 18},
-};
-
-const isValidEmail = (email) =>
-  /*eslint-disable*/
-  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      email,
-  );
-
+export default SignUpForm;

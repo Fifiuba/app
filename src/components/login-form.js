@@ -3,16 +3,39 @@ import {View, StyleSheet, Text} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import CheckBox from 'expo-checkbox';
+import login from '../services/login';
 
 const LoginForm = (props) => {
-  const [isSelected, setSelection] = useState(false);
+  const [isSelectedPassanger, setSelectionPassanger] = useState(false);
+  const [isSelectedDriver, setSelectionDriver] = useState(false);
   const [hidePassword, sethidePassword] = useState(true);
-  const {control, formState: {errors}} = useForm({
+  const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       email: '',
       password: '',
+      type: '',
     },
   });
+
+  const PASSANGER = 'Passanger';
+  const DRIVER = 'Driver';
+
+  const setUserType = (data) => {
+    if (isSelectedDriver) {
+      data.type = DRIVER;
+    } else {
+      data.type = PASSANGER;
+    }
+  };
+
+  function onSubmit(data) {
+    setUserType(data);
+    // Send data to the service for loging users
+    if (login(data)) {
+      props.onLogin(true);
+      props.onNavigation.navigate('Home');
+    }
+  }
 
   return (
     <View style={loginStyle.container}>
@@ -84,15 +107,15 @@ const LoginForm = (props) => {
       <Text>Mínimo {constraints.password.min}</Text>}
       <View style={loginStyle.checkboxContainer}>
         <CheckBox
-          value={isSelected}
-          onValueChange={setSelection}
+          value={isSelectedPassanger}
+          onValueChange={setSelectionPassanger}
           style={loginStyle.checkbox}
           color={Colors.blueGrey800}
         />
         <Text style={loginStyle.label}>Pasajero</Text>
         <CheckBox
-          value={isSelected}
-          onValueChange={setSelection}
+          value={isSelectedDriver}
+          onValueChange={setSelectionDriver}
           style={loginStyle.checkbox}
           color={Colors.blueGrey800}
         />
@@ -102,7 +125,7 @@ const LoginForm = (props) => {
         style={loginStyle.button}
         color={Colors.blue800}
         mode="contained"
-        onPress={() => props.onLogin(true)}>
+        onPress={handleSubmit(onSubmit)}>
         <Text style={{fontSize: 20}}>Iniciar sesión</Text>
       </Button>
       <View style={loginStyle.subcontainerRedes}>
@@ -135,12 +158,17 @@ const LoginForm = (props) => {
 };
 
 const constraints = {
-  name: {max: 15, min: 3},
   email: {max: 50},
   password: {min: 8, max: 20},
 };
 
 const isValidEmail = (email) =>
+/*eslint-disable*/
+  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      email,
+  );
+
+const setUserType = (type) =>
 /*eslint-disable*/
   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
       email,
@@ -193,7 +221,6 @@ const loginStyle = StyleSheet.create({
     margin: 15,
     width: 150,
     height: 50,
-
   },
 });
 
