@@ -10,10 +10,15 @@
     "eslint": "npx eslint src --fix"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@expo/webpack-config": "^0.17.0",
+    "@mui/icons-material": "^5.10.6",
+    "@mui/material": "^5.10.6",
     "@react-native-community/checkbox": "^0.5.12",
     "@react-navigation/native": "^6.0.12",
     "@react-navigation/native-stack": "^6.8.0",
+    "@types/react-native-vector-icons": "^6.4.12",
     "axios": "^0.27.2",
     "expo": "~46.0.9",
     "expo-checkbox": "~2.2.0",
@@ -26,6 +31,7 @@
     "react-native-components": "^0.0.1",
     "react-native-elements": "^3.4.2",
     "react-native-paper": "^4.12.4",
+    "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.7"
   },
   "devDependencies": {
