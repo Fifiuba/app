@@ -168,12 +168,6 @@ const isValidEmail = (email) =>
       email,
   );
 
-const setUserType = (type) =>
-/*eslint-disable*/
-  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      email,
-  );
-
 const loginStyle = StyleSheet.create({
   container: {
     justifyContent: 'center',

@@ -6,18 +6,17 @@ import {
   Text,
   TouchableRipple,
 } from 'react-native-paper';
-
 import { Icon } from 'react-native-elements';
 
 const MyProfileView = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{marginTop: 15}}>
-            <Title style={styles.title}>Nombre Apellido</Title>
-          </View>
-        </View>
+        <Title style={styles.title}>Nombre Apellido</Title>
+        <Image
+          source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
+          style={styles.image}
+      />
       </View>
 
       <View style={styles.userInfoSection}>
@@ -48,8 +47,8 @@ const MyProfileView = () => {
       <View style={styles.menuWrapper}>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Icon name="help" color="black" size={25}/>
-            <Text style={styles.menuItemText}>Ayuda</Text>
+            <Icon name="edit" size={25}/>
+            <Text style={styles.menuItemText}>Editar perfil</Text>
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
@@ -60,8 +59,8 @@ const MyProfileView = () => {
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Icon name="edit" size={25}/>
-            <Text style={styles.menuItemText}>Editar perfil</Text>
+            <Icon name="help" color="black" size={25}/>
+            <Text style={styles.menuItemText}>Ayuda</Text>
           </View>
         </TouchableRipple>
       </View>
@@ -74,13 +73,11 @@ export default MyProfileView;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 100,
-    marginTop: 70,
+    marginTop: 100,
   },
   userInfoSection: {
     paddingHorizontal: 30,
     marginBottom: 25,
-    marginTop: 20,
   },
   title: {
     fontSize: 28,
@@ -115,6 +112,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 15,
     paddingHorizontal: 30,
+    fontSize: 18,
   },
   menuItemText: {
     marginLeft: 20,
@@ -127,5 +125,19 @@ const styles = StyleSheet.create({
     marginLeft: 20, 
     fontSize: 20,
     lineHeight: 30,
+  },
+  button: {
+    marginTop: 15,
+    padding: 5,
+    width: 220,
+    height: 50,
+    marginLeft: 40,
+  },
+  image: {
+    marginTop: 35,
+    width: 150,
+    height: 150,
+    marginLeft: 100,
+    marginBottom: 10,
   },
 });
