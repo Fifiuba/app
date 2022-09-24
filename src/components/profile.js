@@ -8,7 +8,7 @@ import {
 } from 'react-native-paper';
 import {Icon} from 'react-native-elements';
 
-const Profile = () => {
+const Profile = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>
@@ -21,11 +21,11 @@ const Profile = () => {
 
       <View style={styles.userInfoSection}>
         <View style={styles.row}>
-          <Icon name="phone" color="#777777" size={30}/>
+          <Icon name="phone" size={30}/>
           <Text style={styles.text}>Número de teléfono</Text>
         </View>
         <View style={styles.row}>
-          <Icon name="email" color="#777777" size={30}/>
+          <Icon name="email" size={30}/>
           <Text style={styles.text}>Correo electrónico</Text>
         </View>
       </View>
@@ -45,7 +45,10 @@ const Profile = () => {
       </View>
 
       <View style={styles.menuWrapper}>
-        <TouchableRipple onPress={() => {}}>
+        <TouchableRipple 
+          onPress={() =>
+            props.onNavigation.navigate('Editar perfil')
+        }>
           <View style={styles.menuItem}>
             <Icon name="edit" size={25}/>
             <Text style={styles.menuItemText}>Editar perfil</Text>
@@ -81,7 +84,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
   },
   caption: {
     fontSize: 18,
@@ -135,8 +137,8 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: 35,
-    width: 150,
-    height: 150,
+    width: 130,
+    height: 130,
     marginLeft: 100,
     marginBottom: 10,
   },

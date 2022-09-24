@@ -15,7 +15,7 @@ export default function LoggedNav() {
         }
       </Stack.Screen>
       <Stack.Screen
-        name="Profile">
+        name="Mi perfil">
         {(navigation) =>
           <ProfileView onNavigation={navigation}/>
         }

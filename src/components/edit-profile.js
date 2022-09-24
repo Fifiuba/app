@@ -10,7 +10,7 @@ import {useTheme, Colors, Button} from 'react-native-paper';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
-const EditProfile = () => {
+const EditProfile = (props) => {
   const {colors} = useTheme();
 
   return (
@@ -27,7 +27,7 @@ const EditProfile = () => {
         <View style={styles.action}>
           <FontAwesome name="user-o" color={colors.text} size={25} />
           <TextInput
-            placeholder="First Name"
+            placeholder="Nombre"
             placeholderTextColor="#666666"
             autoCorrect={false}
             style={[
@@ -41,7 +41,7 @@ const EditProfile = () => {
         <View style={styles.action}>
           <FontAwesome name="user-o" color={colors.text} size={25} />
           <TextInput
-            placeholder="Last Name"
+            placeholder="Apellido"
             placeholderTextColor="#666666"
             autoCorrect={false}
             style={[
@@ -55,7 +55,7 @@ const EditProfile = () => {
         <View style={styles.action}>
           <Feather name="phone" color={colors.text} size={25} />
           <TextInput
-            placeholder="Phone"
+            placeholder="Número de teléfono"
             placeholderTextColor="#666666"
             keyboardType="number-pad"
             autoCorrect={false}
@@ -70,7 +70,7 @@ const EditProfile = () => {
         <View style={styles.action}>
           <FontAwesome name="envelope-o" color={colors.text} size={25} />
           <TextInput
-            placeholder="Email"
+            placeholder="Correo electrónico"
             placeholderTextColor="#666666"
             keyboardType="email-address"
             autoCorrect={false}
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
   },
   title: {
-    fontSize: 30,
+    fontSize: 28,
   },
   textInput: {
     flex: 1,

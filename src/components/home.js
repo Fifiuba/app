@@ -13,7 +13,7 @@ const Home = (props) => {
       <TouchableOpacity
         style={styles.categoryBtn}
         onPress={() =>
-          props.onNavigation.navigate('Profile')
+          props.onNavigation.navigate('Mi perfil')
         }>
         <View style={styles.categoryIcon}>
           <Image

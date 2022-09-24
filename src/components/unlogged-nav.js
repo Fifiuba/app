@@ -12,25 +12,25 @@ export default function UnloggedNav(props) {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="EditProfile">
-        {(navigation) =>
-          <EditProfileView onNavigation={navigation}/>
-        }
-      </Stack.Screen>
-      <Stack.Screen
         name="Home">
         {(navigation) =>
           <HomeView onNavigation={navigation}/>
         }
       </Stack.Screen>
       <Stack.Screen
-        name="Profile">
+        name="Mi perfil">
         {(navigation) =>
           <ProfileView onNavigation={navigation}/>
         }
       </Stack.Screen>
       <Stack.Screen
-        name="Login">
+        name="Editar perfil">
+        {(navigation) =>
+          <EditProfileView onNavigation={navigation}/>
+        }
+      </Stack.Screen>
+      <Stack.Screen
+        name="Iniciar">
         {(navigation) =>
           <LoginView onLogin={props.onLogin} onNavigation={navigation}/>
         }
