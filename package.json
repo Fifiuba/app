@@ -31,6 +31,7 @@
     "react-native-components": "^0.0.1",
     "react-native-elements": "^3.4.2",
     "react-native-paper": "^4.12.4",
+    "react-native-swipe": "^1.0.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.7"
   },

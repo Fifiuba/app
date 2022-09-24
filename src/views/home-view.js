@@ -1,10 +1,14 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
+import Home from '../components/home';
 
-export default function HomeView() {
+export default function HomeView(props) {
   return (
     <View style={{flex: 1}}>
-      <Text>Home Screen</Text>
+      <Home
+        onNavigation={props.onNavigation.navigation}
+      />
     </View>
   );
 }
+
