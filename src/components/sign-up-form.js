@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
+import CheckBox from 'expo-checkbox';
 import {useForm, Controller} from 'react-hook-form';
 import signup from '../services/sign-up';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const SignUpForm = (props) => {
+  const [isSelectedPassanger, setSelectionPassanger] = useState(false);
+  const [isSelectedDriver, setSelectionDriver] = useState(false);
   const [code, setCode] = useState(false);
   const [hidePassword, sethidePassword] = useState(true);
 
@@ -20,12 +23,24 @@ const SignUpForm = (props) => {
     },
   });
 
+  const PASSANGER = 'Passanger';
+  const DRIVER = 'Driver';
+
+  const setUserType = (data) => {
+    if (isSelectedDriver) {
+      data.type = DRIVER;
+    } else {
+      data.type = PASSANGER;
+    }
+  };
+
   const onSubmit = (data) => {
     if (!code) {
       // Send PIN of activation
       setCode(true);
     } else {
       // Send data to users service for signing up
+      setUserType(data);
       signup(data)
       props.onNavigation.navigate('Iniciar');
     }
@@ -33,10 +48,7 @@ const SignUpForm = (props) => {
 
   return (
     <View style={signUpStyle.container}>
-      <View>
         <Text style={signUpStyle.title}>FIFI-UBA</Text>
-        <FontAwesome name="user-o" size={60} style={signUpStyle.loginIcon}/>
-      </View>
       <Controller control={control}
         rules={{
           required: true,
@@ -161,6 +173,22 @@ const SignUpForm = (props) => {
       <Text>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
       <Text>Mínimo {constraints.password.min}</Text>}
+      <View style={signUpStyle.checkboxContainer}>
+        <CheckBox
+          value={isSelectedPassanger}
+          onValueChange={setSelectionPassanger}
+          style={signUpStyle.checkbox}
+          color={Colors.blueGrey800}
+        />
+        <Text style={signUpStyle.labelCheckbox}>Pasajero</Text>
+        <CheckBox
+          value={isSelectedDriver}
+          onValueChange={setSelectionDriver}
+          style={signUpStyle.checkbox}
+          color={Colors.blueGrey800}
+        />
+        <Text style={signUpStyle.labelCheckbox}>Chofer</Text>
+      </View>
       { code &&
         <Controller control={control}
           rules={{
@@ -234,7 +262,9 @@ const signUpStyle = StyleSheet.create({
   },
   title: {
     fontSize: 40,
-    paddingLeft: 105,
+    paddingLeft: 95,
+    margin: 10,
+    marginTop: 15,
   },
   loginIcon: {
     marginLeft: 150,
@@ -246,6 +276,18 @@ const signUpStyle = StyleSheet.create({
   },
   label: {
     fontSize: 16,
+  },
+  labelCheckbox: {
+    margin: 8,
+    fontSize: 18,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    margin: 5,
+    marginTop: 15,
+  },
+  checkbox: {
+    alignSelf: 'center',
   },
   button: {
     marginTop: 25,

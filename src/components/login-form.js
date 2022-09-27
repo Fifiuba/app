@@ -2,12 +2,9 @@ import {React, useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
-import CheckBox from 'expo-checkbox';
 import login from '../services/login';
 
 const LoginForm = (props) => {
-  const [isSelectedPassanger, setSelectionPassanger] = useState(false);
-  const [isSelectedDriver, setSelectionDriver] = useState(false);
   const [hidePassword, sethidePassword] = useState(true);
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
@@ -16,19 +13,7 @@ const LoginForm = (props) => {
     },
   });
 
-  const PASSANGER = 'Passanger';
-  const DRIVER = 'Driver';
-
-  const setUserType = (data) => {
-    if (isSelectedDriver) {
-      data.type = DRIVER;
-    } else {
-      data.type = PASSANGER;
-    }
-  };
-
   function onSubmit(data) {
-    //setUserType(data);
     // Send data to users service for signing in
     login(data);
     props.onLogin(true);
@@ -101,22 +86,6 @@ const LoginForm = (props) => {
       <Text>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
       <Text>Mínimo {constraints.password.min}</Text>}
-      <View style={loginStyle.checkboxContainer}>
-        <CheckBox
-          value={isSelectedPassanger}
-          onValueChange={setSelectionPassanger}
-          style={loginStyle.checkbox}
-          color={Colors.blueGrey800}
-        />
-        <Text style={loginStyle.label}>Pasajero</Text>
-        <CheckBox
-          value={isSelectedDriver}
-          onValueChange={setSelectionDriver}
-          style={loginStyle.checkbox}
-          color={Colors.blueGrey800}
-        />
-        <Text style={loginStyle.label}>Chofer</Text>
-      </View>
       <Button
         style={loginStyle.button}
         color={Colors.blue800}
@@ -180,13 +149,6 @@ const loginStyle = StyleSheet.create({
   input: {
     marginTop: 5,
     marginBottom: 5,
-  },
-  checkboxContainer: {
-    flexDirection: 'row',
-    margin: 10,
-  },
-  checkbox: {
-    alignSelf: 'center',
   },
   label: {
     margin: 8,

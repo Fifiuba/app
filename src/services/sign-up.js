@@ -3,7 +3,7 @@ import axios from 'axios';
 export default function signup(data) {
   console.log('data:\n\n', data);
   axios.post('http://10.0.2.2:8000/users', {
-    'user_type': 'pasajero',
+    'user_type': data.type,
     'name': data.name,
     'password': data.password,
     'phone_number': data.phone,
