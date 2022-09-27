@@ -3,15 +3,15 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SignUpView from '../views/sign-up-view';
 import LoginView from '../views/login-view';
 import HomeView from '../views/home-view';
-import EditProfileView from '../views/edit-profile-view';
 import ProfileView from '../views/profile-view';
+import EditProfileView from '../views/edit-profile-view';
 
 const Stack = createNativeStackNavigator();
 
 export default function UnloggedNav(props) {
   return (
     <Stack.Navigator>
-      <Stack.Screen
+          <Stack.Screen
         name="Home">
         {(navigation) =>
           <HomeView onNavigation={navigation}/>
@@ -36,7 +36,7 @@ export default function UnloggedNav(props) {
         }
       </Stack.Screen>
       <Stack.Screen
-        name="Signup">
+        name="Registrar">
         {(navigation) =>
           <SignUpView onNavigation={navigation}/>
         }

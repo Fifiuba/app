@@ -45,10 +45,10 @@ const Profile = (props) => {
       </View>
 
       <View style={styles.menuWrapper}>
-        <TouchableRipple 
+        <TouchableRipple
           onPress={() =>
             props.onNavigation.navigate('Editar perfil')
-        }>
+          }>
           <View style={styles.menuItem}>
             <Icon name="edit" size={25}/>
             <Text style={styles.menuItemText}>Editar perfil</Text>

@@ -5,6 +5,7 @@ export default function login(data) {
   axios.post('http://10.0.2.2:8000/users/login', {
     user_name: data.mail,
     password: data.password,
+    type: data.type,
   })
       .then(function(response) {
         console.log(response);

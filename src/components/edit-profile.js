@@ -88,7 +88,7 @@ const EditProfile = (props) => {
         color={Colors.blue800}
         mode="contained"
         onPress={() => console.log('Update user info')}>
-        <Text style={{fontSize: 20}}>Editar</Text>
+        <Text style={{fontSize: 20}}>Guardar</Text>
       </Button>
     </View>
   );

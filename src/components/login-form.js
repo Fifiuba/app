@@ -39,7 +39,7 @@ const LoginForm = (props) => {
 
   return (
     <View style={loginStyle.container}>
-      <Text style={loginStyle.title}>FIFIUBA</Text>
+      <Text style={loginStyle.title}>FIFI-UBA</Text>
       <Controller control={control}
         rules={{
           required: true,
@@ -47,7 +47,7 @@ const LoginForm = (props) => {
           maxLength: constraints.email.max}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
-            theme={{colors: {primary: 'blue'}, roundness: 10}}
+            theme={{colors: {primary: 'grey'}, roundness: 10}}
             style={loginStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -68,9 +68,8 @@ const LoginForm = (props) => {
         <Text
           style={{textAlign: 'right',
             fontSize: 18,
-            color: 'blue',
-            textDecorationLine: 'underline'}}
-        >
+            color: '#0D516B',
+            textDecorationLine: 'underline'}}>
           ¿Olvidaste la contraseña?
         </Text>
       </View>
@@ -81,7 +80,7 @@ const LoginForm = (props) => {
           minLength: constraints.password.min}}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
-            theme={{colors: {primary: 'blue'}, roundness: 10}}
+            theme={{colors: {primary: 'grey'}, roundness: 10}}
             style={loginStyle.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -136,7 +135,7 @@ const LoginForm = (props) => {
           style={loginStyle.buttonRedes}
           color={Colors.red800}
           mode="contained"
-          onPress={() => console.log('Pressed')}
+          onPress={() => console.log('Login with Google')}
         >
           <Text style={{fontSize: 18}}>Google</Text>
         </Button>
@@ -146,8 +145,8 @@ const LoginForm = (props) => {
             <Text
               style={{textDecorationLine: 'underline',
                 fontSize: 18,
-                color: 'blue'}}
-              onPress={() => props.onNavigation.navigate('Signup')}>
+                color: '#0D516B'}}
+              onPress={() => props.onNavigation.navigate('Registrar')}>
                           Registrate
             </Text>
           </Text>
@@ -174,7 +173,6 @@ const loginStyle = StyleSheet.create({
     alignContent: 'center',
     padding: 30,
     margin: 30,
-    backgroundColor: 'white',
     height: 640,
   },
   title: {
