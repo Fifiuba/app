@@ -25,10 +25,9 @@ const SignUpForm = (props) => {
       // Send PIN of activation
       setCode(true);
     } else {
-      // Send data to the service for signing up users
-      if (signup(data)) {
-        props.onNavigation.navigate('Iniciar');
-      }
+      // Send data to users service for signing up
+      signup(data)
+      props.onNavigation.navigate('Iniciar');
     }
   };
 

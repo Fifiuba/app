@@ -13,7 +13,6 @@ const LoginForm = (props) => {
     defaultValues: {
       email: '',
       password: '',
-      type: '',
     },
   });
 
@@ -29,12 +28,10 @@ const LoginForm = (props) => {
   };
 
   function onSubmit(data) {
-    setUserType(data);
-    // Send data to the service for loging users
-    if (login(data)) {
-      props.onLogin(true);
-      props.onNavigation.navigate('Home');
-    }
+    //setUserType(data);
+    // Send data to users service for signing in
+    login(data);
+    props.onLogin(true);
   }
 
   return (
