@@ -7,7 +7,6 @@ export default function EditProfileView(props) {
     <View style={{flex: 1}}>
       <EditProfile
         onNavigation={props.onNavigation.navigation}
-        name='Celeste Dituro'
       />
     </View>
   );

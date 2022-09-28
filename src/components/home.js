@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,13 +6,28 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const Home = (props) => {
+const Home = () => {
+  const navigation = useNavigation();
+
+  const goToProfileScreen = () => {
+    const user = {
+      name:'Celeste Dituro',
+      email:'celedituro@gmail.com',
+      phone:'02364579854',
+      age: 22,
+    };
+    navigation.navigate('Mi perfil', {
+      user,
+    });
+  };
+
   return (
     <View style={styles.categoryContainer}>
       <TouchableOpacity
         style={styles.categoryBtn}
-        onPress={() => props.onNavigation.navigate('Mi perfil')}>
+        onPress={goToProfileScreen}>
         <View style={styles.categoryIcon}>
           <Image
             source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}

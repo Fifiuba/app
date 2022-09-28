@@ -8,26 +8,45 @@ import {
 } from 'react-native';
 import {useTheme, Colors, Button} from 'react-native-paper';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
+import {Icon} from 'react-native-elements';
+import { useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-const EditProfile = (props) => {
+const EditProfile = () => {
   const {colors} = useTheme();
+  const route = useRoute();
 
   const [state, setState] = useState({
-    name: props.name,
-    phone: props.phone,
-    email: props.email,
-    age: props.age,
+    name: '',
+    phone: '',
+    email: '',
   })
 
-  const handleChangeText = (name, value) => {
-    setState({ ...state, [name]: value })
+  const handleChangeName = (value) => {
+    route.params.user.name = value
   }
+
+  const handleChangeEmail = (value) => {
+    route.params.user.email = value
+  }
+
+  const handleChangePhone = (value) => {
+    route.params.user.phone = value
+  }
+
+  const navigation = useNavigation();
+  const goToProfileScreen = () => {
+    var user = route.params.user
+    console.log(user);
+    navigation.navigate('Mi perfil', {
+      user,
+    });
+  };
 
   return (
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
-        <Text style={styles.title}>{props.name}</Text>
+        <Text style={styles.title}>{route.params.user.name}</Text>
         <Image
           source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
           style={styles.image}
@@ -38,9 +57,9 @@ const EditProfile = (props) => {
         <View style={styles.action}>
           <FontAwesome name="user-o" color={colors.text} size={25} />
           <TextInput
-            placeholder="Nombre"
+            placeholder={route.params.user.name}
             autoCorrect={false}
-            onChangeText={(value) => handleChangeText('name', value)}
+            onChangeText={(value) => handleChangeName(value)}
             style={[
               styles.textInput,
               {
@@ -50,26 +69,12 @@ const EditProfile = (props) => {
           />
         </View>
         <View style={styles.action}>
-          <FontAwesome name="user-o" color={colors.text} size={25} />
+        <Icon name="phone" size={30}/>
           <TextInput
-            placeholder="Edad"
-            autoCorrect={false}
-            onChangeText={(value) => handleChangeText('age', value)}
-            style={[
-              styles.textInput,
-              {
-                color: colors.text,
-              },
-            ]}
-          />
-        </View>
-        <View style={styles.action}>
-          <Feather name="phone" color={colors.text} size={25} />
-          <TextInput
-            placeholder="Número de teléfono"
+            placeholder={route.params.user.phone}
             keyboardType="number-pad"
             autoCorrect={false}
-            onChangeText={(value) => handleChangeText('phone', value)}
+            onChangeText={(value) => handleChangePhone(value)}
             style={[
               styles.textInput,
               {
@@ -81,10 +86,10 @@ const EditProfile = (props) => {
         <View style={styles.action}>
           <FontAwesome name="envelope-o" color={colors.text} size={25} />
           <TextInput
-            placeholder="Correo electrónico"
+            placeholder={route.params.user.email}
             keyboardType="email-address"
             autoCorrect={false}
-            onChangeText={(value) => handleChangeText('email', value)}
+            onChangeText={(value) => handleChangeEmail(value)}
             style={[
               styles.textInput,
               {
@@ -98,7 +103,7 @@ const EditProfile = (props) => {
         style={styles.buttonEdit}
         color={Colors.blue800}
         mode="contained"
-        onPress={() => props.onNavigation.navigate('Mi perfil')}>
+        onPress={goToProfileScreen}>
         <Text style={{fontSize: 20}}>Guardar</Text>
       </Button>
     </View>

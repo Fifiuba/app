@@ -7,13 +7,27 @@ import {
   TouchableRipple,
 } from 'react-native-paper';
 import {Icon} from 'react-native-elements';
+import { useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {useTheme} from 'react-native-paper';
 
-const Profile = (props) => {
+const Profile = () => {
+  const {colors} = useTheme();
+  const route = useRoute();
+
+  const navigation = useNavigation();
+  const goToEditProfileScreen = () => {
+    var user = route.params.user;
+    navigation.navigate('Editar perfil', {
+      user,
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>
-        <Title style={styles.title}>{props.name}</Title>
+        <Title style={styles.title}>{route.params.user.name}</Title>
         <Image
           source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
           style={styles.image}
@@ -21,13 +35,17 @@ const Profile = (props) => {
       </View>
 
       <View style={styles.userInfoSection}>
-        <View style={styles.row}>
-          <Icon name="phone" size={30}/>
-          <Text style={styles.text}>{props.phone}</Text>
+        <View style={styles.action}>
+          <FontAwesome name="user-o" color={colors.text} size={25} />
+          <Text style={styles.textInput}>{route.params.user.age}</Text>
         </View>
-        <View style={styles.row}>
-          <Icon name="email" size={30}/>
-          <Text style={styles.text}>{props.email}</Text>
+        <View style={styles.action}>
+          <Icon name="phone" size={30}/>
+          <Text style={styles.textInput}>{route.params.user.phone}</Text>
+        </View>
+        <View style={styles.action}>
+          <FontAwesome name="envelope-o" color={colors.text} size={25} />
+          <Text style={styles.textInput}>{route.params.user.email}</Text>
         </View>
       </View>
 
@@ -47,9 +65,7 @@ const Profile = (props) => {
 
       <View style={styles.menuWrapper}>
         <TouchableRipple
-          onPress={() =>
-            props.onNavigation.navigate('Editar perfil')
-          }>
+          onPress={goToEditProfileScreen}>
           <View style={styles.menuItem}>
             <Icon name="edit" size={25}/>
             <Text style={styles.menuItemText}>Editar perfil</Text>
@@ -91,10 +107,6 @@ const styles = StyleSheet.create({
     lineHeight: 30,
     fontWeight: '500',
   },
-  row: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
   infoBoxWrapper: {
     borderBottomColor: '#dddddd',
     borderBottomWidth: 1,
@@ -123,11 +135,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 30,
   },
-  text: {
+  textInput: {
+    flex: 1,
+    paddingLeft: 20,
     color: '#777777',
-    marginLeft: 20,
     fontSize: 20,
-    lineHeight: 30,
   },
   button: {
     marginTop: 15,
@@ -141,6 +153,10 @@ const styles = StyleSheet.create({
     width: 130,
     height: 130,
     marginLeft: 100,
-    marginBottom: 10,
+  },
+  action: {
+    flexDirection: 'row',
+    marginTop: 7,
+    marginBottom: 7,
   },
 });
