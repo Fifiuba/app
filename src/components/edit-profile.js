@@ -10,14 +10,14 @@ import {useTheme, Colors, Button} from 'react-native-paper';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
-const EditProfile = ({user}) => {
+const EditProfile = (props) => {
   const {colors} = useTheme();
 
   const [state, setState] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    age: 0,
+    name: props.name,
+    phone: props.phone,
+    email: props.email,
+    age: props.age,
   })
 
   const handleChangeText = (name, value) => {
@@ -27,7 +27,7 @@ const EditProfile = ({user}) => {
   return (
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
-        <Text style={styles.title}>{user.name}</Text>
+        <Text style={styles.title}>{props.name}</Text>
         <Image
           source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
           style={styles.image}
@@ -98,7 +98,7 @@ const EditProfile = ({user}) => {
         style={styles.buttonEdit}
         color={Colors.blue800}
         mode="contained"
-        onPress={() => console.log('Update user info')}>
+        onPress={() => props.onNavigation.navigate('Mi perfil')}>
         <Text style={{fontSize: 20}}>Guardar</Text>
       </Button>
     </View>

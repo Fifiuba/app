@@ -9,10 +9,11 @@ import {
 import {Icon} from 'react-native-elements';
 
 const Profile = (props) => {
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>
-        <Title style={styles.title}>Nombre Apellido</Title>
+        <Title style={styles.title}>{props.name}</Title>
         <Image
           source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
           style={styles.image}
@@ -22,11 +23,11 @@ const Profile = (props) => {
       <View style={styles.userInfoSection}>
         <View style={styles.row}>
           <Icon name="phone" size={30}/>
-          <Text style={styles.text}>Número de teléfono</Text>
+          <Text style={styles.text}>{props.phone}</Text>
         </View>
         <View style={styles.row}>
           <Icon name="email" size={30}/>
-          <Text style={styles.text}>Correo electrónico</Text>
+          <Text style={styles.text}>{props.email}</Text>
         </View>
       </View>
 
