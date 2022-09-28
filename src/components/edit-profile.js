@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -10,13 +10,24 @@ import {useTheme, Colors, Button} from 'react-native-paper';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
-const EditProfile = (props) => {
+const EditProfile = ({user}) => {
   const {colors} = useTheme();
+
+  const [state, setState] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    age: 0,
+  })
+
+  const handleChangeText = (name, value) => {
+    setState({ ...state, [name]: value })
+  }
 
   return (
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
-        <Text style={styles.title}>Nombre Apellido</Text>
+        <Text style={styles.title}>{user.name}</Text>
         <Image
           source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
           style={styles.image}
@@ -28,8 +39,8 @@ const EditProfile = (props) => {
           <FontAwesome name="user-o" color={colors.text} size={25} />
           <TextInput
             placeholder="Nombre"
-            placeholderTextColor="#666666"
             autoCorrect={false}
+            onChangeText={(value) => handleChangeText('name', value)}
             style={[
               styles.textInput,
               {
@@ -41,9 +52,9 @@ const EditProfile = (props) => {
         <View style={styles.action}>
           <FontAwesome name="user-o" color={colors.text} size={25} />
           <TextInput
-            placeholder="Apellido"
-            placeholderTextColor="#666666"
+            placeholder="Edad"
             autoCorrect={false}
+            onChangeText={(value) => handleChangeText('age', value)}
             style={[
               styles.textInput,
               {
@@ -56,9 +67,9 @@ const EditProfile = (props) => {
           <Feather name="phone" color={colors.text} size={25} />
           <TextInput
             placeholder="Número de teléfono"
-            placeholderTextColor="#666666"
             keyboardType="number-pad"
             autoCorrect={false}
+            onChangeText={(value) => handleChangeText('phone', value)}
             style={[
               styles.textInput,
               {
@@ -71,9 +82,9 @@ const EditProfile = (props) => {
           <FontAwesome name="envelope-o" color={colors.text} size={25} />
           <TextInput
             placeholder="Correo electrónico"
-            placeholderTextColor="#666666"
             keyboardType="email-address"
             autoCorrect={false}
+            onChangeText={(value) => handleChangeText('email', value)}
             style={[
               styles.textInput,
               {
