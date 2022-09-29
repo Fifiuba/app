@@ -4,7 +4,6 @@ import {TextInput, Button, Colors} from 'react-native-paper';
 import CheckBox from 'expo-checkbox';
 import {useForm, Controller} from 'react-hook-form';
 import signup from '../services/sign-up';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const SignUpForm = (props) => {
   const [isSelectedPassanger, setSelectionPassanger] = useState(false);
@@ -41,14 +40,14 @@ const SignUpForm = (props) => {
     } else {
       // Send data to users service for signing up
       setUserType(data);
-      signup(data)
+      signup(data);
       props.onNavigation.navigate('Iniciar');
     }
   };
 
   return (
     <View style={signUpStyle.container}>
-        <Text style={signUpStyle.title}>FIFI-UBA</Text>
+      <Text style={signUpStyle.title}>FIFI-UBA</Text>
       <Controller control={control}
         rules={{
           required: true,

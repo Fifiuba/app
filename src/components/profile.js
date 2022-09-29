@@ -7,8 +7,8 @@ import {
   TouchableRipple,
 } from 'react-native-paper';
 import {Icon} from 'react-native-elements';
-import { useRoute } from '@react-navigation/native';
-import { useNavigation } from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useTheme} from 'react-native-paper';
 
@@ -18,7 +18,7 @@ const Profile = () => {
 
   const navigation = useNavigation();
   const goToEditProfileScreen = () => {
-    var user = route.params.user;
+    const user = route.params.user;
     navigation.navigate('Editar perfil', {
       user,
     });

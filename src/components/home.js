@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -6,16 +6,16 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const Home = () => {
   const navigation = useNavigation();
 
   const goToProfileScreen = () => {
     const user = {
-      name:'Celeste Dituro',
-      email:'celedituro@gmail.com',
-      phone:'02364579854',
+      name: 'Celeste Dituro',
+      email: 'celedituro@gmail.com',
+      phone: '02364579854',
       age: 22,
     };
     navigation.navigate('Mi perfil', {
