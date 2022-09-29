@@ -1,47 +1,31 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Image,
-} from 'react-native';
-import {useTheme, Colors, Button} from 'react-native-paper';
+import { Text, View, TextInput, Image, StyleSheet } from "react-native";
+import { useForm, Controller } from "react-hook-form";
+
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {useTheme, Colors, Button} from 'react-native-paper';
 import {Icon} from 'react-native-elements';
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
+import editProfile from "../services/edit-profile";
 
-const EditProfile = () => {
+export default function EditProfile() {
   const {colors} = useTheme();
+  const { control, handleSubmit, formState: { errors } } = useForm({
+    defaultValues: {
+      firstName: '',
+      age: 0,
+      email: '',
+      phone: '',
+    }
+  });
+
   const route = useRoute();
-
-  const [state, setState] = useState({
-    name: '',
-    phone: '',
-    email: '',
-  })
-
-  const handleChangeName = (value) => {
-    route.params.user.name = value
-  }
-
-  const handleChangeEmail = (value) => {
-    route.params.user.email = value
-  }
-
-  const handleChangePhone = (value) => {
-    route.params.user.phone = value
-  }
-
-  const navigation = useNavigation();
-  const goToProfileScreen = () => {
-    var user = route.params.user
-    console.log(user);
+  const onSubmit = (data) => {
+    editProfile(data)
     navigation.navigate('Mi perfil', {
-      user,
+      data,
     });
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -52,65 +36,143 @@ const EditProfile = () => {
           style={styles.image}
         />
       </View>
-
+      
       <View style={styles.subcontainer}>
         <View style={styles.action}>
           <FontAwesome name="user-o" color={colors.text} size={25} />
-          <TextInput
-            placeholder={route.params.user.name}
-            autoCorrect={false}
-            onChangeText={(value) => handleChangeName(value)}
-            style={[
-              styles.textInput,
-              {
-                color: colors.text,
-              },
-            ]}
+          <Controller
+            control={control}
+            rules={{
+              maxLength: constraints.name.max,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={[
+                  styles.textInput,
+                  {
+                    color: colors.text,
+                  },
+                ]}
+                placeholder={route.params.user.name}
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+              />
+            )}
+            name="name"
           />
         </View>
+        {errors.name?.type === 'maxLength' &&
+        <Text style={styles.invalidText}>Máximo {constraints.name.max} letras</Text>}
         <View style={styles.action}>
-        <Icon name="phone" size={30}/>
-          <TextInput
-            placeholder={route.params.user.phone}
-            keyboardType="number-pad"
-            autoCorrect={false}
-            onChangeText={(value) => handleChangePhone(value)}
-            style={[
-              styles.textInput,
-              {
-                color: colors.text,
-              },
-            ]}
+          <FontAwesome name="user-o" color={colors.text} size={25} />
+          <Controller
+            control={control}
+            rules={{
+              maxLength: constraints.age.max,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={[
+                  styles.textInput,
+                  {
+                    color: colors.text,
+                  },
+                ]}
+                mode="outlined"
+                placeholder='Edad'
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name="age"
           />
         </View>
+        {errors.age?.type === 'maxLength' &&
+        <Text style={styles.invalidText}>Máximo {constraints.age.max} números</Text>}
         <View style={styles.action}>
           <FontAwesome name="envelope-o" color={colors.text} size={25} />
-          <TextInput
-            placeholder={route.params.user.email}
-            keyboardType="email-address"
-            autoCorrect={false}
-            onChangeText={(value) => handleChangeEmail(value)}
-            style={[
-              styles.textInput,
-              {
-                color: colors.text,
-              },
-            ]}
+          <Controller
+            control={control}
+            rules={{
+              maxLength: constraints.email.max,
+              validate: isValidEmail,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={[
+                  styles.textInput,
+                  {
+                    color: colors.text,
+                  },
+                ]}
+                mode="outlined"
+                placeholder={route.params.user.email}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name="email"
           />
         </View>
-      </View>
-      <Button
-        style={styles.buttonEdit}
-        color={Colors.blue800}
-        mode="contained"
-        onPress={goToProfileScreen}>
-        <Text style={{fontSize: 20}}>Guardar</Text>
+        {errors.email?.type === 'maxLength' &&
+        <Text style={styles.invalidText}>Máximo {constraints.email.max} caracteres</Text>}
+        {errors.email?.type === 'validate' &&
+        <Text style={styles.invalidText}>Correo electrónico inválido</Text>}
+        <View style={styles.action}>
+          <Icon name="phone" size={30}/>
+          <Controller
+            control={control}
+            rules={{
+              maxLength: constraints.phone.max,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={[
+                  styles.textInput,
+                  {
+                    color: colors.text,
+                  },
+                ]}
+                placeholder={route.params.user.phone}
+                keyboardType="number-pad"
+                autoCorrect={false}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name="phone"
+          />
+        </View>
+        {errors.phone?.type === 'maxLength' &&
+        <Text style={styles.invalidText}>Máximo {constraints.phone.max} números</Text>}
+        <Button
+          style={styles.buttonEdit}
+          color={Colors.blue800}
+          mode="contained"
+          onPress={handleSubmit(onSubmit)}>
+          <Text style={{fontSize: 20}}>Guardar</Text>
       </Button>
-    </View>
+      </View>
+  </View>
   );
 };
 
-export default EditProfile;
+const constraints = {
+  name: {max: 20},
+  age: {max: 3},
+  email: {max: 50},
+  phone: {max: 50}
+};
+
+const isValidEmail = (email) =>
+  /*eslint-disable*/
+  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      email,
+  );
 
 const styles = StyleSheet.create({
   container: {
@@ -134,8 +196,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 30,
     marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
     paddingBottom: 5,
   },
   button: {
@@ -148,7 +208,7 @@ const styles = StyleSheet.create({
   buttonEdit: {
     marginTop: 45,
     padding: 5,
-    width: 190,
+    width: 200,
     height: 50,
     marginLeft: 75,
     alignItems: 'center',
@@ -166,4 +226,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#FF0000',
     paddingBottom: 5,
   },
+  invalidText: {
+    color: 'red',
+  }
 });
