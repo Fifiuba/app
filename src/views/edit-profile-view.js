@@ -1,14 +1,13 @@
 import React from 'react';
 import {View} from 'react-native';
-import Home from '../components/home';
+import EditProfile from '../components/edit-profile';
 
-export default function HomeView(props) {
+export default function EditProfileView(props) {
   return (
     <View style={{flex: 1}}>
-      <Home
+      <EditProfile
         onNavigation={props.onNavigation.navigation}
       />
     </View>
   );
 }
-

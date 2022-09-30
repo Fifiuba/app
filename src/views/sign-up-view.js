@@ -6,7 +6,6 @@ export default function SignUpView(props) {
   return (
     <View style={{flex: 1}}>
       <SignUpForm
-        onLogin={props.onLogin}
         onNavigation={props.onNavigation.navigation}
       />
     </View>
