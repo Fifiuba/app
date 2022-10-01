@@ -16,7 +16,7 @@ const LoginForm = (props) => {
   function onSubmit(data) {
     // Send data to users service for signing in
     login(data);
-    props.onLogin(true);
+    //props.onLogin(true);
   }
 
   return (
