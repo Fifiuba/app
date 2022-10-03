@@ -7,10 +7,10 @@ export default async function login(data) {
   try {
     const token = await authFirebase(data);
     const res = await authUser(token);
-    localStorage.setItem('token', res.data['token']);
     console.log('res:', res)
     return res;
   } catch (e) {
+    console.log('error:', e)
     return;
   }
 }
@@ -27,5 +27,13 @@ async function authFirebase(data) {
 
 export function authUser(token) {
   console.log('authUser')
-  axios.post('http://127.0.0.1:8000/users/login', token)
+  axios.post('http://10.0.2.2:8000/users/login', token)
+    .then(function(response) {
+      console.log('response:', response);
+      return response;
+    })
+    .catch(function(error) {
+      console.log('error:', error);
+      return error;
+    });
 }
