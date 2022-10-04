@@ -101,7 +101,6 @@ const LoginForm = (props) => {
           style={loginStyle.buttonRedes}
           color={Colors.red800}
           mode="contained"
-          onPress={() => console.log('Login with Google')}
         >
           <Text style={{fontSize: 18}}>Google</Text>
         </Button>
