@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { auth } from '../../firebase';
+import { auth } from '../../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default async function login(data) {
