@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { auth } from '../../firebaseConfig';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 export default async function login(data) {
   console.log('login')
@@ -17,6 +16,7 @@ export default async function login(data) {
 
 async function authFirebase(data) {
   console.log('authFirebase')
+  const auth = getAuth();
   const userCredential = 
     await signInWithEmailAndPassword(auth, data.email, data.password);
   const user = userCredential.user;
