@@ -9,6 +9,7 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
+import {WEB_CLIENT_ID} from '@env'
 
 const firebaseConfig = {
   apiKey: "AIzaSyD_fAr5j7fbdhezakqnBmSLW2xEZ9Uki2U",
@@ -41,7 +42,6 @@ const LoginForm = (props) => {
     props.onLogin(true);
   }
 
-  const WEB_CLIENT_ID = '627165168741-aqol4difl2m8tma737ipfq6pbn4jahsi.apps.googleusercontent.com';
   const [_request, response, promptAsync] = Google.useIdTokenAuthRequest(
     {
       clientId: WEB_CLIENT_ID,
