@@ -5,7 +5,6 @@ import UnloggedNav from './src/components/unlogged-nav';
 import './firebaseConfig';
 
 export default function App() {
-
   const [connected, setConnected] = useState(false);
   return (
     <NavigationContainer>

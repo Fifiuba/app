@@ -38,6 +38,7 @@ const LoginForm = (props) => {
       const { id_token } = response.params;
       const auth = getAuth();
       const credential = GoogleAuthProvider.credential(id_token);
+      console.log('credential:', credential)
       signInWithCredential(auth, credential);
     }
   }, [response]);
