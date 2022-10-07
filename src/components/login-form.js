@@ -9,6 +9,7 @@ import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import {WEB_CLIENT_ID} from '@env'
+import loginWithGoogle from '../services/login-with-google';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -33,13 +34,40 @@ const LoginForm = (props) => {
     },
   );
 
+  async function getUserIdToken(auth) {
+    console.log('hoooola')
+    //console.log('currentUser:', auth.currentUser)
+    auth.currentUser.getIdToken(/* forceRefresh */ false).then(function(idToken) {
+      // Send token to backend
+      console.log('idT:', idToken)
+      loginWithGoogle(idToken)
+    }).catch(function(error) {
+      alert(error.message)
+    });
+    /*console.log("state = unknown (until the callback is invoked)")
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        console.log("state = definitely signed in")
+        loginWithGoogle(user.stsTokenManager.accessToken)
+      }
+      else {
+        console.log("state = definitely signed out")
+      }
+    })*/
+  }
+
   React.useEffect(() => {
     if (response?.type === 'success') {
+      console.log('resp:', response)
       const { id_token } = response.params;
+      console.log('0')
       const auth = getAuth();
+      console.log('1')
       const credential = GoogleAuthProvider.credential(id_token);
-      console.log('credential:', credential)
+      console.log('cred:', credential)
       signInWithCredential(auth, credential);
+      console.log('3')
+      getUserIdToken(auth);
     }
   }, [response]);
 
