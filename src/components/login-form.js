@@ -8,7 +8,7 @@ import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
-import {WEB_CLIENT_ID} from '@env'
+//import {WEB_CLIENT_ID} from '@env'
 import loginWithGoogle from '../services/login-with-google';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -30,22 +30,25 @@ const LoginForm = (props) => {
 
   const [_request, response, promptAsync] = Google.useIdTokenAuthRequest(
     {
-      clientId: WEB_CLIENT_ID,
+      clientId: "627165168741-aqol4difl2m8tma737ipfq6pbn4jahsi.apps.googleusercontent.com",
     },
   );
 
   async function getUserIdToken(auth) {
     console.log('hoooola')
     //console.log('currentUser:', auth.currentUser)
-    auth.currentUser.getIdToken(/* forceRefresh */ false).then(function(idToken) {
+    /*auth.currentUser.getIdToken(/* forceRefresh */ /*false).then(function(idToken) {
       // Send token to backend
       console.log('idT:', idToken)
       loginWithGoogle(idToken)
     }).catch(function(error) {
       alert(error.message)
-    });
-    /*console.log("state = unknown (until the callback is invoked)")
+    });*/
+    console.log("state = unknown (until the callback is invoked)")
     auth.onAuthStateChanged(user => {
+
+    })
+    .then(function(user) {
       if (user) {
         console.log("state = definitely signed in")
         loginWithGoogle(user.stsTokenManager.accessToken)
@@ -53,7 +56,10 @@ const LoginForm = (props) => {
       else {
         console.log("state = definitely signed out")
       }
-    })*/
+    })
+    .catch(function(error) {
+      alert(error.message)
+    });
   }
 
   React.useEffect(() => {
