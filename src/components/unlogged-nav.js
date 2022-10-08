@@ -14,9 +14,9 @@ export default function UnloggedNav(props) {
     <Stack.Navigator>
       <Stack.Screen
         name="Reset Password">
-          {(navigation) =>
-            <ResetPasswordView onNavigation={navigation}/>
-          }
+        {(navigation) =>
+          <ResetPasswordView onNavigation={navigation}/>
+        }
       </Stack.Screen>
       <Stack.Screen
         name="Home">
