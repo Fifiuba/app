@@ -10,10 +10,15 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import {WEB_CLIENT_ID} from '@env'
 import loginWithGoogle from '../services/login-with-google';
+import CheckBox from 'expo-checkbox';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 WebBrowser.maybeCompleteAuthSession();
 
 const LoginForm = (props) => {
+  const [isSelectedPassanger, setSelectionPassanger] = useState(false);
+  const [isSelectedDriver, setSelectionDriver] = useState(false);
   const [hidePassword, sethidePassword] = useState(true);
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
@@ -34,7 +39,17 @@ const LoginForm = (props) => {
     },
   );
 
-  async function getUserIdToken(auth) {
+  const PASSANGER = 'passanger';
+  const DRIVER = 'driver';
+  function setUserType() {
+    var user_type = PASSANGER;
+    if (isSelectedDriver) {
+      user_type = DRIVER;
+    }
+    return user_type;
+  }
+
+  async function getUserIdToken(access_token) {
     /*auth.currentUser.getIdToken(/* forceRefresh */ /*false).then(function(idToken) {
       // Send token to backend
       console.log('idT:', idToken)
@@ -42,30 +57,47 @@ const LoginForm = (props) => {
     }).catch(function(error) {
       alert(error.message)
     });*/
-    console.log("state = unknown (until the callback is invoked)")
-    auth.onAuthStateChanged(function(user) {
-      if (user) {
-        console.log("state = definitely signed in")
-        loginWithGoogle(user.stsTokenManager.accessToken)
-      }
-      else {
-        console.log("state = definitely signed out")
-      }
-    })
-    .catch(function(error) {
+    try {
+      /*console.log('auth:', auth)
+      console.log("state = unknown (until the callback is invoked)")
+      const user = await auth.onAuthStateChanged()
+      console.log('user:', user)*/
+      const response = 
+      console.log('response:', response)
+    }
+    catch(error) {
+      console.error(error.message)
       alert(error.message)
-    });
+    }
   }
 
   React.useEffect(() => {
-    if (response?.type === 'success') {
-      const { id_token } = response.params;
-      const auth = getAuth();
-      const credential = GoogleAuthProvider.credential(id_token);
-      signInWithCredential(auth, credential);
-      getUserIdToken(auth);
-    }
+    const handleResponse = async(response) => {
+      try {
+        if (response?.type === 'success') {
+          const { id_token } = response.params;
+          const auth = getAuth();
+          const credential = GoogleAuthProvider.credential(id_token);
+          const result = await signInWithCredential(auth, credential)
+          const access_token = result.user.stsTokenManager.accessToken
+          //await getUserIdToken(auth);
+          await loginWithGoogle(access_token, setUserType())
+          console.log('2')
+        }
+      } catch(error) {
+        console.error(error.message)
+        alert(error.message)
+      }
+   }
+   handleResponse(response);
   }, [response]);
+
+  /*useEffect(() => {
+    axios.get('http://192.168.0.16:8000/users/loginGoogle')
+    .then(res => res.data)
+    .then(console.log)
+    .catch(console.error)
+  }, [])*/
 
   return (
     <View style={loginStyle.container}>
@@ -134,6 +166,22 @@ const LoginForm = (props) => {
       <Text>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
       <Text>Mínimo {constraints.password.min}</Text>}
+      <View style={loginStyle.checkboxContainer}>
+        <CheckBox
+          value={isSelectedPassanger}
+          onValueChange={setSelectionPassanger}
+          style={loginStyle.checkbox}
+          color={Colors.blueGrey800}
+        />
+        <Text style={loginStyle.labelCheckbox}>Pasajero</Text>
+        <CheckBox
+          value={isSelectedDriver}
+          onValueChange={setSelectionDriver}
+          style={loginStyle.checkbox}
+          color={Colors.blueGrey800}
+        />
+        <Text style={loginStyle.labelCheckbox}>Chofer</Text>
+      </View>
       <Button
         style={loginStyle.button}
         color={Colors.blue800}
@@ -143,14 +191,14 @@ const LoginForm = (props) => {
       </Button>
       <View style={loginStyle.subcontainerRedes}>
         <Text style={loginStyle.label}>
-          -------- O iniciar sesión con --------
+          O iniciar sesión con
         </Text>
         <Button
           style={loginStyle.buttonRedes}
           color={Colors.red800}
           mode="contained"
           onPress={() => {
-          promptAsync();
+            promptAsync();
         }}
         >
           <Text style={{fontSize: 18}}>Google</Text>
@@ -222,6 +270,18 @@ const loginStyle = StyleSheet.create({
     margin: 15,
     width: 150,
     height: 50,
+  },
+  labelCheckbox: {
+    margin: 8,
+    fontSize: 18,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    margin: 5,
+    marginTop: 15,
+  },
+  checkbox: {
+    alignSelf: 'center',
   },
 });
 
