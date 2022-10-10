@@ -2,17 +2,17 @@ import {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
+import CheckBox from 'expo-checkbox';
+
 import login from '../services/login';
+import loginWithGoogle from '../services/login-with-google';
+
 import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import {WEB_CLIENT_ID} from '@env'
-import loginWithGoogle from '../services/login-with-google';
-import CheckBox from 'expo-checkbox';
-import { useEffect } from 'react';
-import axios from 'axios';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -29,8 +29,9 @@ const LoginForm = (props) => {
 
   function onSubmit(data) {
     // Send data to users service for signing in
-    login(data);
-    props.onLogin(true);
+    if (login(data)) {
+      props.onLogin(true);
+    }
   }
 
   const [_request, response, promptAsync] = Google.useIdTokenAuthRequest(
@@ -49,28 +50,6 @@ const LoginForm = (props) => {
     return user_type;
   }
 
-  async function getUserIdToken(access_token) {
-    /*auth.currentUser.getIdToken(/* forceRefresh */ /*false).then(function(idToken) {
-      // Send token to backend
-      console.log('idT:', idToken)
-      loginWithGoogle(idToken)
-    }).catch(function(error) {
-      alert(error.message)
-    });*/
-    try {
-      /*console.log('auth:', auth)
-      console.log("state = unknown (until the callback is invoked)")
-      const user = await auth.onAuthStateChanged()
-      console.log('user:', user)*/
-      const response = 
-      console.log('response:', response)
-    }
-    catch(error) {
-      console.error(error.message)
-      alert(error.message)
-    }
-  }
-
   React.useEffect(() => {
     const handleResponse = async(response) => {
       try {
@@ -78,26 +57,20 @@ const LoginForm = (props) => {
           const { id_token } = response.params;
           const auth = getAuth();
           const credential = GoogleAuthProvider.credential(id_token);
-          const result = await signInWithCredential(auth, credential)
-          const access_token = result.user.stsTokenManager.accessToken
-          //await getUserIdToken(auth);
-          await loginWithGoogle(access_token, setUserType())
-          console.log('2')
+          const result = await signInWithCredential(auth, credential);
+          const access_token = result.user.stsTokenManager.accessToken;
+          const token_response = await loginWithGoogle(access_token, setUserType());
+          if (token_response) {
+            props.onLogin(true);
+          }
         }
       } catch(error) {
-        console.error(error.message)
-        alert(error.message)
+        console.error(error.message);
+        alert(error.message);
       }
    }
    handleResponse(response);
   }, [response]);
-
-  /*useEffect(() => {
-    axios.get('http://192.168.0.16:8000/users/loginGoogle')
-    .then(res => res.data)
-    .then(console.log)
-    .catch(console.error)
-  }, [])*/
 
   return (
     <View style={loginStyle.container}>
