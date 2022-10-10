@@ -5,12 +5,19 @@ import LoginView from '../views/login-view';
 import ProfileView from '../views/profile-view';
 import EditProfileView from '../views/edit-profile-view';
 import HomeView from '../views/home-view';
+import ResetPasswordView from '../views/reset-password';
 
 const Stack = createNativeStackNavigator();
 
 export default function UnloggedNav(props) {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Reset Password">
+        {(navigation) =>
+          <ResetPasswordView onNavigation={navigation}/>
+        }
+      </Stack.Screen>
       <Stack.Screen
         name="Home">
         {(navigation) =>
