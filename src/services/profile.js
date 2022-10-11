@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default async function profile() {
   try {
-    const response = await axios.get('http://localhost:8000/users/me');
+    const response = await axios.get('http://192.168.0.16:8000/users/me');
     console.log(response);
     return response;
   } catch (error) {
