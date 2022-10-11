@@ -22,9 +22,8 @@ const SignUpForm = (props) => {
     },
   });
 
-  const PASSANGER = 'Passanger';
-  const DRIVER = 'Driver';
-
+  const PASSANGER = 'passanger';
+  const DRIVER = 'driver';
   const setUserType = (data) => {
     if (isSelectedDriver) {
       data.type = DRIVER;

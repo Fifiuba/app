@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default function login(data) {
   console.log('data:\n\n', data);
-  axios.post('http://localhost:8000/users/login', {
+  axios.post('http://192.168.0.16:8000/users/login', {
     'email': data.email,
     'password': data.password,
   })
