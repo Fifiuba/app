@@ -7,12 +7,12 @@ import CheckBox from 'expo-checkbox';
 import login from '../services/login';
 import loginWithGoogle from '../services/login-with-google';
 
-import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
+import {getAuth, GoogleAuthProvider, signInWithCredential} from 'firebase/auth';
 
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
-import {WEB_CLIENT_ID} from '@env'
+import {WEB_CLIENT_ID} from '@env';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -34,42 +34,44 @@ const LoginForm = (props) => {
     }
   }
 
-  const [_request, response, promptAsync] = Google.useIdTokenAuthRequest(
-    {
-      clientId: WEB_CLIENT_ID,
-    },
+  // eslint-disable-next-line no-unused-vars
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
+      {
+        clientId: WEB_CLIENT_ID,
+      },
   );
 
   const PASSANGER = 'passanger';
   const DRIVER = 'driver';
   function setUserType() {
-    var user_type = PASSANGER;
+    let userType = PASSANGER;
     if (isSelectedDriver) {
-      user_type = DRIVER;
+      userType = DRIVER;
     }
-    return user_type;
+    return userType;
   }
 
   React.useEffect(() => {
-    const handleResponse = async(response) => {
+    const handleResponse = async (response) => {
       try {
         if (response?.type === 'success') {
-          const { id_token } = response.params;
+          const {idToken} = response.params;
           const auth = getAuth();
-          const credential = GoogleAuthProvider.credential(id_token);
+          const credential = GoogleAuthProvider.credential(idToken);
           const result = await signInWithCredential(auth, credential);
-          const access_token = result.user.stsTokenManager.accessToken;
-          const token_response = await loginWithGoogle(access_token, setUserType());
-          if (token_response) {
+          const accessToken = result.user.stsTokenManager.accessToken;
+          const tokenResponse =
+            await loginWithGoogle(accessToken, setUserType());
+          if (tokenResponse) {
             props.onLogin(true);
           }
         }
-      } catch(error) {
+      } catch (error) {
         console.error(error.message);
         alert(error.message);
       }
-   }
-   handleResponse(response);
+    };
+    handleResponse(response);
   }, [response]);
 
   return (
@@ -172,7 +174,7 @@ const LoginForm = (props) => {
           mode="contained"
           onPress={() => {
             promptAsync();
-        }}
+          }}
         >
           <Text style={{fontSize: 18}}>Google</Text>
         </Button>
