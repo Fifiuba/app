@@ -2,7 +2,7 @@ import {React, useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
-import login from '../services/login';
+import loginWithEmailAndPassword from '../services/login-with-email-and-password';
 
 const LoginForm = (props) => {
   const [hidePassword, sethidePassword] = useState(true);
@@ -15,8 +15,10 @@ const LoginForm = (props) => {
 
   function onSubmit(data) {
     // Send data to users service for signing in
-    login(data);
-    //props.onLogin(true);
+    if (loginWithEmailAndPassword(data)) {
+      console.log('Todo ok');
+      //props.onLogin(true);
+    }
   }
 
   return (

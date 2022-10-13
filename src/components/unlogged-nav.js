@@ -2,9 +2,6 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SignUpView from '../views/sign-up-view';
 import LoginView from '../views/login-view';
-import ProfileView from '../views/profile-view';
-import EditProfileView from '../views/edit-profile-view';
-import HomeView from '../views/home-view';
 
 const Stack = createNativeStackNavigator();
 
