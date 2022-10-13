@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, SafeAreaView, StyleSheet, Image} from 'react-native';
 import {
   Title,
@@ -7,27 +7,52 @@ import {
   TouchableRipple,
 } from 'react-native-paper';
 import {Icon} from 'react-native-elements';
-import {useRoute} from '@react-navigation/native';
-import {useNavigation} from '@react-navigation/native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {useTheme} from 'react-native-paper';
+import getProfile from '../services/get-profile';
 
-const Profile = () => {
-  const {colors} = useTheme();
-  const route = useRoute();
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-  const navigation = useNavigation();
-  const goToEditProfileScreen = () => {
-    const user = route.params.user;
-    navigation.navigate('Editar perfil', {
-      user,
-    });
+const Profile = (props) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [age, setAge] = useState(0);
+  const [phone, setPhone] = useState('');
+
+  const getUserInfo = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      return value;
+    } catch (error) {
+      console.error(error.message);
+      alert(error.message);
+    }
   };
+
+  React.useEffect(() => {
+    const handleProfile = async () => {
+      try {
+        const userInfo = await getProfile();
+        if (userInfo) {
+          const name = await getUserInfo('name');
+          setName(name);
+          const email = await getUserInfo('email');
+          setEmail(email);
+          const age = await getUserInfo('age');
+          setAge(age);
+          const phone = await getUserInfo('phone');
+          setPhone(phone);
+        }
+      } catch (error) {
+        console.error(error.message);
+        alert(error.message);
+      }
+    };
+    handleProfile();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>
-        <Title style={styles.title}>{route.params.user.name}</Title>
+        <Title style={styles.title}>Mi perfil</Title>
         <Image
           source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
           style={styles.image}
@@ -36,16 +61,16 @@ const Profile = () => {
 
       <View style={styles.userInfoSection}>
         <View style={styles.action}>
-          <FontAwesome name="user-o" color={colors.text} size={25} />
-          <Text style={styles.textInput}>{route.params.user.age}</Text>
+          <Text style={styles.textInput}>Nombre: {name}</Text>
         </View>
         <View style={styles.action}>
-          <Icon name="phone" size={30}/>
-          <Text style={styles.textInput}>{route.params.user.phone}</Text>
+          <Text style={styles.textInput}>Edad: {age}</Text>
         </View>
         <View style={styles.action}>
-          <FontAwesome name="envelope-o" color={colors.text} size={25} />
-          <Text style={styles.textInput}>{route.params.user.email}</Text>
+          <Text style={styles.textInput}>Número de teléfono: {phone}</Text>
+        </View>
+        <View style={styles.action}>
+          <Text style={styles.textInput}>Correo electrónico: {email}</Text>
         </View>
       </View>
 
@@ -65,7 +90,7 @@ const Profile = () => {
 
       <View style={styles.menuWrapper}>
         <TouchableRipple
-          onPress={goToEditProfileScreen}>
+          onPress={() => props.onNavigation.navigate('Editar perfil')}>
           <View style={styles.menuItem}>
             <Icon name="edit" size={25}/>
             <Text style={styles.menuItemText}>Editar perfil</Text>
@@ -101,6 +126,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
+    marginLeft: 130,
   },
   caption: {
     fontSize: 18,
@@ -152,7 +178,7 @@ const styles = StyleSheet.create({
     marginTop: 35,
     width: 130,
     height: 130,
-    marginLeft: 100,
+    marginLeft: 115,
   },
   action: {
     flexDirection: 'row',

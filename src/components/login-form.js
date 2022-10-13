@@ -14,6 +14,8 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import {WEB_CLIENT_ID} from '@env';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 WebBrowser.maybeCompleteAuthSession();
 
 const LoginForm = (props) => {
@@ -41,7 +43,7 @@ const LoginForm = (props) => {
       },
   );
 
-  const PASSANGER = 'passanger';
+  const PASSANGER = 'passenger';
   const DRIVER = 'driver';
   function setUserType() {
     let userType = PASSANGER;
@@ -55,14 +57,18 @@ const LoginForm = (props) => {
     const handleResponse = async (response) => {
       try {
         if (response?.type === 'success') {
-          const {idToken} = response.params;
+          /* eslint-disable camelcase */
+          const {id_token} = response.params;
           const auth = getAuth();
-          const credential = GoogleAuthProvider.credential(idToken);
+          const credential = GoogleAuthProvider.credential(id_token);
           const result = await signInWithCredential(auth, credential);
           const accessToken = result.user.stsTokenManager.accessToken;
+          const userType = setUserType();
           const tokenResponse =
-            await loginWithGoogle(accessToken, setUserType());
+            await loginWithGoogle(accessToken, userType);
           if (tokenResponse) {
+            AsyncStorage.setItem('token', tokenResponse);
+            AsyncStorage.setItem('user_type', userType);
             props.onLogin(true);
           }
         }

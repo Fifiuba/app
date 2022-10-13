@@ -5,32 +5,70 @@ import {useForm, Controller} from 'react-hook-form';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useTheme, Colors, Button} from 'react-native-paper';
 import {Icon} from 'react-native-elements';
-import {useRoute} from '@react-navigation/native';
 import editProfile from '../services/edit-profile';
 
 export default function EditProfile() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [age, setAge] = useState(0);
+  const [phone, setPhone] = useState('');
+
   const {colors} = useTheme();
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
-      firstName: '',
+      name: '',
       age: 0,
       email: '',
       phone: '',
     },
   });
 
-  const route = useRoute();
-  const onSubmit = (data) => {
-    editProfile(data);
-    navigation.navigate('Mi perfil', {
-      data,
-    });
+  const getUserInfo = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      return value;
+    } catch (error) {
+      console.error(error.message);
+      alert(error.message);
+    }
+  };
+
+  React.useEffect(() => {
+    const handleEditProfile = async () => {
+      try {
+        const name = await getUserInfo('name');
+        setName(name);
+        const email = await getUserInfo('email');
+        setEmail(email);
+        const age = await getUserInfo('age');
+        setAge(age);
+        const phone = await getUserInfo('phone');
+        setPhone(phone);
+      } catch (error) {
+        console.error(error.message);
+        alert(error.message);
+      }
+    };
+    handleEditProfile();
+  }, []);
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await editProfile(data);
+      if (response) {
+        console.log('Edición exitosa');
+      }
+    } catch (error) {
+      alert(error.message);
+      console.error(error.message);
+      return nill;
+    }
   };
 
   return (
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
-        <Text style={styles.title}>{route.params.user.name}</Text>
+        <Text style={styles.title}>Editar perfil</Text>
         <Image
           source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
           style={styles.image}
@@ -53,7 +91,7 @@ export default function EditProfile() {
                     color: colors.text,
                   },
                 ]}
-                placeholder={route.params.user.name}
+                placeholder={name}
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
                 value={value}
@@ -82,7 +120,7 @@ export default function EditProfile() {
                   },
                 ]}
                 mode="outlined"
-                placeholder='Edad'
+                placeholder={age}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
@@ -96,37 +134,8 @@ export default function EditProfile() {
           Máximo {constraints.age.max} números
         </Text>}
         <View style={styles.action}>
-          <FontAwesome name="envelope-o" color={colors.text} size={25} />
-          <Controller
-            control={control}
-            rules={{
-              maxLength: constraints.email.max,
-              validate: isValidEmail,
-            }}
-            render={({field: {onChange, onBlur, value}}) => (
-              <TextInput
-                style={[
-                  styles.textInput,
-                  {
-                    color: colors.text,
-                  },
-                ]}
-                mode="outlined"
-                placeholder={route.params.user.email}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-            name="email"
-          />
+          <Text style={styles.textInput}>Correo electrónico: {email}</Text>
         </View>
-        {errors.email?.type === 'maxLength' &&
-        <Text style={styles.invalidText}>
-          Máximo {constraints.email.max} caracteres
-        </Text>}
-        {errors.email?.type === 'validate' &&
-        <Text style={styles.invalidText}>Correo electrónico inválido</Text>}
         <View style={styles.action}>
           <Icon name="phone" size={30}/>
           <Controller
@@ -142,7 +151,7 @@ export default function EditProfile() {
                     color: colors.text,
                   },
                 ]}
-                placeholder={route.params.user.phone}
+                placeholder={phone}
                 keyboardType="number-pad"
                 autoCorrect={false}
                 onBlur={onBlur}
@@ -175,12 +184,6 @@ const constraints = {
   email: {max: 50},
   phone: {max: 50},
 };
-
-const isValidEmail = (email) =>
-  /*eslint-disable*/
-  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      email,
-  );
 
 const styles = StyleSheet.create({
   container: {
@@ -236,5 +239,5 @@ const styles = StyleSheet.create({
   },
   invalidText: {
     color: 'red',
-  }
+  },
 });
