@@ -1,13 +1,31 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const setUserInfo = async (userInfo) => {
+const isModified = async (key, newValue) => {
+  const value = await AsyncStorage.getItem(key);
+  return value != newValue;
+};
+
+const updateUserInfo = async (userInfo) => {
   console.log('USER INFO');
   try {
-    // await AsyncStorage.setItem('name', userInfo.name);
-    // await AsyncStorage.setItem('email', userInfo.email);
-    // await AsyncStorage.setItem('phone', userInfo.phone);
-    await AsyncStorage.setItem('age', userInfo.age.toString());
+    const keys = Object.getOwnPropertyNames(userInfo);
+    for (let idx = 0; idx < keys.length; idx++) {
+      const key = keys[idx];
+      const value = userInfo[key];
+      if (isModified(key, value)) {
+        let newValue;
+        if (key == 'age' || key == 'id') {
+          newValue = value.toString();
+        } else {
+          newValue = value;
+        }
+        console.log('new value:', newValue);
+        if(newValue){
+          await AsyncStorage.setItem(key, newValue);
+        }
+      }
+    }
   } catch (error) {
     console.log('ERROR USER INFO');
     alert(error.message);
@@ -26,31 +44,46 @@ const getUserInfo = async (key) => {
   }
 };
 
+const getFields = (data) => {
+  const userInfo = {};
+  const typeUserInfo = {};
+
+  const keys = Object.getOwnPropertyNames(data);
+  console.log('KEYS:', keys);
+
+  for (let idx = 0; idx < keys.length; idx++) {
+    const key = keys[idx];
+    console.log('key:', key);
+    const value = data[key];
+    console.log('value:', value);
+    if (value != '' || value != 0) {
+      userInfo[key] = value;
+      console.log('userInfo:', userInfo);
+    }
+  };
+  return [userInfo, typeUserInfo];
+};
+
 export default async function editProfile(data) {
   try {
     console.log('DATA:', data);
     const userType = await getUserInfo('user_type');
-    const token = await getUserInfo('token');
-    console.log('user type:', userType);
-    console.log('token:', token);
     const params = {
       'user_type': userType,
-      'fields': [
-        {
-          'age': data.age,
-        },
-        {},
-      ],
+      'fields': getFields(data),
     };
+    console.log('params:', params);
+
+    const token = await getUserInfo('token');
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
-    console.log('params:', params);
     console.log('config:', config);
+
     const response = await axios.patch('http://192.168.0.76:8000/users/me/', params, config);
     console.log('response data:', response.data);
     if (response.data) {
-      await setUserInfo(response.data[0]);
+      await updateUserInfo(response.data[0]);
     }
     return response.data;
   } catch (error) {
