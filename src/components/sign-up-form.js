@@ -9,7 +9,6 @@ const SignUpForm = (props) => {
   const [isSelectedPassanger, setSelectionPassanger] = useState(false);
   const [isSelectedDriver, setSelectionDriver] = useState(false);
   const [code, setCode] = useState(false);
-  const [hidePassword, sethidePassword] = useState(true);
 
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
@@ -156,11 +155,7 @@ const SignUpForm = (props) => {
             label="Contraseña"
             placeholder="Contraseña"
             secureTextEntry={hidePassword}
-            right={
-              <TextInput.Icon
-                icon="eye"
-                onPress={() => sethidePassword(!hidePassword)}
-              />}
+            type="password"
           />
         )}
         name="password"

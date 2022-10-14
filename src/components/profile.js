@@ -6,14 +6,10 @@ import {
   Text,
   TouchableRipple,
 } from 'react-native-paper';
-import {Icon} from 'react-native-elements';
 import {useRoute} from '@react-navigation/native';
 import {useNavigation} from '@react-navigation/native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {useTheme} from 'react-native-paper';
 
 const Profile = () => {
-  const {colors} = useTheme();
   const route = useRoute();
 
   const navigation = useNavigation();
@@ -36,15 +32,12 @@ const Profile = () => {
 
       <View style={styles.userInfoSection}>
         <View style={styles.action}>
-          <FontAwesome name="user-o" color={colors.text} size={25} />
           <Text style={styles.textInput}>{route.params.user.age}</Text>
         </View>
         <View style={styles.action}>
-          <Icon name="phone" size={30}/>
           <Text style={styles.textInput}>{route.params.user.phone}</Text>
         </View>
         <View style={styles.action}>
-          <FontAwesome name="envelope-o" color={colors.text} size={25} />
           <Text style={styles.textInput}>{route.params.user.email}</Text>
         </View>
       </View>
@@ -67,19 +60,16 @@ const Profile = () => {
         <TouchableRipple
           onPress={goToEditProfileScreen}>
           <View style={styles.menuItem}>
-            <Icon name="edit" size={25}/>
             <Text style={styles.menuItemText}>Editar perfil</Text>
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Icon name="settings" size={25}/>
             <Text style={styles.menuItemText}>Configuración</Text>
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Icon name="help" color="black" size={25}/>
             <Text style={styles.menuItemText}>Ayuda</Text>
           </View>
         </TouchableRipple>

@@ -2,9 +2,7 @@ import React from 'react';
 import {Text, View, TextInput, Image, StyleSheet} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useTheme, Colors, Button} from 'react-native-paper';
-import {Icon} from 'react-native-elements';
 import {useRoute} from '@react-navigation/native';
 import editProfile from '../services/edit-profile';
 
@@ -39,7 +37,6 @@ export default function EditProfile() {
 
       <View style={styles.subcontainer}>
         <View style={styles.action}>
-          <FontAwesome name="user-o" color={colors.text} size={25} />
           <Controller
             control={control}
             rules={{
@@ -67,7 +64,6 @@ export default function EditProfile() {
           Máximo {constraints.name.max} letras
         </Text>}
         <View style={styles.action}>
-          <FontAwesome name="user-o" color={colors.text} size={25} />
           <Controller
             control={control}
             rules={{
@@ -96,39 +92,9 @@ export default function EditProfile() {
           Máximo {constraints.age.max} números
         </Text>}
         <View style={styles.action}>
-          <FontAwesome name="envelope-o" color={colors.text} size={25} />
-          <Controller
-            control={control}
-            rules={{
-              maxLength: constraints.email.max,
-              validate: isValidEmail,
-            }}
-            render={({field: {onChange, onBlur, value}}) => (
-              <TextInput
-                style={[
-                  styles.textInput,
-                  {
-                    color: colors.text,
-                  },
-                ]}
-                mode="outlined"
-                placeholder={route.params.user.email}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-            name="email"
-          />
+          <Text style={styles.textInput}>{route.params.user.email}</Text>
         </View>
-        {errors.email?.type === 'maxLength' &&
-        <Text style={styles.invalidText}>
-          Máximo {constraints.email.max} caracteres
-        </Text>}
-        {errors.email?.type === 'validate' &&
-        <Text style={styles.invalidText}>Correo electrónico inválido</Text>}
         <View style={styles.action}>
-          <Icon name="phone" size={30}/>
           <Controller
             control={control}
             rules={{
@@ -175,12 +141,6 @@ const constraints = {
   email: {max: 50},
   phone: {max: 50},
 };
-
-const isValidEmail = (email) =>
-  /*eslint-disable*/
-  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      email,
-  );
 
 const styles = StyleSheet.create({
   container: {
@@ -236,5 +196,5 @@ const styles = StyleSheet.create({
   },
   invalidText: {
     color: 'red',
-  }
+  },
 });

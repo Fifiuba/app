@@ -4,10 +4,8 @@ import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import CheckBox from 'expo-checkbox';
 
-import login from '../services/login';
-import loginWithGoogle from '../services/login-with-google';
-
 import {getAuth, GoogleAuthProvider, signInWithCredential} from 'firebase/auth';
+import loginWithGoogle from '../services/login-with-google';
 
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
@@ -15,11 +13,13 @@ import * as Google from 'expo-auth-session/providers/google';
 import {WEB_CLIENT_ID} from '@env';
 
 WebBrowser.maybeCompleteAuthSession();
+/* eslint-disable-next-line max-len */
+import loginWithEmailAndPassword from '../services/login-with-email-and-password';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginForm = (props) => {
   const [isSelectedPassanger, setSelectionPassanger] = useState(false);
   const [isSelectedDriver, setSelectionDriver] = useState(false);
-  const [hidePassword, sethidePassword] = useState(true);
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       email: '',
@@ -27,12 +27,20 @@ const LoginForm = (props) => {
     },
   });
 
-  function onSubmit(data) {
-    // Send data to users service for signing in
-    if (login(data)) {
-      props.onLogin(true);
+  const onSubmit = async (data) => {
+    try {
+      // Send data to users service for signing in
+      const tokenResponse = await loginWithEmailAndPassword(data);
+      if (tokenResponse) {
+        await AsyncStorage.setItem('token', tokenResponse);
+        props.onLogin(true);
+      }
+    } catch (error) {
+      console.error(error.message);
+      alert(error.message);
+      return nill;
     }
-  }
+  };
 
   // eslint-disable-next-line no-unused-vars
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
@@ -125,12 +133,7 @@ const LoginForm = (props) => {
             mode="outlined"
             label="Contraseña"
             placeholder="Contraseña"
-            secureTextEntry={hidePassword}
-            right={
-              <TextInput.Icon
-                icon="eye"
-                onPress={() => sethidePassword(!hidePassword)}
-              />}
+            type="password"
           />
         )}
         name="password"
