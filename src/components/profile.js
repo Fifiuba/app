@@ -33,13 +33,14 @@ const Profile = (props) => {
     const handleProfile = async () => {
       try {
         const userInfo = await getProfile();
+        console.log('user_info:', userInfo);
         if (userInfo) {
           const name = await getUserInfo('name');
           setName(name);
           const email = await getUserInfo('email');
           setEmail(email);
           const age = await getUserInfo('age');
-          if (age != '[object Undefined]') {
+          if (age) {
             setAge(age);
           }
           const phone = await getUserInfo('phone');
@@ -53,7 +54,7 @@ const Profile = (props) => {
       }
     };
     handleProfile();
-  });
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>

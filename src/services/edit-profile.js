@@ -7,8 +7,7 @@ const setUserInfo = async (userInfo) => {
     // await AsyncStorage.setItem('name', userInfo.name);
     // await AsyncStorage.setItem('email', userInfo.email);
     // await AsyncStorage.setItem('phone', userInfo.phone);
-    console.log('age:', userInfo.age);
-    await AsyncStorage.setItem('age', toString(userInfo.age));
+    await AsyncStorage.setItem('age', userInfo.age.toString());
   } catch (error) {
     console.log('ERROR USER INFO');
     alert(error.message);
@@ -49,7 +48,6 @@ export default async function editProfile(data) {
     console.log('params:', params);
     console.log('config:', config);
     const response = await axios.patch('http://192.168.0.76:8000/users/me/', params, config);
-    console.log('response:', response);
     console.log('response data:', response.data);
     if (response.data) {
       await setUserInfo(response.data[0]);

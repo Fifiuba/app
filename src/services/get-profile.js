@@ -10,8 +10,9 @@ const setUserInfo = async (userInfo) => {
       await AsyncStorage.setItem('phone', userInfo.phone);
     }
     if (userInfo.age) {
+      console.log('age:', userInfo.age);
       await AsyncStorage.removeItem('age');
-      await AsyncStorage.setItem('age', toString(userInfo.age));
+      await AsyncStorage.setItem('age', userInfo.age.toString());
     }
   } catch (error) {
     console.log('ERROR USER INFO');
@@ -46,9 +47,7 @@ export default async function getProfile() {
       },
       headers: {Authorization: `Bearer ${token}`},
     };
-    console.log('NUEVA VERSION');
     const response = await axios.get('http://192.168.0.76:8000/users/me/', config);
-    console.log('response_data:', response.data);
     console.log('response_data:', response.data[0]);
     await setUserInfo(response.data[0]);
     // await setTypeUserInfo(response.data[1]);

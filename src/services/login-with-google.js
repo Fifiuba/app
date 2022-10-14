@@ -7,7 +7,6 @@ export default async function loginWithGoogle(token, userType) {
       'user_type': userType,
       'token': token,
     });
-    console.log('response:', response);
     console.log('response_data:', response.data);
     return response.data;
   } catch (error) {
