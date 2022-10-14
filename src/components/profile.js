@@ -19,7 +19,9 @@ const Profile = (props) => {
 
   const getUserInfo = async (key) => {
     try {
+      console.log('key:', key);
       const value = await AsyncStorage.getItem(key);
+      console.log('value:', value);
       return value;
     } catch (error) {
       console.error(error.message);
@@ -37,9 +39,13 @@ const Profile = (props) => {
           const email = await getUserInfo('email');
           setEmail(email);
           const age = await getUserInfo('age');
-          setAge(age);
+          if (age != '[object Undefined]') {
+            setAge(age);
+          }
           const phone = await getUserInfo('phone');
-          setPhone(phone);
+          if (phone) {
+            setPhone(phone);
+          }
         }
       } catch (error) {
         console.error(error.message);
@@ -47,7 +53,7 @@ const Profile = (props) => {
       }
     };
     handleProfile();
-  }, []);
+  });
 
   return (
     <SafeAreaView style={styles.container}>

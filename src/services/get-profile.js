@@ -6,8 +6,13 @@ const setUserInfo = async (userInfo) => {
   try {
     await AsyncStorage.setItem('name', userInfo.name);
     await AsyncStorage.setItem('email', userInfo.email);
-    // await AsyncStorage.setItem('phone', userInfo.phone);
-    // await AsyncStorage.setItem('age', userInfo.age);
+    if (userInfo.phone) {
+      await AsyncStorage.setItem('phone', userInfo.phone);
+    }
+    if (userInfo.age) {
+      await AsyncStorage.removeItem('age');
+      await AsyncStorage.setItem('age', toString(userInfo.age));
+    }
   } catch (error) {
     console.log('ERROR USER INFO');
     alert(error.message);
@@ -16,7 +21,7 @@ const setUserInfo = async (userInfo) => {
   }
 };
 
-const setTypeUserInfo = async (typeUserInfo) => {
+/* const setTypeUserInfo = async (typeUserInfo) => {
   console.log('TYPE USER INFO');
   try {
     // await AsyncStorage.setItem('id', typeUserInfo.id);
@@ -27,7 +32,7 @@ const setTypeUserInfo = async (typeUserInfo) => {
     console.error(error);
     return nill;
   }
-};
+};*/
 
 export default async function getProfile() {
   try {
@@ -46,7 +51,7 @@ export default async function getProfile() {
     console.log('response_data:', response.data);
     console.log('response_data:', response.data[0]);
     await setUserInfo(response.data[0]);
-    await setTypeUserInfo(response.data[1]);
+    // await setTypeUserInfo(response.data[1]);
     return response.data;
   } catch (error) {
     alert(error.message);

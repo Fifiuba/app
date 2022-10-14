@@ -1,17 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, TextInput, Image, StyleSheet} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useTheme, Colors, Button} from 'react-native-paper';
-import {Icon} from 'react-native-elements';
 import editProfile from '../services/edit-profile';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function EditProfile() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [age, setAge] = useState(0);
-  const [phone, setPhone] = useState('');
 
   const {colors} = useTheme();
   const {control, handleSubmit, formState: {errors}} = useForm({
@@ -40,10 +37,6 @@ export default function EditProfile() {
         setName(name);
         const email = await getUserInfo('email');
         setEmail(email);
-        const age = await getUserInfo('age');
-        setAge(age);
-        const phone = await getUserInfo('phone');
-        setPhone(phone);
       } catch (error) {
         console.error(error.message);
         alert(error.message);
@@ -68,7 +61,7 @@ export default function EditProfile() {
   return (
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
-        <Text style={styles.title}>Editar perfil</Text>
+        <Text style={styles.title}>{name}</Text>
         <Image
           source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
           style={styles.image}
@@ -77,7 +70,6 @@ export default function EditProfile() {
 
       <View style={styles.subcontainer}>
         <View style={styles.action}>
-          <FontAwesome name="user-o" color={colors.text} size={25} />
           <Controller
             control={control}
             rules={{
@@ -91,7 +83,7 @@ export default function EditProfile() {
                     color: colors.text,
                   },
                 ]}
-                placeholder={name}
+                placeholder="Nombre"
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
                 value={value}
@@ -105,7 +97,6 @@ export default function EditProfile() {
           Máximo {constraints.name.max} letras
         </Text>}
         <View style={styles.action}>
-          <FontAwesome name="user-o" color={colors.text} size={25} />
           <Controller
             control={control}
             rules={{
@@ -120,7 +111,7 @@ export default function EditProfile() {
                   },
                 ]}
                 mode="outlined"
-                placeholder={age}
+                placeholder="Edad"
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
@@ -134,10 +125,9 @@ export default function EditProfile() {
           Máximo {constraints.age.max} números
         </Text>}
         <View style={styles.action}>
-          <Text style={styles.textInput}>Correo electrónico: {email}</Text>
+          <Text style={styles.textInput}>{email}</Text>
         </View>
         <View style={styles.action}>
-          <Icon name="phone" size={30}/>
           <Controller
             control={control}
             rules={{
@@ -151,7 +141,7 @@ export default function EditProfile() {
                     color: colors.text,
                   },
                 ]}
-                placeholder={phone}
+                placeholder="Número de teléfono"
                 keyboardType="number-pad"
                 autoCorrect={false}
                 onBlur={onBlur}
@@ -217,7 +207,7 @@ const styles = StyleSheet.create({
     marginTop: 35,
   },
   buttonEdit: {
-    marginTop: 45,
+    marginTop: 60,
     padding: 5,
     width: 200,
     height: 50,
