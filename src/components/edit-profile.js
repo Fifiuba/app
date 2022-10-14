@@ -6,7 +6,7 @@ import {useTheme, Colors, Button} from 'react-native-paper';
 import editProfile from '../services/edit-profile';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function EditProfile() {
+export default function EditProfile(props) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
@@ -16,7 +16,7 @@ export default function EditProfile() {
       name: '',
       age: 0,
       email: '',
-      phone: '',
+      phone_number: '',
     },
   });
 
@@ -50,6 +50,7 @@ export default function EditProfile() {
       const response = await editProfile(data);
       if (response) {
         console.log('Edición exitosa');
+        props.onNavigation.navigate('Mi perfil');
       }
     } catch (error) {
       alert(error.message);
@@ -141,7 +142,7 @@ export default function EditProfile() {
                     color: colors.text,
                   },
                 ]}
-                placeholder="Número de teléfono"
+                placeholder="Teléfono"
                 keyboardType="number-pad"
                 autoCorrect={false}
                 onBlur={onBlur}
@@ -149,7 +150,7 @@ export default function EditProfile() {
                 value={value}
               />
             )}
-            name="phone"
+            name="phone_number"
           />
         </View>
         {errors.phone?.type === 'maxLength' &&

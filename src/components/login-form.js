@@ -67,8 +67,8 @@ const LoginForm = (props) => {
           const tokenResponse =
             await loginWithGoogle(accessToken, userType);
           if (tokenResponse) {
-            AsyncStorage.setItem('token', tokenResponse);
-            AsyncStorage.setItem('user_type', userType);
+            await AsyncStorage.setItem('token', tokenResponse);
+            await AsyncStorage.setItem('user_type', userType);
             props.onLogin(true);
           }
         }

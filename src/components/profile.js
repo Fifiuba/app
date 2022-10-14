@@ -9,7 +9,7 @@ import {
 import {Icon} from 'react-native-elements';
 import getProfile from '../services/get-profile';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = (props) => {
   const [name, setName] = useState('');
@@ -17,17 +17,35 @@ const Profile = (props) => {
   const [age, setAge] = useState(0);
   const [phone, setPhone] = useState('');
 
-  const getUserInfo = async (key) => {
-    try {
-      console.log('key:', key);
-      const value = await AsyncStorage.getItem(key);
-      console.log('value:', value);
-      return value;
-    } catch (error) {
-      console.error(error.message);
-      alert(error.message);
+  const setUserInfo = (userInfo) => {
+    const keys = Object.getOwnPropertyNames(userInfo);
+    for (let idx = 0; idx < keys.length; idx++) {
+        let key = keys[idx];
+        let value = userInfo[key];
+        console.log('value:', value)
+        if (value) {
+          if (key == 'name') {
+            setName(value);
+          } 
+          if (key == 'email') {
+            setEmail(value);
+          } 
+          if (key == 'age') {
+            setAge(value);
+          } 
+          if (key == 'phone_number' || key == 'phone') {
+            setPhone(value);
+          }
+        } else {
+          if (key == 'age') {
+            setAge('Edad Desconocida');
+          } 
+          if (key == 'phone_number') {
+            setPhone('Teléfono Indefinido');
+          }
+        }
     }
-  };
+  }
 
   React.useEffect(() => {
     const handleProfile = async () => {
@@ -35,18 +53,7 @@ const Profile = (props) => {
         const userInfo = await getProfile();
         console.log('user_info:', userInfo);
         if (userInfo) {
-          const name = await getUserInfo('name');
-          setName(name);
-          const email = await getUserInfo('email');
-          setEmail(email);
-          const age = await getUserInfo('age');
-          if (age) {
-            setAge(age);
-          }
-          const phone = await getUserInfo('phone');
-          if (phone) {
-            setPhone(phone);
-          }
+          setUserInfo(userInfo);
         }
       } catch (error) {
         console.error(error.message);
@@ -59,7 +66,7 @@ const Profile = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>
-        <Title style={styles.title}>Mi perfil</Title>
+        <Title style={styles.title}>{name}</Title>
         <Image
           source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
           style={styles.image}
@@ -74,10 +81,10 @@ const Profile = (props) => {
           <Text style={styles.textInput}>Edad: {age}</Text>
         </View>
         <View style={styles.action}>
-          <Text style={styles.textInput}>Número de teléfono: {phone}</Text>
+          <Text style={styles.textInput}>Email: {email}</Text>
         </View>
         <View style={styles.action}>
-          <Text style={styles.textInput}>Correo electrónico: {email}</Text>
+          <Text style={styles.textInput}>Teléfono: {phone}</Text>
         </View>
       </View>
 
@@ -133,7 +140,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    marginLeft: 130,
+    marginLeft: 88,
   },
   caption: {
     fontSize: 18,
@@ -171,7 +178,7 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     paddingLeft: 20,
-    color: '#777777',
+    color: 'black',
     fontSize: 20,
   },
   button: {

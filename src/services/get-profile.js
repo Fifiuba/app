@@ -2,6 +2,26 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const setUserInfo = async (userInfo) => {
+  try {
+      const keys = Object.getOwnPropertyNames(userInfo);
+      for (let idx = 0; idx < keys.length; idx++) {
+          let key = keys[idx];
+          let value = userInfo[key];
+          if (value) {
+              if (key == 'age' || key == 'id') {
+                await AsyncStorage.setItem(key, value.toString());
+              } else {
+                await AsyncStorage.setItem(key, value);
+              } 
+          }
+      }
+  } catch (error) {
+      console.error(error.message);
+      alert(error.message);
+  }
+};
+
+/*const setUserInfo = async (userInfo) => {
   console.log('USER INFO');
   try {
     await AsyncStorage.setItem('name', userInfo.name);
@@ -20,7 +40,7 @@ const setUserInfo = async (userInfo) => {
     console.error(error);
     return nill;
   }
-};
+};*/
 
 /* const setTypeUserInfo = async (typeUserInfo) => {
   console.log('TYPE USER INFO');
@@ -51,7 +71,7 @@ export default async function getProfile() {
     console.log('response_data:', response.data[0]);
     await setUserInfo(response.data[0]);
     // await setTypeUserInfo(response.data[1]);
-    return response.data;
+    return response.data[0];
   } catch (error) {
     alert(error.message);
     console.error(error);
