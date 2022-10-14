@@ -9,8 +9,6 @@ import {
 import {Icon} from 'react-native-elements';
 import getProfile from '../services/get-profile';
 
-//import AsyncStorage from '@react-native-async-storage/async-storage';
-
 const Profile = (props) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -41,7 +39,7 @@ const Profile = (props) => {
             setAge('Edad Desconocida');
           } 
           if (key == 'phone_number') {
-            setPhone('Teléfono Indefinido');
+            setPhone('Teléfono Desconocido');
           }
         }
     }

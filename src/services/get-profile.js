@@ -21,40 +21,6 @@ const setUserInfo = async (userInfo) => {
   }
 };
 
-/*const setUserInfo = async (userInfo) => {
-  console.log('USER INFO');
-  try {
-    await AsyncStorage.setItem('name', userInfo.name);
-    await AsyncStorage.setItem('email', userInfo.email);
-    if (userInfo.phone) {
-      await AsyncStorage.setItem('phone', userInfo.phone);
-    }
-    if (userInfo.age) {
-      console.log('age:', userInfo.age);
-      await AsyncStorage.removeItem('age');
-      await AsyncStorage.setItem('age', userInfo.age.toString());
-    }
-  } catch (error) {
-    console.log('ERROR USER INFO');
-    alert(error.message);
-    console.error(error);
-    return nill;
-  }
-};*/
-
-/* const setTypeUserInfo = async (typeUserInfo) => {
-  console.log('TYPE USER INFO');
-  try {
-    // await AsyncStorage.setItem('id', typeUserInfo.id);
-    // await AsyncStorage.setItem('score', typeUserInfo.score);
-  } catch (error) {
-    console.log('ERROR TYPE USER INFO');
-    alert(error.message);
-    console.error(error);
-    return nill;
-  }
-};*/
-
 export default async function getProfile() {
   try {
     const token = await AsyncStorage.getItem('token');
@@ -70,7 +36,6 @@ export default async function getProfile() {
     const response = await axios.get('http://192.168.0.76:8000/users/me/', config);
     console.log('response_data:', response.data[0]);
     await setUserInfo(response.data[0]);
-    // await setTypeUserInfo(response.data[1]);
     return response.data[0];
   } catch (error) {
     alert(error.message);
