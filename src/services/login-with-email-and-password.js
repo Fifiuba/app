@@ -8,7 +8,7 @@ export default async function loginWithEmailAndPassword(data) {
     console.log('token firebase:', token);
     const response = await authUser(token);
     console.log('response back:', response);
-    return response.data;
+    return response;
   } catch (error) {
     console.error(error.message);
     alert(error.message);
@@ -36,7 +36,7 @@ const authUser = async (token) => {
   try {
     console.log('authUser');
     params = {
-      "token": token
+      'token': token,
     };
     const response = await axios.post('http://192.168.0.76:8000/users/login', params);
     return response.data;

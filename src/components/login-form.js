@@ -2,7 +2,9 @@ import {React, useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
+/* eslint-disable-next-line max-len */
 import loginWithEmailAndPassword from '../services/login-with-email-and-password';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginForm = (props) => {
   const [hidePassword, sethidePassword] = useState(true);
@@ -13,13 +15,20 @@ const LoginForm = (props) => {
     },
   });
 
-  function onSubmit(data) {
-    // Send data to users service for signing in
-    if (loginWithEmailAndPassword(data)) {
-      console.log('Todo ok');
-      //props.onLogin(true);
+  const onSubmit = async (data) => {
+    try {
+      // Send data to users service for signing in
+      const tokenResponse = await loginWithEmailAndPassword(data);
+      if (tokenResponse) {
+        await AsyncStorage.setItem('token', tokenResponse);
+        props.onLogin(true);
+      }
+    } catch (error) {
+      console.error(error.message);
+      alert(error.message);
+      return nill;
     }
-  }
+  };
 
   return (
     <View style={loginStyle.container}>
