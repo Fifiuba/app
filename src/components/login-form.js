@@ -12,11 +12,12 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import {WEB_CLIENT_ID} from '@env';
 
-WebBrowser.maybeCompleteAuthSession();
-/* eslint-disable-next-line max-len */
-import loginWithEmailAndPassword from '../services/login-with-email-and-password';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+/* eslint-disable-next-line max-len */
+import loginWithEmailAndPassword from '../services/login-with-email-and-password';
+
+WebBrowser.maybeCompleteAuthSession();
 const LoginForm = (props) => {
   const [isSelectedPassanger, setSelectionPassanger] = useState(false);
   const [isSelectedDriver, setSelectionDriver] = useState(false);
@@ -33,6 +34,7 @@ const LoginForm = (props) => {
       const tokenResponse = await loginWithEmailAndPassword(data);
       if (tokenResponse) {
         await AsyncStorage.setItem('token', tokenResponse);
+        await AsyncStorage.setItem('user_type', setUserType());
         props.onLogin(true);
       }
     } catch (error) {
@@ -49,28 +51,33 @@ const LoginForm = (props) => {
       },
   );
 
-  const PASSANGER = 'passanger';
+  const PASSANGER = 'passenger';
   const DRIVER = 'driver';
-  function setUserType() {
+
+  const setUserType = () => {
     let userType = PASSANGER;
     if (isSelectedDriver) {
       userType = DRIVER;
     }
     return userType;
-  }
+  };
 
   React.useEffect(() => {
     const handleResponse = async (response) => {
       try {
         if (response?.type === 'success') {
-          const {idToken} = response.params;
+          /* eslint-disable camelcase */
+          const {id_token} = response.params;
           const auth = getAuth();
-          const credential = GoogleAuthProvider.credential(idToken);
+          const credential = GoogleAuthProvider.credential(id_token);
           const result = await signInWithCredential(auth, credential);
           const accessToken = result.user.stsTokenManager.accessToken;
+          const userType = setUserType();
           const tokenResponse =
-            await loginWithGoogle(accessToken, setUserType());
+            await loginWithGoogle(accessToken, userType);
           if (tokenResponse) {
+            await AsyncStorage.setItem('token', tokenResponse);
+            await AsyncStorage.setItem('user_type', userType);
             props.onLogin(true);
           }
         }

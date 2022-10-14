@@ -21,7 +21,7 @@ const SignUpForm = (props) => {
     },
   });
 
-  const PASSANGER = 'passanger';
+  const PASSANGER = 'passenger';
   const DRIVER = 'driver';
   const setUserType = (data) => {
     if (isSelectedDriver) {
@@ -154,7 +154,6 @@ const SignUpForm = (props) => {
             mode="outlined"
             label="Contraseña"
             placeholder="Contraseña"
-            secureTextEntry={hidePassword}
             type="password"
           />
         )}

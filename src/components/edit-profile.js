@@ -1,34 +1,68 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, TextInput, Image, StyleSheet} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 
 import {useTheme, Colors, Button} from 'react-native-paper';
-import {useRoute} from '@react-navigation/native';
 import editProfile from '../services/edit-profile';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function EditProfile() {
+export default function EditProfile(props) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
   const {colors} = useTheme();
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
-      firstName: '',
+      name: '',
       age: 0,
       email: '',
-      phone: '',
+      phone_number: '',
     },
   });
 
-  const route = useRoute();
-  const onSubmit = (data) => {
-    editProfile(data);
-    navigation.navigate('Mi perfil', {
-      data,
-    });
+  const getUserInfo = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      return value;
+    } catch (error) {
+      console.error(error.message);
+      alert(error.message);
+    }
+  };
+
+  React.useEffect(() => {
+    const handleEditProfile = async () => {
+      try {
+        const name = await getUserInfo('name');
+        setName(name);
+        const email = await getUserInfo('email');
+        setEmail(email);
+      } catch (error) {
+        console.error(error.message);
+        alert(error.message);
+      }
+    };
+    handleEditProfile();
+  }, []);
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await editProfile(data);
+      if (response) {
+        console.log('Edición exitosa');
+        props.onNavigation.navigate('Mi perfil');
+      }
+    } catch (error) {
+      alert(error.message);
+      console.error(error.message);
+      return nill;
+    }
   };
 
   return (
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
-        <Text style={styles.title}>{route.params.user.name}</Text>
+        <Text style={styles.title}>{name}</Text>
         <Image
           source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
           style={styles.image}
@@ -50,7 +84,7 @@ export default function EditProfile() {
                     color: colors.text,
                   },
                 ]}
-                placeholder={route.params.user.name}
+                placeholder="Nombre"
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
                 value={value}
@@ -78,7 +112,7 @@ export default function EditProfile() {
                   },
                 ]}
                 mode="outlined"
-                placeholder='Edad'
+                placeholder="Edad"
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
@@ -92,7 +126,7 @@ export default function EditProfile() {
           Máximo {constraints.age.max} números
         </Text>}
         <View style={styles.action}>
-          <Text style={styles.textInput}>{route.params.user.email}</Text>
+          <Text style={styles.textInput}>{email}</Text>
         </View>
         <View style={styles.action}>
           <Controller
@@ -108,7 +142,7 @@ export default function EditProfile() {
                     color: colors.text,
                   },
                 ]}
-                placeholder={route.params.user.phone}
+                placeholder="Teléfono"
                 keyboardType="number-pad"
                 autoCorrect={false}
                 onBlur={onBlur}
@@ -116,7 +150,7 @@ export default function EditProfile() {
                 value={value}
               />
             )}
-            name="phone"
+            name="phone_number"
           />
         </View>
         {errors.phone?.type === 'maxLength' &&
@@ -174,7 +208,7 @@ const styles = StyleSheet.create({
     marginTop: 35,
   },
   buttonEdit: {
-    marginTop: 45,
+    marginTop: 60,
     padding: 5,
     width: 200,
     height: 50,

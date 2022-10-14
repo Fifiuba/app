@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, SafeAreaView, StyleSheet, Image} from 'react-native';
 import {
   Title,
@@ -6,24 +6,64 @@ import {
   Text,
   TouchableRipple,
 } from 'react-native-paper';
-import {useRoute} from '@react-navigation/native';
-import {useNavigation} from '@react-navigation/native';
+import getProfile from '../services/get-profile';
 
-const Profile = () => {
-  const route = useRoute();
+const Profile = (props) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [age, setAge] = useState(0);
+  const [phone, setPhone] = useState('');
 
-  const navigation = useNavigation();
-  const goToEditProfileScreen = () => {
-    const user = route.params.user;
-    navigation.navigate('Editar perfil', {
-      user,
-    });
+  const setUserInfo = (userInfo) => {
+    const keys = Object.getOwnPropertyNames(userInfo);
+    for (let idx = 0; idx < keys.length; idx++) {
+      const key = keys[idx];
+      const value = userInfo[key];
+      console.log('value:', value);
+      if (value) {
+        if (key == 'name') {
+          setName(value);
+        }
+        if (key == 'email') {
+          setEmail(value);
+        }
+        if (key == 'age') {
+          setAge(value);
+        }
+        if (key == 'phone_number' || key == 'phone') {
+          setPhone(value);
+        }
+      } else {
+        if (key == 'age') {
+          setAge('Edad Desconocida');
+        }
+        if (key == 'phone_number') {
+          setPhone('Teléfono Desconocido');
+        }
+      }
+    }
   };
+
+  React.useEffect(() => {
+    const handleProfile = async () => {
+      try {
+        const userInfo = await getProfile();
+        console.log('user_info:', userInfo);
+        if (userInfo) {
+          setUserInfo(userInfo);
+        }
+      } catch (error) {
+        console.error(error.message);
+        alert(error.message);
+      }
+    };
+    handleProfile();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>
-        <Title style={styles.title}>{route.params.user.name}</Title>
+        <Title style={styles.title}>{name}</Title>
         <Image
           source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
           style={styles.image}
@@ -32,13 +72,16 @@ const Profile = () => {
 
       <View style={styles.userInfoSection}>
         <View style={styles.action}>
-          <Text style={styles.textInput}>{route.params.user.age}</Text>
+          <Text style={styles.textInput}>Nombre: {name}</Text>
         </View>
         <View style={styles.action}>
-          <Text style={styles.textInput}>{route.params.user.phone}</Text>
+          <Text style={styles.textInput}>Edad: {age}</Text>
         </View>
         <View style={styles.action}>
-          <Text style={styles.textInput}>{route.params.user.email}</Text>
+          <Text style={styles.textInput}>Email: {email}</Text>
+        </View>
+        <View style={styles.action}>
+          <Text style={styles.textInput}>Teléfono: {phone}</Text>
         </View>
       </View>
 
@@ -58,7 +101,7 @@ const Profile = () => {
 
       <View style={styles.menuWrapper}>
         <TouchableRipple
-          onPress={goToEditProfileScreen}>
+          onPress={() => props.onNavigation.navigate('Editar perfil')}>
           <View style={styles.menuItem}>
             <Text style={styles.menuItemText}>Editar perfil</Text>
           </View>
@@ -91,6 +134,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
+    marginLeft: 88,
   },
   caption: {
     fontSize: 18,
@@ -128,7 +172,7 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     paddingLeft: 20,
-    color: '#777777',
+    color: 'black',
     fontSize: 20,
   },
   button: {
@@ -142,7 +186,7 @@ const styles = StyleSheet.create({
     marginTop: 35,
     width: 130,
     height: 130,
-    marginLeft: 100,
+    marginLeft: 115,
   },
   action: {
     flexDirection: 'row',
