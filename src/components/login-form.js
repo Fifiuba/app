@@ -1,8 +1,7 @@
 import {useState} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, Switch} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
-import CheckBox from 'expo-checkbox';
 
 import {getAuth, GoogleAuthProvider, signInWithCredential} from 'firebase/auth';
 import loginWithGoogle from '../services/login-with-google';
@@ -19,8 +18,8 @@ import loginWithEmailAndPassword from '../services/login-with-email-and-password
 
 WebBrowser.maybeCompleteAuthSession();
 const LoginForm = (props) => {
-  const [isSelectedPassanger, setSelectionPassanger] = useState(false);
-  const [isSelectedDriver, setSelectionDriver] = useState(false);
+  const [isPassenger, setIsPassenger] = useState(true);
+  const toggleSwitch = () => setIsPassenger((previousState) => !previousState);
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       email: '',
@@ -51,13 +50,10 @@ const LoginForm = (props) => {
       },
   );
 
-  const PASSANGER = 'passenger';
-  const DRIVER = 'driver';
-
   const setUserType = () => {
-    let userType = PASSANGER;
-    if (isSelectedDriver) {
-      userType = DRIVER;
+    let userType = 'passenger';
+    if (!isSelectedPassenger) {
+      userType = 'driver';
     }
     return userType;
   };
@@ -90,8 +86,8 @@ const LoginForm = (props) => {
   }, [response]);
 
   return (
-    <View style={loginStyle.container}>
-      <Text style={loginStyle.title}>FIFIUBA</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>FIFIUBA</Text>
       <Controller control={control}
         rules={{
           required: true,
@@ -100,7 +96,7 @@ const LoginForm = (props) => {
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
             theme={{colors: {primary: 'grey'}, roundness: 10}}
-            style={loginStyle.input}
+            style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -116,17 +112,6 @@ const LoginForm = (props) => {
       <Text style={{color: 'red'}}>Campo obligatorio</Text>}
       {errors.email?.type === 'validate' &&
       <Text style={{color: 'red'}}>Ingrese un correo electrónico válido</Text>}
-      <View style={{marginTop: 10}}>
-        <Text
-          onPress={() => props.onNavigation.navigate('RecuperarContraseña')}
-          style={{textAlign: 'right',
-            fontSize: 17,
-            color: '#0D516B',
-            textDecorationLine: 'underline',
-          }}>
-          ¿Olvidaste la contraseña?
-        </Text>
-      </View>
       <Controller control={control}
         rules={{
           required: true,
@@ -135,7 +120,7 @@ const LoginForm = (props) => {
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
             theme={{colors: {primary: 'grey'}, roundness: 10}}
-            style={loginStyle.input}
+            style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -153,35 +138,41 @@ const LoginForm = (props) => {
       <Text>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
       <Text>Mínimo {constraints.password.min}</Text>}
-      <View style={loginStyle.checkboxContainer}>
-        <CheckBox
-          value={isSelectedPassanger}
-          onValueChange={setSelectionPassanger}
-          style={loginStyle.checkbox}
-          color={Colors.blueGrey800}
+      <View style={styles.switchContainer}>
+        <Text style={styles.text}>Pasajero</Text>
+        <Switch
+          trackColor={{false: '#767577', true: '#BFBFBD'}}
+          thumbColor={isPassenger ? '#4572AD' : '#f4f3f4'}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isPassenger}
         />
-        <Text style={loginStyle.labelCheckbox}>Pasajero</Text>
-        <CheckBox
-          value={isSelectedDriver}
-          onValueChange={setSelectionDriver}
-          style={loginStyle.checkbox}
-          color={Colors.blueGrey800}
-        />
-        <Text style={loginStyle.labelCheckbox}>Chofer</Text>
+        <Text style={styles.text}>Chofer</Text>
       </View>
       <Button
-        style={loginStyle.button}
+        style={styles.button}
         color={Colors.blue800}
         mode="contained"
         onPress={handleSubmit(onSubmit)}>
         <Text style={{fontSize: 20}}>Iniciar sesión</Text>
       </Button>
-      <View style={loginStyle.subcontainer}>
-        <Text style={loginStyle.label}>
+      <View style={{marginTop: 10}}>
+        <Text
+          onPress={() => props.onNavigation.navigate('RecuperarContraseña')}
+          style={{textAlign: 'center',
+            fontSize: 18,
+            color: '#0D516B',
+            textDecorationLine: 'underline',
+          }}>
+          ¿Has olvidado la contraseña?
+        </Text>
+      </View>
+      <View style={styles.subcontainer}>
+        <Text style={styles.text}>
           O iniciar sesión con
         </Text>
         <Button
-          style={loginStyle.buttonGoogle}
+          style={styles.googleButton}
           color={Colors.red800}
           mode="contained"
           onPress={() => {
@@ -190,8 +181,8 @@ const LoginForm = (props) => {
         >
           <Text style={{fontSize: 18}}>Google</Text>
         </Button>
-        <View style={{margin: 15}}>
-          <Text style={{marginTop: 7, textAlign: 'center', fontSize: 18}}>
+        <View style={{marginTop: 10}}>
+          <Text style={{textAlign: 'center', fontSize: 18, color: '#282829'}}>
                       ¿No tenes cuenta?{'\n'}
             <Text
               style={{textDecorationLine: 'underline',
@@ -218,60 +209,57 @@ const isValidEmail = (email) =>
       email,
   );
 
-const loginStyle = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignContent: 'center',
     backgroundColor: 'white',
-    padding: 30,
-    margin: 30,
-    marginTop: 30,
-    height: 640,
+    padding: 18,
+    margin: 15,
+    marginTop: 90,
+    height: 670,
     borderRadius: 16,
   },
   title: {
     fontSize: 40,
-    paddingLeft: 65,
+    paddingLeft: 70,
     margin: 10,
+    color: '#3B3C3D',
   },
   input: {
     marginTop: 15,
     marginBottom: 15,
   },
-  label: {
+  text: {
     margin: 8,
-    fontSize: 17,
+    fontSize: 18,
+    color: '#282829',
+  },
+  switchContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    padding: 5,
+    width: 210,
+    height: 50,
+    marginTop: 10,
+    marginLeft: 55,
+    marginBottom: 10,
   },
   subcontainer: {
     alignItems: 'center',
     height: 200,
     paddingTop: 10,
+    marginTop: 10,
   },
-  button: {
-    marginTop: 15,
-    padding: 5,
-    width: 210,
-    height: 50,
-    marginLeft: 30,
-  },
-  buttonGoogle: {
+  googleButton: {
     justifyContent: 'center',
-    marginTop: 20,
     margin: 5,
     width: 150,
     height: 50,
-  },
-  checkbox: {
-    alignSelf: 'center',
-  },
-  labelCheckbox: {
-    margin: 8,
-    fontSize: 18,
-  },
-  checkboxContainer: {
-    flexDirection: 'row',
-    margin: 10,
-    marginTop: 15,
   },
 });
 
