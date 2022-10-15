@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export default async function signUp(data, userType) {
+  console.log('sign Up');
   try {
     console.log('data:', data);
     const response = await axios.post('http://192.168.0.76:8000/users', {

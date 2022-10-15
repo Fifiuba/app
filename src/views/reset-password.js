@@ -9,7 +9,7 @@ import {Text,
 } from 'react-native-paper';
 import resetPassword from '../services/reset-password';
 
-const ResetPasswordView = () => {
+const ResetPasswordView = (props) => {
   const [email, setEmail] = useState('');
   const [send, setSend] = useState(false);
   const [msg, setMsg] = useState('');
@@ -58,7 +58,7 @@ const style = StyleSheet.create({
   },
   card: {
     marginTop: 190,
-    height: 320,
+    height: 335,
     width: 350,
     padding: 35,
     backgroundColor: 'white',
@@ -89,6 +89,8 @@ const style = StyleSheet.create({
   msg: {
     marginTop: 10,
     textAlign: 'center',
+    fontSize: 18,
+    color: '#205C5C',
   },
 });
 

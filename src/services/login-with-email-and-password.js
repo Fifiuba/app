@@ -2,7 +2,7 @@ import axios from 'axios';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 
 export default async function loginWithEmailAndPassword(data) {
-  console.log('login with email and password');
+  console.log('Login with email and password');
   try {
     const token = await authFirebase(data);
     console.log('token firebase:', token);

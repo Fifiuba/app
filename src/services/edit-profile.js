@@ -7,7 +7,6 @@ const isModified = async (key, newValue) => {
 };
 
 const updateUserInfo = async (userInfo) => {
-  console.log('USER INFO');
   try {
     const keys = Object.getOwnPropertyNames(userInfo);
     for (let idx = 0; idx < keys.length; idx++) {
@@ -20,14 +19,12 @@ const updateUserInfo = async (userInfo) => {
         } else {
           newValue = value;
         }
-        console.log('new value:', newValue);
         if (newValue) {
           await AsyncStorage.setItem(key, newValue);
         }
       }
     }
   } catch (error) {
-    console.log('ERROR USER INFO');
     alert(error.message);
     console.error(error);
     return nill;
@@ -49,24 +46,22 @@ const getFields = (data) => {
   const typeUserInfo = {};
 
   const keys = Object.getOwnPropertyNames(data);
-  console.log('KEYS:', keys);
+  console.log('keys:', keys);
 
   for (let idx = 0; idx < keys.length; idx++) {
     const key = keys[idx];
-    console.log('key:', key);
     const value = data[key];
-    console.log('value:', value);
     if (value != '' || value != 0) {
       userInfo[key] = value;
-      console.log('userInfo:', userInfo);
     }
+    console.log('userInfo:', userInfo);
   };
   return [userInfo, typeUserInfo];
 };
 
 export default async function editProfile(data) {
+  console.log('Edit profile');
   try {
-    console.log('DATA:', data);
     const userType = await getUserInfo('user_type');
     const params = {
       'user_type': userType,

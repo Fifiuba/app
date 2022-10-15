@@ -1,17 +1,20 @@
 import {getAuth, sendPasswordResetEmail} from 'firebase/auth';
 
 const resetPassword = async (email, setSend, setMsg, setLoading) => {
+  console.log('Reset password');
   try {
     const auth = getAuth();
     await sendPasswordResetEmail(auth, email);
     setSend(true);
     setLoading(false);
     setMsg('Email sent succesfully!');
+    console.log('Email sent');
   } catch(error) {
-    const errorMessage = error.message;
     setSend(true);
     setLoading(false);
-    setMsg(errorMessage);
+    setMsg(error.message);
+    alert(error.message);
+    console.error(error.message);
   }
 };
 

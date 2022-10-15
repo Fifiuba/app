@@ -19,7 +19,6 @@ const Profile = (props) => {
     for (let idx = 0; idx < keys.length; idx++) {
       const key = keys[idx];
       const value = userInfo[key];
-      console.log('value:', value);
       if (value) {
         if (key == 'name') {
           setName(value);
@@ -35,10 +34,10 @@ const Profile = (props) => {
         }
       } else {
         if (key == 'age') {
-          setAge('Edad Desconocida');
+          setAge('Desconocida');
         }
         if (key == 'phone_number') {
-          setPhone('Teléfono Desconocido');
+          setPhone('Desconocido');
         }
       }
     }
