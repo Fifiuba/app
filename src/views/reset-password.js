@@ -20,12 +20,11 @@ const ResetPasswordView = (props) => {
     },
   });
 
-  const onSubmit = async (email) => {
+  const onSubmit = async (data) => {
     try {
+      console.log('email:', data.email);
       setLoading(true);
-      if (resetPassword(email, setSend, setMsg, setLoading)) {
-        props.onNavigation.navigate('IniciarSesion');
-      };
+      await resetPassword(data.email, setSend, setMsg, setLoading);
     } catch (error) {
       console.error(error.message);
       alert(error.message);
@@ -88,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#dddddd',
   },
   card: {
-    marginTop: 190,
+    marginTop: 170,
     height: 335,
     width: 350,
     padding: 35,

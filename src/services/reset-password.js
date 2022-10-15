@@ -7,12 +7,12 @@ const resetPassword = async (email, setSend, setMsg, setLoading) => {
     await sendPasswordResetEmail(auth, email);
     setSend(true);
     setLoading(false);
-    setMsg('Email sent succesfully!');
-    console.log('Email sent');
+    setMsg('Mail enviado');
+    console.log('Mail sent');
   } catch (error) {
     setSend(true);
     setLoading(false);
-    setMsg(error.message);
+    setMsg('Error al enviar el mail');
     console.error(error.message);
     return null;
   }
