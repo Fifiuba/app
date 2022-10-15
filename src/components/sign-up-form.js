@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, Switch} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
-import CheckBox from 'expo-checkbox';
 import {useForm, Controller} from 'react-hook-form';
 import signUp from '../services/sign-up';
 
 const SignUpForm = (props) => {
-  const [isSelectedPassanger, setSelectionPassanger] = useState(false);
-  const [isSelectedDriver, setSelectionDriver] = useState(false);
   const [code, setCode] = useState(false);
+  const [isPassenger, setIsPassenger] = useState(true);
+  const toggleSwitch = () => setIsPassenger((previousState) => !previousState);
 
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
@@ -22,7 +21,7 @@ const SignUpForm = (props) => {
   });
 
   const userType = () => {
-    if (isSelectedDriver) {
+    if (!isPassenger) {
       return 'driver';
     } else {
       return 'passenger';
@@ -43,8 +42,8 @@ const SignUpForm = (props) => {
   };
 
   return (
-    <View style={signUpStyle.container}>
-      <Text style={signUpStyle.title}>FIFIUBA</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>FIFIUBA</Text>
       <Controller control={control}
         rules={{
           required: true,
@@ -53,7 +52,7 @@ const SignUpForm = (props) => {
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
             theme={{colors: {primary: 'grey'}, roundness: 10}}
-            style={signUpStyle.input}
+            style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -79,7 +78,7 @@ const SignUpForm = (props) => {
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
             theme={{colors: {primary: 'grey'}, roundness: 10}}
-            style={signUpStyle.input}
+            style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -102,7 +101,7 @@ const SignUpForm = (props) => {
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
             theme={{colors: {primary: 'grey'}, roundness: 10}}
-            style={signUpStyle.input}
+            style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -123,7 +122,7 @@ const SignUpForm = (props) => {
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
             theme={{colors: {primary: 'grey'}, roundness: 10}}
-            style={signUpStyle.input}
+            style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -146,7 +145,7 @@ const SignUpForm = (props) => {
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
             theme={{colors: {primary: 'grey'}, roundness: 10}}
-            style={signUpStyle.input}
+            style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -164,21 +163,16 @@ const SignUpForm = (props) => {
       <Text>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
       <Text>Mínimo {constraints.password.min}</Text>}
-      <View style={signUpStyle.checkboxContainer}>
-        <CheckBox
-          value={isSelectedPassanger}
-          onValueChange={() => setSelectionPassanger(true)}
-          style={signUpStyle.checkbox}
-          color={Colors.blueGrey800}
+      <View style={styles.switchContainer}>
+        <Text style={styles.text}>Pasajero</Text>
+        <Switch
+          trackColor={{false: '#767577', true: '#BFBFBD'}}
+          thumbColor={isPassenger ? '#4572AD' : '#f4f3f4'}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isPassenger}
         />
-        <Text style={signUpStyle.labelCheckbox}>Pasajero</Text>
-        <CheckBox
-          value={isSelectedDriver}
-          onValueChange={() => setSelectionDriver(true)}
-          style={signUpStyle.checkbox}
-          color={Colors.blueGrey800}
-        />
-        <Text style={signUpStyle.labelCheckbox}>Chofer</Text>
+        <Text style={styles.text}>Chofer</Text>
       </View>
       { code &&
         <Controller control={control}
@@ -188,7 +182,7 @@ const SignUpForm = (props) => {
           render={({field: {onChange, onBlur, value}}) => (
             <TextInput
               theme={{colors: {primary: 'grey'}, roundness: 10}}
-              style={signUpStyle.input}
+              style={styles.input}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -208,14 +202,17 @@ const SignUpForm = (props) => {
       <Text>Mínimo {constraints.code.min}</Text>}
       <Button
         color={Colors.blue800}
-        style={signUpStyle.button}
+        style={styles.button}
         mode="contained"
         onPress={handleSubmit(onSubmit)}
       >
-        <Text style={{fontSize: 18}}>Registrar</Text>
+        <Text style={{fontSize: 18}}>Registrarse</Text>
       </Button>
       <View style={{margin: 5}}>
-        <Text style={{marginTop: 5, textAlign: 'center', fontSize: 18}}>
+        <Text style={{marginTop: 5,
+          textAlign: 'center',
+          fontSize: 18,
+          color: '#282829'}}>
                     ¿Ya tenes cuenta?{'\n'}
           <Text
             style={{textDecorationLine: 'underline',
@@ -244,49 +241,41 @@ const isValidEmail = (email) =>
       email,
   );
 
-const signUpStyle = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignContent: 'center',
     padding: 30,
     height: 700,
-    marginTop: 5,
+    marginTop: 70,
   },
   title: {
     fontSize: 40,
-    paddingLeft: 95,
+    paddingLeft: 80,
     margin: 10,
     marginTop: 15,
-  },
-  loginIcon: {
-    marginLeft: 150,
-    marginTop: 15,
-    marginBottom: 15,
+    color: '#3B3C3D',
   },
   input: {
     marginTop: 5,
   },
-  label: {
-    fontSize: 16,
-  },
-  labelCheckbox: {
+  text: {
     margin: 8,
     fontSize: 18,
+    color: '#282829',
   },
-  checkboxContainer: {
+  switchContainer: {
+    flex: 1,
     flexDirection: 'row',
-    margin: 5,
-    marginTop: 15,
-  },
-  checkbox: {
-    alignSelf: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   button: {
-    marginTop: 25,
     height: 55,
     width: 200,
     justifyContent: 'center',
     marginLeft: 70,
+    marginBottom: 15,
   },
 });
 
