@@ -40,6 +40,6 @@ export default async function getProfile() {
   } catch (error) {
     alert(error.message);
     console.error(error.response);
-    return nill;
+    return null;
   }
 }

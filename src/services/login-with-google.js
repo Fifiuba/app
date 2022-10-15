@@ -12,7 +12,7 @@ export default async function loginWithGoogle(token, userType) {
   } catch (error) {
     alert(error.message);
     console.error(error.message);
-    return nill;
+    return null;
   }
 }
 

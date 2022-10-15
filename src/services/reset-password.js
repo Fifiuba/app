@@ -14,6 +14,7 @@ const resetPassword = async (email, setSend, setMsg, setLoading) => {
     setLoading(false);
     setMsg(error.message);
     console.error(error.message);
+    return null;
   }
 };
 

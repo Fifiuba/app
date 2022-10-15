@@ -38,12 +38,13 @@ const ResetPasswordView = (props) => {
           mode="contained"
           onPress={() => {
             setLoading(true);
-            resetPassword(email, setSend, setMsg, setLoading);
-            props.onNavigation.navigate('Iniciar sesión');
+            if (resetPassword(email, setSend, setMsg, setLoading)) {
+              props.onNavigation.navigate('Iniciar sesión');
+            };
           }}>
-          <Text style={{fontSize: 20, color: 'white'}}>Enviar Link</Text>
+          <Text style={{fontSize: 20, color: 'white'}}>Enviar link</Text>
         </Button>
-        <Text style={style.msg}> {send ? msg : ''} </Text>
+        <Text style={style.msg}> {send ? msg : ''}</Text>
       </View>
     </View>
   );

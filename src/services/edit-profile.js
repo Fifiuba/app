@@ -84,6 +84,6 @@ export default async function editProfile(data) {
   } catch (error) {
     alert(error.message);
     console.error(error.message);
-    return nill;
+    return null;
   }
 }

@@ -12,7 +12,7 @@ export default async function loginWithEmailAndPassword(data) {
   } catch (error) {
     console.error(error.message);
     alert(error.message);
-    return nill;
+    return null;
   }
 }
 
