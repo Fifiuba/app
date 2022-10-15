@@ -9,7 +9,7 @@ const resetPassword = async (email, setSend, setMsg, setLoading) => {
     setLoading(false);
     setMsg('Email sent succesfully!');
     console.log('Email sent');
-  } catch(error) {
+  } catch (error) {
     setSend(true);
     setLoading(false);
     setMsg(error.message);
