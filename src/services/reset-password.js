@@ -13,7 +13,6 @@ const resetPassword = async (email, setSend, setMsg, setLoading) => {
     setSend(true);
     setLoading(false);
     setMsg(error.message);
-    alert(error.message);
     console.error(error.message);
   }
 };
