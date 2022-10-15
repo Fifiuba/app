@@ -19,7 +19,7 @@ import loginWithEmailAndPassword from '../services/login-with-email-and-password
 WebBrowser.maybeCompleteAuthSession();
 const LoginForm = (props) => {
   const [isPassenger, setIsPassenger] = useState(true);
-  const toggleSwitch = () => setIsPassenger((previousState) => !previousState);
+  const toggleSwitch = () => setIsPassenger(false);
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       email: '',
@@ -52,7 +52,7 @@ const LoginForm = (props) => {
 
   const setUserType = () => {
     let userType = 'passenger';
-    if (!isSelectedPassenger) {
+    if (!isPassenger) {
       userType = 'driver';
     }
     return userType;
@@ -139,7 +139,7 @@ const LoginForm = (props) => {
       {errors.password?.type === 'minLength' &&
       <Text>Mínimo {constraints.password.min}</Text>}
       <View style={styles.switchContainer}>
-        <Text style={styles.text}>Pasajero</Text>
+        <Text style={styles.text}>Chofer</Text>
         <Switch
           trackColor={{false: '#767577', true: '#BFBFBD'}}
           thumbColor={isPassenger ? '#4572AD' : '#f4f3f4'}
@@ -147,7 +147,7 @@ const LoginForm = (props) => {
           onValueChange={toggleSwitch}
           value={isPassenger}
         />
-        <Text style={styles.text}>Chofer</Text>
+        <Text style={styles.text}>Pasajero</Text>
       </View>
       <Button
         style={styles.button}

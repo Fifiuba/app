@@ -7,7 +7,7 @@ import signUp from '../services/sign-up';
 const SignUpForm = (props) => {
   const [code, setCode] = useState(false);
   const [isPassenger, setIsPassenger] = useState(true);
-  const toggleSwitch = () => setIsPassenger((previousState) => !previousState);
+  const toggleSwitch = () => setIsPassenger(false);
 
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
@@ -36,7 +36,7 @@ const SignUpForm = (props) => {
       // Send data to users service for signing up
       // setUserType(data);
       if (signUp(data, userType())) {
-        props.onNavigation.navigate('Iniciar sesión');
+        props.onNavigation.navigate('IniciarSesion');
       }
     }
   };
@@ -164,7 +164,7 @@ const SignUpForm = (props) => {
       {errors.password?.type === 'minLength' &&
       <Text>Mínimo {constraints.password.min}</Text>}
       <View style={styles.switchContainer}>
-        <Text style={styles.text}>Pasajero</Text>
+        <Text style={styles.text}>Chofer</Text>
         <Switch
           trackColor={{false: '#767577', true: '#BFBFBD'}}
           thumbColor={isPassenger ? '#4572AD' : '#f4f3f4'}
@@ -172,7 +172,7 @@ const SignUpForm = (props) => {
           onValueChange={toggleSwitch}
           value={isPassenger}
         />
-        <Text style={styles.text}>Chofer</Text>
+        <Text style={styles.text}>Pasajero</Text>
       </View>
       { code &&
         <Controller control={control}
@@ -246,8 +246,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     padding: 30,
-    height: 700,
-    marginTop: 70,
+    height: 750,
+    marginTop: 50,
   },
   title: {
     fontSize: 40,
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
     width: 200,
     justifyContent: 'center',
     marginLeft: 70,
-    marginBottom: 15,
+    marginTop: 15,
   },
 });
 
