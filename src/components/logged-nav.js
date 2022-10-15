@@ -10,7 +10,7 @@ export default function LoggedNav() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        options={{title: ''}}
+        options={{title: '', headerShown: false}}
         name="Home">
         {(navigation) =>
           <HomeView onNavigation={navigation}/>
@@ -18,14 +18,14 @@ export default function LoggedNav() {
       </Stack.Screen>
       <Stack.Screen
         options={{title: ''}}
-        name="Mi perfil">
+        name="MiPerfil">
         {(navigation) =>
           <ProfileView onNavigation={navigation}/>
         }
       </Stack.Screen>
       <Stack.Screen
         options={{title: ''}}
-        name="Editar perfil">
+        name="EditarPerfil">
         {(navigation) =>
           <EditProfileView onNavigation={navigation}/>
         }
