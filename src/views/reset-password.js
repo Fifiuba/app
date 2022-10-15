@@ -39,6 +39,7 @@ const ResetPasswordView = () => {
           onPress={() => {
             setLoading(true);
             resetPassword(email, setSend, setMsg, setLoading);
+            props.onNavigation.navigate('Iniciar sesión');
           }}>
           <Text style={{fontSize: 20, color: 'white'}}>Enviar Link</Text>
         </Button>
@@ -88,7 +89,6 @@ const style = StyleSheet.create({
   msg: {
     marginTop: 10,
     textAlign: 'center',
-    color: 'red',
   },
 });
 
