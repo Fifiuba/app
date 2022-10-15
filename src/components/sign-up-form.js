@@ -250,7 +250,7 @@ const signUpStyle = StyleSheet.create({
     alignContent: 'center',
     padding: 30,
     height: 700,
-    marginTop: 20,
+    marginTop: 5,
   },
   title: {
     fontSize: 40,

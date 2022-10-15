@@ -225,7 +225,7 @@ const loginStyle = StyleSheet.create({
     backgroundColor: 'white',
     padding: 30,
     margin: 30,
-    marginTop: 70,
+    marginTop: 30,
     height: 640,
     borderRadius: 16,
   },
@@ -240,7 +240,7 @@ const loginStyle = StyleSheet.create({
   },
   label: {
     margin: 8,
-    fontSize: 16,
+    fontSize: 17,
   },
   subcontainer: {
     alignItems: 'center',
@@ -250,9 +250,9 @@ const loginStyle = StyleSheet.create({
   button: {
     marginTop: 15,
     padding: 5,
-    width: 220,
+    width: 210,
     height: 50,
-    marginLeft: 40,
+    marginLeft: 30,
   },
   buttonGoogle: {
     justifyContent: 'center',

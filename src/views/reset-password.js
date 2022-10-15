@@ -9,7 +9,7 @@ import {Text,
 } from 'react-native-paper';
 import resetPassword from '../services/reset-password';
 
-const ResetPasswordView = (props) => {
+const ResetPasswordView = () => {
   const [email, setEmail] = useState('');
   const [send, setSend] = useState(false);
   const [msg, setMsg] = useState('');
@@ -23,6 +23,7 @@ const ResetPasswordView = (props) => {
           label="Correo electrónico"
           type='email'
           mode= "outlined"
+          text='email'
           onChangeText={(text) => setEmail(text)}
           style={style.input}
           theme={{colors: {primary: 'grey'}, roundness: 10}}
@@ -39,7 +40,7 @@ const ResetPasswordView = (props) => {
             setLoading(true);
             resetPassword(email, setSend, setMsg, setLoading);
           }}>
-          <Text style={{fontSize: 20, color: 'white'}}>Enviar</Text>
+          <Text style={{fontSize: 20, color: 'white'}}>Enviar Link</Text>
         </Button>
         <Text style={style.msg}> {send ? msg : ''} </Text>
       </View>
@@ -55,8 +56,8 @@ const style = StyleSheet.create({
     backgroundColor: '#dddddd',
   },
   card: {
-    marginTop: 230,
-    height: 300,
+    marginTop: 190,
+    height: 320,
     width: 350,
     padding: 35,
     backgroundColor: 'white',
@@ -75,16 +76,19 @@ const style = StyleSheet.create({
   },
   button: {
     padding: 5,
-    width: 170,
+    width: 215,
     height: 50,
-    marginLeft: 45,
+    marginLeft: 30,
+    marginTop: 15,
   },
   loading: {
-    marginTop: 10,
+    marginTop: 15,
+    color: 'grey',
   },
   msg: {
     marginTop: 10,
     textAlign: 'center',
+    color: 'red',
   },
 });
 

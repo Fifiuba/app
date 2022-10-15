@@ -99,7 +99,7 @@ const Profile = (props) => {
         </View>
       </View>
 
-      <View style={styles.menuWrapper}>
+      <View>
         <TouchableRipple
           onPress={() => props.onNavigation.navigate('Editar perfil')}>
           <View style={styles.menuItem}>
@@ -128,13 +128,19 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 20,
   },
-  userInfoSection: {
-    paddingHorizontal: 30,
-    marginBottom: 25,
-  },
   title: {
     fontSize: 28,
-    marginLeft: 88,
+    marginLeft: 75,
+  },
+  image: {
+    marginTop: 15,
+    width: 130,
+    height: 130,
+    marginLeft: 105,
+  },
+  userInfoSection: {
+    paddingHorizontal: 30,
+    marginBottom: 20,
   },
   caption: {
     fontSize: 18,
@@ -153,9 +159,6 @@ const styles = StyleSheet.create({
     width: '50%',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  menuWrapper: {
-    marginTop: 25,
   },
   menuItem: {
     flexDirection: 'row',
@@ -181,12 +184,6 @@ const styles = StyleSheet.create({
     width: 220,
     height: 50,
     marginLeft: 40,
-  },
-  image: {
-    marginTop: 35,
-    width: 130,
-    height: 130,
-    marginLeft: 115,
   },
   action: {
     flexDirection: 'row',

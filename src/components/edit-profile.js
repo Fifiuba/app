@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     marginTop: 35,
   },
   buttonEdit: {
-    marginTop: 60,
+    marginTop: 40,
     padding: 5,
     width: 200,
     height: 50,
