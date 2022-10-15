@@ -39,7 +39,7 @@ const LoginForm = (props) => {
     } catch (error) {
       console.error(error.message);
       alert(error.message);
-      return nill;
+      return null;
     }
   };
 
