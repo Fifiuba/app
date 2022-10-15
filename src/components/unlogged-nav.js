@@ -10,18 +10,21 @@ export default function UnloggedNav(props) {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Iniciar">
+        options={{title: ''}}
+        name="Iniciar sesión">
         {(navigation) =>
           <LoginView onLogin={props.onLogin} onNavigation={navigation}/>
         }
       </Stack.Screen>
       <Stack.Screen
-        name="Reset Password">
+        options={{title: ''}}
+        name="Recuperar contraseña">
         {(navigation) =>
           <ResetPasswordView onNavigation={navigation}/>
         }
       </Stack.Screen>
       <Stack.Screen
+        options={{title: ''}}
         name="Registrar">
         {(navigation) =>
           <SignUpView onNavigation={navigation}/>

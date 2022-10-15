@@ -91,7 +91,7 @@ const LoginForm = (props) => {
 
   return (
     <View style={loginStyle.container}>
-      <Text style={loginStyle.title}>FIFI-UBA</Text>
+      <Text style={loginStyle.title}>FIFIUBA</Text>
       <Controller control={control}
         rules={{
           required: true,
@@ -118,10 +118,12 @@ const LoginForm = (props) => {
       <Text style={{color: 'red'}}>Ingrese un correo electrónico válido</Text>}
       <View style={{marginTop: 10}}>
         <Text
+          onPress={() => props.onNavigation.navigate('Recuperar contraseña')}
           style={{textAlign: 'right',
-            fontSize: 18,
+            fontSize: 17,
             color: '#0D516B',
-            textDecorationLine: 'underline'}}>
+            textDecorationLine: 'underline',
+          }}>
           ¿Olvidaste la contraseña?
         </Text>
       </View>
@@ -174,12 +176,12 @@ const LoginForm = (props) => {
         onPress={handleSubmit(onSubmit)}>
         <Text style={{fontSize: 20}}>Iniciar sesión</Text>
       </Button>
-      <View style={loginStyle.subcontainerRedes}>
+      <View style={loginStyle.subcontainer}>
         <Text style={loginStyle.label}>
           O iniciar sesión con
         </Text>
         <Button
-          style={loginStyle.buttonRedes}
+          style={loginStyle.buttonGoogle}
           color={Colors.red800}
           mode="contained"
           onPress={() => {
@@ -220,25 +222,27 @@ const loginStyle = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignContent: 'center',
+    backgroundColor: 'white',
     padding: 30,
     margin: 30,
+    marginTop: 70,
     height: 640,
+    borderRadius: 16,
   },
   title: {
     fontSize: 40,
-    paddingLeft: 60,
+    paddingLeft: 65,
     margin: 10,
   },
   input: {
-    marginTop: 5,
-    marginBottom: 5,
+    marginTop: 15,
+    marginBottom: 15,
   },
   label: {
     margin: 8,
-    fontSize: 18,
+    fontSize: 16,
   },
-  subcontainerRedes: {
-    margin: 15,
+  subcontainer: {
     alignItems: 'center',
     height: 200,
     paddingTop: 10,
@@ -250,11 +254,15 @@ const loginStyle = StyleSheet.create({
     height: 50,
     marginLeft: 40,
   },
-  buttonRedes: {
+  buttonGoogle: {
     justifyContent: 'center',
-    margin: 15,
+    marginTop: 20,
+    margin: 5,
     width: 150,
     height: 50,
+  },
+  checkbox: {
+    alignSelf: 'center',
   },
   labelCheckbox: {
     margin: 8,
@@ -262,11 +270,8 @@ const loginStyle = StyleSheet.create({
   },
   checkboxContainer: {
     flexDirection: 'row',
-    margin: 5,
+    margin: 10,
     marginTop: 15,
-  },
-  checkbox: {
-    alignSelf: 'center',
   },
 });
 

@@ -4,11 +4,12 @@ import {View, StyleSheet} from 'react-native';
 import {Text,
   TextInput,
   Button,
-  ActivityIndicator} from 'react-native-paper';
+  ActivityIndicator,
+  Colors,
+} from 'react-native-paper';
 import resetPassword from '../services/reset-password';
 
-
-const ResetPasswordView = (navigation) => {
+const ResetPasswordView = (props) => {
   const [email, setEmail] = useState('');
   const [send, setSend] = useState(false);
   const [msg, setMsg] = useState('');
@@ -19,32 +20,29 @@ const ResetPasswordView = (navigation) => {
       <View style={style.card}>
         <Text style={style.title}> Recuperar contraseña </Text>
         <TextInput
-          label="Email"
+          label="Correo electrónico"
           type='email'
           mode= "outlined"
           onChangeText={(text) => setEmail(text)}
-          style={style.emailField}
+          style={style.input}
+          theme={{colors: {primary: 'grey'}, roundness: 10}}
         />
         <ActivityIndicator
           animating={loading}
           style={style.loading}
         />
         <Button
-          mode="outlined"
           style={style.button}
+          color={Colors.blue800}
+          mode="contained"
           onPress={() => {
             setLoading(true);
             resetPassword(email, setSend, setMsg, setLoading);
-          }}
-        >
-          <Text style={{
-            color: 'white',
-          }}> enviar </Text>
+          }}>
+          <Text style={{fontSize: 20, color: 'white'}}>Enviar</Text>
         </Button>
         <Text style={style.msg}> {send ? msg : ''} </Text>
-
       </View>
-
     </View>
   );
 };
@@ -53,32 +51,33 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#16222e',
-
+    backgroundColor: '#dddddd',
   },
   card: {
-    height: 250,
+    marginTop: 230,
+    height: 300,
     width: 350,
-    padding: 32,
+    padding: 35,
     backgroundColor: 'white',
     borderRadius: 16,
-  },
-  emailField: {
-    height: 40,
-    fontSize: 13,
+    justifyContent: 'center',
   },
   title: {
-    fontSize: 20,
-    marginBottom: 1,
+    marginTop: 30,
+    fontSize: 23,
+    marginBottom: 40,
     textAlign: 'center',
   },
+  input: {
+    marginTop: 5,
+    marginBottom: 5,
+  },
   button: {
-    marginTop: 20,
-    width: '100%',
-    alignSelf: 'center',
-    backgroundColor: '#1f7a50',
+    padding: 5,
+    width: 170,
+    height: 50,
+    marginLeft: 45,
   },
   loading: {
     marginTop: 10,

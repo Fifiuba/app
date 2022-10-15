@@ -3,7 +3,7 @@ import {View, StyleSheet, Text} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import CheckBox from 'expo-checkbox';
 import {useForm, Controller} from 'react-hook-form';
-import signup from '../services/sign-up';
+import signUp from '../services/sign-up';
 
 const SignUpForm = (props) => {
   const [isSelectedPassanger, setSelectionPassanger] = useState(false);
@@ -14,20 +14,18 @@ const SignUpForm = (props) => {
     defaultValues: {
       name: '',
       email: '',
-      phone: '',
+      phone_number: '',
       age: 0,
       password: '',
       code: '',
     },
   });
 
-  const PASSANGER = 'passenger';
-  const DRIVER = 'driver';
-  const setUserType = (data) => {
+  const userType = () => {
     if (isSelectedDriver) {
-      data.type = DRIVER;
+      return 'driver';
     } else {
-      data.type = PASSANGER;
+      return 'passenger';
     }
   };
 
@@ -37,15 +35,16 @@ const SignUpForm = (props) => {
       setCode(true);
     } else {
       // Send data to users service for signing up
-      setUserType(data);
-      signup(data);
-      props.onNavigation.navigate('Iniciar');
+      // setUserType(data);
+      if (signUp(data, userType())) {
+        props.onNavigation.navigate('Iniciar sesión');
+      }
     }
   };
 
   return (
     <View style={signUpStyle.container}>
-      <Text style={signUpStyle.title}>FIFI-UBA</Text>
+      <Text style={signUpStyle.title}>FIFIUBA</Text>
       <Controller control={control}
         rules={{
           required: true,
@@ -108,11 +107,11 @@ const SignUpForm = (props) => {
             onChangeText={onChange}
             value={value}
             mode="outlined"
-            label="Número de teléfono"
-            placeholder="Número de teléfono"
+            label="Teléfono"
+            placeholder="Teléfono"
           />
         )}
-        name="phone"
+        name="phone_number"
       />
       {errors.phone?.type === 'required' &&
       <Text style={{color: 'red'}}>Campo obligatorio</Text>}
@@ -168,14 +167,14 @@ const SignUpForm = (props) => {
       <View style={signUpStyle.checkboxContainer}>
         <CheckBox
           value={isSelectedPassanger}
-          onValueChange={setSelectionPassanger}
+          onValueChange={() => setSelectionPassanger(true)}
           style={signUpStyle.checkbox}
           color={Colors.blueGrey800}
         />
         <Text style={signUpStyle.labelCheckbox}>Pasajero</Text>
         <CheckBox
           value={isSelectedDriver}
-          onValueChange={setSelectionDriver}
+          onValueChange={() => setSelectionDriver(true)}
           style={signUpStyle.checkbox}
           color={Colors.blueGrey800}
         />
@@ -222,7 +221,7 @@ const SignUpForm = (props) => {
             style={{textDecorationLine: 'underline',
               fontSize: 18,
               color: '#0D516B'}}
-            onPress={() => props.onNavigation.navigate('Iniciar')}>
+            onPress={() => props.onNavigation.navigate('Iniciar sesión')}>
                         Iniciar sesión
           </Text>
         </Text>
@@ -251,6 +250,7 @@ const signUpStyle = StyleSheet.create({
     alignContent: 'center',
     padding: 30,
     height: 700,
+    marginTop: 20,
   },
   title: {
     fontSize: 40,
