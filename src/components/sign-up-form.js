@@ -153,7 +153,7 @@ const SignUpForm = (props) => {
             mode="outlined"
             label="Contraseña"
             placeholder="Contraseña"
-            type="password"
+            secureTextEntry={true}
           />
         )}
         name="password"
