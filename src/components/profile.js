@@ -100,7 +100,12 @@ const Profile = (props) => {
 
       <View>
         <TouchableRipple
-          onPress={() => props.onNavigation.navigate('EditarPerfil')}>
+          onPress={() => props.onNavigation.navigate('EditarPerfil', {
+            'name': name,
+            'email': email,
+            'phone': phone,
+            'age': age,
+          })}>
           <View style={styles.menuItem}>
             <Text style={styles.menuItemText}>Editar perfil</Text>
           </View>

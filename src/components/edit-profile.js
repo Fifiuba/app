@@ -1,16 +1,17 @@
 import React, {useState} from 'react';
-import {Text, View, TextInput, Image, StyleSheet} from 'react-native';
+import {Text, View, Image, StyleSheet} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 
-import {useTheme, Colors, Button} from 'react-native-paper';
+import {Colors, Button, TextInput} from 'react-native-paper';
 import editProfile from '../services/edit-profile';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function EditProfile(props) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [age, setAge] = useState(0);
 
-  const {colors} = useTheme();
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       name: '',
@@ -36,7 +37,12 @@ export default function EditProfile(props) {
         const name = await getUserInfo('name');
         setName(name);
         const email = await getUserInfo('email');
+        console.log('email:', email);
         setEmail(email);
+        const phone = await getUserInfo('phone_number');
+        setPhone(phone);
+        const age = await getUserInfo('age');
+        setAge(age);
       } catch (error) {
         console.error(error.message);
         alert(error.message);
@@ -70,93 +76,79 @@ export default function EditProfile(props) {
       </View>
 
       <View style={styles.subcontainer}>
-        <View style={styles.action}>
-          <Controller
-            control={control}
-            rules={{
-              maxLength: constraints.name.max,
-            }}
-            render={({field: {onChange, onBlur, value}}) => (
-              <TextInput
-                style={[
-                  styles.textInput,
-                  {
-                    color: colors.text,
-                  },
-                ]}
-                placeholder="Nombre"
-                onBlur={onBlur}
-                onChangeText={(value) => onChange(value)}
-                value={value}
-              />
-            )}
-            name="name"
-          />
-        </View>
+        <Controller control={control}
+          rules={{
+            required: true,
+            maxLength: constraints.name.max,
+            minLength: constraints.name.min}}
+          render={({field: {onChange, onBlur, value}}) => (
+            <TextInput
+              theme={{colors: {primary: 'grey'}, roundness: 10}}
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              mode="outlined"
+              label="Nombre"
+              placeholder={name}
+            />
+          )}
+          name="name"
+        />
         {errors.name?.type === 'maxLength' &&
-        <Text style={styles.invalidText}>
-          Máximo {constraints.name.max} letras
-        </Text>}
-        <View style={styles.action}>
-          <Controller
-            control={control}
-            rules={{
-              maxLength: constraints.age.max,
-            }}
-            render={({field: {onChange, onBlur, value}}) => (
-              <TextInput
-                style={[
-                  styles.textInput,
-                  {
-                    color: colors.text,
-                  },
-                ]}
-                mode="outlined"
-                placeholder="Edad"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-            name="age"
-          />
-        </View>
-        {errors.age?.type === 'maxLength' &&
-        <Text style={styles.invalidText}>
-          Máximo {constraints.age.max} números
-        </Text>}
-        <View style={styles.action}>
-          <Text style={styles.textInput}>{email}</Text>
-        </View>
-        <View style={styles.action}>
-          <Controller
-            control={control}
-            rules={{
-              maxLength: constraints.phone.max,
-            }}
-            render={({field: {onChange, onBlur, value}}) => (
-              <TextInput
-                style={[
-                  styles.textInput,
-                  {
-                    color: colors.text,
-                  },
-                ]}
-                placeholder="Teléfono"
-                keyboardType="number-pad"
-                autoCorrect={false}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-            name="phone_number"
-          />
-        </View>
-        {errors.phone?.type === 'maxLength' &&
-        <Text style={styles.invalidText}>
-          Máximo {constraints.phone.max} números
-        </Text>}
+        <Text>Máximo {constraints.name.max}</Text>}
+        {errors.name?.type === 'minLength' &&
+        <Text>Mínimo {constraints.name.min}</Text>}
+        <Controller control={control}
+          render={() => (
+            <TextInput
+              theme={{colors: {primary: 'grey'}, roundness: 10}}
+              style={styles.input}
+              mode="outlined"
+              label={email}
+              disabled="true"
+            />
+          )}
+          name="email"
+        />
+        <Controller control={control}
+          rules={{
+            required: true,
+          }}
+          render={({field: {onChange, onBlur, value}}) => (
+            <TextInput
+              theme={{colors: {primary: 'grey'}, roundness: 10}}
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              mode="outlined"
+              label="Teléfono"
+              placeholder={phone}
+            />)}
+          name="phone_number"
+        />
+        <Controller control={control}
+          rules={{
+            required: true,
+            min: constraints.age.min,
+          }}
+          render={({field: {onChange, onBlur, value}}) => (
+            <TextInput
+              theme={{colors: {primary: 'grey'}, roundness: 10}}
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              mode="outlined"
+              label="Edad"
+              placeholder={age}
+            />
+          )}
+          name="age"
+        />
+        {errors.age?.type === 'min' &&
+        <Text>Mínimo {constraints.age.min}</Text>}
         <Button
           style={styles.buttonEdit}
           color={Colors.blue800}
@@ -194,11 +186,8 @@ const styles = StyleSheet.create({
     color: '#777777',
     fontSize: 20,
   },
-  action: {
-    flexDirection: 'row',
-    marginTop: 30,
-    marginBottom: 10,
-    paddingBottom: 5,
+  input: {
+    marginTop: 5,
   },
   button: {
     padding: 15,

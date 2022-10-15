@@ -28,14 +28,11 @@ const Home = (props) => {
 export default Home;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   categoryContainer: {
     flexDirection: 'row',
     width: '90%',
     alignSelf: 'center',
-    marginTop: 25,
+    marginTop: 100,
     marginBottom: 10,
   },
   categoryBtn: {
