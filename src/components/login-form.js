@@ -118,7 +118,7 @@ const LoginForm = (props) => {
       <Text style={{color: 'red'}}>Ingrese un correo electrónico válido</Text>}
       <View style={{marginTop: 10}}>
         <Text
-          onPress={() => props.onNavigation.navigate('Recuperar contraseña')}
+          onPress={() => props.onNavigation.navigate('RecuperarContraseña')}
           style={{textAlign: 'right',
             fontSize: 17,
             color: '#0D516B',
@@ -197,7 +197,7 @@ const LoginForm = (props) => {
               style={{textDecorationLine: 'underline',
                 fontSize: 18,
                 color: '#0D516B'}}
-              onPress={() => props.onNavigation.navigate('Registrar')}>
+              onPress={() => props.onNavigation.navigate('Registrarse')}>
                           Registrate
             </Text>
           </Text>

@@ -221,7 +221,7 @@ const SignUpForm = (props) => {
             style={{textDecorationLine: 'underline',
               fontSize: 18,
               color: '#0D516B'}}
-            onPress={() => props.onNavigation.navigate('Iniciar sesión')}>
+            onPress={() => props.onNavigation.navigate('IniciarSesion')}>
                         Iniciar sesión
           </Text>
         </Text>

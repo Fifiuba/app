@@ -50,7 +50,7 @@ export default function EditProfile(props) {
       const response = await editProfile(data);
       if (response) {
         console.log('Edición exitosa');
-        props.onNavigation.navigate('Mi perfil');
+        props.onNavigation.navigate('MiPerfil');
       }
     } catch (error) {
       alert(error.message);

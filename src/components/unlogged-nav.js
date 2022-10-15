@@ -11,7 +11,7 @@ export default function UnloggedNav(props) {
     <Stack.Navigator>
       <Stack.Screen
         options={{title: '', headerShown: false}}
-        name="IniciarSesión">
+        name="IniciarSesion">
         {(navigation) =>
           <LoginView onLogin={props.onLogin} onNavigation={navigation}/>
         }
