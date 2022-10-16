@@ -28,7 +28,7 @@ const authFirebase = async (data) => {
   } catch (error) {
     console.error(error.message);
     alert(error.message);
-    return nill;
+    return null;
   }
 };
 
@@ -43,6 +43,6 @@ const authUser = async (token) => {
   } catch (error) {
     console.error(error.message);
     alert(error.message);
-    return nill;
+    return null;
   }
 };

@@ -188,7 +188,7 @@ const SignUpForm = (props) => {
               value={value}
               mode="outlined"
               label="PIN de activación"
-              placeholder="XXXX"
+              placeholder="PIN"
             />
           )}
           name="code"
