@@ -17,6 +17,9 @@ export default function LoggedNav() {
         console.log('user_info:', userInfo);
         if (userInfo) {
           setUser(userInfo[0]);
+          if (userInfo[0].picture) {
+            user.picture = 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png';
+          }
         }
       } catch (error) {
         console.error(error.message);

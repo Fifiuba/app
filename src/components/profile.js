@@ -71,7 +71,7 @@ export default function Profile(props) {
       <View style={{alignItems: 'center'}}>
         <Text style={styles.title}>{user.name}</Text>
         <Image
-          source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
+          source={{uri: user.picture}}
           style={styles.image}
         />
       </View>
@@ -208,5 +208,6 @@ const styles = StyleSheet.create({
     width: 130,
     height: 130,
     marginLeft: 10,
+    borderRadius: 100,
   },
 });
