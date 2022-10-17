@@ -141,7 +141,7 @@ export default function Profile(props) {
               value={value}
               mode="outlined"
               label="Edad"
-              placeholder={user.age}
+              placeholder={user.age.toString()}
             />
           )}
           name="age"
