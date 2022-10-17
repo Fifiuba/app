@@ -21,7 +21,6 @@ export default function LoggedNav() {
             userInfo[0].picture = DEFAULT_URL_USER_PICTURE;
           }
           setUser(userInfo[0]);
-          console.log('user:', user);
         }
       } catch (error) {
         console.error(error.message);

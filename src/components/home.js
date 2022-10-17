@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+const DEFAULT_URL_USER_PICTURE = 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png';
+
 export default function Home(props) {
   return (
     <View style={styles.categoryContainer}>
@@ -18,7 +20,7 @@ export default function Home(props) {
         }}>
         <View style={styles.categoryIcon}>
           <Image
-            source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
+            source={{uri: DEFAULT_URL_USER_PICTURE}}
             style={styles.image}
           />
           <Text style={styles.categoryBtnTxt}>Mi perfil</Text>
