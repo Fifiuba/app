@@ -1,197 +1,212 @@
-import React, {useState} from 'react';
-import {View, SafeAreaView, StyleSheet, Image} from 'react-native';
-import {
-  Title,
-  Caption,
-  Text,
-  TouchableRipple,
-} from 'react-native-paper';
-import getProfile from '../services/get-profile';
+import React, {useContext} from 'react';
+import {Text, View, Image, StyleSheet} from 'react-native';
+import {useForm, Controller} from 'react-hook-form';
+import {Colors, Button, TextInput} from 'react-native-paper';
 
-const Profile = (props) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [age, setAge] = useState(0);
-  const [phone, setPhone] = useState('');
+import editProfile from '../services/edit-profile';
+import {UserContext} from '../context/user-context';
 
-  const setUserInfo = (userInfo) => {
-    const keys = Object.getOwnPropertyNames(userInfo);
-    for (let idx = 0; idx < keys.length; idx++) {
-      const key = keys[idx];
-      const value = userInfo[key];
-      if (value) {
-        if (key == 'name') {
-          setName(value);
-        }
-        if (key == 'email') {
-          setEmail(value);
-        }
-        if (key == 'age') {
-          setAge(value);
-        }
-        if (key == 'phone_number' || key == 'phone') {
-          setPhone(value);
-        }
-      } else {
-        if (key == 'age') {
-          setAge('Desconocida');
-        }
-        if (key == 'phone_number') {
-          setPhone('Desconocido');
+export default function Profile(props) {
+  const user = useContext(UserContext);
+
+  const {control, handleSubmit, formState: {errors}} = useForm({
+    defaultValues: {
+      name: '',
+      age: 0,
+      email: '',
+      phone_number: '',
+    },
+  });
+
+  const isModified = (value, newValue) => {
+    return value != newValue;
+  };
+
+  const updateUserInfo = (userInfo) => {
+    console.log('Updatting user info');
+    console.log('user:', user);
+    console.log('userInfo:', userInfo);
+    try {
+      const keys = Object.getOwnPropertyNames(userInfo);
+      for (let idx = 0; idx < keys.length; idx++) {
+        const key = keys[idx];
+        const value = userInfo[key];
+        if (isModified(user[key], value)) {
+          let newValue;
+          if (key == 'age' || key == 'id') {
+            newValue = value.toString();
+          } else {
+            newValue = value;
+          }
+          if (newValue) {
+            user[key] = newValue;
+          }
         }
       }
+      console.log('Updated user:', user);
+    } catch (error) {
+      alert(error.message);
+      console.error(error);
     }
   };
 
-  React.useEffect(() => {
-    const handleProfile = async () => {
-      try {
-        const userInfo = await getProfile();
-        console.log('user_info:', userInfo);
-        if (userInfo) {
-          setUserInfo(userInfo);
-        }
-      } catch (error) {
-        console.error(error.message);
-        alert(error.message);
+  const onSubmit = async (data) => {
+    try {
+      console.log('data:', data);
+      const response = await editProfile(data);
+      if (response) {
+        console.log('Edición exitosa');
+        updateUserInfo(response[0]);
+        console.log('updated user:', user);
+        props.onNavigation.navigate('MiPerfil');
       }
-    };
-    handleProfile();
-  }, []);
+    } catch (error) {
+      alert(error.message);
+      console.error(error.message);
+    }
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.userInfoSection}>
-        <Title style={styles.title}>{name}</Title>
+    <View style={styles.container}>
+      <View style={{alignItems: 'center'}}>
+        <Text style={styles.title}>{user.name}</Text>
         <Image
           source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
           style={styles.image}
         />
       </View>
 
-      <View style={styles.userInfoSection}>
-        <View style={styles.action}>
-          <Text style={styles.textInput}>Nombre: {name}</Text>
-        </View>
-        <View style={styles.action}>
-          <Text style={styles.textInput}>Edad: {age}</Text>
-        </View>
-        <View style={styles.action}>
-          <Text style={styles.textInput}>Email: {email}</Text>
-        </View>
-        <View style={styles.action}>
-          <Text style={styles.textInput}>Teléfono: {phone}</Text>
-        </View>
+      <View style={styles.subcontainer}>
+        <Controller control={control}
+          rules={{
+            maxLength: constraints.name.max,
+            minLength: constraints.name.min}}
+          render={({field: {onChange, onBlur, value}}) => (
+            <TextInput
+              theme={{colors: {primary: 'grey'}, roundness: 10}}
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              mode="outlined"
+              label="Nombre"
+              placeholder={user.name}
+            />
+          )}
+          name="name"
+        />
+        {errors.name?.type === 'maxLength' &&
+        <Text style={{color: 'red'}}>
+          Máximo {constraints.name.max} letras
+        </Text>}
+        {errors.name?.type === 'minLength' &&
+        <Text style={{color: 'red'}}>Mínimo {constraints.name.min} letra</Text>}
+        <Controller control={control}
+          render={() => (
+            <TextInput
+              theme={{colors: {primary: 'grey'}, roundness: 10}}
+              style={styles.input}
+              value={user.email}
+              mode="outlined"
+              label="Correo electrónico"
+              placeholder={user.email}
+              disabled="true"
+            />)}
+          name="email"
+        />
+        <Controller control={control}
+          render={({field: {onChange, onBlur, value}}) => (
+            <TextInput
+              theme={{colors: {primary: 'grey'}, roundness: 10}}
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              mode="outlined"
+              label="Teléfono"
+              placeholder={user.phone}
+            />)}
+          name="phone_number"
+        />
+        <Controller control={control}
+          rules={{
+            min: constraints.age.min,
+          }}
+          render={({field: {onChange, onBlur, value}}) => (
+            <TextInput
+              theme={{colors: {primary: 'grey'}, roundness: 10}}
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              mode="outlined"
+              label="Edad"
+              placeholder={user.age}
+            />
+          )}
+          name="age"
+        />
+        {errors.age?.type === 'min' &&
+        <Text style={{color: 'red'}}>
+          Tienes que ser mayor de {constraints.age.min} años
+        </Text>}
       </View>
-
-      <View style={styles.infoBoxWrapper}>
-        <View style={[styles.infoBox, {
-          borderRightColor: '#dddddd',
-          borderRightWidth: 1,
-        }]}>
-          <Title>$</Title>
-          <Caption style={styles.caption}>Billetera</Caption>
-        </View>
-        <View style={styles.infoBox}>
-          <Title>N</Title>
-          <Caption style={styles.caption}>Viajes</Caption>
-        </View>
-      </View>
-
-      <View>
-        <TouchableRipple
-          onPress={() => props.onNavigation.navigate('EditarPerfil', {
-            'name': name,
-            'email': email,
-            'phone': phone,
-            'age': age,
-          })}>
-          <View style={styles.menuItem}>
-            <Text style={styles.menuItemText}>Editar perfil</Text>
-          </View>
-        </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
-          <View style={styles.menuItem}>
-            <Text style={styles.menuItemText}>Configuración</Text>
-          </View>
-        </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
-          <View style={styles.menuItem}>
-            <Text style={styles.menuItemText}>Ayuda</Text>
-          </View>
-        </TouchableRipple>
-      </View>
-    </SafeAreaView>
+      <Button
+        style={styles.buttonEdit}
+        color={Colors.blue800}
+        mode="contained"
+        onPress={handleSubmit(onSubmit)}>
+        <Text style={{fontSize: 20}}>Editar</Text>
+      </Button>
+    </View>
   );
 };
 
-export default Profile;
+const constraints = {
+  name: {max: 30, min: 1},
+  age: {min: 18},
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
+    margin: 30,
+    marginTop: 40,
+  },
+  subcontainer: {
+    marginTop: 25,
   },
   title: {
     fontSize: 28,
-    marginLeft: 75,
-  },
-  image: {
-    marginTop: 15,
-    width: 130,
-    height: 130,
-    marginLeft: 105,
-  },
-  userInfoSection: {
-    paddingHorizontal: 30,
-    marginBottom: 20,
-  },
-  caption: {
-    fontSize: 18,
-    lineHeight: 30,
-    fontWeight: '500',
-  },
-  infoBoxWrapper: {
-    borderBottomColor: '#dddddd',
-    borderBottomWidth: 1,
-    borderTopColor: '#dddddd',
-    borderTopWidth: 1,
-    flexDirection: 'row',
-    height: 100,
-  },
-  infoBox: {
-    width: '50%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  menuItem: {
-    flexDirection: 'row',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    fontSize: 18,
-  },
-  menuItemText: {
-    marginLeft: 20,
-    fontWeight: '600',
-    fontSize: 18,
-    lineHeight: 30,
   },
   textInput: {
     flex: 1,
     paddingLeft: 20,
-    color: 'black',
+    color: '#777777',
     fontSize: 20,
   },
-  button: {
-    marginTop: 15,
-    padding: 5,
-    width: 220,
-    height: 50,
-    marginLeft: 40,
+  input: {
+    marginTop: 5,
   },
-  action: {
-    flexDirection: 'row',
-    marginTop: 7,
-    marginBottom: 7,
+  button: {
+    padding: 15,
+    borderRadius: 10,
+    backgroundColor: '#FF6347',
+    alignItems: 'center',
+    marginTop: 35,
+  },
+  buttonEdit: {
+    marginTop: 40,
+    padding: 5,
+    width: 200,
+    height: 50,
+    marginLeft: 75,
+    alignItems: 'center',
+  },
+  image: {
+    marginTop: 35,
+    width: 130,
+    height: 130,
+    marginLeft: 10,
   },
 });

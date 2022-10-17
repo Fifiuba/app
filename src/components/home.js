@@ -7,25 +7,26 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const Home = (props) => {
+export default function Home(props) {
   return (
     <View style={styles.categoryContainer}>
       <TouchableOpacity
         style={styles.categoryBtn}
-        onPress={() => props.onNavigation.navigate('MiPerfil')}>
+        onPress={() => {
+          console.log('log & navigate');
+          props.onNavigation.navigate('MiPerfil');
+        }}>
         <View style={styles.categoryIcon}>
           <Image
             source={{uri: 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png'}}
             style={styles.image}
           />
+          <Text style={styles.categoryBtnTxt}>Mi perfil</Text>
         </View>
-        <Text style={styles.categoryBtnTxt}>Mi perfil</Text>
       </TouchableOpacity>
     </View>
   );
 };
-
-export default Home;
 
 const styles = StyleSheet.create({
   categoryContainer: {

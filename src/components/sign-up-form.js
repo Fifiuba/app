@@ -28,14 +28,14 @@ const SignUpForm = (props) => {
     }
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (!code) {
       // Send PIN of activation
       setCode(true);
     } else {
       // Send data to users service for signing up
-      // setUserType(data);
-      if (signUp(data, userType())) {
+      const response = await signUp(data, userType());
+      if (response) {
         props.onNavigation.navigate('IniciarSesion');
       }
     }
