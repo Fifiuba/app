@@ -124,7 +124,7 @@ export default function Profile(props) {
               value={value}
               mode="outlined"
               label="Teléfono"
-              placeholder={user.phone}
+              placeholder={user.phone_number}
             />)}
           name="phone_number"
         />
