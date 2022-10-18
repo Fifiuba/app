@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import LoggedNav from './src/components/logged-nav';
-import UnloggedNav from './src/components/unlogged-nav';
+import LoggedNav from './src/components/LoggedNav';
+import UnloggedNav from './src/components/UnloggedNav';
 import './firebaseConfig';
 
 export default function App() {

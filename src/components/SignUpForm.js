@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, Switch} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
-import signUp from '../services/sign-up';
+
+import signUp from '../services/SignUp';
 
 const SignUpForm = (props) => {
   const [code, setCode] = useState(false);
@@ -265,7 +266,7 @@ const styles = StyleSheet.create({
     color: '#282829',
   },
   switchContainer: {
-    flex: 1,
+    marginTop: 10,
     flexDirection: 'row',
     alignItems: "center",
     justifyContent: "center",

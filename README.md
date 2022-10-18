@@ -19,6 +19,11 @@ $ npm run eslint
 ```
 ---
 
+## Env file
+You can see what its necessary to have in .env file to run the app in .env.example file.
+
+---
+
 ## Visualizing the app
 
 - #### Mobile
@@ -39,13 +44,19 @@ $ npm run eslint
 
 ## App's views
 
+### Login view
+<img width="211" alt="login-view" src="https://user-images.githubusercontent.com/67125933/196438397-3358d4b8-4d34-494c-9fd2-531e4249e29a.png">
+
+### SignUp view
+<img width="203" alt="sign-up-view" src="https://user-images.githubusercontent.com/67125933/196438449-79471080-d1d3-45e3-baf1-2d2a4f2c256f.png">
+
+### Reset Password view
+<img width="207" alt="reset-password-view" src="https://user-images.githubusercontent.com/67125933/196438486-af9be255-112e-41ac-b8c2-3228e99528c2.png">
+
 ### Home view
-<img width="248" alt="home-view" src="https://user-images.githubusercontent.com/67125933/192106724-8223d717-1ab4-48cc-a738-ad0bfd19b525.png">
+<img width="206" alt="home-view" src="https://user-images.githubusercontent.com/67125933/196438524-56e209c3-814b-4b2b-b254-40c9b8c58a60.png">
 
 ### Profile view
-<img width="256" alt="profile-view" src="https://user-images.githubusercontent.com/67125933/192106778-5e3067bb-470c-4aad-8bce-3a8b0f7c60b2.png">
 
-### Edit Profile view
-<img width="253" alt="edit-profile-view" src="https://user-images.githubusercontent.com/67125933/192106784-82b58898-bbe3-43eb-9001-621d5decb340.png">
 
 
