@@ -9,14 +9,14 @@ import {
 
 const DEFAULT_URL_USER_PICTURE = 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png';
 
-export default function Home(props) {
+export default function Home({navigation}) {
   return (
     <View style={styles.categoryContainer}>
       <TouchableOpacity
         style={styles.categoryBtn}
         onPress={() => {
           console.log('log & navigate');
-          props.onNavigation.navigate('MiPerfil');
+          navigation.navigate('MiPerfil');
         }}>
         <View style={styles.categoryIcon}>
           <Image

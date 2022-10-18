@@ -36,18 +36,14 @@ export default function LoggedNav() {
       <Stack.Navigator>
         <Stack.Screen
           options={{title: '', headerShown: false}}
-          name="Home">
-          {(navigation) =>
-            <HomeView onNavigation={navigation}/>
-          }
-        </Stack.Screen>
+          name="Home"
+          component={HomeView}
+          />
         <Stack.Screen
           options={{title: ''}}
-          name="MiPerfil">
-          {(navigation) =>
-            <ProfileView onNavigation={navigation}/>
-          }
-        </Stack.Screen>
+          name="MiPerfil"
+          component={ProfileView}
+          />
       </Stack.Navigator>
     </UserContext.Provider>
   );

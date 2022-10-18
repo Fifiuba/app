@@ -6,7 +6,7 @@ import {Colors, Button, TextInput} from 'react-native-paper';
 import editProfile from '../services/EditProfile';
 import {UserContext} from '../context/UserContext';
 
-export default function Profile(props) {
+export default function Profile({navigation}) {
   const user = useContext(UserContext);
 
   const {control, handleSubmit, formState: {errors}} = useForm({
@@ -58,7 +58,7 @@ export default function Profile(props) {
         console.log('Edición exitosa');
         updateUserInfo(response[0]);
         console.log('updated user:', user);
-        props.onNavigation.navigate('MiPerfil');
+        navigation.navigate('MiPerfil');
       }
     } catch (error) {
       alert(error.message);

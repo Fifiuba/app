@@ -3,12 +3,10 @@ import {View} from 'react-native';
 
 import Profile from '../components/Profile';
 
-export default function ProfileView(props) {
+export default function ProfileView({navigation}) {
   return (
     <View style={{flex: 1}}>
-      <Profile
-        onNavigation={props.onNavigation.navigation}
-      />
+      <Profile navigation={navigation}/>
     </View>
   );
 }

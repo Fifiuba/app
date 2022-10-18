@@ -3,12 +3,10 @@ import {View} from 'react-native';
 
 import Home from '../components/Home';
 
-export default function HomeView(props) {
+export default function HomeView({navigation}) {
   return (
     <View style={{flex: 1}}>
-      <Home
-        onNavigation={props.onNavigation.navigation}
-      />
+      <Home navigation={navigation}/>
     </View>
   );
 }
