@@ -1,12 +1,12 @@
 import React from 'react';
 import {View} from 'react-native';
-import LoginForm from '../components/login-form';
 
-export default function LoginView(props) {
+import Profile from '../components/Profile';
+
+export default function ProfileView(props) {
   return (
     <View style={{flex: 1}}>
-      <LoginForm
-        onLogin={props.onLogin}
+      <Profile
         onNavigation={props.onNavigation.navigation}
       />
     </View>

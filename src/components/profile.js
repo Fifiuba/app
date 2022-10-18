@@ -3,8 +3,8 @@ import {Text, View, Image, StyleSheet} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {Colors, Button, TextInput} from 'react-native-paper';
 
-import editProfile from '../services/edit-profile';
-import {UserContext} from '../context/user-context';
+import editProfile from '../services/EditProfile';
+import {UserContext} from '../context/UserContext';
 
 export default function Profile(props) {
   const user = useContext(UserContext);

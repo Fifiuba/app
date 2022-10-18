@@ -4,7 +4,7 @@ import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
 import {getAuth, GoogleAuthProvider, signInWithCredential} from 'firebase/auth';
-import loginWithGoogle from '../services/login-with-google';
+import loginWithGoogle from '../services/LoginWithGoogle';
 
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
@@ -14,7 +14,7 @@ import {WEB_CLIENT_ID} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /* eslint-disable-next-line max-len */
-import loginWithEmailAndPassword from '../services/login-with-email-and-password';
+import loginWithEmailAndPassword from '../services/LoginWithEmailAndPassword';
 
 WebBrowser.maybeCompleteAuthSession();
 const LoginForm = (props) => {

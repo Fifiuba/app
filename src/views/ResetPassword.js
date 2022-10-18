@@ -7,7 +7,8 @@ import {Text,
   Colors,
 } from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
-import resetPassword from '../services/reset-password';
+
+import resetPassword from '../services/ResetPassword';
 
 const ResetPasswordView = (props) => {
   const [send, setSend] = useState(false);
