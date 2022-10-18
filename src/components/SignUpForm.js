@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
     color: '#282829',
   },
   switchContainer: {
-    flex: 1,
+    marginTop: 10,
     flexDirection: 'row',
     alignItems: "center",
     justifyContent: "center",
