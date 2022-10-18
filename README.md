@@ -19,6 +19,11 @@ $ npm run eslint
 ```
 ---
 
+## Env file
+You can see what its necessary to have in .env file to run the app in .env.example file.
+
+---
+
 ## Visualizing the app
 
 - #### Mobile
@@ -39,13 +44,15 @@ $ npm run eslint
 
 ## App's views
 
+### Login view
+
+### SignUp view
+
+### Reset Password view
+
 ### Home view
-<img width="248" alt="home-view" src="https://user-images.githubusercontent.com/67125933/192106724-8223d717-1ab4-48cc-a738-ad0bfd19b525.png">
 
 ### Profile view
-<img width="256" alt="profile-view" src="https://user-images.githubusercontent.com/67125933/192106778-5e3067bb-470c-4aad-8bce-3a8b0f7c60b2.png">
 
-### Edit Profile view
-<img width="253" alt="edit-profile-view" src="https://user-images.githubusercontent.com/67125933/192106784-82b58898-bbe3-43eb-9001-621d5decb340.png">
 
 
