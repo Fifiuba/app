@@ -26,28 +26,24 @@ export default function Profile({navigation}) {
     console.log('Updatting user info');
     console.log('user:', user);
     console.log('userInfo:', userInfo);
-    try {
-      const keys = Object.getOwnPropertyNames(userInfo);
-      for (let idx = 0; idx < keys.length; idx++) {
-        const key = keys[idx];
-        const value = userInfo[key];
-        if (isModified(user[key], value)) {
-          let newValue;
-          if (key == 'age' || key == 'id') {
-            newValue = value.toString();
-          } else {
-            newValue = value;
-          }
-          if (newValue) {
-            user[key] = newValue;
-          }
+    
+    const keys = Object.getOwnPropertyNames(userInfo);
+    for (let idx = 0; idx < keys.length; idx++) {
+      const key = keys[idx];
+      const value = userInfo[key];
+      if (isModified(user[key], value)) {
+        let newValue;
+        if (key == 'age' || key == 'id') {
+          newValue = value.toString();
+        } else {
+          newValue = value;
+        }
+        if (newValue) {
+          user[key] = newValue;
         }
       }
-      console.log('Updated user:', user);
-    } catch (error) {
-      alert(error.message);
-      console.error(error);
     }
+    console.log('Updated user:', user);
   };
 
   const onSubmit = async (data) => {
@@ -61,8 +57,8 @@ export default function Profile({navigation}) {
         navigation.navigate('MiPerfil');
       }
     } catch (error) {
-      alert(error.message);
-      console.error(error.message);
+      alert(error.response.data.detail);
+      console.error(error.response.data.detail);
     }
   };
 

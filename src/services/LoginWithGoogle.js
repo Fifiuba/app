@@ -11,8 +11,8 @@ export default async function loginWithGoogle(token, userType) {
     console.log('response_data:', response.data);
     return response.data;
   } catch (error) {
-    alert(error.message);
-    console.error(error.message);
+    alert(error.response.data.detail);
+    console.error(error.response.data.detail);
     return null;
   }
 }

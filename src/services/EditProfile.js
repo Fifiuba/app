@@ -38,8 +38,8 @@ export default async function editProfile(data) {
     console.log('response data:', response.data);
     return response.data;
   } catch (error) {
-    alert(error.message);
-    console.error(error.message);
+    alert(error.response.data.detail);
+    console.error(error.response.data.detail);
     return null;
   }
 }

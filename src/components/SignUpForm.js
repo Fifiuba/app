@@ -44,8 +44,8 @@ const SignUpForm = ({navigation}) => {
         }
       }
     } catch (error) {
-      console.error(error.message);
-      alert(error.message);
+      alert(error.response.data.detail);
+      console.error(error.response.data.detail);
       return null;
     }
   };
