@@ -6,7 +6,6 @@ import {useForm, Controller} from 'react-hook-form';
 import signUp from '../services/SignUp';
 
 const SignUpForm = ({navigation}) => {
-  console.log('Estoy en SignUpForm');
   const [code, setCode] = useState(false);
   const [isPassenger, setIsPassenger] = useState(true);
   const toggleSwitch = () => setIsPassenger(false);

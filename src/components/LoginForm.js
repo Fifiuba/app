@@ -20,10 +20,12 @@ import {LoginContext} from '../context/LoginContext';
 WebBrowser.maybeCompleteAuthSession();
 
 const LoginForm = ({navigation}) => {
+
   const onLogin = useContext(LoginContext);
-  console.log('En LoginForm, soy onLogin:', onLogin);
+
   const [isPassenger, setIsPassenger] = useState(true);
   const toggleSwitch = () => setIsPassenger(false);
+
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       email: '',

@@ -11,7 +11,7 @@ import {LoginContext} from '../context/LoginContext';
 const Stack = createNativeStackNavigator();
 
 export default function UnloggedNav({onLogin}) {
-  console.log('Estoy en UnloggedNav, soy onLogin:', onLogin);
+
   return (
     <LoginContext.Provider value={onLogin}>
       <Stack.Navigator>
