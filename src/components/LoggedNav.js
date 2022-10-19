@@ -38,12 +38,12 @@ export default function LoggedNav() {
           options={{title: '', headerShown: false}}
           name="Home"
           component={HomeView}
-          />
+        />
         <Stack.Screen
           options={{title: ''}}
           name="MiPerfil"
           component={ProfileView}
-          />
+        />
       </Stack.Navigator>
     </UserContext.Provider>
   );
