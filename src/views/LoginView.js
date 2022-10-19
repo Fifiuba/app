@@ -3,13 +3,10 @@ import {View} from 'react-native';
 
 import LoginForm from '../components/LoginForm';
 
-export default function LoginView(props) {
+export default function LoginView({navigation}) {
   return (
     <View style={{flex: 1}}>
-      <LoginForm
-        onLogin={props.onLogin}
-        onNavigation={props.onNavigation.navigation}
-      />
+      <LoginForm navigation={navigation}/>
     </View>
   );
 }

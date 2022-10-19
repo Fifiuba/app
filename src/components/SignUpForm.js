@@ -5,7 +5,8 @@ import {useForm, Controller} from 'react-hook-form';
 
 import signUp from '../services/SignUp';
 
-const SignUpForm = (props) => {
+const SignUpForm = ({navigation}) => {
+  console.log('Estoy en SignUpForm');
   const [code, setCode] = useState(false);
   const [isPassenger, setIsPassenger] = useState(true);
   const toggleSwitch = () => setIsPassenger(false);
@@ -30,15 +31,23 @@ const SignUpForm = (props) => {
   };
 
   const onSubmit = async (data) => {
-    if (!code) {
-      // Send PIN of activation
-      setCode(true);
-    } else {
-      // Send data to users service for signing up
-      const response = await signUp(data, userType());
-      if (response) {
-        props.onNavigation.navigate('IniciarSesion');
+    try {
+      if (!code) {
+        // Send PIN of activation
+        setCode(true);
+      } else {
+        // Send data to users service for signing up
+        const response = await signUp(data, userType());
+        if (response) {
+          navigation.navigate('IniciarSesion');
+          // navigation.navigate('DriverFormView',
+          // {params: { userInfo: data }});
+        }
       }
+    } catch (error) {
+      console.error(error.message);
+      alert(error.message);
+      return null;
     }
   };
 
@@ -219,7 +228,7 @@ const SignUpForm = (props) => {
             style={{textDecorationLine: 'underline',
               fontSize: 18,
               color: '#0D516B'}}
-            onPress={() => props.onNavigation.navigate('IniciarSesion')}>
+            onPress={() => navigation.navigate('IniciarSesion')}>
                         Iniciar sesión
           </Text>
         </Text>
