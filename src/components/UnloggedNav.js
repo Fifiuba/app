@@ -3,14 +3,22 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import SignUpView from '../views/SignUpView';
 import LoginView from '../views/LoginView';
-import ResetPasswordView from '../views/ResetPassword';
+import ResetPasswordView from '../views/ResetPasswordView';
 import DriverFormView from '../views/DriverForm';
+import PassengerFormView from '../views/PassengerFormView';
 
 const Stack = createNativeStackNavigator();
 
 export default function UnloggedNav(props) {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        options={{title: '', headerShown: false}}
+        name="PasajeroForm">
+        {(navigation) =>
+          <PassengerFormView onNavigation={navigation}/>
+        }
+      </Stack.Screen>
       <Stack.Screen
         options={{title: '', headerShown: false}}
         name="ChoferForm">
