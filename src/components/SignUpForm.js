@@ -38,9 +38,11 @@ const SignUpForm = ({navigation}) => {
         // Send data to users service for signing up
         const response = await signUp(data, userType());
         if (response) {
-          navigation.navigate('IniciarSesion');
-          // navigation.navigate('DriverFormView',
-          // {params: { userInfo: data }});
+          if (isPassenger) {
+            navigation.navigate('PasajeroForm', {'user_id': response.id});
+          } else {
+            navigation.navigate('ChoferForm', {'user_id': response.id});
+          }
         }
       }
     } catch (error) {

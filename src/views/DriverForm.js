@@ -7,7 +7,9 @@ import {Text,
 } from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
-const DriverFormView = () => {
+import setUserTypeInfo from '../services/SetUserTypeInfo';
+
+const DriverFormView = ({navigation}) => {
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       license_plate: '',
@@ -18,7 +20,10 @@ const DriverFormView = () => {
   const onSubmit = async (data) => {
     try {
       console.log('driverInfo:', data);
-      // await signUp(data, 'driver');
+      const response = await setUserTypeInfo(data, 5, 'driver');
+      if (response) {
+        navigation.navigate('IniciarSesion');
+      }
     } catch (error) {
       console.error(error.message);
       alert(error.message);

@@ -7,7 +7,9 @@ import {Text,
 } from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
-const PassengerFormView = () => {
+import setUserTypeInfo from '../services/SetUserTypeInfo';
+
+const PassengerFormView = ({navigation}) => {
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       default_address: '',
@@ -17,7 +19,10 @@ const PassengerFormView = () => {
   const onSubmit = async (data) => {
     try {
       console.log('passengerInfo:', data);
-      // await signUp(data, 'driver');
+      const response = await setUserTypeInfo(data, 1, 'passenger');
+      if (response) {
+        navigation.navigate('IniciarSesion');
+      }
     } catch (error) {
       console.error(error.message);
       alert(error.message);
