@@ -10,7 +10,7 @@ import {useForm, Controller} from 'react-hook-form';
 
 import resetPassword from '../services/ResetPassword';
 
-const ResetPasswordView = (props) => {
+const ResetPasswordView = () => {
   const [send, setSend] = useState(false);
   const [msg, setMsg] = useState('');
   const [loading, setLoading] = useState(false);
