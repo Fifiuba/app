@@ -20,7 +20,6 @@ import {LoginContext} from '../context/LoginContext';
 WebBrowser.maybeCompleteAuthSession();
 
 const LoginForm = ({navigation}) => {
-
   const onLogin = useContext(LoginContext);
 
   const [isPassenger, setIsPassenger] = useState(true);

@@ -26,7 +26,7 @@ export default function Profile({navigation}) {
     console.log('Updatting user info');
     console.log('user:', user);
     console.log('userInfo:', userInfo);
-    
+
     const keys = Object.getOwnPropertyNames(userInfo);
     for (let idx = 0; idx < keys.length; idx++) {
       const key = keys[idx];
