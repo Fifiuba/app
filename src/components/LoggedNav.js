@@ -10,18 +10,22 @@ const Stack = createNativeStackNavigator();
 const DEFAULT_URL_USER_PICTURE = 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png';
 
 export default function LoggedNav() {
-  const [user, setUser] = useState('');
+  const [userInfo, setUserInfo] = useState('');
+  const [userTypeInfo, setUserTypeInfo] = useState('');
 
   React.useEffect(() => {
     const handleProfile = async () => {
       try {
         const userInfo = await getProfile();
-        console.log('user_info:', userInfo);
         if (userInfo) {
           if (userInfo[0].picture === null) {
             userInfo[0].picture = DEFAULT_URL_USER_PICTURE;
           }
-          setUser(userInfo[0]);
+          if (userInfo[0].age === null) {
+            userInfo[0].age = '';
+          }
+          setUserInfo(userInfo[0]);
+          setUserTypeInfo(userInfo[1]);
         }
       } catch (error) {
         console.error(error.message);
@@ -29,21 +33,23 @@ export default function LoggedNav() {
       }
     };
     handleProfile();
+    console.log('user info:', userInfo);
+    console.log('user type info:', userTypeInfo);
   }, []);
 
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={{userInfo, userTypeInfo}}>
       <Stack.Navigator>
         <Stack.Screen
           options={{title: '', headerShown: false}}
           name="Home"
           component={HomeView}
-          />
+        />
         <Stack.Screen
           options={{title: ''}}
           name="MiPerfil"
           component={ProfileView}
-          />
+        />
       </Stack.Navigator>
     </UserContext.Provider>
   );

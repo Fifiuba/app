@@ -41,8 +41,8 @@ const authUser = async (token) => {
     const response = await axios.post('http://192.168.0.76:8000/users/login', params);
     return response.data;
   } catch (error) {
-    console.error(error.message);
-    alert(error.message);
+    alert(error.response.data.detail);
+    console.error(error.response.data.detail);
     return null;
   }
 };

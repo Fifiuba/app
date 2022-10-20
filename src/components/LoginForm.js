@@ -1,10 +1,12 @@
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import {View, StyleSheet, Text, Switch} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
 import {getAuth, GoogleAuthProvider, signInWithCredential} from 'firebase/auth';
+
 import loginWithGoogle from '../services/LoginWithGoogle';
+import {constraints} from '../utils/Constraints';
 
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
@@ -12,14 +14,18 @@ import * as Google from 'expo-auth-session/providers/google';
 import {WEB_CLIENT_ID} from '@env';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 /* eslint-disable-next-line max-len */
 import loginWithEmailAndPassword from '../services/LoginWithEmailAndPassword';
+import {LoginContext} from '../context/LoginContext';
 
 WebBrowser.maybeCompleteAuthSession();
-const LoginForm = (props) => {
+
+const LoginForm = ({navigation}) => {
+  const onLogin = useContext(LoginContext);
+
   const [isPassenger, setIsPassenger] = useState(true);
-  const toggleSwitch = () => setIsPassenger(false);
+  const toggleSwitch = () => setIsPassenger((previousState) => !previousState);
+
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       email: '',
@@ -31,10 +37,10 @@ const LoginForm = (props) => {
     try {
       // Send data to users service for signing in
       const tokenResponse = await loginWithEmailAndPassword(data);
-      if (tokenResponse) {
+      if (!(tokenResponse === null)) {
         await AsyncStorage.setItem('token', tokenResponse);
         await AsyncStorage.setItem('user_type', setUserType());
-        props.onLogin(true);
+        onLogin(true);
       }
     } catch (error) {
       console.error(error.message);
@@ -74,7 +80,7 @@ const LoginForm = (props) => {
           if (tokenResponse) {
             await AsyncStorage.setItem('token', tokenResponse);
             await AsyncStorage.setItem('user_type', userType);
-            props.onLogin(true);
+            onLogin(true);
           }
         }
       } catch (error) {
@@ -158,7 +164,7 @@ const LoginForm = (props) => {
       </Button>
       <View style={{marginTop: 10}}>
         <Text
-          onPress={() => props.onNavigation.navigate('RecuperarContraseña')}
+          onPress={() => navigation.navigate('RecuperarContraseña')}
           style={{textAlign: 'center',
             fontSize: 18,
             color: '#0D516B',
@@ -188,7 +194,7 @@ const LoginForm = (props) => {
               style={{textDecorationLine: 'underline',
                 fontSize: 18,
                 color: '#0D516B'}}
-              onPress={() => props.onNavigation.navigate('Registrarse')}>
+              onPress={() => navigation.navigate('Registrarse')}>
                           Registrate
             </Text>
           </Text>
@@ -196,11 +202,6 @@ const LoginForm = (props) => {
       </View>
     </View>
   );
-};
-
-const constraints = {
-  email: {max: 50},
-  password: {min: 8, max: 20},
 };
 
 const isValidEmail = (email) =>

@@ -1,9 +1,12 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const PASSENGER_FIELD = 'default_address';
+const DRIVER_FIELDS = ['car_model, license_plate'];
+
 const getFields = (data) => {
   const userInfo = {};
-  const typeUserInfo = {};
+  const userTypeInfo = {};
 
   const keys = Object.getOwnPropertyNames(data);
   console.log('keys:', keys);
@@ -11,11 +14,15 @@ const getFields = (data) => {
   for (let idx = 0; idx < keys.length; idx++) {
     const key = keys[idx];
     const value = data[key];
-    if (value != '' || value != 0) {
-      userInfo[key] = value;
+    if (value != '' || value != 0 || !(value === null)) {
+      if (key == PASSENGER_FIELD || key in DRIVER_FIELDS) {
+        userTypeInfo[key] = value;
+      } else {
+        userInfo[key] = value;
+      }
     }
   };
-  return [userInfo, typeUserInfo];
+  return [userInfo, userTypeInfo];
 };
 
 export default async function editProfile(data) {
@@ -38,8 +45,8 @@ export default async function editProfile(data) {
     console.log('response data:', response.data);
     return response.data;
   } catch (error) {
-    alert(error.message);
-    console.error(error.message);
+    alert(error.response.data.detail);
+    console.error(error.response.data.detail);
     return null;
   }
 }

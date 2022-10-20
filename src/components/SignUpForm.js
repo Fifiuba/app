@@ -2,13 +2,15 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, Switch} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import signUp from '../services/SignUp';
+import {constraints} from '../utils/Constraints';
 
-const SignUpForm = (props) => {
+const SignUpForm = ({navigation}) => {
   const [code, setCode] = useState(false);
   const [isPassenger, setIsPassenger] = useState(true);
-  const toggleSwitch = () => setIsPassenger(false);
+  const toggleSwitch = () => setIsPassenger((previousState) => !previousState);
 
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
@@ -30,15 +32,28 @@ const SignUpForm = (props) => {
   };
 
   const onSubmit = async (data) => {
-    if (!code) {
-      // Send PIN of activation
-      setCode(true);
-    } else {
-      // Send data to users service for signing up
-      const response = await signUp(data, userType());
-      if (response) {
-        props.onNavigation.navigate('IniciarSesion');
+    try {
+      if (!code) {
+        // Send PIN of activation
+        setCode(true);
+      } else {
+        // Send data to users service for signing up
+        const response = await signUp(data, userType());
+        await AsyncStorage.setItem('user_id', response.id.toString());
+        if (response) {
+          if (isPassenger) {
+            navigation.navigate('PasajeroForm');
+          } else {
+            navigation.navigate('ChoferForm');
+          }
+        }
       }
+    } catch (error) {
+      console.error(error.message);
+      alert(error.message);
+      // alert(error.response.data.detail);
+      // console.error(error.response.data.detail);
+      return null;
     }
   };
 
@@ -219,21 +234,13 @@ const SignUpForm = (props) => {
             style={{textDecorationLine: 'underline',
               fontSize: 18,
               color: '#0D516B'}}
-            onPress={() => props.onNavigation.navigate('IniciarSesion')}>
+            onPress={() => navigation.navigate('IniciarSesion')}>
                         Iniciar sesión
           </Text>
         </Text>
       </View>
     </View>
   );
-};
-
-const constraints = {
-  name: {max: 15, min: 3},
-  email: {max: 50},
-  password: {min: 8, max: 20},
-  code: {min: 4, max: 4},
-  age: {min: 18},
 };
 
 const isValidEmail = (email) =>
