@@ -4,7 +4,9 @@ import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
 import {getAuth, GoogleAuthProvider, signInWithCredential} from 'firebase/auth';
+
 import loginWithGoogle from '../services/LoginWithGoogle';
+import {constraints} from '../utils/Constraints';
 
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
@@ -201,11 +203,6 @@ const LoginForm = ({navigation}) => {
       </View>
     </View>
   );
-};
-
-const constraints = {
-  email: {max: 50},
-  password: {min: 8, max: 20},
 };
 
 const isValidEmail = (email) =>

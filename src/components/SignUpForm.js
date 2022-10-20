@@ -5,6 +5,7 @@ import {useForm, Controller} from 'react-hook-form';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import signUp from '../services/SignUp';
+import {constraints} from '../utils/Constraints';
 
 const SignUpForm = ({navigation}) => {
   const [code, setCode] = useState(false);
@@ -240,14 +241,6 @@ const SignUpForm = ({navigation}) => {
       </View>
     </View>
   );
-};
-
-const constraints = {
-  name: {max: 15, min: 3},
-  email: {max: 50},
-  password: {min: 8, max: 20},
-  code: {min: 4, max: 4},
-  age: {min: 18},
 };
 
 const isValidEmail = (email) =>
