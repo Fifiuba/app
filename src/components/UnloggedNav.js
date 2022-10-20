@@ -11,9 +11,8 @@ import {LoginContext} from '../context/LoginContext';
 const Stack = createNativeStackNavigator();
 
 export default function UnloggedNav({onLogin}) {
-  const userId = 0;
   return (
-    <LoginContext.Provider value={{onLogin, userId}}>
+    <LoginContext.Provider value={onLogin}>
       <Stack.Navigator>
         <Stack.Screen
           options={{title: '', headerShown: false}}

@@ -14,7 +14,7 @@ export default async function getProfile() {
     };
     console.log('config:', config);
     const response = await axios.get('http://192.168.0.76:8000/users/me/', config);
-    console.log('response_data:', response.data[0]);
+    console.log('response_data:', response.data);
     return response.data;
   } catch (error) {
     alert(error.response.data.detail);
