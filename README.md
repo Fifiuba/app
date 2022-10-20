@@ -57,6 +57,11 @@ You can see what its necessary to have in .env file to run the app in .env.examp
 <img width="206" alt="home-view" src="https://user-images.githubusercontent.com/67125933/196438524-56e209c3-814b-4b2b-b254-40c9b8c58a60.png">
 
 ### Profile view
+#### Passenger profile view
+<img width="200" alt="passenger-profile" src="https://user-images.githubusercontent.com/67125933/196954479-f0b57606-8f43-4064-9d36-416a0627b451.png">
+
+#### Driver profile view
+<img width="203" alt="driver-profile" src="https://user-images.githubusercontent.com/67125933/196954494-3d7bc6b0-770a-4004-b4ce-277c26269f42.png">
 
 
 
