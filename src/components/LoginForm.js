@@ -22,7 +22,7 @@ const LoginForm = ({navigation}) => {
   const onLogin = useContext(LoginContext);
 
   const [isPassenger, setIsPassenger] = useState(true);
-  const toggleSwitch = () => setIsPassenger(false);
+  const toggleSwitch = () => setIsPassenger((previousState) => !previousState);
 
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {

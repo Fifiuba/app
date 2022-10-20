@@ -9,7 +9,7 @@ import signUp from '../services/SignUp';
 const SignUpForm = ({navigation}) => {
   const [code, setCode] = useState(false);
   const [isPassenger, setIsPassenger] = useState(true);
-  const toggleSwitch = () => setIsPassenger(false);
+  const toggleSwitch = () => setIsPassenger((previousState) => !previousState);
 
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
