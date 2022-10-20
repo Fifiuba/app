@@ -37,11 +37,10 @@ const LoginForm = ({navigation}) => {
     try {
       // Send data to users service for signing in
       const tokenResponse = await loginWithEmailAndPassword(data);
-      if (tokenResponse) {
+      if (!(tokenResponse === null)) {
         await AsyncStorage.setItem('token', tokenResponse);
         await AsyncStorage.setItem('user_type', setUserType());
         onLogin(true);
-        console.log('Update onLogin', onLogin);
       }
     } catch (error) {
       console.error(error.message);
