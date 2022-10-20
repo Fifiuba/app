@@ -1,49 +1,74 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Text, View, Image, StyleSheet} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {Colors, Button, TextInput} from 'react-native-paper';
 
 import editProfile from '../services/EditProfile';
 import {UserContext} from '../context/UserContext';
+import {constraints} from '../utils/Constraints';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Profile({navigation}) {
   const user = useContext(UserContext);
+  const userInfo = user.userInfo;
+  const userTypeInfo = user.userTypeInfo;
+
+  const [isPassenger, setIsPassenger] = useState(true);
 
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       name: '',
-      age: 0,
+      age: 18,
       email: '',
       phone_number: '',
+      default_address: '',
+      car_model: '',
+      license_plate: '',
     },
   });
+
+  React.useEffect(() => {
+    const setUserType = async () => {
+      const userType = await AsyncStorage.getItem('user_type');
+      if (userType == 'driver') {
+        setIsPassenger(false);
+      }
+    };
+    setUserType();
+  }, []);
 
   const isModified = (value, newValue) => {
     return value != newValue;
   };
 
-  const updateUserInfo = (userInfo) => {
-    console.log('Updatting user info');
-    console.log('user:', user);
-    console.log('userInfo:', userInfo);
+  const isValid = (value) => {
+    return (value != '' || value != 0 || !(value === null));
+  };
 
-    const keys = Object.getOwnPropertyNames(userInfo);
+  const updateInfo = (info, data) => {
+    console.log('Updatting info info');
+    console.log('info:', info);
+    console.log('data:', data);
+
+    const keys = Object.getOwnPropertyNames(data);
     for (let idx = 0; idx < keys.length; idx++) {
       const key = keys[idx];
-      const value = userInfo[key];
-      if (isModified(user[key], value)) {
-        let newValue;
-        if (key == 'age' || key == 'id') {
-          newValue = value.toString();
-        } else {
-          newValue = value;
-        }
-        if (newValue) {
-          user[key] = newValue;
+      const value = data[key];
+      if (isValid(value)) {
+        if (isModified(info[key], value)) {
+          let newValue;
+          if (key == 'age' || key == 'id') {
+            newValue = value.toString();
+          } else {
+            newValue = value;
+          }
+          if (newValue) {
+            info[key] = newValue;
+          }
         }
       }
     }
-    console.log('Updated user:', user);
+    console.log('Updated info:', info);
   };
 
   const onSubmit = async (data) => {
@@ -52,22 +77,24 @@ export default function Profile({navigation}) {
       const response = await editProfile(data);
       if (response) {
         console.log('Edición exitosa');
-        updateUserInfo(response[0]);
-        console.log('updated user:', user);
+        updateInfo(userInfo, response[0]);
+        updateInfo(userTypeInfo, response[1]);
+        console.log('updated userInfo:', userInfo);
+        console.log('updated userTypeInfo:', userTypeInfo);
         navigation.navigate('MiPerfil');
       }
     } catch (error) {
-      alert(error.response.data.detail);
-      console.error(error.response.data.detail);
+      alert(error.message);
+      console.error(error.message);
     }
   };
 
   return (
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
-        <Text style={styles.title}>{user.name}</Text>
+        <Text style={styles.title}>{userInfo.name}</Text>
         <Image
-          source={{uri: user.picture}}
+          source={{uri: userInfo.picture}}
           style={styles.image}
         />
       </View>
@@ -86,7 +113,7 @@ export default function Profile({navigation}) {
               value={value}
               mode="outlined"
               label="Nombre"
-              placeholder={user.name}
+              placeholder={userInfo.name}
             />
           )}
           name="name"
@@ -102,10 +129,10 @@ export default function Profile({navigation}) {
             <TextInput
               theme={{colors: {primary: 'grey'}, roundness: 10}}
               style={styles.input}
-              value={user.email}
+              value={userInfo.email}
               mode="outlined"
               label="Correo electrónico"
-              placeholder={user.email}
+              placeholder={userInfo.email}
               disabled="true"
             />)}
           name="email"
@@ -120,7 +147,7 @@ export default function Profile({navigation}) {
               value={value}
               mode="outlined"
               label="Teléfono"
-              placeholder={user.phone_number}
+              placeholder={userInfo.phone_number}
             />)}
           name="phone_number"
         />
@@ -137,7 +164,7 @@ export default function Profile({navigation}) {
               value={value}
               mode="outlined"
               label="Edad"
-              placeholder={user.age.toString()}
+              placeholder={userInfo.age.toString()}
             />
           )}
           name="age"
@@ -147,6 +174,76 @@ export default function Profile({navigation}) {
           Tienes que ser mayor de {constraints.age.min} años
         </Text>}
       </View>
+      <View>
+        { isPassenger &&
+          <Controller control={control}
+            rules={{
+              required: isPassenger,
+            }}
+            render={({field: {onChange, onBlur, value}}) => (
+              <TextInput
+                theme={{colors: {primary: 'grey'}, roundness: 10}}
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                mode="outlined"
+                label="Dirección"
+                placeholder={userInfo.default_address}
+              />
+            )}
+            name="default_address"
+          />
+        }
+        {isPassenger && errors.isPassenger?.type === 'required' &&
+        <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+        {errors.isPassenger?.type === 'maxLength' &&
+        <Text>Máximo {constraints.isPassenger.max} caracteres</Text>}
+        {errors.isPassenger?.type === 'minLength' &&
+        <Text>Mínimo {constraints.isPassenger.min} caracteres</Text>}
+      </View>
+      { !isPassenger &&
+        <><View>
+          <Controller control={control}
+            render={({field: {onChange, onBlur, value}}) => (
+              <TextInput
+                theme={{colors: {primary: 'grey'}, roundness: 10}}
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                mode="outlined"
+                label="Modelo del vehículo"
+                placeholder="Modelo" />
+            )}
+            name="car_model" />
+          {errors.car_model?.type === 'required' &&
+            <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+          {errors.car_model?.type === 'maxLength' &&
+            <Text>Máximo {constraints.car_model.max} caracteres</Text>}
+          {errors.car_model?.type === 'minLength' &&
+            <Text>Mínimo {constraints.car_model.min} caracteres</Text>}
+        </View><View>
+          <Controller control={control}
+            render={({field: {onChange, onBlur, value}}) => (
+              <TextInput
+                theme={{colors: {primary: 'grey'}, roundness: 10}}
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                mode="outlined"
+                label="Patente del vehículo"
+                placeholder="Patente" />
+            )}
+            name="license_plate" />
+          {errors.license_plate?.type === 'required' &&
+            <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+          {errors.license_plate?.type === 'maxLength' &&
+            <Text>Máximo {constraints.license_plate.max} caracteres</Text>}
+          {errors.license_plate?.type === 'minLength' &&
+            <Text>Mínimo {constraints.license_plate.min} caracteres</Text>}
+        </View></>}
       <Button
         style={styles.buttonEdit}
         color={Colors.blue800}
@@ -158,52 +255,34 @@ export default function Profile({navigation}) {
   );
 };
 
-const constraints = {
-  name: {max: 30, min: 1},
-  age: {min: 18},
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 30,
-    marginTop: 40,
+    marginTop: 15,
   },
   subcontainer: {
-    marginTop: 25,
+    marginTop: 10,
   },
   title: {
     fontSize: 28,
   },
-  textInput: {
-    flex: 1,
-    paddingLeft: 20,
-    color: '#777777',
-    fontSize: 20,
+  image: {
+    marginTop: 10,
+    width: 130,
+    height: 130,
+    marginLeft: 10,
+    borderRadius: 100,
   },
   input: {
     marginTop: 5,
   },
-  button: {
-    padding: 15,
-    borderRadius: 10,
-    backgroundColor: '#FF6347',
-    alignItems: 'center',
-    marginTop: 35,
-  },
   buttonEdit: {
-    marginTop: 40,
+    marginTop: 15,
     padding: 5,
     width: 200,
     height: 50,
     marginLeft: 75,
     alignItems: 'center',
-  },
-  image: {
-    marginTop: 35,
-    width: 130,
-    height: 130,
-    marginLeft: 10,
-    borderRadius: 100,
   },
 });
