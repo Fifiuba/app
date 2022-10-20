@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import signUp from '../services/SignUp';
 import {constraints} from '../utils/Constraints';
-import { isValidEmail } from '../utils/EmailValidation';
+import {isValidEmail} from '../utils/EmailValidation';
 
 const SignUpForm = ({navigation}) => {
   const [code, setCode] = useState(false);
@@ -270,8 +270,8 @@ const styles = StyleSheet.create({
   switchContainer: {
     marginTop: 10,
     flexDirection: 'row',
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   button: {
     height: 55,

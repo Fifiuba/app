@@ -7,7 +7,7 @@ import {getAuth, GoogleAuthProvider, signInWithCredential} from 'firebase/auth';
 
 import loginWithGoogle from '../services/LoginWithGoogle';
 import {constraints} from '../utils/Constraints';
-import { isValidEmail } from '../utils/EmailValidation';
+import {isValidEmail} from '../utils/EmailValidation';
 
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
@@ -234,8 +234,8 @@ const styles = StyleSheet.create({
   switchContainer: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   button: {
     padding: 5,

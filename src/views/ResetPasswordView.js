@@ -9,8 +9,8 @@ import {Text,
 import {useForm, Controller} from 'react-hook-form';
 
 import resetPassword from '../services/ResetPassword';
-import { constraints } from '../utils/Constraints';
-import { isValidEmail } from '../utils/EmailValidation';
+import {constraints} from '../utils/Constraints';
+import {isValidEmail} from '../utils/EmailValidation';
 
 const ResetPasswordView = () => {
   const [send, setSend] = useState(false);
