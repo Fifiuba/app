@@ -9,6 +9,8 @@ import {Text,
 import {useForm, Controller} from 'react-hook-form';
 
 import resetPassword from '../services/ResetPassword';
+import { constraints } from '../utils/Constraints';
+import { isValidEmail } from '../utils/EmailValidation';
 
 const ResetPasswordView = () => {
   const [send, setSend] = useState(false);
@@ -124,15 +126,5 @@ const styles = StyleSheet.create({
     color: '#205C5C',
   },
 });
-
-const constraints = {
-  email: {max: 50},
-};
-
-const isValidEmail = (email) =>
-/*eslint-disable*/
-  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      email,
-  );
 
 export default ResetPasswordView;

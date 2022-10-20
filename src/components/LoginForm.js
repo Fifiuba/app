@@ -7,6 +7,7 @@ import {getAuth, GoogleAuthProvider, signInWithCredential} from 'firebase/auth';
 
 import loginWithGoogle from '../services/LoginWithGoogle';
 import {constraints} from '../utils/Constraints';
+import { isValidEmail } from '../utils/EmailValidation';
 
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
@@ -203,12 +204,6 @@ const LoginForm = ({navigation}) => {
     </View>
   );
 };
-
-const isValidEmail = (email) =>
-/*eslint-disable*/
-  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      email,
-  );
 
 const styles = StyleSheet.create({
   container: {

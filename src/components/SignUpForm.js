@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import signUp from '../services/SignUp';
 import {constraints} from '../utils/Constraints';
+import { isValidEmail } from '../utils/EmailValidation';
 
 const SignUpForm = ({navigation}) => {
   const [code, setCode] = useState(false);
@@ -242,12 +243,6 @@ const SignUpForm = ({navigation}) => {
     </View>
   );
 };
-
-const isValidEmail = (email) =>
-  /*eslint-disable*/
-  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      email,
-  );
 
 const styles = StyleSheet.create({
   container: {

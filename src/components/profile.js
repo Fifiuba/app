@@ -189,7 +189,7 @@ export default function Profile({navigation}) {
                 value={value}
                 mode="outlined"
                 label="Dirección"
-                placeholder={userInfo.default_address}
+                placeholder={userTypeInfo.default_address}
               />
             )}
             name="default_address"
@@ -214,7 +214,7 @@ export default function Profile({navigation}) {
                 value={value}
                 mode="outlined"
                 label="Modelo del vehículo"
-                placeholder="Modelo" />
+                placeholder={userTypeInfo.car_model}/>
             )}
             name="car_model" />
           {errors.car_model?.type === 'required' &&
@@ -234,7 +234,7 @@ export default function Profile({navigation}) {
                 value={value}
                 mode="outlined"
                 label="Patente del vehículo"
-                placeholder="Patente" />
+                placeholder={userTypeInfo.license_plate} />
             )}
             name="license_plate" />
           {errors.license_plate?.type === 'required' &&
