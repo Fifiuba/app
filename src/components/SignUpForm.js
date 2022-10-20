@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, Switch} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import signUp from '../services/SignUp';
 
@@ -37,17 +38,20 @@ const SignUpForm = ({navigation}) => {
       } else {
         // Send data to users service for signing up
         const response = await signUp(data, userType());
+        await AsyncStorage.setItem('user_id', response.id.toString());
         if (response) {
           if (isPassenger) {
-            navigation.navigate('PasajeroForm', {'user_id': response.id});
+            navigation.navigate('PasajeroForm');
           } else {
-            navigation.navigate('ChoferForm', {'user_id': response.id});
+            navigation.navigate('ChoferForm');
           }
         }
       }
     } catch (error) {
-      alert(error.response.data.detail);
-      console.error(error.response.data.detail);
+      console.error(error.message);
+      alert(error.message);
+      // alert(error.response.data.detail);
+      // console.error(error.response.data.detail);
       return null;
     }
   };

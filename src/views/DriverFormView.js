@@ -6,6 +6,7 @@ import {Text,
   Colors,
 } from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import setUserTypeInfo from '../services/SetUserTypeInfo';
 
@@ -20,7 +21,9 @@ const DriverFormView = ({navigation}) => {
   const onSubmit = async (data) => {
     try {
       console.log('driverInfo:', data);
-      const response = await setUserTypeInfo(data, 5, 'driver');
+      const userId = await AsyncStorage.getItem('user_id');
+      console.log('userId:', userId);
+      const response = await setUserTypeInfo(data, userId, 'driver');
       if (response) {
         navigation.navigate('IniciarSesion');
       }

@@ -12,7 +12,6 @@ import * as Google from 'expo-auth-session/providers/google';
 import {WEB_CLIENT_ID} from '@env';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 /* eslint-disable-next-line max-len */
 import loginWithEmailAndPassword from '../services/LoginWithEmailAndPassword';
 import {LoginContext} from '../context/LoginContext';
