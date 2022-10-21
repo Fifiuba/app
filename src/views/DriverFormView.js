@@ -9,7 +9,7 @@ import {useForm, Controller} from 'react-hook-form';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import setUserTypeInfo from '../services/SetUserTypeInfo';
-import { constraints } from '../utils/Constraints';
+import {constraints} from '../utils/Constraints';
 
 const DriverFormView = ({navigation}) => {
   const {control, handleSubmit, formState: {errors}} = useForm({

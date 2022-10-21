@@ -12,11 +12,10 @@ import {Text,
 } from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
-import { constraints } from '../utils/Constraints';
-import { constants } from '../utils/Constants';
+import {constants} from '../utils/Constants';
 
 export default function Home({navigation}) {
-  const {control, handleSubmit, formState: {errors}} = useForm({
+  const {control, handleSubmit} = useForm({
     defaultValues: {
       default_address: '',
     },
@@ -24,7 +23,7 @@ export default function Home({navigation}) {
 
   const onSubmit = async (data) => {
     console.log('HOLA HOME');
-  }
+  };
 
   return (
     <><View style={styles.categoryContainer}>
@@ -36,7 +35,7 @@ export default function Home({navigation}) {
         } }>
         <View style={styles.categoryIcon}>
           <Image
-            source={{ uri: constants.DEFAULT_URL_USER_PICTURE }}
+            source={{uri: constants.DEFAULT_URL_USER_PICTURE}}
             style={styles.image} />
           <Text style={styles.categoryBtnTxt}>Mi perfil</Text>
         </View>
@@ -44,29 +43,29 @@ export default function Home({navigation}) {
     </View>
     <Text style={styles.title}>Realizar viaje</Text>
     <View style={styles.container}>
-        <Controller control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              theme={{ colors: { primary: 'grey' }, roundness: 10 }}
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              mode="outlined"
-              label="Destino"
-              placeholder="Destino" 
-              />
-          )}
-          name="default_address" />
-      </View>
-      <Button
-        style={styles.button}
-        color={Colors.blue800}
-        mode="contained"
-        onPress={handleSubmit(onSubmit)}>
-        <Text style={{ fontSize: 18, color: 'white' }}>Buscar</Text>
-      </Button>
-      </>
+      <Controller control={control}
+        render={({field: {onChange, onBlur, value}}) => (
+          <TextInput
+            theme={{colors: {primary: 'grey'}, roundness: 10}}
+            style={styles.input}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            mode="outlined"
+            label="Destino"
+            placeholder="Destino"
+          />
+        )}
+        name="default_address" />
+    </View>
+    <Button
+      style={styles.button}
+      color={Colors.blue800}
+      mode="contained"
+      onPress={handleSubmit(onSubmit)}>
+      <Text style={{fontSize: 18, color: 'white'}}>Buscar</Text>
+    </Button>
+    </>
   );
 };
 
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
     width: '90%',
     marginTop: 100,
     marginBottom: 10,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   categoryBtn: {
     flex: 1,
@@ -113,7 +112,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 40,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   input: {
     marginTop: 5,
