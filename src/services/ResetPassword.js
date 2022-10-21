@@ -1,5 +1,7 @@
 import {getAuth, sendPasswordResetEmail} from 'firebase/auth';
 
+import {constants} from '../utils/Constants';
+
 const resetPassword = async (email, setSend, setMsg, setLoading) => {
   console.log('Reset password');
   try {
@@ -7,13 +9,15 @@ const resetPassword = async (email, setSend, setMsg, setLoading) => {
     await sendPasswordResetEmail(auth, email);
     setSend(true);
     setLoading(false);
-    setMsg('Mail enviado');
-    console.log('Mail sent');
+    setMsg('Email enviado exitosamente');
+    console.log('Email enviado exitosamente');
   } catch (error) {
-    setSend(true);
+    setSend(false);
     setLoading(false);
-    setMsg('Error al enviar el mail');
-    console.error(error.message);
+    if (error.message == constants.USER_NOT_FOUND_ERROR) {
+      setMsg('Usuario no registrado');
+      console.error(error.message);
+    }
     return null;
   }
 };

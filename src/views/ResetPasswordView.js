@@ -54,7 +54,6 @@ const ResetPasswordView = () => {
               mode="outlined"
               label="Correo electrónico"
               placeholder="Correo electrónico"
-              right={<TextInput.Affix text={'/' + constraints.email.max} />}
             />
           )}
           name="email"
@@ -63,11 +62,12 @@ const ResetPasswordView = () => {
         <Text style={{color: 'red'}}>Campo obligatorio</Text>}
         {errors.email?.type === 'validate' &&
         <Text style={{color: 'red'}}>
-          Ingrese un correo electrónico válido
+          Correo electrónico inválido
         </Text>}
         <ActivityIndicator
           animating={loading}
-          style={styles.loading}
+          color="#757575"
+          style={{marginTop: 10}}
         />
         <Button
           style={styles.button}
@@ -76,7 +76,12 @@ const ResetPasswordView = () => {
           onPress={handleSubmit(onSubmit)}>
           <Text style={{fontSize: 20, color: 'white'}}>Enviar link</Text>
         </Button>
-        <Text style={styles.msg}> {send ? msg : ''}</Text>
+        { send &&
+            <Text style={styles.successMsg}>{msg}</Text>
+        }
+        { !send &&
+          <Text style={styles.errorMsg}>{msg}</Text>
+        }
       </View>
     </View>
   );
@@ -91,7 +96,7 @@ const styles = StyleSheet.create({
   },
   card: {
     marginTop: 170,
-    height: 335,
+    height: 360,
     width: 350,
     padding: 35,
     backgroundColor: 'white',
@@ -114,16 +119,25 @@ const styles = StyleSheet.create({
     height: 50,
     marginLeft: 30,
     marginTop: 15,
+    marginBottom: 10,
   },
-  loading: {
-    marginTop: 15,
-    color: 'grey',
-  },
-  msg: {
+  errorMsg: {
     marginTop: 10,
     textAlign: 'center',
     fontSize: 18,
-    color: '#205C5C',
+    color: '#e53935',
+    borderRadius: 16,
+    height: 40,
+    paddingTop: 5,
+  },
+  successMsg: {
+    marginTop: 10,
+    textAlign: 'center',
+    fontSize: 18,
+    color: '#00796b',
+    borderRadius: 16,
+    height: 40,
+    paddingTop: 5,
   },
 });
 

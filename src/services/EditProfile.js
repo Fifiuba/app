@@ -25,7 +25,7 @@ const getFields = (data) => {
   return [userInfo, userTypeInfo];
 };
 
-export default async function editProfile(data) {
+export default async function editProfile(data, setEdit, setMsg) {
   console.log('Edit profile');
   try {
     const userType = await AsyncStorage.getItem('user_type');
@@ -43,8 +43,12 @@ export default async function editProfile(data) {
 
     const response = await axios.patch('http://192.168.0.76:8000/users/me/', params, config);
     console.log('response data:', response.data);
+    setEdit(true);
+    setMsg('Edición exitosa');
     return response.data;
   } catch (error) {
+    setEdit(false);
+    setMsg('Edición fallida');
     alert(error.response.data.detail);
     console.error(error.response.data.detail);
     return null;

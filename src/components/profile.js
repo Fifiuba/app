@@ -14,6 +14,8 @@ export default function Profile({navigation}) {
   const userTypeInfo = user.userTypeInfo;
 
   const [isPassenger, setIsPassenger] = useState(true);
+  const [msg, setMsg] = useState('');
+  const [edit, setEdit] = useState(false);
 
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
@@ -74,7 +76,7 @@ export default function Profile({navigation}) {
   const onSubmit = async (data) => {
     try {
       console.log('data:', data);
-      const response = await editProfile(data);
+      const response = await editProfile(data, setEdit, setMsg);
       if (response) {
         console.log('Edición exitosa');
         updateInfo(userInfo, response[0]);
@@ -251,6 +253,12 @@ export default function Profile({navigation}) {
         onPress={handleSubmit(onSubmit)}>
         <Text style={{fontSize: 20}}>Editar</Text>
       </Button>
+      { edit &&
+        <Text style={styles.successMsg}>{msg}</Text>
+      }
+      { !edit &&
+        <Text style={styles.errorMsg}>{msg}</Text>
+      }
     </View>
   );
 };
@@ -284,5 +292,23 @@ const styles = StyleSheet.create({
     height: 50,
     marginLeft: 75,
     alignItems: 'center',
+  },
+  errorMsg: {
+    marginTop: 10,
+    textAlign: 'center',
+    fontSize: 18,
+    color: '#e53935',
+    borderRadius: 16,
+    height: 40,
+    paddingTop: 5,
+  },
+  successMsg: {
+    marginTop: 10,
+    textAlign: 'center',
+    fontSize: 18,
+    color: '#00796b',
+    borderRadius: 16,
+    height: 40,
+    paddingTop: 5,
   },
 });
