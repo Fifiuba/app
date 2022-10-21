@@ -9,6 +9,7 @@ import {useForm, Controller} from 'react-hook-form';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import setUserTypeInfo from '../services/SetUserTypeInfo';
+import { constraints } from '../utils/Constraints';
 
 const PassengerFormView = ({navigation}) => {
   const {control, handleSubmit, formState: {errors}} = useForm({
@@ -114,10 +115,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
-
-const constraints = {
-  default_address: {max: 10, min: 6},
-};
 
 export default PassengerFormView;
 

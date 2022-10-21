@@ -9,6 +9,7 @@ import {useForm, Controller} from 'react-hook-form';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import setUserTypeInfo from '../services/SetUserTypeInfo';
+import { constraints } from '../utils/Constraints';
 
 const DriverFormView = ({navigation}) => {
   const {control, handleSubmit, formState: {errors}} = useForm({
@@ -152,11 +153,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
-
-const constraints = {
-  license_plate: {max: 10, min: 6},
-  car_model: {max: 50, min: 2},
-};
 
 export default DriverFormView;
 
