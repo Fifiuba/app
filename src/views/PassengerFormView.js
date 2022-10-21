@@ -51,8 +51,8 @@ const PassengerFormView = ({navigation}) => {
               onChangeText={onChange}
               value={value}
               mode="outlined"
-              label="Dirección"
-              placeholder="Dirección"
+              label="Ubicación"
+              placeholder="Ubicación"
             />
           )}
           name="default_address"
