@@ -10,17 +10,44 @@ import {Text,
 } from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import MapView, {Marker, Polyline} from 'react-native-maps';
+import * as Location from 'expo-location';
 
 export const Journey = () => {
   const [origin, setOrigin] = useState({
-    latitude: -34.6037,
-    longitude: -58.3816,
+    latitude: -34.5872,
+    longitude: -58.4266,
   });
-
   const [destination, setDestination] = useState({
     latitude: -34.5872,
     longitude: -58.4266,
   });
+
+  const getLocationPermission = async () => {
+    try {
+      const {status} = await Location.requestForegroundPermissionsAsync();
+
+      if (status !== 'granted') {
+        alert('Permiso denegado');
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({});
+      const current = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setOrigin(current);
+    } catch (error) {
+      console.error(error.message);
+      return null;
+    }
+  };
+
+  React.useEffect(() => {
+    getLocationPermission();
+    console.log('origin:', origin);
+  }, []);
+
 
   const {control, handleSubmit} = useForm({
     defaultValues: {
@@ -34,7 +61,7 @@ export const Journey = () => {
 
   return (
     <>
-      <Text style={styles.title}>Realizar viaje</Text>
+      <Text style={styles.title}>¿Deseas iniciar un viaje?</Text>
       <View style={styles.container}>
         <Controller control={control}
           render={({field: {onChange, onBlur, value}}) => (
@@ -90,7 +117,7 @@ const styles = StyleSheet.create({
   title: {
     paddingTop: 50,
     fontSize: 28,
-    paddingLeft: 110,
+    paddingLeft: 55,
   },
   container: {
     flexDirection: 'row',
