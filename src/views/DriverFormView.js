@@ -11,7 +11,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import setUserTypeInfo from '../services/SetUserTypeInfo';
 import {constraints} from '../utils/Constraints';
 
-const DriverFormView = ({navigation}) => {
+const DriverFormView = ({navigation, route}) => {
+  const userId = route.params.user_id;
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       license_plate: '',
@@ -22,7 +23,7 @@ const DriverFormView = ({navigation}) => {
   const onSubmit = async (data) => {
     try {
       console.log('driverInfo:', data);
-      const userId = await AsyncStorage.getItem('user_id');
+      //const userId = await AsyncStorage.getItem('user_id');
       console.log('userId:', userId);
       const response = await setUserTypeInfo(data, userId, 'driver');
       if (response) {

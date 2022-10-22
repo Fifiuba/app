@@ -14,12 +14,7 @@ const Stack = createNativeStackNavigator();
 export default function UnloggedNav({onLogin}) {
   return (
     <LoginContext.Provider value={onLogin}>
-      <Stack.Navigator>
-        <Stack.Screen
-          options={{title: '', headerShown: false}}
-          name="Home"
-          component={HomeView}
-        />
+      <Stack.Navigator initialRouteName='IniciarSesion'>
         <Stack.Screen
           options={{title: '', headerShown: false}}
           name="IniciarSesion"

@@ -33,13 +33,11 @@ export default function LoggedNav() {
       }
     };
     handleProfile();
-    console.log('user info:', userInfo);
-    console.log('user type info:', userTypeInfo);
   }, []);
 
   return (
     <UserContext.Provider value={{userInfo, userTypeInfo}}>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName='Home'>
         <Stack.Screen
           options={{title: '', headerShown: false}}
           name="Home"

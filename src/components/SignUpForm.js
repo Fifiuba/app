@@ -40,12 +40,12 @@ const SignUpForm = ({navigation}) => {
       } else {
         // Send data to users service for signing up
         const response = await signUp(data, userType());
-        await AsyncStorage.setItem('user_id', response.id.toString());
+        //await AsyncStorage.setItem('user_id', response.id.toString());
         if (response) {
           if (isPassenger) {
-            navigation.navigate('PasajeroForm');
+            navigation.navigate('PasajeroForm', {'user_id': response.id});
           } else {
-            navigation.navigate('ChoferForm');
+            navigation.navigate('ChoferForm', {'user_id': response.id});
           }
         }
       }

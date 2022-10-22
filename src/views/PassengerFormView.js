@@ -11,7 +11,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import setUserTypeInfo from '../services/SetUserTypeInfo';
 import {constraints} from '../utils/Constraints';
 
-const PassengerFormView = ({navigation}) => {
+const PassengerFormView = ({navigation, route}) => {
+  const userId = route.params.user_id;
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       default_address: '',
@@ -21,7 +22,7 @@ const PassengerFormView = ({navigation}) => {
   const onSubmit = async (data) => {
     try {
       console.log('passengerInfo:', data);
-      const userId = await AsyncStorage.getItem('user_id');
+      //const userId = await AsyncStorage.getItem('user_id');
       console.log('userId:', userId);
       const response = await setUserTypeInfo(data, userId, 'passenger');
       if (response) {
