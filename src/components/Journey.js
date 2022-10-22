@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
+  SafeAreaView
 } from 'react-native';
 import {Text,
   TextInput,
@@ -11,6 +12,8 @@ import {Text,
 import {useForm, Controller} from 'react-hook-form';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import * as Location from 'expo-location';
+
+import SearchBar from './SearchBar';
 
 export const Journey = () => {
   const [origin, setOrigin] = useState({
@@ -48,40 +51,27 @@ export const Journey = () => {
     console.log('origin:', origin);
   }, []);
 
-
-  const {control, handleSubmit} = useForm({
-    defaultValues: {
-      default_address: '',
-    },
-  });
-
-  const onSubmit = async (data) => {
-    console.log('Journey component');
-  };
+  const [searchPhrase, setSearchPhrase] = useState("");
+  const [clicked, setClicked] = useState(false);
 
   return (
     <>
       <Text style={styles.title}>¿Deseas iniciar un viaje?</Text>
       <View style={styles.container}>
-        <Controller control={control}
-          render={({field: {onChange, onBlur, value}}) => (
-            <TextInput
-              theme={{colors: {primary: 'grey'}, roundness: 10}}
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              mode="outlined"
-              label="Destino"
-              placeholder="Destino" />
-          )}
-          name="default_address" />
+        <SafeAreaView style={styles.root}>
+          <SearchBar
+            searchPhrase={searchPhrase}
+            setSearchPhrase={setSearchPhrase}
+            clicked={clicked}
+            setClicked={setClicked}
+          />
+        </SafeAreaView>
       </View>
       <Button
         style={styles.button}
         color={Colors.blue800}
         mode="contained"
-        onPress={handleSubmit(onSubmit)}>
+        onPress={() => console.log('Press on')}>
         <Text style={{fontSize: 18, color: 'white'}}>Buscar</Text>
       </Button>
       <MapView
@@ -117,13 +107,13 @@ const styles = StyleSheet.create({
   title: {
     paddingTop: 50,
     fontSize: 28,
-    paddingLeft: 55,
+    paddingLeft: 40,
   },
   container: {
     flexDirection: 'row',
     width: '95%',
     marginLeft: 10,
-    marginTop: 40,
+    marginTop: 25,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -137,12 +127,12 @@ const styles = StyleSheet.create({
     width: 170,
     height: 50,
     marginLeft: 115,
-    marginTop: 35,
+    marginTop: 10,
   },
   map: {
     margin: 10,
     marginTop: 20,
     width: '95%',
-    height: '35%',
+    height: '40%',
   },
 });
