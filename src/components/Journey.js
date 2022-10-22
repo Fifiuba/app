@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -9,8 +9,19 @@ import {Text,
   Colors,
 } from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
+import MapView, {Marker, Polyline} from 'react-native-maps';
 
 export const Journey = () => {
+  const [origin, setOrigin] = useState({
+    latitude: -34.6037,
+    longitude: -58.3816,
+  });
+
+  const [destination, setDestination] = useState({
+    latitude: -34.5872,
+    longitude: -58.4266,
+  });
+
   const {control, handleSubmit} = useForm({
     defaultValues: {
       default_address: '',
@@ -45,7 +56,33 @@ export const Journey = () => {
         mode="contained"
         onPress={handleSubmit(onSubmit)}>
         <Text style={{fontSize: 18, color: 'white'}}>Buscar</Text>
-      </Button></>
+      </Button>
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: origin.latitude,
+          longitude: origin.longitude,
+          latitudeDelta: 0.09,
+          longitudeDelta: 0.04,
+        }}>
+        <Marker
+          draggable
+          coordinate={origin}
+          onDragEnd={(direction) => setOrigin(direction.nativeEvent.coordinate)}
+        />
+        <Marker
+          draggable
+          coordinate={destination}
+          onDragEnd={(direction) =>
+            setDestination(direction.nativeEvent.coordinate)}
+        />
+        <Polyline
+          coordinates={[origin, destination]}
+          strokeColor="red"
+          strokeWidth={5}
+        />
+      </MapView>
+    </>
   );
 };
 
@@ -74,5 +111,11 @@ const styles = StyleSheet.create({
     height: 50,
     marginLeft: 115,
     marginTop: 35,
+  },
+  map: {
+    margin: 10,
+    marginTop: 20,
+    width: '95%',
+    height: '35%',
   },
 });
