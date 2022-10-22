@@ -60,10 +60,6 @@ const PassengerFormView = ({navigation, route}) => {
         />
         {errors.default_address?.type === 'required' &&
             <Text style={{color: 'red'}}>Campo obligatorio</Text>}
-        {errors.default_address?.type === 'maxLength' &&
-            <Text style={{color: 'red'}}>
-                Máximo {constraints.default_address.max} caracteres
-            </Text>}
         {errors.default_address?.type === 'minLength' &&
             <Text style={{color: 'red'}}>
                 Mínimo {constraints.default_address.min} caracteres

@@ -6,12 +6,15 @@ export default async function loginWithEmailAndPassword(data) {
   try {
     const token = await authFirebase(data);
     console.log('token firebase:', token);
+    if (token === null){
+      alert('Usuario no encontrado');
+      return null;
+    }
     const response = await authUser(token);
     console.log('response back:', response);
     return response;
   } catch (error) {
     console.error(error.message);
-    alert(error.message);
     return null;
   }
 }
@@ -27,7 +30,6 @@ const authFirebase = async (data) => {
     return token;
   } catch (error) {
     console.error(error.message);
-    alert(error.message);
     return null;
   }
 };

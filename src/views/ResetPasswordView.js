@@ -64,11 +64,11 @@ const ResetPasswordView = () => {
         <Text style={{color: 'red'}}>
           Correo electrónico inválido
         </Text>}
-        <ActivityIndicator
+        { loading && <ActivityIndicator
           animating={loading}
           color="#757575"
           style={{marginTop: 10}}
-        />
+        />}
         <Button
           style={styles.button}
           color={Colors.blue800}
@@ -78,9 +78,6 @@ const ResetPasswordView = () => {
         </Button>
         { send &&
             <Text style={styles.successMsg}>{msg}</Text>
-        }
-        { !send &&
-          <Text style={styles.errorMsg}>{msg}</Text>
         }
       </View>
     </View>
@@ -96,7 +93,7 @@ const styles = StyleSheet.create({
   },
   card: {
     marginTop: 170,
-    height: 360,
+    height: 340,
     width: 350,
     padding: 35,
     backgroundColor: 'white',
@@ -104,9 +101,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    marginTop: 30,
+    marginTop: 20,
     fontSize: 23,
-    marginBottom: 40,
+    marginBottom: 25,
     textAlign: 'center',
   },
   input: {
@@ -118,23 +115,15 @@ const styles = StyleSheet.create({
     width: 215,
     height: 50,
     marginLeft: 30,
-    marginTop: 15,
-    marginBottom: 10,
-  },
-  errorMsg: {
-    marginTop: 10,
-    textAlign: 'center',
-    fontSize: 18,
-    color: '#e53935',
-    borderRadius: 16,
-    height: 40,
-    paddingTop: 5,
+    marginTop: 40,
+    marginBottom: 15,
   },
   successMsg: {
     marginTop: 10,
     textAlign: 'center',
     fontSize: 18,
-    color: '#00796b',
+    color: '#616161',
+    backgroundColor: '#c8e6c9',
     borderRadius: 16,
     height: 40,
     paddingTop: 5,

@@ -15,7 +15,7 @@ const resetPassword = async (email, setSend, setMsg, setLoading) => {
     setSend(false);
     setLoading(false);
     if (error.message == constants.USER_NOT_FOUND_ERROR) {
-      setMsg('Usuario no registrado');
+      alert('Usuario no encontrado');
       console.error(error.message);
     }
     return null;

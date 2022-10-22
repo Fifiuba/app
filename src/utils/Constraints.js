@@ -6,5 +6,5 @@ export const constraints = {
   age: {min: 18},
   license_plate: {max: 10, min: 6},
   car_model: {max: 50, min: 2},
-  default_address: {max: 10, min: 6},
+  default_address: {min: 6},
 };
