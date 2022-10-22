@@ -6,7 +6,6 @@ import LoginView from '../views/LoginView';
 import ResetPasswordView from '../views/ResetPasswordView';
 import DriverFormView from '../views/DriverFormView';
 import PassengerFormView from '../views/PassengerFormView';
-import HomeView from '../views/HomeView';
 import {LoginContext} from '../context/LoginContext';
 
 const Stack = createNativeStackNavigator();

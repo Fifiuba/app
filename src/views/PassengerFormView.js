@@ -6,7 +6,6 @@ import {Text,
   Colors,
 } from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import setUserTypeInfo from '../services/SetUserTypeInfo';
 import {constraints} from '../utils/Constraints';
@@ -22,7 +21,6 @@ const PassengerFormView = ({navigation, route}) => {
   const onSubmit = async (data) => {
     try {
       console.log('passengerInfo:', data);
-      //const userId = await AsyncStorage.getItem('user_id');
       console.log('userId:', userId);
       const response = await setUserTypeInfo(data, userId, 'passenger');
       if (response) {

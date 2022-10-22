@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, Switch} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import signUp from '../services/SignUp';
 import {constraints} from '../utils/Constraints';
@@ -40,7 +39,6 @@ const SignUpForm = ({navigation}) => {
       } else {
         // Send data to users service for signing up
         const response = await signUp(data, userType());
-        //await AsyncStorage.setItem('user_id', response.id.toString());
         if (response) {
           if (isPassenger) {
             navigation.navigate('PasajeroForm', {'user_id': response.id});

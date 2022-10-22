@@ -6,7 +6,7 @@ export default async function loginWithEmailAndPassword(data) {
   try {
     const token = await authFirebase(data);
     console.log('token firebase:', token);
-    if (token === null){
+    if (token === null) {
       alert('Usuario no encontrado');
       return null;
     }
