@@ -40,8 +40,8 @@ const LoginForm = ({navigation}) => {
       // Send data to users service for signing in
       const tokenResponse = await loginWithEmailAndPassword(data);
       if (!(tokenResponse === null)) {
-        await AsyncStorage.setItem(constants.TOKEN_KEY, tokenResponse);
-        await AsyncStorage.setItem(constants.USER_TYPE_KEY, setUserType());
+        await AsyncStorage.setItem('token', tokenResponse);
+        await AsyncStorage.setItem('user_type', setUserType());
         onLogin(true);
       }
     } catch (error) {
@@ -59,9 +59,9 @@ const LoginForm = ({navigation}) => {
   );
 
   const setUserType = () => {
-    let userType = constants.PASSENGER;
+    let userType = 'passenger';
     if (!isPassenger) {
-      userType = constants.DRIVER;
+      userType = 'driver';
     }
     return userType;
   };
@@ -80,8 +80,8 @@ const LoginForm = ({navigation}) => {
           const tokenResponse =
             await loginWithGoogle(accessToken, userType);
           if (tokenResponse) {
-            await AsyncStorage.setItem(constants.TOKEN_KEY, tokenResponse);
-            await AsyncStorage.setItem(constants.USER_TYPE_KEY, userType);
+            await AsyncStorage.setItem('token', tokenResponse);
+            await AsyncStorage.setItem('user_type', userType);
             onLogin(true);
           }
         }

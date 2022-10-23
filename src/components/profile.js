@@ -33,8 +33,8 @@ export default function Profile({navigation}) {
 
   React.useEffect(() => {
     const setUserType = async () => {
-      const userType = await AsyncStorage.getItem(constants.USER_TYPE_KEY);
-      if (userType == constants.DRIVER) {
+      const userType = await AsyncStorage.getItem('user_type');
+      if (userType == 'driver') {
         setIsPassenger(false);
       }
     };
@@ -55,7 +55,7 @@ export default function Profile({navigation}) {
       if (isValid(value)) {
         if (isModified(info[key], value)) {
           let newValue;
-          if (key == constants.AGE_KEY || key == constants.ID_KEY) {
+          if (key == 'age' || key == 'id') {
             newValue = value.toString();
           } else {
             newValue = value;

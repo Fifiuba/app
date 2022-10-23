@@ -24,7 +24,7 @@ export default function Home({navigation}) {
         } }>
         <View style={styles.categoryIcon}>
           <Image
-            source={{uri: userInfo[constants.PICTURE_KEY]}}
+            source={{uri: userInfo['picture']}}
             style={styles.image} />
           <Text style={styles.categoryBtnTxt}>Mi perfil</Text>
         </View>

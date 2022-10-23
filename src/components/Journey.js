@@ -18,8 +18,8 @@ export const Journey = () => {
     longitude: -58.4266,
   });
   const [destination, setDestination] = useState({
-    latitude: -34.5872,
-    longitude: -58.4266,
+    latitude: -38.05077,
+    longitude: -57.54162,
   });
 
   const getLocationPermission = async () => {

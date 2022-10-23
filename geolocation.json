@@ -1,0 +1,235 @@
+{
+    "info": {
+        "statuscode": 0,
+        "copyright": {
+            "text": "© 2022 MapQuest, Inc.",
+            "imageUrl": "http://api.mqcdn.com/res/mqlogo.gif",
+            "imageAltText": "© 2022 MapQuest, Inc."
+        },
+        "messages": []
+    },
+    "options": {
+        "maxResults": -1,
+        "thumbMaps": true,
+        "ignoreLatLngInput": false
+    },
+    "results": [
+        {
+            "providedLocation": {
+                "location": "Avenida Pueyrredón 1051,Ciudad Autónoma de Buenos Aires,Argentina"
+            },
+            "locations": [
+                {
+                    "street": "Avenida Pueyrredón 1051",
+                    "adminArea6": "",
+                    "adminArea6Type": "Neighborhood",
+                    "adminArea5": "Buenos Aires",
+                    "adminArea5Type": "City",
+                    "adminArea4": "",
+                    "adminArea4Type": "County",
+                    "adminArea3": "",
+                    "adminArea3Type": "State",
+                    "adminArea1": "AR",
+                    "adminArea1Type": "Country",
+                    "postalCode": "C1405",
+                    "geocodeQualityCode": "P1AAA",
+                    "geocodeQuality": "POINT",
+                    "dragPoint": false,
+                    "sideOfStreet": "N",
+                    "linkId": "AR/PAD/p0/1977856",
+                    "unknownInput": "",
+                    "type": "s",
+                    "latLng": {
+                        "lat": -34.59803,
+                        "lng": -58.40338
+                    },
+                    "displayLatLng": {
+                        "lat": -34.59803,
+                        "lng": -58.40338
+                    },
+                    "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&type=map&size=225,160&locations=-34.59803,-58.40338|marker-sm-50318A-1&scalebar=true&zoom=15&rand=1852501508"
+                },
+                {
+                    "street": "Calle Pueyrredón 1051",
+                    "adminArea6": "",
+                    "adminArea6Type": "Neighborhood",
+                    "adminArea5": "Buenos Aires",
+                    "adminArea5Type": "City",
+                    "adminArea4": "",
+                    "adminArea4Type": "County",
+                    "adminArea3": "",
+                    "adminArea3Type": "State",
+                    "adminArea1": "AR",
+                    "adminArea1Type": "Country",
+                    "postalCode": "",
+                    "geocodeQualityCode": "P1CAA",
+                    "geocodeQuality": "POINT",
+                    "dragPoint": false,
+                    "sideOfStreet": "N",
+                    "linkId": "AR/PAD/p0/1579393",
+                    "unknownInput": "",
+                    "type": "s",
+                    "latLng": {
+                        "lat": -34.67338,
+                        "lng": -58.70624
+                    },
+                    "displayLatLng": {
+                        "lat": -34.67338,
+                        "lng": -58.70624
+                    },
+                    "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&type=map&size=225,160&locations=-34.67338,-58.70624|marker-sm-50318A-2&scalebar=true&zoom=15&rand=-762870445"
+                },
+                {
+                    "street": "Calle Pueyrredón 1051",
+                    "adminArea6": "",
+                    "adminArea6Type": "Neighborhood",
+                    "adminArea5": "Buenos Aires",
+                    "adminArea5Type": "City",
+                    "adminArea4": "",
+                    "adminArea4Type": "County",
+                    "adminArea3": "",
+                    "adminArea3Type": "State",
+                    "adminArea1": "AR",
+                    "adminArea1Type": "Country",
+                    "postalCode": "B1804",
+                    "geocodeQualityCode": "P1CAA",
+                    "geocodeQuality": "POINT",
+                    "dragPoint": false,
+                    "sideOfStreet": "N",
+                    "linkId": "AR/PAD/p0/2955000",
+                    "unknownInput": "",
+                    "type": "s",
+                    "latLng": {
+                        "lat": -34.85393,
+                        "lng": -58.53582
+                    },
+                    "displayLatLng": {
+                        "lat": -34.85393,
+                        "lng": -58.53582
+                    },
+                    "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&type=map&size=225,160&locations=-34.85393,-58.53582|marker-sm-50318A-3&scalebar=true&zoom=15&rand=410735961"
+                },
+                {
+                    "street": "Calle J.M. Pueyrredón 1051",
+                    "adminArea6": "",
+                    "adminArea6Type": "Neighborhood",
+                    "adminArea5": "Buenos Aires",
+                    "adminArea5Type": "City",
+                    "adminArea4": "",
+                    "adminArea4Type": "County",
+                    "adminArea3": "",
+                    "adminArea3Type": "State",
+                    "adminArea1": "AR",
+                    "adminArea1Type": "Country",
+                    "postalCode": "B1828",
+                    "geocodeQualityCode": "P1CAA",
+                    "geocodeQuality": "POINT",
+                    "dragPoint": false,
+                    "sideOfStreet": "N",
+                    "linkId": "AR/PAD/p0/1230869",
+                    "unknownInput": "",
+                    "type": "s",
+                    "latLng": {
+                        "lat": -34.74921,
+                        "lng": -58.39117
+                    },
+                    "displayLatLng": {
+                        "lat": -34.74921,
+                        "lng": -58.39117
+                    },
+                    "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&type=map&size=225,160&locations=-34.74921,-58.39117|marker-sm-50318A-4&scalebar=true&zoom=15&rand=-792485994"
+                },
+                {
+                    "street": "Avenida Doctor Honorio Pueyrredón 1051",
+                    "adminArea6": "",
+                    "adminArea6Type": "Neighborhood",
+                    "adminArea5": "Buenos Aires",
+                    "adminArea5Type": "City",
+                    "adminArea4": "",
+                    "adminArea4Type": "County",
+                    "adminArea3": "",
+                    "adminArea3Type": "State",
+                    "adminArea1": "AR",
+                    "adminArea1Type": "Country",
+                    "postalCode": "C1405",
+                    "geocodeQualityCode": "L1CAA",
+                    "geocodeQuality": "ADDRESS",
+                    "dragPoint": false,
+                    "sideOfStreet": "N",
+                    "linkId": "AR/ADDR/p0/153725",
+                    "unknownInput": "",
+                    "type": "s",
+                    "latLng": {
+                        "lat": -34.60798,
+                        "lng": -58.44507
+                    },
+                    "displayLatLng": {
+                        "lat": -34.60798,
+                        "lng": -58.44507
+                    },
+                    "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&type=map&size=225,160&locations=-34.60798,-58.44507|marker-sm-50318A-5&scalebar=true&zoom=15&rand=-1891442045"
+                },
+                {
+                    "street": "Avenida Juan Martín de Pueyrredón 1051",
+                    "adminArea6": "",
+                    "adminArea6Type": "Neighborhood",
+                    "adminArea5": "Balcarce",
+                    "adminArea5Type": "City",
+                    "adminArea4": "",
+                    "adminArea4Type": "County",
+                    "adminArea3": "Provincia de Buenos Aires",
+                    "adminArea3Type": "State",
+                    "adminArea1": "AR",
+                    "adminArea1Type": "Country",
+                    "postalCode": "",
+                    "geocodeQualityCode": "P1CCA",
+                    "geocodeQuality": "POINT",
+                    "dragPoint": false,
+                    "sideOfStreet": "N",
+                    "linkId": "AR/PAD/p0/45984",
+                    "unknownInput": "",
+                    "type": "s",
+                    "latLng": {
+                        "lat": -37.86236,
+                        "lng": -58.25778
+                    },
+                    "displayLatLng": {
+                        "lat": -37.86236,
+                        "lng": -58.25778
+                    },
+                    "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&type=map&size=225,160&locations=-37.86236,-58.25778|marker-sm-50318A-6&scalebar=true&zoom=15&rand=-185966682"
+                },
+                {
+                    "street": "",
+                    "adminArea6": "",
+                    "adminArea6Type": "Neighborhood",
+                    "adminArea5": "",
+                    "adminArea5Type": "City",
+                    "adminArea4": "",
+                    "adminArea4Type": "County",
+                    "adminArea3": "Ciudad Autónoma de Buenos Aires",
+                    "adminArea3Type": "State",
+                    "adminArea1": "AR",
+                    "adminArea1Type": "Country",
+                    "postalCode": "",
+                    "geocodeQualityCode": "A3XAX",
+                    "geocodeQuality": "STATE",
+                    "dragPoint": false,
+                    "sideOfStreet": "N",
+                    "linkId": "AR/GEO/p0/4220",
+                    "unknownInput": "",
+                    "type": "s",
+                    "latLng": {
+                        "lat": -34.61448,
+                        "lng": -58.44616
+                    },
+                    "displayLatLng": {
+                        "lat": -34.61448,
+                        "lng": -58.44616
+                    },
+                    "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&type=map&size=225,160&locations=-34.61448,-58.44616|marker-sm-50318A-7&scalebar=true&zoom=5&rand=-2069860980"
+                }
+            ]
+        }
+    ]
+}

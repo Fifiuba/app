@@ -1,0 +1,969 @@
+{
+    "route": {
+        "hasTollRoad": false,
+        "hasBridge": false,
+        "boundingBox": {
+            "lr": {
+                "lng": -57.947884,
+                "lat": -34.920872
+            },
+            "ul": {
+                "lng": -58.443031,
+                "lat": -34.610935
+            }
+        },
+        "distance": 42.125,
+        "hasTimedRestriction": false,
+        "hasTunnel": false,
+        "hasHighway": true,
+        "computedWaypoints": [],
+        "routeError": {
+            "errorCode": -400,
+            "message": ""
+        },
+        "formattedTime": "00:52:54",
+        "sessionId": "6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+        "hasAccessRestriction": false,
+        "realTime": -1,
+        "hasSeasonalClosure": false,
+        "hasCountryCross": false,
+        "fuelUsed": 2.23,
+        "legs": [
+            {
+                "hasTollRoad": false,
+                "hasBridge": false,
+                "destNarrative": "Proceed to LA PLATA.",
+                "distance": 42.125,
+                "hasTimedRestriction": false,
+                "hasTunnel": false,
+                "hasHighway": true,
+                "index": 0,
+                "formattedTime": "00:52:54",
+                "origIndex": 9,
+                "hasAccessRestriction": false,
+                "hasSeasonalClosure": false,
+                "hasCountryCross": false,
+                "roadGradeStrategy": [
+                    []
+                ],
+                "destIndex": 24,
+                "time": 3174,
+                "hasUnpaved": false,
+                "origNarrative": "Go south on RN1.",
+                "maneuvers": [
+                    {
+                        "distance": 0.379,
+                        "streets": [
+                            "Av. Doctor Honorio Pueyrredón"
+                        ],
+                        "narrative": "Start out going southeast on Av. Doctor Honorio Pueyrredón toward Felipe Vallese.",
+                        "turnType": 0,
+                        "startPoint": {
+                            "lng": -58.443031,
+                            "lat": -34.610935
+                        },
+                        "index": 0,
+                        "formattedTime": "00:00:42",
+                        "directionName": "Southeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.61093521118164,-58.443031311035156|marker-1||-34.61594772338867,-58.44062805175781|marker-2||&center=-34.613441467285156,-58.441829681396484&defaultMarker=none&zoom=11&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 42,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/icon-dirs-start_sm.gif",
+                        "direction": 5
+                    },
+                    {
+                        "distance": 0.176,
+                        "streets": [
+                            "Neuquén"
+                        ],
+                        "narrative": "Turn left onto Neuquén.",
+                        "turnType": 6,
+                        "startPoint": {
+                            "lng": -58.440628,
+                            "lat": -34.615948
+                        },
+                        "index": 1,
+                        "formattedTime": "00:00:46",
+                        "directionName": "East",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.61594772338867,-58.44062805175781|marker-2||-34.61589813232422,-58.43754196166992|marker-3||&center=-34.615922927856445,-58.43908500671387&defaultMarker=none&zoom=13&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 46,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_left_sm.gif",
+                        "direction": 8
+                    },
+                    {
+                        "distance": 0.179,
+                        "streets": [
+                            "Av. Acoyte"
+                        ],
+                        "narrative": "Turn right onto Av. Acoyte.",
+                        "turnType": 2,
+                        "startPoint": {
+                            "lng": -58.437542,
+                            "lat": -34.615898
+                        },
+                        "index": 2,
+                        "formattedTime": "00:00:25",
+                        "directionName": "Southeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.61589813232422,-58.43754196166992|marker-3||-34.6182975769043,-58.4364013671875|marker-4||&center=-34.61709785461426,-58.43697166442871&defaultMarker=none&zoom=12&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 25,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_right_sm.gif",
+                        "direction": 5
+                    },
+                    {
+                        "distance": 0.692,
+                        "streets": [
+                            "Av. José María Moreno"
+                        ],
+                        "narrative": "Av. Acoyte becomes Av. José María Moreno.",
+                        "turnType": 0,
+                        "startPoint": {
+                            "lng": -58.436401,
+                            "lat": -34.618298
+                        },
+                        "index": 3,
+                        "formattedTime": "00:01:28",
+                        "directionName": "South",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.6182975769043,-58.4364013671875|marker-4||-34.628021240234375,-58.43378448486328|marker-5||&center=-34.623159408569336,-58.43509292602539&defaultMarker=none&zoom=10&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 88,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_straight_sm.gif",
+                        "direction": 4
+                    },
+                    {
+                        "distance": 0.407,
+                        "streets": [
+                            "Av. Directorio"
+                        ],
+                        "narrative": "Turn left onto Av. Directorio.",
+                        "turnType": 6,
+                        "startPoint": {
+                            "lng": -58.433784,
+                            "lat": -34.628021
+                        },
+                        "index": 4,
+                        "formattedTime": "00:00:47",
+                        "directionName": "East",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.628021240234375,-58.43378448486328|marker-5||-34.627017974853516,-58.4267463684082|marker-6||&center=-34.627519607543945,-58.43026542663574&defaultMarker=none&zoom=12&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 47,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_left_sm.gif",
+                        "direction": 8
+                    },
+                    {
+                        "distance": 3.351,
+                        "streets": [
+                            "Av. San Juan"
+                        ],
+                        "narrative": "Av. Directorio becomes Av. San Juan.",
+                        "turnType": 0,
+                        "startPoint": {
+                            "lng": -58.426746,
+                            "lat": -34.627018
+                        },
+                        "index": 5,
+                        "formattedTime": "00:06:28",
+                        "directionName": "East",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.627017974853516,-58.4267463684082|marker-6||-34.62173080444336,-58.36830520629883|marker-7||&center=-34.62437438964844,-58.397525787353516&defaultMarker=none&zoom=8&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 388,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_straight_sm.gif",
+                        "direction": 8
+                    },
+                    {
+                        "distance": 0.242,
+                        "streets": [
+                            "Av. Paseo Colón"
+                        ],
+                        "narrative": "Turn right onto Av. Paseo Colón.",
+                        "turnType": 2,
+                        "startPoint": {
+                            "lng": -58.368305,
+                            "lat": -34.621731
+                        },
+                        "index": 6,
+                        "formattedTime": "00:00:39",
+                        "directionName": "South",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.62173080444336,-58.36830520629883|marker-7||-34.62521743774414,-58.36800003051758|marker-8||&center=-34.62347412109375,-58.3681526184082&defaultMarker=none&zoom=11&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 39,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_right_sm.gif",
+                        "direction": 4
+                    },
+                    {
+                        "distance": 0.286,
+                        "streets": [
+                            "Av. Brasil"
+                        ],
+                        "narrative": "Turn left onto Av. Brasil.",
+                        "turnType": 6,
+                        "startPoint": {
+                            "lng": -58.368,
+                            "lat": -34.625217
+                        },
+                        "index": 7,
+                        "formattedTime": "00:00:37",
+                        "directionName": "East",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.62521743774414,-58.36800003051758|marker-8||-34.625099182128906,-58.36298370361328|marker-9||&center=-34.62515830993652,-58.36549186706543&defaultMarker=none&zoom=12&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 37,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_left_sm.gif",
+                        "direction": 8
+                    },
+                    {
+                        "distance": 0.283,
+                        "streets": [],
+                        "narrative": "Turn slight right onto ramp.",
+                        "turnType": 1,
+                        "startPoint": {
+                            "lng": -58.362984,
+                            "lat": -34.625099
+                        },
+                        "index": 8,
+                        "formattedTime": "00:00:26",
+                        "directionName": "Southeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.625099182128906,-58.36298370361328|marker-9||-34.62711715698242,-58.35867691040039|marker-10||&center=-34.626108169555664,-58.360830307006836&defaultMarker=none&zoom=12&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 26,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_slight_right_sm.gif",
+                        "direction": 5
+                    },
+                    {
+                        "distance": 1.992,
+                        "streets": [
+                            "RN1"
+                        ],
+                        "narrative": "Merge onto RN1.",
+                        "turnType": 10,
+                        "startPoint": {
+                            "lng": -58.358677,
+                            "lat": -34.627117
+                        },
+                        "index": 9,
+                        "formattedTime": "00:01:55",
+                        "directionName": "South",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.62711715698242,-58.35867691040039|marker-10||-34.65316390991211,-58.352943420410156|marker-11||&center=-34.640140533447266,-58.35581016540527&defaultMarker=none&zoom=8&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 128,
+                        "time": 115,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_merge_right_sm.gif",
+                        "direction": 4
+                    },
+                    {
+                        "distance": 1.148,
+                        "streets": [
+                            "Autopista La Plata Buenos Aires",
+                            "Autopista Doctor Ricardo Balbín"
+                        ],
+                        "narrative": "RN1 becomes Autopista La Plata Buenos Aires/Autopista Doctor Ricardo Balbín.",
+                        "turnType": 0,
+                        "startPoint": {
+                            "lng": -58.352943,
+                            "lat": -34.653164
+                        },
+                        "index": 10,
+                        "formattedTime": "00:01:05",
+                        "directionName": "Southeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.65316390991211,-58.352943420410156|marker-11||-34.66718673706055,-58.34230041503906|marker-12||&center=-34.66017532348633,-58.34762191772461&defaultMarker=none&zoom=9&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 128,
+                        "time": 65,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_straight_sm.gif",
+                        "direction": 5
+                    },
+                    {
+                        "distance": 0.674,
+                        "streets": [],
+                        "narrative": "Take the exit.",
+                        "turnType": 14,
+                        "startPoint": {
+                            "lng": -58.3423,
+                            "lat": -34.667187
+                        },
+                        "index": 11,
+                        "formattedTime": "00:01:05",
+                        "directionName": "Southeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.66718673706055,-58.34230041503906|marker-12||-34.673892974853516,-58.333919525146484|marker-13||&center=-34.67053985595703,-58.33810997009277&defaultMarker=none&zoom=10&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 65,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_gr_exitright_sm.gif",
+                        "direction": 5
+                    },
+                    {
+                        "distance": 0.081,
+                        "streets": [
+                            "Autopista Doctor Ricardo Balbín"
+                        ],
+                        "narrative": "Merge onto Autopista Doctor Ricardo Balbín.",
+                        "turnType": 10,
+                        "startPoint": {
+                            "lng": -58.33392,
+                            "lat": -34.673893
+                        },
+                        "index": 12,
+                        "formattedTime": "00:00:08",
+                        "directionName": "Southeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.673892974853516,-58.333919525146484|marker-13||-34.67469787597656,-58.3328971862793|marker-14||&center=-34.67429542541504,-58.33340835571289&defaultMarker=none&zoom=14&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 8,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_merge_right_sm.gif",
+                        "direction": 5
+                    },
+                    {
+                        "distance": 2.521,
+                        "streets": [
+                            "RNA001"
+                        ],
+                        "narrative": "Autopista Doctor Ricardo Balbín becomes RNA001.",
+                        "turnType": 0,
+                        "startPoint": {
+                            "lng": -58.332897,
+                            "lat": -34.674698
+                        },
+                        "index": 13,
+                        "formattedTime": "00:03:03",
+                        "directionName": "Southeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.67469787597656,-58.3328971862793|marker-14||-34.70115661621094,-58.30430603027344|marker-15||&center=-34.68792724609375,-58.31860160827637&defaultMarker=none&zoom=8&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 128,
+                        "time": 183,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_straight_sm.gif",
+                        "direction": 5
+                    },
+                    {
+                        "distance": 0.508,
+                        "streets": [],
+                        "narrative": "Take the RNA001 exit.",
+                        "turnType": 14,
+                        "startPoint": {
+                            "lng": -58.304306,
+                            "lat": -34.701157
+                        },
+                        "index": 14,
+                        "formattedTime": "00:00:44",
+                        "directionName": "Southwest",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.70115661621094,-58.30430603027344|marker-15||-34.70750045776367,-58.3078498840332|marker-16||&center=-34.704328536987305,-58.30607795715332&defaultMarker=none&zoom=10&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 44,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_gr_exitright_sm.gif",
+                        "direction": 6
+                    },
+                    {
+                        "distance": 0.239,
+                        "streets": [
+                            "Bermejo"
+                        ],
+                        "narrative": "Merge onto Bermejo.",
+                        "turnType": 11,
+                        "startPoint": {
+                            "lng": -58.30785,
+                            "lat": -34.7075
+                        },
+                        "index": 15,
+                        "formattedTime": "00:00:36",
+                        "directionName": "Southwest",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.70750045776367,-58.3078498840332|marker-16||-34.70999526977539,-58.310760498046875|marker-17||&center=-34.70874786376953,-58.30930519104004&defaultMarker=none&zoom=12&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 36,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_merge_left_sm.gif",
+                        "direction": 6
+                    },
+                    {
+                        "distance": 1.348,
+                        "streets": [
+                            "086-01",
+                            "Av. Dardo Rocha"
+                        ],
+                        "narrative": "Turn left onto 086-01/Av. Dardo Rocha.",
+                        "turnType": 6,
+                        "startPoint": {
+                            "lng": -58.31076,
+                            "lat": -34.709995
+                        },
+                        "index": 16,
+                        "formattedTime": "00:02:42",
+                        "directionName": "Southeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.70999526977539,-58.310760498046875|marker-17||-34.71957778930664,-58.290138244628906|marker-18||&center=-34.714786529541016,-58.30044937133789&defaultMarker=none&zoom=10&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 162,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_left_sm.gif",
+                        "direction": 5
+                    },
+                    {
+                        "distance": 1.005,
+                        "streets": [
+                            "Avenida Zapiola"
+                        ],
+                        "narrative": "Turn left onto Avenida Zapiola.",
+                        "turnType": 6,
+                        "startPoint": {
+                            "lng": -58.290138,
+                            "lat": -34.719578
+                        },
+                        "index": 17,
+                        "formattedTime": "00:02:02",
+                        "directionName": "Northeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.71957778930664,-58.290138244628906|marker-18||-34.71200180053711,-58.275062561035156|marker-19||&center=-34.715789794921875,-58.28260040283203&defaultMarker=none&zoom=10&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 122,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_left_sm.gif",
+                        "direction": 3
+                    },
+                    {
+                        "distance": 0.482,
+                        "streets": [
+                            "Av. San Martín"
+                        ],
+                        "narrative": "Turn left onto Av. San Martín.",
+                        "turnType": 6,
+                        "startPoint": {
+                            "lng": -58.275063,
+                            "lat": -34.712002
+                        },
+                        "index": 18,
+                        "formattedTime": "00:00:52",
+                        "directionName": "Northwest",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.71200180053711,-58.275062561035156|marker-19||-34.708797454833984,-58.28257751464844|marker-20||&center=-34.71039962768555,-58.2788200378418&defaultMarker=none&zoom=11&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 52,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_left_sm.gif",
+                        "direction": 2
+                    },
+                    {
+                        "distance": 0.025,
+                        "streets": [
+                            "Avellaneda"
+                        ],
+                        "narrative": "Turn right onto Avellaneda.",
+                        "turnType": 2,
+                        "startPoint": {
+                            "lng": -58.282578,
+                            "lat": -34.708797
+                        },
+                        "index": 19,
+                        "formattedTime": "00:00:06",
+                        "directionName": "Northeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.708797454833984,-58.28257751464844|marker-20||-34.70852279663086,-58.28228759765625|marker-21||&center=-34.70866012573242,-58.282432556152344&defaultMarker=none&zoom=15&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 6,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_right_sm.gif",
+                        "direction": 3
+                    },
+                    {
+                        "distance": 0.489,
+                        "streets": [
+                            "Tomás Espora"
+                        ],
+                        "narrative": "Avellaneda becomes Tomás Espora.",
+                        "turnType": 0,
+                        "startPoint": {
+                            "lng": -58.282288,
+                            "lat": -34.708523
+                        },
+                        "index": 20,
+                        "formattedTime": "00:01:00",
+                        "directionName": "Northeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.70852279663086,-58.28228759765625|marker-21||-34.70329284667969,-58.276512145996094|marker-22||&center=-34.70590782165527,-58.27939987182617&defaultMarker=none&zoom=11&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 60,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_straight_sm.gif",
+                        "direction": 3
+                    },
+                    {
+                        "distance": 0.03,
+                        "streets": [
+                            "Salida Bernal"
+                        ],
+                        "narrative": "Tomás Espora becomes Salida Bernal.",
+                        "turnType": 0,
+                        "startPoint": {
+                            "lng": -58.276512,
+                            "lat": -34.703293
+                        },
+                        "index": 21,
+                        "formattedTime": "00:00:06",
+                        "directionName": "Northeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.70329284667969,-58.276512145996094|marker-22||-34.7031135559082,-58.27603530883789|marker-23||&center=-34.703203201293945,-58.27627372741699&defaultMarker=none&zoom=15&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 6,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_straight_sm.gif",
+                        "direction": 3
+                    },
+                    {
+                        "distance": 0.291,
+                        "streets": [],
+                        "narrative": "Salida Bernal becomes ramp.",
+                        "turnType": 0,
+                        "startPoint": {
+                            "lng": -58.276035,
+                            "lat": -34.703114
+                        },
+                        "index": 22,
+                        "formattedTime": "00:00:26",
+                        "directionName": "East",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.7031135559082,-58.27603530883789|marker-23||-34.70368957519531,-58.27179718017578|marker-24||&center=-34.70340156555176,-58.273916244506836&defaultMarker=none&zoom=12&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 26,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_straight_sm.gif",
+                        "direction": 8
+                    },
+                    {
+                        "distance": 21.889,
+                        "streets": [
+                            "RN1",
+                            "Autopista Doctor Ricardo Balbín"
+                        ],
+                        "narrative": "Merge onto RN1/Autopista Doctor Ricardo Balbín.",
+                        "turnType": 10,
+                        "startPoint": {
+                            "lng": -58.271797,
+                            "lat": -34.70369
+                        },
+                        "index": 23,
+                        "formattedTime": "00:16:53",
+                        "directionName": "Southeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.70368957519531,-58.27179718017578|marker-24||-34.881309509277344,-57.960357666015625|marker-25||&center=-34.79249954223633,-58.1160774230957&defaultMarker=none&zoom=6&rand=-446269857&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 128,
+                        "time": 1013,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_merge_right_sm.gif",
+                        "direction": 5
+                    },
+                    {
+                        "distance": 0.257,
+                        "streets": [],
+                        "narrative": "Take the exit toward RP11.",
+                        "turnType": 14,
+                        "startPoint": {
+                            "lng": -57.960358,
+                            "lat": -34.88131
+                        },
+                        "index": 24,
+                        "formattedTime": "00:00:29",
+                        "directionName": "Southeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.881309509277344,-57.960357666015625|marker-25||-34.883270263671875,-57.957008361816406|marker-26||&center=-34.88228988647461,-57.958683013916016&defaultMarker=none&zoom=12&rand=-445115610&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 29,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_gr_exitright_sm.gif",
+                        "direction": 5
+                    },
+                    {
+                        "distance": 0.338,
+                        "streets": [
+                            "Avenida Domingo Mercante"
+                        ],
+                        "narrative": "Merge onto Avenida Domingo Mercante.",
+                        "turnType": 10,
+                        "startPoint": {
+                            "lng": -57.957008,
+                            "lat": -34.88327
+                        },
+                        "index": 25,
+                        "formattedTime": "00:00:37",
+                        "directionName": "South",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.883270263671875,-57.957008361816406|marker-26||-34.8880615234375,-57.95707321166992|marker-27||&center=-34.88566589355469,-57.957040786743164&defaultMarker=none&zoom=11&rand=-445115610&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 37,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_merge_right_sm.gif",
+                        "direction": 4
+                    },
+                    {
+                        "distance": 0.691,
+                        "streets": [
+                            "120"
+                        ],
+                        "narrative": "Enter next roundabout and take the 5th exit onto 120.",
+                        "turnType": 2,
+                        "startPoint": {
+                            "lng": -57.957073,
+                            "lat": -34.888062
+                        },
+                        "index": 26,
+                        "formattedTime": "00:01:58",
+                        "directionName": "Southeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.8880615234375,-57.95707321166992|marker-27||-34.89389419555664,-57.949371337890625|marker-28||&center=-34.89097785949707,-57.95322227478027&defaultMarker=none&zoom=10&rand=-445115610&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 118,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_right_sm.gif",
+                        "direction": 5
+                    },
+                    {
+                        "distance": 0.043,
+                        "streets": [
+                            "Avenida 38"
+                        ],
+                        "narrative": "Turn right onto Avenida 38.",
+                        "turnType": 2,
+                        "startPoint": {
+                            "lng": -57.949371,
+                            "lat": -34.893894
+                        },
+                        "index": 27,
+                        "formattedTime": "00:00:10",
+                        "directionName": "Southwest",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.89389419555664,-57.949371337890625|marker-28||-34.894351959228516,-57.94987106323242|marker-29||&center=-34.89412307739258,-57.94962120056152&defaultMarker=none&zoom=15&rand=-445115610&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 10,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_right_sm.gif",
+                        "direction": 6
+                    },
+                    {
+                        "distance": 1.354,
+                        "streets": [
+                            "Diagonal 80"
+                        ],
+                        "narrative": "Turn slight left onto Diagonal 80.",
+                        "turnType": 7,
+                        "startPoint": {
+                            "lng": -57.949871,
+                            "lat": -34.894352
+                        },
+                        "index": 28,
+                        "formattedTime": "00:02:39",
+                        "directionName": "South",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.894351959228516,-57.94987106323242|marker-29||-34.913902282714844,-57.948673248291016|marker-30||&center=-34.90412712097168,-57.94927215576172&defaultMarker=none&zoom=9&rand=-445115610&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 159,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_slight_left_sm.gif",
+                        "direction": 4
+                    },
+                    {
+                        "distance": 0.092,
+                        "streets": [
+                            "50"
+                        ],
+                        "narrative": "Turn slight right onto 50.",
+                        "turnType": 1,
+                        "startPoint": {
+                            "lng": -57.948673,
+                            "lat": -34.913902
+                        },
+                        "index": 29,
+                        "formattedTime": "00:00:31",
+                        "directionName": "Southwest",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.913902282714844,-57.948673248291016|marker-30||-34.914894104003906,-57.94976043701172|marker-31||&center=-34.914398193359375,-57.94921684265137&defaultMarker=none&zoom=13&rand=-445115610&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 31,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_slight_right_sm.gif",
+                        "direction": 6
+                    },
+                    {
+                        "distance": 0.142,
+                        "streets": [
+                            "Avenida 7"
+                        ],
+                        "narrative": "Turn left onto Avenida 7.",
+                        "turnType": 6,
+                        "startPoint": {
+                            "lng": -57.94976,
+                            "lat": -34.914894
+                        },
+                        "index": 30,
+                        "formattedTime": "00:00:26",
+                        "directionName": "Southeast",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.914894104003906,-57.94976043701172|marker-31||-34.916263580322266,-57.94788360595703|marker-32||&center=-34.915578842163086,-57.948822021484375&defaultMarker=none&zoom=13&rand=-445115610&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 26,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_left_sm.gif",
+                        "direction": 5
+                    },
+                    {
+                        "distance": 0.427,
+                        "streets": [
+                            "Avenida 53"
+                        ],
+                        "narrative": "Turn right onto Avenida 53.",
+                        "turnType": 2,
+                        "startPoint": {
+                            "lng": -57.947884,
+                            "lat": -34.916264
+                        },
+                        "index": 31,
+                        "formattedTime": "00:00:52",
+                        "directionName": "Southwest",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.916263580322266,-57.94788360595703|marker-32||-34.92087173461914,-57.95288848876953|marker-33||&center=-34.9185676574707,-57.95038604736328&defaultMarker=none&zoom=11&rand=-445115610&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 52,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_right_sm.gif",
+                        "direction": 6
+                    },
+                    {
+                        "distance": 0.064,
+                        "streets": [
+                            "12"
+                        ],
+                        "narrative": "Turn right onto 12.",
+                        "turnType": 2,
+                        "startPoint": {
+                            "lng": -57.952888,
+                            "lat": -34.920872
+                        },
+                        "index": 32,
+                        "formattedTime": "00:00:11",
+                        "directionName": "Northwest",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "mapUrl": "http://www.mapquestapi.com/staticmap/v5/map?key=Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo&size=225,160&locations=-34.92087173461914,-57.95288848876953|marker-33||-34.92025375366211,-57.9537239074707|marker-34||&center=-34.920562744140625,-57.95330619812012&defaultMarker=none&zoom=15&rand=-445115610&session=6355c212-02be-993a-02b4-3875-0ab15a356ce7",
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 11,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/rs_right_sm.gif",
+                        "direction": 2
+                    },
+                    {
+                        "distance": 0,
+                        "streets": [],
+                        "narrative": "Welcome to LA PLATA.",
+                        "turnType": -1,
+                        "startPoint": {
+                            "lng": -57.953724,
+                            "lat": -34.920254
+                        },
+                        "index": 33,
+                        "formattedTime": "00:00:00",
+                        "directionName": "",
+                        "maneuverNotes": [],
+                        "linkIds": [],
+                        "signs": [],
+                        "transportMode": "AUTO",
+                        "attributes": 0,
+                        "time": 0,
+                        "iconUrl": "http://content.mqcdn.com/mqsite/turnsigns/icon-dirs-end_sm.gif",
+                        "direction": 0
+                    }
+                ],
+                "hasFerry": false
+            }
+        ],
+        "options": {
+            "arteryWeights": [],
+            "cyclingRoadFactor": 1,
+            "timeType": 0,
+            "useTraffic": false,
+            "returnLinkDirections": false,
+            "countryBoundaryDisplay": true,
+            "enhancedNarrative": false,
+            "locale": "en_US",
+            "tryAvoidLinkIds": [],
+            "drivingStyle": 2,
+            "doReverseGeocode": true,
+            "generalize": -1,
+            "mustAvoidLinkIds": [],
+            "sideOfStreetDisplay": true,
+            "routeType": "FASTEST",
+            "avoidTimedConditions": false,
+            "routeNumber": 0,
+            "shapeFormat": "raw",
+            "maxWalkingDistance": -1,
+            "destinationManeuverDisplay": true,
+            "transferPenalty": -1,
+            "narrativeType": "text",
+            "walkingSpeed": -1,
+            "urbanAvoidFactor": -1,
+            "stateBoundaryDisplay": true,
+            "unit": "M",
+            "highwayEfficiency": 22,
+            "maxLinkId": 0,
+            "maneuverPenalty": -1,
+            "avoidTripIds": [],
+            "filterZoneFactor": -1,
+            "manmaps": "true"
+        },
+        "locations": [
+            {
+                "dragPoint": false,
+                "displayLatLng": {
+                    "lng": -58.44598,
+                    "lat": -34.612869
+                },
+                "adminArea4": "",
+                "adminArea5": "Buenos Aires",
+                "postalCode": "",
+                "adminArea1": "AR",
+                "adminArea3": "",
+                "type": "s",
+                "sideOfStreet": "N",
+                "geocodeQualityCode": "A5XAX",
+                "adminArea4Type": "County",
+                "linkId": 51215956,
+                "street": "",
+                "adminArea5Type": "City",
+                "geocodeQuality": "CITY",
+                "adminArea1Type": "Country",
+                "adminArea3Type": "State",
+                "latLng": {
+                    "lng": -58.445979,
+                    "lat": -34.612869
+                }
+            },
+            {
+                "dragPoint": false,
+                "displayLatLng": {
+                    "lng": -57.954384,
+                    "lat": -34.921135
+                },
+                "adminArea4": "",
+                "adminArea5": "La Plata",
+                "postalCode": "",
+                "adminArea1": "AR",
+                "adminArea3": "",
+                "type": "s",
+                "sideOfStreet": "N",
+                "geocodeQualityCode": "A5XAX",
+                "adminArea4Type": "County",
+                "linkId": 53934042,
+                "street": "",
+                "adminArea5Type": "City",
+                "geocodeQuality": "CITY",
+                "adminArea1Type": "Country",
+                "adminArea3Type": "State",
+                "latLng": {
+                    "lng": -57.954384,
+                    "lat": -34.921136
+                }
+            }
+        ],
+        "time": 3174,
+        "hasUnpaved": false,
+        "locationSequence": [
+            0,
+            1
+        ],
+        "hasFerry": false
+    },
+    "info": {
+        "statuscode": 0,
+        "copyright": {
+            "imageAltText": "© 2022 MapQuest, Inc.",
+            "imageUrl": "http://api.mqcdn.com/res/mqlogo.gif",
+            "text": "© 2022 MapQuest, Inc."
+        },
+        "messages": []
+    }
+}

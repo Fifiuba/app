@@ -15,7 +15,7 @@ const getFields = (data) => {
     const key = keys[idx];
     const value = data[key];
     if (isValid(value)) {
-      if (key == constants.PASSENGER_FIELD) {
+      if (key == 'default_address') {
         userTypeInfo[key] = value;
       } else {
         userInfo[key] = value;
