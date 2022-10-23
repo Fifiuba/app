@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Image,
@@ -8,8 +8,12 @@ import {
 import {Text} from 'react-native-paper';
 
 import {constants} from '../utils/Constants';
+import {UserContext} from '../context/UserContext';
 
 export default function Home({navigation}) {
+  const user = useContext(UserContext);
+  const userInfo = user.userInfo;
+
   return (
     <View style={styles.categoryContainer}>
       <TouchableOpacity
@@ -20,7 +24,7 @@ export default function Home({navigation}) {
         } }>
         <View style={styles.categoryIcon}>
           <Image
-            source={{uri: constants.DEFAULT_URL_USER_PICTURE}}
+            source={{uri: userInfo[constants.PICTURE_KEY]}}
             style={styles.image} />
           <Text style={styles.categoryBtnTxt}>Mi perfil</Text>
         </View>

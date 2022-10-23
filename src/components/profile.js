@@ -8,6 +8,7 @@ import editProfile from '../services/EditProfile';
 import {UserContext} from '../context/UserContext';
 import {constraints} from '../utils/Constraints';
 import {isValid} from '../utils/ValueIsValid';
+import {constants} from '../utils/Constants';
 
 export default function Profile({navigation}) {
   const user = useContext(UserContext);
@@ -32,8 +33,8 @@ export default function Profile({navigation}) {
 
   React.useEffect(() => {
     const setUserType = async () => {
-      const userType = await AsyncStorage.getItem('user_type');
-      if (userType == 'driver') {
+      const userType = await AsyncStorage.getItem(constants.USER_TYPE_KEY);
+      if (userType == constants.DRIVER) {
         setIsPassenger(false);
       }
     };
@@ -54,7 +55,7 @@ export default function Profile({navigation}) {
       if (isValid(value)) {
         if (isModified(info[key], value)) {
           let newValue;
-          if (key == 'age' || key == 'id') {
+          if (key == constants.AGE_KEY || key == constants.ID_KEY) {
             newValue = value.toString();
           } else {
             newValue = value;

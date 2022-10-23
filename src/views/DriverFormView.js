@@ -9,6 +9,7 @@ import {useForm, Controller} from 'react-hook-form';
 
 import setUserTypeInfo from '../services/SetUserTypeInfo';
 import {constraints} from '../utils/Constraints';
+import {constants} from '../utils/Constants';
 
 const DriverFormView = ({navigation, route}) => {
   const userId = route.params.user_id;
@@ -23,7 +24,7 @@ const DriverFormView = ({navigation, route}) => {
     try {
       console.log('driverInfo:', data);
       console.log('userId:', userId);
-      const response = await setUserTypeInfo(data, userId, 'driver');
+      const response = await setUserTypeInfo(data, userId, constants.DRIVER);
       if (response) {
         navigation.navigate('IniciarSesion');
       }

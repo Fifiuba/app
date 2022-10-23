@@ -9,6 +9,7 @@ import {useForm, Controller} from 'react-hook-form';
 
 import setUserTypeInfo from '../services/SetUserTypeInfo';
 import {constraints} from '../utils/Constraints';
+import {constants} from '../utils/Constants';
 
 const PassengerFormView = ({navigation, route}) => {
   const userId = route.params.user_id;
@@ -22,7 +23,7 @@ const PassengerFormView = ({navigation, route}) => {
     try {
       console.log('passengerInfo:', data);
       console.log('userId:', userId);
-      const response = await setUserTypeInfo(data, userId, 'passenger');
+      const response = await setUserTypeInfo(data, userId, constants.PASSENGER);
       if (response) {
         navigation.navigate('IniciarSesion');
       }

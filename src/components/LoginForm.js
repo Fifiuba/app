@@ -18,6 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 /* eslint-disable-next-line max-len */
 import loginWithEmailAndPassword from '../services/LoginWithEmailAndPassword';
 import {LoginContext} from '../context/LoginContext';
+import {constants} from '../utils/Constants';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -39,8 +40,8 @@ const LoginForm = ({navigation}) => {
       // Send data to users service for signing in
       const tokenResponse = await loginWithEmailAndPassword(data);
       if (!(tokenResponse === null)) {
-        await AsyncStorage.setItem('token', tokenResponse);
-        await AsyncStorage.setItem('user_type', setUserType());
+        await AsyncStorage.setItem(constants.TOKEN_KEY, tokenResponse);
+        await AsyncStorage.setItem(constants.USER_TYPE_KEY, setUserType());
         onLogin(true);
       }
     } catch (error) {
@@ -58,9 +59,9 @@ const LoginForm = ({navigation}) => {
   );
 
   const setUserType = () => {
-    let userType = 'passenger';
+    let userType = constants.PASSENGER;
     if (!isPassenger) {
-      userType = 'driver';
+      userType = constants.DRIVER;
     }
     return userType;
   };
@@ -79,8 +80,8 @@ const LoginForm = ({navigation}) => {
           const tokenResponse =
             await loginWithGoogle(accessToken, userType);
           if (tokenResponse) {
-            await AsyncStorage.setItem('token', tokenResponse);
-            await AsyncStorage.setItem('user_type', userType);
+            await AsyncStorage.setItem(constants.TOKEN_KEY, tokenResponse);
+            await AsyncStorage.setItem(constants.USER_TYPE_KEY, userType);
             onLogin(true);
           }
         }
