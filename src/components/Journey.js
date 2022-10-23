@@ -2,14 +2,11 @@ import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
-  SafeAreaView
 } from 'react-native';
 import {Text,
-  TextInput,
   Button,
   Colors,
 } from 'react-native-paper';
-import {useForm, Controller} from 'react-hook-form';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import * as Location from 'expo-location';
 
@@ -51,28 +48,26 @@ export const Journey = () => {
     console.log('origin:', origin);
   }, []);
 
-  const [searchPhrase, setSearchPhrase] = useState("");
+  const [searchPhrase, setSearchPhrase] = useState('');
   const [clicked, setClicked] = useState(false);
 
   return (
-    <>
+    <View>
       <Text style={styles.title}>¿Deseas iniciar un viaje?</Text>
       <View style={styles.container}>
-        <SafeAreaView style={styles.root}>
-          <SearchBar
-            searchPhrase={searchPhrase}
-            setSearchPhrase={setSearchPhrase}
-            clicked={clicked}
-            setClicked={setClicked}
-          />
-        </SafeAreaView>
+        <SearchBar
+          searchPhrase={searchPhrase}
+          setSearchPhrase={setSearchPhrase}
+          clicked={clicked}
+          setClicked={setClicked}
+        />
       </View>
       <Button
         style={styles.button}
         color={Colors.blue800}
         mode="contained"
         onPress={() => console.log('Press on')}>
-        <Text style={{fontSize: 18, color: 'white'}}>Buscar</Text>
+        <Text style={styles.titleButton}>Buscar</Text>
       </Button>
       <MapView
         style={styles.map}
@@ -99,7 +94,7 @@ export const Journey = () => {
           strokeWidth={5}
         />
       </MapView>
-    </>
+    </View>
   );
 };
 
@@ -121,6 +116,10 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
     width: '85%',
+  },
+  titleButton: {
+    fontSize: 18,
+    color: 'white',
   },
   button: {
     padding: 5,

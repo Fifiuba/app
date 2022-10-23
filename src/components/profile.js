@@ -2,11 +2,12 @@ import React, {useContext, useState} from 'react';
 import {Text, View, Image, StyleSheet} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {Colors, Button, TextInput} from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import editProfile from '../services/EditProfile';
 import {UserContext} from '../context/UserContext';
 import {constraints} from '../utils/Constraints';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {isValid} from '../utils/ValueIsValid';
 
 export default function Profile({navigation}) {
   const user = useContext(UserContext);
@@ -43,14 +44,8 @@ export default function Profile({navigation}) {
     return value != newValue;
   };
 
-  const isValid = (value) => {
-    return (value != '' || value != 0 || !(value === null));
-  };
-
   const updateInfo = (info, data) => {
-    console.log('Updatting info info');
-    console.log('info:', info);
-    console.log('data:', data);
+    console.log('Updatting info');
 
     const keys = Object.getOwnPropertyNames(data);
     for (let idx = 0; idx < keys.length; idx++) {
@@ -78,11 +73,8 @@ export default function Profile({navigation}) {
       console.log('data:', data);
       const response = await editProfile(data, setEdit, setMsg);
       if (response) {
-        console.log('Edición exitosa');
         updateInfo(userInfo, response[0]);
         updateInfo(userTypeInfo, response[1]);
-        console.log('updated userInfo:', userInfo);
-        console.log('updated userTypeInfo:', userTypeInfo);
         navigation.navigate('MiPerfil');
       }
     } catch (error) {

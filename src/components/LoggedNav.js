@@ -5,27 +5,37 @@ import HomeView from '../views/HomeView';
 import ProfileView from '../views/ProfileView';
 import getProfile from '../services/GetProfile';
 import {UserContext} from '../context/UserContext';
+import {constants} from '../utils/Constants';
 
 const Stack = createNativeStackNavigator();
-const DEFAULT_URL_USER_PICTURE = 'https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png';
 
 export default function LoggedNav() {
   const [userInfo, setUserInfo] = useState('');
   const [userTypeInfo, setUserTypeInfo] = useState('');
+
+  const setEmpty = (data) => {
+    const keys = Object.getOwnPropertyNames(data);
+    for (let idx = 0; idx < keys.length; idx++) {
+      const key = keys[idx];
+      const value = data[key];
+      if (value === null) {
+        if (key == constants.PICTURE) {
+          data[key] = constants.DEFAULT_URL_USER_PICTURE;
+        } else {
+          data[key] = constants.EMPTY;
+        }
+      }
+    };
+    return data;
+  };
 
   React.useEffect(() => {
     const handleProfile = async () => {
       try {
         const userInfo = await getProfile();
         if (userInfo) {
-          if (userInfo[0].picture === null) {
-            userInfo[0].picture = DEFAULT_URL_USER_PICTURE;
-          }
-          if (userInfo[0].age === null) {
-            userInfo[0].age = '';
-          }
-          setUserInfo(userInfo[0]);
-          setUserTypeInfo(userInfo[1]);
+          setUserInfo(setEmpty(userInfo[0]));
+          setUserTypeInfo(setEmpty(userInfo[1]));
         }
       } catch (error) {
         console.error(error.message);

@@ -1,8 +1,8 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const PASSENGER_FIELD = 'default_address';
-const DRIVER_FIELDS = ['car_model, license_plate'];
+import {isValid} from '../utils/ValueIsValid';
+import {constants} from '../utils/Constants';
 
 const getFields = (data) => {
   const userInfo = {};
@@ -14,8 +14,8 @@ const getFields = (data) => {
   for (let idx = 0; idx < keys.length; idx++) {
     const key = keys[idx];
     const value = data[key];
-    if (value != '' || value != 0 || !(value === null)) {
-      if (key == PASSENGER_FIELD || key in DRIVER_FIELDS) {
+    if (isValid(value)) {
+      if (key == constants.PASSENGER_FIELD) {
         userTypeInfo[key] = value;
       } else {
         userInfo[key] = value;
@@ -49,8 +49,7 @@ export default async function editProfile(data, setEdit, setMsg) {
   } catch (error) {
     setEdit(false);
     setMsg('Edición fallida');
-    alert(error.response.data.detail);
-    console.error(error.response.data.detail);
+    console.error(error);
     return null;
   }
 }
