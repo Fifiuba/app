@@ -11,16 +11,21 @@ import MapView, {Marker, Polyline} from 'react-native-maps';
 import * as Location from 'expo-location';
 
 import SearchBar from './SearchBar';
+import getRoute from '../services/GetRoute';
 
-export const Journey = () => {
+const Journey = () => {
   const [origin, setOrigin] = useState({
-    latitude: -34.5872,
-    longitude: -58.4266,
+    latitude: 0,
+    longitude: 0,
   });
   const [destination, setDestination] = useState({
-    latitude: -38.05077,
-    longitude: -57.54162,
+    latitude: 0,
+    longitude: 0,
   });
+  const [coords, setCoords] = useState([origin, destination]);
+
+  const [searchPhrase, setSearchPhrase] = useState('');
+  const [clicked, setClicked] = useState(false);
 
   const getLocationPermission = async () => {
     try {
@@ -45,11 +50,19 @@ export const Journey = () => {
 
   React.useEffect(() => {
     getLocationPermission();
+    const handleCoords = async () => {
+      try {
+        const response = await getRoute(origin);
+        setCoords(response);
+      } catch (error) {
+        console.error(error.message);
+        return null;
+      }
+    };
+    handleCoords();
     console.log('origin:', origin);
+    console.log('destination:', destination);
   }, []);
-
-  const [searchPhrase, setSearchPhrase] = useState('');
-  const [clicked, setClicked] = useState(false);
 
   return (
     <View>
@@ -89,7 +102,7 @@ export const Journey = () => {
             setDestination(direction.nativeEvent.coordinate)}
         />
         <Polyline
-          coordinates={[origin, destination]}
+          coordinates={coords}
           strokeColor="red"
           strokeWidth={5}
         />
@@ -97,6 +110,8 @@ export const Journey = () => {
     </View>
   );
 };
+
+export default Journey;
 
 const styles = StyleSheet.create({
   title: {

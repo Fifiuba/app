@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import {Text} from 'react-native-paper';
 
-import {constants} from '../utils/Constants';
 import {UserContext} from '../context/UserContext';
 
 export default function Home({navigation}) {

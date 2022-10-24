@@ -18,7 +18,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 /* eslint-disable-next-line max-len */
 import loginWithEmailAndPassword from '../services/LoginWithEmailAndPassword';
 import {LoginContext} from '../context/LoginContext';
-import {constants} from '../utils/Constants';
 
 WebBrowser.maybeCompleteAuthSession();
 

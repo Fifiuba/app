@@ -8,7 +8,6 @@ import editProfile from '../services/EditProfile';
 import {UserContext} from '../context/UserContext';
 import {constraints} from '../utils/Constraints';
 import {isValid} from '../utils/ValueIsValid';
-import {constants} from '../utils/Constants';
 
 export default function Profile({navigation}) {
   const user = useContext(UserContext);

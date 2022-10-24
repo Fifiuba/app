@@ -20,7 +20,7 @@ export default function LoggedNav() {
       const value = data[key];
       if (value === null) {
         if (key == 'picture') {
-          data[key] = DEFAULT_URL_USER_PICTURE;
+          data[key] = constants.DEFAULT_URL_USER_PICTURE;
         } else {
           data[key] = '';
         }
