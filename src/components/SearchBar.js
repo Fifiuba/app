@@ -2,7 +2,8 @@ import React from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
 import {Feather} from '@expo/vector-icons';
 
-const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked}) => {
+/* eslint-disable-next-line max-len */
+const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked, placeholderValue}) => {
   return (
     <View style={styles.container}>
       <View style={styles.searchBar}>
@@ -15,7 +16,7 @@ const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked}) => {
         <TextInput
           mode='flat'
           style={styles.input}
-          placeholder="Buscar destino"
+          placeholder={placeholderValue}
           value={searchPhrase}
           onChangeText={setSearchPhrase}
           onFocus={() => {
@@ -30,7 +31,6 @@ export default SearchBar;
 
 const styles = StyleSheet.create({
   container: {
-    margin: 15,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    fontSize: 20,
+    fontSize: 16,
     marginLeft: 15,
     width: '90%',
     height: 35,

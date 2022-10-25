@@ -22,7 +22,6 @@ const PassengerFormView = ({navigation, route}) => {
   const onSubmit = async (data) => {
     try {
       console.log('passengerInfo:', data);
-      console.log('userId:', userId);
       const response = await setUserTypeInfo(data, userId, constants.PASSENGER);
       if (response) {
         navigation.navigate('IniciarSesion');
