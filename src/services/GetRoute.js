@@ -2,8 +2,8 @@ import axios from 'axios';
 
 import {JOURNEY_SERVICE_KEY} from '@env';
 
-const getCoords = (data, coords) => {
-  console.log('Getting coords');
+const getRouteCoords = (data, coords) => {
+  console.log('Getting route coords');
 
   for (let idx = 0; idx < data.length; idx++) {
     const point = {
@@ -16,11 +16,27 @@ const getCoords = (data, coords) => {
   return coords;
 };
 
-const getRoute = async (originCoords) => {
+const getLocationCoords = (data) => {
+  console.log('Getting location coords:', data.length);
+  const coords = [];
+
+  for (let idx = 0; idx < data.length; idx++) {
+    const point = {
+      'latitude': data[idx].latLng.lat,
+      'longitude': data[idx].latLng.lng,
+    };
+    console.log('point:', point);
+    coords.push(point);
+  }
+  console.log('coords:', coords);
+  return coords;
+};
+
+const getRoute = async (originCoords, origin, destination) => {
   const params = {
     key: JOURNEY_SERVICE_KEY,
-    from: 'Junín, Argentina',
-    to: 'Mar del Plata, Argentina',
+    from: origin,
+    to: destination,
   };
   console.log('params:', params);
   try {
@@ -28,9 +44,11 @@ const getRoute = async (originCoords) => {
       params,
     });
     const maneuvers = response.data.route.legs[0].maneuvers;
-    let coords = [originCoords];
-    coords = getCoords(maneuvers, coords);
-    return coords;
+    let routeCoords = [originCoords];
+    routeCoords = getRouteCoords(maneuvers, routeCoords);
+    const locations = response.data.route.locations;
+    const locationCoords = getLocationCoords(locations);
+    return [routeCoords, locationCoords];
   } catch (error) {
     console.error(error.message);
     return null;

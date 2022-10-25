@@ -22,9 +22,10 @@ const Journey = () => {
     latitude: 0,
     longitude: 0,
   });
-  const [coords, setCoords] = useState([origin, destination]);
+  const [coords, setCoords] = useState([origin]);
 
-  const [searchPhrase, setSearchPhrase] = useState('');
+  const [searchOrigin, setSearchOrigin] = useState('');
+  const [searchDestination, setSearchDestination] = useState('');
   const [clicked, setClicked] = useState(false);
 
   const getLocationPermission = async () => {
@@ -48,20 +49,20 @@ const Journey = () => {
     }
   };
 
+  const handleSearchJourney = async () => {
+    try {
+      const response = await getRoute(origin, searchOrigin, searchDestination);
+      setCoords(response[0]);
+      setOrigin(response[1][0]);
+      setDestination(response[1][1]);
+    } catch (error) {
+      console.error(error.message);
+      return null;
+    }
+  };
+
   React.useEffect(() => {
     getLocationPermission();
-    const handleCoords = async () => {
-      try {
-        const response = await getRoute(origin);
-        setCoords(response);
-      } catch (error) {
-        console.error(error.message);
-        return null;
-      }
-    };
-    handleCoords();
-    console.log('origin:', origin);
-    console.log('destination:', destination);
   }, []);
 
   return (
@@ -69,17 +70,30 @@ const Journey = () => {
       <Text style={styles.title}>¿Deseas iniciar un viaje?</Text>
       <View style={styles.container}>
         <SearchBar
-          searchPhrase={searchPhrase}
-          setSearchPhrase={setSearchPhrase}
+          searchPhrase={searchOrigin}
+          setSearchPhrase={setSearchOrigin}
           clicked={clicked}
           setClicked={setClicked}
+          placeholderValue="Buscar origen"
+        />
+      </View>
+      <View style={styles.container}>
+        <SearchBar
+          searchPhrase={searchDestination}
+          setSearchPhrase={setSearchDestination}
+          clicked={clicked}
+          setClicked={setClicked}
+          placeholderValue="Buscar destino"
         />
       </View>
       <Button
         style={styles.button}
         color={Colors.blue800}
         mode="contained"
-        onPress={() => console.log('Press on')}>
+        onPress={() => {
+          console.log('Buscar viaje');
+          handleSearchJourney();
+        }}>
         <Text style={styles.titleButton}>Buscar</Text>
       </Button>
       <MapView
@@ -115,7 +129,7 @@ export default Journey;
 
 const styles = StyleSheet.create({
   title: {
-    paddingTop: 50,
+    paddingTop: 30,
     fontSize: 28,
     paddingLeft: 40,
   },
@@ -141,12 +155,12 @@ const styles = StyleSheet.create({
     width: 170,
     height: 50,
     marginLeft: 115,
-    marginTop: 10,
+    marginTop: 20,
   },
   map: {
     margin: 10,
     marginTop: 20,
     width: '95%',
-    height: '40%',
+    height: '42%',
   },
 });
