@@ -1,6 +1,8 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import {USER_SERVICE_URL} from '@env';
+
 export default async function getProfile() {
   console.log('Get profile');
   try {
@@ -12,7 +14,7 @@ export default async function getProfile() {
       },
       headers: {Authorization: `Bearer ${token}`},
     };
-    const response = await axios.get('http://192.168.0.76:8000/users/me/', config);
+    const response = await axios.get(`${USER_SERVICE_URL}/users/me/`, config);
     console.log('response_data:', response.data);
     return response.data;
   } catch (error) {

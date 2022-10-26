@@ -1,6 +1,8 @@
 import axios from 'axios';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 
+import {USER_SERVICE_URL} from '@env';
+
 export default async function loginWithEmailAndPassword(data) {
   console.log('Login with email and password');
   try {
@@ -40,11 +42,11 @@ const authUser = async (token) => {
     params = {
       'token': token,
     };
-    const response = await axios.post('http://192.168.0.76:8000/users/login', params);
+    const response = await axios.post(`${USER_SERVICE_URL}/users/login`, params);
     return response.data;
   } catch (error) {
-    alert(error.response.data.detail);
-    console.error(error.response.data.detail);
+    alert(error.response);
+    console.error(error.response);
     return null;
   }
 };

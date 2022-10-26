@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-const searchJourney = async (origin, destination, userId) => {
+import {JOURNEY_SERVICE_URL} from '@env';
+
+const searchJourney = async (origin, destination, userId, distance) => {
   try {
-    const response = await axios.post('http://192.168.0.76:9000/journey/', {
+    const response = await axios.post(`${JOURNEY_SERVICE_URL}/journey/`, {
       'modality': 'standar',
-      'distance': 120,
+      'distance': distance,
       'idPassenger': userId,
       'from': [origin.latitude, origin.longitude],
       'to': [destination.latitude, destination.longitude],

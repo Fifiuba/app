@@ -2,6 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {isValid} from '../utils/ValueIsValid';
+import {USER_SERVICE_URL} from '@env';
 
 const getFields = (data) => {
   const userInfo = {};
@@ -40,7 +41,7 @@ export default async function editProfile(data, setEdit, setMsg) {
     };
     console.log('config:', config);
 
-    const response = await axios.patch('http://192.168.0.76:8000/users/me/', params, config);
+    const response = await axios.patch(`${USER_SERVICE_URL}/users/me/`, params, config);
     console.log('response data:', response.data);
     setEdit(true);
     setMsg('Edición exitosa');

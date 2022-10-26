@@ -1,10 +1,12 @@
 import axios from 'axios';
 
+import {USER_SERVICE_URL} from '@env';
+
 export default async function loginWithGoogle(token, userType) {
   console.log('Login with google');
   try {
     console.log('token from firebase:', token);
-    const response = await axios.post('http://192.168.0.76:8000/users/loginGoogle', {
+    const response = await axios.post(`${USER_SERVICE_URL}/users/loginGoogle`, {
       'user_type': userType,
       'token': token,
     });
