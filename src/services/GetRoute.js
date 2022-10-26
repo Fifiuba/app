@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 import {JOURNEY_SERVICE_KEY} from '@env';
+/* eslint-disable max-len */
+const INVALID_DIRECTIONS_ERROR = 'We are unable to route with the given locations.';
 
 const getDirections = (data) => {
   const coords = [];
@@ -24,13 +26,17 @@ const getRoute = async (origin, destination) => {
     const response = await axios.get('http://www.mapquestapi.com/directions/v2/route', {
       params,
     });
-    const shapePoints = response.data.route.shape.shapePoints;
-    const routeCoords = getDirections(shapePoints);
-    const distance = response.data.route.distance;
-    return [routeCoords, distance];
+    if (response.data.info.messages == INVALID_DIRECTIONS_ERROR) {
+      console.error('Direcciones inválidas');
+      alert('No se encontraron resultados para esas direcciones');
+      return null;
+    } else {
+      const shapePoints = response.data.route.shape.shapePoints;
+      const routeCoords = getDirections(shapePoints);
+      const distance = response.data.route.distance;
+      return [routeCoords, distance];
+    }
   } catch (error) {
-    /* if (error.message == "We are unable to route with the given locations.");
-      alert('No se encontraron resultados para esas direcciones');*/
     console.error(error.message);
     return null;
   }

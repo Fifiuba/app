@@ -73,11 +73,13 @@ const Journey = () => {
   const handleGetInfoJourney = async () => {
     try {
       const response = await getRoute(searchOrigin, searchDestination);
-      setJourneyInfo(response[0], response[1]);
-      const journeyPrice = await getJourneyInfo(distance);
-      console.log('price', journeyPrice);
-      setPrice(journeyPrice);
-      setPriceSetted(true);
+      if (!(response === null)) {
+        setJourneyInfo(response[0], response[1]);
+        const journeyPrice = await getJourneyInfo(distance);
+        console.log('price', journeyPrice);
+        setPrice(journeyPrice);
+        setPriceSetted(true);
+      }
     } catch (error) {
       console.error(error.message);
       return null;
@@ -170,7 +172,7 @@ const Journey = () => {
           mode="contained"
           onPress={() => {
             {console.log('Iniciar viaje');
-            handleCreateJourney();}
+              handleCreateJourney();}
           }}>
           <Text style={styles.titleButton}>Iniciar viaje</Text>
         </Button>
