@@ -42,7 +42,8 @@ const authUser = async (token) => {
     params = {
       'token': token,
     };
-    const response = await axios.post(`${USER_SERVICE_URL}/users/login`, params);
+    const response =
+      await axios.post(`${USER_SERVICE_URL}/users/login`, params);
     return response.data;
   } catch (error) {
     alert(error.response);
