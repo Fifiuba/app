@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '90%',
     marginTop: 100,
-    marginBottom: 10,
     alignSelf: 'center',
   },
   categoryBtn: {
@@ -57,7 +56,6 @@ const styles = StyleSheet.create({
   },
   categoryBtnTxt: {
     alignSelf: 'center',
-    marginTop: 5,
     fontSize: 14,
   },
   image: {

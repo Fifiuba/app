@@ -1,5 +1,5 @@
 import {useState, useContext} from 'react';
-import {View, StyleSheet, Text, Switch} from 'react-native';
+import {View, StyleSheet, Text, Switch, Image} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
@@ -94,7 +94,9 @@ const LoginForm = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>FIFIUBA</Text>
+      <Image
+        source={require('../../assets/icon-app.png')}
+        style={styles.image} />
       <Controller control={control}
         rules={{
           required: true,
@@ -174,7 +176,7 @@ const LoginForm = ({navigation}) => {
           ¿Has olvidado la contraseña?
         </Text>
       </View>
-      <View style={styles.subcontainer}>
+      <View style={styles.googleContainer}>
         <Text style={styles.text}>
           O iniciar sesión con
         </Text>
@@ -188,13 +190,11 @@ const LoginForm = ({navigation}) => {
         >
           <Text style={{fontSize: 18}}>Google</Text>
         </Button>
-        <View style={{marginTop: 10}}>
+        <View style={styles.bottomContainer}>
           <Text style={{textAlign: 'center', fontSize: 18, color: '#282829'}}>
                       ¿No tenes cuenta?{'\n'}
             <Text
-              style={{textDecorationLine: 'underline',
-                fontSize: 18,
-                color: '#0D516B'}}
+              style={styles.link}
               onPress={() => navigation.navigate('Registrarse')}>
                           Registrate
             </Text>
@@ -210,17 +210,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     backgroundColor: 'white',
-    padding: 18,
-    margin: 15,
-    marginTop: 90,
-    height: 670,
+    padding: 20,
+    margin: 10,
+    marginTop: 80,
+    height: 680,
     borderRadius: 16,
   },
-  title: {
-    fontSize: 40,
-    paddingLeft: 70,
-    margin: 10,
-    color: '#3B3C3D',
+  image: {
+    width: 310,
+    height: 100,
   },
   input: {
     marginTop: 15,
@@ -231,10 +229,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#282829',
   },
+  link: {
+    textDecorationLine: 'underline',
+    fontSize: 18,
+    color: '#0D516B',
+  },
   switchContainer: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignContent: 'center',
     justifyContent: 'center',
   },
   button: {
@@ -242,10 +245,13 @@ const styles = StyleSheet.create({
     width: 210,
     height: 50,
     marginTop: 10,
-    marginLeft: 55,
     marginBottom: 10,
+    alignSelf: 'center',
   },
-  subcontainer: {
+  bottomContainer: {
+    margin: 10,
+  },
+  googleContainer: {
     alignItems: 'center',
     height: 200,
     paddingTop: 10,

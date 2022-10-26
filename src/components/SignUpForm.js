@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, Switch} from 'react-native';
+import {View, StyleSheet, Text, Switch, Image} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
@@ -58,7 +58,9 @@ const SignUpForm = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>FIFIUBA</Text>
+      <Image
+        source={require('../../assets/icon-app.png')}
+        style={styles.image} />
       <Controller control={control}
         rules={{
           required: true,
@@ -80,11 +82,15 @@ const SignUpForm = ({navigation}) => {
         name="name"
       />
       {errors.name?.type === 'required' &&
-      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+      <Text style={styles.errorText}>Campo obligatorio</Text>}
       {errors.name?.type === 'maxLength' &&
-      <Text>Máximo {constraints.name.max}</Text>}
+      <Text style={styles.errorText}>
+        Máximo {constraints.name.max} letras
+      </Text>}
       {errors.name?.type === 'minLength' &&
-      <Text>Mínimo {constraints.name.min}</Text>}
+      <Text style={styles.errorText}>
+        Mínimo {constraints.name.min} letras
+      </Text>}
       <Controller control={control}
         rules={{
           required: true,
@@ -106,9 +112,9 @@ const SignUpForm = ({navigation}) => {
         name="email"
       />
       {errors.email?.type === 'required' &&
-      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+      <Text style={styles.errorText}>Campo obligatorio</Text>}
       {errors.email?.type === 'validate' &&
-      <Text style={{color: 'red'}}>Correo electrónico inválido</Text>}
+      <Text style={styles.errorText}>Correo electrónico inválido</Text>}
       <Controller control={control}
         rules={{
           required: true,
@@ -128,7 +134,7 @@ const SignUpForm = ({navigation}) => {
         name="phone_number"
       />
       {errors.phone?.type === 'required' &&
-      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+      <Text style={styles.errorText}>Campo obligatorio</Text>}
       <Controller control={control}
         rules={{
           required: true,
@@ -149,9 +155,11 @@ const SignUpForm = ({navigation}) => {
         name="age"
       />
       {errors.age?.type === 'required' &&
-      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+      <Text style={styles.errorText}>Campo obligatorio</Text>}
       {errors.age?.type === 'min' &&
-      <Text>Mínimo {constraints.age.min}</Text>}
+      <Text style={styles.errorText}>
+        Mínimo {constraints.age.min} años
+      </Text>}
       <Controller control={control}
         rules={{
           required: true,
@@ -173,11 +181,15 @@ const SignUpForm = ({navigation}) => {
         name="password"
       />
       {errors.password?.type === 'required' &&
-      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+      <Text style={styles.errorText}>Campo obligatorio</Text>}
       {errors.password?.type === 'maxLength' &&
-      <Text>Máximo {constraints.password.max}</Text>}
+      <Text style={styles.errorText}>
+        Máximo {constraints.password.max} caracteres
+      </Text>}
       {errors.password?.type === 'minLength' &&
-      <Text>Mínimo {constraints.password.min}</Text>}
+      <Text style={styles.errorText}>
+        Mínimo {constraints.password.min} caracteres
+      </Text>}
       <View style={styles.switchContainer}>
         <Text style={styles.text}>Chofer</Text>
         <Switch
@@ -210,31 +222,30 @@ const SignUpForm = ({navigation}) => {
         />
       }
       {code && errors.code?.type === 'required' &&
-      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+      <Text style={styles.errorText}>Campo obligatorio</Text>}
       {errors.code?.type === 'maxLength' &&
-      <Text>Máximo {constraints.code.max}</Text>}
+      <Text style={styles.errorText}>
+        Máximo {constraints.code.max} dígitos
+      </Text>}
       {errors.code?.type === 'minLength' &&
-      <Text>Mínimo {constraints.code.min}</Text>}
+      <Text style={styles.errorText}>
+        Mínimo {constraints.code.min} dígitos
+      </Text>}
       <Button
         color={Colors.blue800}
         style={styles.button}
         mode="contained"
         onPress={handleSubmit(onSubmit)}
       >
-        <Text style={{fontSize: 18}}>Registrarse</Text>
+        <Text style={{fontSize: 20}}>Registrarse</Text>
       </Button>
-      <View style={{margin: 5}}>
-        <Text style={{marginTop: 5,
-          textAlign: 'center',
-          fontSize: 18,
-          color: '#282829'}}>
-                    ¿Ya tenes cuenta?{'\n'}
+      <View style={styles.bottomContainer}>
+        <Text style={{textAlign: 'center', fontSize: 18, color: '#282829'}}>
+                      ¿Ya tenes cuenta?{'\n'}
           <Text
-            style={{textDecorationLine: 'underline',
-              fontSize: 18,
-              color: '#0D516B'}}
-            onPress={() => navigation.navigate('IniciarSesion')}>
-                        Iniciar sesión
+            style={styles.link}
+            onPress={() => navigation.navigate('Registrarse')}>
+                          Iniciar sesión
           </Text>
         </Text>
       </View>
@@ -246,16 +257,16 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignContent: 'center',
-    padding: 30,
-    height: 750,
-    marginTop: 50,
-  },
-  title: {
-    fontSize: 40,
-    paddingLeft: 80,
+    backgroundColor: 'white',
+    padding: 20,
     margin: 10,
-    marginTop: 15,
-    color: '#3B3C3D',
+    marginTop: 50,
+    height: 720,
+    borderRadius: 16,
+  },
+  image: {
+    width: 310,
+    height: 90,
   },
   input: {
     marginTop: 5,
@@ -265,18 +276,29 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#282829',
   },
+  errorText: {
+    color: 'red',
+  },
   switchContainer: {
     marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  link: {
+    textDecorationLine: 'underline',
+    fontSize: 18,
+    color: '#0D516B',
+  },
   button: {
     height: 55,
     width: 200,
-    justifyContent: 'center',
     marginLeft: 70,
     marginTop: 15,
+    justifyContent: 'center',
+  },
+  bottomContainer: {
+    margin: 10,
   },
 });
 
