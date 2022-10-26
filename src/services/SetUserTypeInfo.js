@@ -27,7 +27,8 @@ export default async function setUserTypeInfo(data, userId, userType) {
       'fields': getFields(data),
     };
     console.log('params:', params);
-    const response = await axios.patch(`${USER_SERVICE_URL}/users/${userId}`, params);
+    const response =
+      await axios.patch(`${USER_SERVICE_URL}/users/${userId}`, params);
     console.log('response data:', response.data);
     return response.data;
   } catch (error) {

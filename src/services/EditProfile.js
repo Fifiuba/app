@@ -41,7 +41,8 @@ export default async function editProfile(data, setEdit, setMsg) {
     };
     console.log('config:', config);
 
-    const response = await axios.patch(`${USER_SERVICE_URL}/users/me/`, params, config);
+    const response =
+      await axios.patch(`${USER_SERVICE_URL}/users/me/`, params, config);
     console.log('response data:', response.data);
     setEdit(true);
     setMsg('Edición exitosa');
