@@ -26,8 +26,11 @@ const getRoute = async (origin, destination) => {
     });
     const shapePoints = response.data.route.shape.shapePoints;
     const routeCoords = getDirections(shapePoints);
-    return routeCoords;
+    const distance = response.data.route.distance;
+    return [routeCoords, distance];
   } catch (error) {
+    /* if (error.message == "We are unable to route with the given locations.");
+      alert('No se encontraron resultados para esas direcciones');*/
     console.error(error.message);
     return null;
   }

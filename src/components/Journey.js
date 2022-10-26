@@ -12,8 +12,9 @@ import * as Location from 'expo-location';
 
 import SearchBar from './SearchBar';
 import getRoute from '../services/GetRoute';
-import searchJourney from '../services/SearchJourney';
+import createJourney from '../services/CreateJourney';
 import {UserContext} from '../context/UserContext';
+import getJourneyInfo from '../services/GetInfoJourney';
 
 const Journey = () => {
   const user = useContext(UserContext);
@@ -33,9 +34,11 @@ const Journey = () => {
   const [searchDestination, setSearchDestination] = useState('');
   const [clicked, setClicked] = useState(false);
 
+  const [distance, setDistance] = useState(0);
   const [price, setPrice] = useState(0);
   const [priceSetted, setPriceSetted] = useState(false);
 
+  /* eslint-disable no-unused-vars */
   const getLocationPermission = async () => {
     try {
       const {status} = await Location.requestForegroundPermissionsAsync();
@@ -57,19 +60,35 @@ const Journey = () => {
     }
   };
 
-  const handleSearchJourney = async () => {
+  const setJourneyInfo = (route, distance) => {
+    setDistance(distance);
+    setRoute(route);
+    setOrigin(route[0]);
+    setDestination(route[(route.length)-1]);
+    console.log('distance:', distance);
+    console.log('origin:', origin);
+    console.log('destination:', destination);
+  };
+
+  const handleGetInfoJourney = async () => {
     try {
-      const responseRoute = await getRoute(searchOrigin, searchDestination);
-      setRoute(responseRoute);
-      setOrigin(responseRoute[0]);
-      setDestination(responseRoute[(responseRoute.length)-1]);
-      console.log('origin:', origin);
-      console.log('destination:', destination);
-      const responseJourney =
-        await searchJourney(origin, destination, userInfo.id);
-      console.log('responseJourney', responseJourney);
-      setPrice(responseJourney.price);
+      const response = await getRoute(searchOrigin, searchDestination);
+      setJourneyInfo(response[0], response[1]);
+      const journeyPrice = await getJourneyInfo(distance);
+      console.log('price', journeyPrice);
+      setPrice(journeyPrice);
       setPriceSetted(true);
+    } catch (error) {
+      console.error(error.message);
+      return null;
+    }
+  };
+
+  const handleCreateJourney = async () => {
+    try {
+      const response =
+        await createJourney(origin, destination, userInfo.id, distance);
+      console.log('response create journey', response);
     } catch (error) {
       console.error(error.message);
       return null;
@@ -81,8 +100,11 @@ const Journey = () => {
     setPriceSetted(false);
   }, []);
 
+  React.useEffect(() => {
+  }, [origin, destination]);
+
   return (
-    <View>
+    <View style={styles.journeyContainer}>
       <Text style={styles.title}>¿Deseas iniciar un viaje?</Text>
       <View style={styles.container}>
         <SearchBar
@@ -102,41 +124,13 @@ const Journey = () => {
           placeholderValue="Buscar destino"
         />
       </View>
-      { priceSetted &&
-        <View style={styles.priceContainer}>
-          <Text style={styles.label}>El precio del viaje es ${price}</Text>
-        </View>
-      }
-      { !priceSetted &&
-        <Button
-          style={styles.button}
-          color={Colors.blue800}
-          mode="contained"
-          onPress={() => {
-            console.log('Buscar viaje');
-            handleSearchJourney();
-          }}>
-          <Text style={styles.titleButton}>Buscar</Text>
-        </Button>
-      }
-      { priceSetted &&
-        <Button
-          style={styles.journeyButton}
-          color={Colors.blue800}
-          mode="contained"
-          onPress={() => {
-            console.log('Iniciar Viaje');
-          }}>
-          <Text style={styles.titleButton}>Iniciar viaje</Text>
-        </Button>
-      }
       <MapView
         style={priceSetted ? styles.mapReduced : styles.map}
-        initialRegion={{
+        region={{
           latitude: origin.latitude,
           longitude: origin.longitude,
-          latitudeDelta: 0.09,
-          longitudeDelta: 0.04,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
         }}>
         <Marker
           draggable
@@ -155,6 +149,32 @@ const Journey = () => {
           strokeWidth={5}
         />
       </MapView>
+      { priceSetted &&
+        <View style={styles.priceContainer}>
+          <Text style={styles.label}>El precio del viaje es ${price}</Text>
+        </View>
+      }
+      { !priceSetted &&
+        <Button
+          style={styles.button}
+          color={Colors.blue800}
+          mode="contained"
+          onPress={() => handleGetInfoJourney()}>
+          <Text style={styles.titleButton}>Buscar</Text>
+        </Button>
+      }
+      { priceSetted &&
+        <Button
+          style={styles.journeyButton}
+          color={Colors.blue800}
+          mode="contained"
+          onPress={() => {
+            {console.log('Iniciar viaje');
+            handleCreateJourney();}
+          }}>
+          <Text style={styles.titleButton}>Iniciar viaje</Text>
+        </Button>
+      }
     </View>
   );
 };
@@ -162,15 +182,16 @@ const Journey = () => {
 export default Journey;
 
 const styles = StyleSheet.create({
+  journeyContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   title: {
-    paddingTop: 30,
     fontSize: 28,
-    paddingLeft: 40,
   },
   container: {
     flexDirection: 'row',
     width: '95%',
-    marginLeft: 10,
     marginTop: 25,
     alignItems: 'center',
     justifyContent: 'center',
@@ -187,9 +208,8 @@ const styles = StyleSheet.create({
   priceContainer: {
     height: 50,
     justifyContent: 'center',
-    width: '80%',
+    width: '70%',
     backgroundColor: '#cfd8dc',
-    marginLeft: 32,
     marginTop: 20,
     borderRadius: 16,
     textAlign: 'center',
@@ -204,24 +224,22 @@ const styles = StyleSheet.create({
     padding: 5,
     width: 170,
     height: 50,
-    marginLeft: 115,
-    marginTop: 20,
+    marginTop: 10,
   },
   journeyButton: {
     padding: 5,
     width: 220,
     height: 50,
-    marginLeft: 80,
     marginTop: 20,
   },
   map: {
-    margin: 10,
+    margin: 5,
     marginTop: 20,
     width: '95%',
     height: '40%',
   },
   mapReduced: {
-    margin: 10,
+    margin: 5,
     marginTop: 20,
     width: '95%',
     height: '30%',
