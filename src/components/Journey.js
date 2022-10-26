@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   StyleSheet,
@@ -12,21 +12,29 @@ import * as Location from 'expo-location';
 
 import SearchBar from './SearchBar';
 import getRoute from '../services/GetRoute';
+import searchJourney from '../services/SearchJourney';
+import {UserContext} from '../context/UserContext';
 
 const Journey = () => {
+  const user = useContext(UserContext);
+  const userInfo = user.userInfo;
+
   const [origin, setOrigin] = useState({
-    latitude: 0,
-    longitude: 0,
+    latitude: -34.59908,
+    longitude: -58.38186,
   });
   const [destination, setDestination] = useState({
-    latitude: 0,
-    longitude: 0,
+    latitude: -34.59908,
+    longitude: -68.38186,
   });
-  const [coords, setCoords] = useState([origin]);
+  const [route, setRoute] = useState([]);
 
   const [searchOrigin, setSearchOrigin] = useState('');
   const [searchDestination, setSearchDestination] = useState('');
   const [clicked, setClicked] = useState(false);
+
+  const [price, setPrice] = useState(0);
+  const [priceSetted, setPriceSetted] = useState(false);
 
   const getLocationPermission = async () => {
     try {
@@ -51,10 +59,17 @@ const Journey = () => {
 
   const handleSearchJourney = async () => {
     try {
-      const response = await getRoute(origin, searchOrigin, searchDestination);
-      setCoords(response[0]);
-      setOrigin(response[1][0]);
-      setDestination(response[1][1]);
+      const responseRoute = await getRoute(searchOrigin, searchDestination);
+      setRoute(responseRoute);
+      setOrigin(responseRoute[0]);
+      setDestination(responseRoute[(responseRoute.length)-1]);
+      console.log('origin:', origin);
+      console.log('destination:', destination);
+      const responseJourney =
+        await searchJourney(origin, destination, userInfo.id);
+      console.log('responseJourney', responseJourney);
+      setPrice(responseJourney.price);
+      setPriceSetted(true);
     } catch (error) {
       console.error(error.message);
       return null;
@@ -62,7 +77,8 @@ const Journey = () => {
   };
 
   React.useEffect(() => {
-    getLocationPermission();
+    // getLocationPermission();
+    setPriceSetted(false);
   }, []);
 
   return (
@@ -86,18 +102,36 @@ const Journey = () => {
           placeholderValue="Buscar destino"
         />
       </View>
-      <Button
-        style={styles.button}
-        color={Colors.blue800}
-        mode="contained"
-        onPress={() => {
-          console.log('Buscar viaje');
-          handleSearchJourney();
-        }}>
-        <Text style={styles.titleButton}>Buscar</Text>
-      </Button>
+      { priceSetted &&
+        <View style={styles.priceContainer}>
+          <Text style={styles.label}>El precio del viaje es ${price}</Text>
+        </View>
+      }
+      { !priceSetted &&
+        <Button
+          style={styles.button}
+          color={Colors.blue800}
+          mode="contained"
+          onPress={() => {
+            console.log('Buscar viaje');
+            handleSearchJourney();
+          }}>
+          <Text style={styles.titleButton}>Buscar</Text>
+        </Button>
+      }
+      { priceSetted &&
+        <Button
+          style={styles.journeyButton}
+          color={Colors.blue800}
+          mode="contained"
+          onPress={() => {
+            console.log('Iniciar Viaje');
+          }}>
+          <Text style={styles.titleButton}>Iniciar viaje</Text>
+        </Button>
+      }
       <MapView
-        style={styles.map}
+        style={priceSetted ? styles.mapReduced : styles.map}
         initialRegion={{
           latitude: origin.latitude,
           longitude: origin.longitude,
@@ -116,7 +150,7 @@ const Journey = () => {
             setDestination(direction.nativeEvent.coordinate)}
         />
         <Polyline
-          coordinates={coords}
+          coordinates={route}
           strokeColor="red"
           strokeWidth={5}
         />
@@ -150,6 +184,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
   },
+  priceContainer: {
+    height: 50,
+    justifyContent: 'center',
+    width: '80%',
+    backgroundColor: '#cfd8dc',
+    marginLeft: 32,
+    marginTop: 20,
+    borderRadius: 16,
+    textAlign: 'center',
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#37474f',
+    textAlign: 'center',
+  },
   button: {
     padding: 5,
     width: 170,
@@ -157,10 +207,23 @@ const styles = StyleSheet.create({
     marginLeft: 115,
     marginTop: 20,
   },
+  journeyButton: {
+    padding: 5,
+    width: 220,
+    height: 50,
+    marginLeft: 80,
+    marginTop: 20,
+  },
   map: {
     margin: 10,
     marginTop: 20,
     width: '95%',
-    height: '42%',
+    height: '40%',
+  },
+  mapReduced: {
+    margin: 10,
+    marginTop: 20,
+    width: '95%',
+    height: '30%',
   },
 });

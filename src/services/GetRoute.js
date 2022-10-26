@@ -2,53 +2,31 @@ import axios from 'axios';
 
 import {JOURNEY_SERVICE_KEY} from '@env';
 
-const getRouteCoords = (data, coords) => {
-  console.log('Getting route coords');
-
-  for (let idx = 0; idx < data.length; idx++) {
-    const point = {
-      'latitude': data[idx].startPoint.lat,
-      'longitude': data[idx].startPoint.lng,
-    };
-    coords.push(point);
-  }
-
-  return coords;
-};
-
-const getLocationCoords = (data) => {
-  console.log('Getting location coords:', data.length);
+const getDirections = (data) => {
   const coords = [];
-
-  for (let idx = 0; idx < data.length; idx++) {
-    const point = {
-      'latitude': data[idx].latLng.lat,
-      'longitude': data[idx].latLng.lng,
-    };
-    console.log('point:', point);
-    coords.push(point);
+  for (let index = 0; index < data.length; index+=2) {
+    const element = {latitude: data[index], longitude: data[index + 1]};
+    coords.push(element);
   }
-  console.log('coords:', coords);
   return coords;
 };
 
-const getRoute = async (originCoords, origin, destination) => {
+const getRoute = async (origin, destination) => {
   const params = {
-    key: JOURNEY_SERVICE_KEY,
-    from: origin,
-    to: destination,
+    'key': JOURNEY_SERVICE_KEY,
+    'from': origin,
+    'to': destination,
+    'unit': 'k',
+    'generalize': 0,
   };
   console.log('params:', params);
   try {
     const response = await axios.get('http://www.mapquestapi.com/directions/v2/route', {
       params,
     });
-    const maneuvers = response.data.route.legs[0].maneuvers;
-    let routeCoords = [originCoords];
-    routeCoords = getRouteCoords(maneuvers, routeCoords);
-    const locations = response.data.route.locations;
-    const locationCoords = getLocationCoords(locations);
-    return [routeCoords, locationCoords];
+    const shapePoints = response.data.route.shape.shapePoints;
+    const routeCoords = getDirections(shapePoints);
+    return routeCoords;
   } catch (error) {
     console.error(error.message);
     return null;
