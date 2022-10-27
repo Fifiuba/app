@@ -20,6 +20,10 @@ const RoadTripView = () => {
     latitude: -34.59908,
     longitude: -58.38186,
   });
+  const [destination, setDestination] = useState({
+    latitude: -34.59908,
+    longitude: -58.38186,
+  });
   const [route, setRoute] = useState([origin, destination]);
 
   const getLocationPermission = async () => {
