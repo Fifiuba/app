@@ -16,7 +16,7 @@ import createJourney from '../services/CreateJourney';
 import {UserContext} from '../context/UserContext';
 import getJourneyInfo from '../services/GetInfoJourney';
 
-const Journey = () => {
+const Journey = ({navigation}) => {
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
 
@@ -88,9 +88,10 @@ const Journey = () => {
 
   const handleCreateJourney = async () => {
     try {
-      const response =
+      const journeyInfo =
         await createJourney(origin, destination, userInfo.id, distance);
-      console.log('response create journey', response);
+      console.log('response create journey', journeyInfo);
+      navigation.navigate('JourneyView', {'journey': journeyInfo});
     } catch (error) {
       console.error(error.message);
       return null;
