@@ -6,6 +6,7 @@ import * as Location from 'expo-location';
 
 import {UserContext} from '../context/UserContext';
 import { constants } from '../utils/Constants';
+import TimerJourney from '../components/TimerJourney';
 
 const RoadTripView = () => {
     //const journeyInfo = route.params;
@@ -16,10 +17,6 @@ const RoadTripView = () => {
     //const userInfo = user.userInfo;
     
     const [origin, setOrigin] = useState({
-        latitude: -34.59908,
-        longitude: -58.38186,
-    });
-    const [destination, setDestination] = useState({
         latitude: -34.59908,
         longitude: -58.38186,
     });
@@ -50,6 +47,32 @@ const RoadTripView = () => {
         getLocationPermission();
     }, []);
 
+    /*const [journeyIsFinished, setJourneyIsFinished] = useState(true);
+    const [isStopwatchStart, setIsStopwatchStart] = useState(true);
+    const [resetStopwatch, setResetStopwatch] = useState(false);
+
+    React.useEffect(() => {
+        if (journeyIsFinished == true) {
+            setIsStopwatchStart(!isStopwatchStart);
+            setResetStopwatch(false);
+        }
+    });*/
+
+    const handleCancelJourney = async () => {
+        try {
+          const response = await cancelJourney(journeyInfo);
+          console.log('response:', response);
+          if (!(response === null)) {
+            alert('Viaje cancelado exitosamente');
+            navigation.navigate('Home');
+          } else {
+            alert('Error al cancelar viaje');
+          }
+        } catch (error) {
+          console.error(error.message);
+        }
+    };
+
     return (
         <>
         <View style={styles.appBar}>
@@ -59,6 +82,10 @@ const RoadTripView = () => {
             </View>
         </View>
         <View style={styles.container}>
+            <TimerJourney
+                //isStopwatchStart={isStopwatchStart}
+                //resetStopwatch={resetStopwatch}
+            />
             <MapView
                 style={styles.map}
                 region={{
@@ -101,7 +128,6 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 10,
     },
     appBar:{      
         display: 'flex',
@@ -115,16 +141,15 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     map: {
-        margin: 5,
         width: '95%',
-        height: '75%',
+        height: '70%',
     },
     button: {
         padding: 5,
         width: 210,
         height: 50,
         marginTop: 30,
-      },
+    },
     buttonText: {
         fontSize: 16,
         color: 'white',
