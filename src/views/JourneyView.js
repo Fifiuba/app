@@ -2,12 +2,15 @@ import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Colors, Text, ActivityIndicator, Button} from 'react-native-paper';
 
-export default function JourneyView({route}) {
+import cancelJourney from '../services/CancelJourney';
+
+export default function JourneyView({route, navigation}) {
   const journeyInfo = route.params;
 
   /* eslint-disable no-unused-vars */
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [text, setText] = useState('Tu chofer está en camino');
+  const [cancel, setCancel] = useState(false);
 
   React.useEffect(() => {
     if (!loading) {
@@ -18,6 +21,14 @@ export default function JourneyView({route}) {
   const handleCancelJourney = async () => {
     try {
       const response = await cancelJourney(journeyInfo);
+      console.log('response:', response);
+      if (!(response === null)) {
+        setLoading(false);
+        setCancel(true);
+        navigation.navigate('Home');
+      } else {
+        alert('Error al cancelar viaje');
+      }
     } catch (error) {
       console.error(error.message);
     }
@@ -32,14 +43,23 @@ export default function JourneyView({route}) {
             animating={loading}
             color="#757575"
             style={{marginTop: 10}}
-          />}
+          />
+        };
         <Button
           style={styles.button}
           color={Colors.red800}
           mode="contained"
-          onPress={() => console.log('Cancel journey')}>
+          onPress={() => {
+            console.log('Cancel journey');
+            handleCancelJourney();
+          }}>
           <Text style={styles.buttonText}>Cancelar viaje</Text>
         </Button>
+        { cancel &&
+          <Text style={styles.successMsg}>
+            Viaje cancelado exitosamente
+          </Text>
+        }
       </View>
     </View>
   );
@@ -54,9 +74,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#dddddd',
   },
   card: {
-    height: 230,
+    height: 270,
     width: 360,
-    padding: 40,
+    padding: 15,
     backgroundColor: 'white',
     borderRadius: 16,
     justifyContent: 'center',
@@ -78,5 +98,17 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     color: 'white',
+  },
+  successMsg: {
+    marginTop: 10,
+    fontSize: 18,
+    color: '#616161',
+    backgroundColor: '#c8e6c9',
+    borderRadius: 16,
+    height: 40,
+    width: 320,
+    marginTop: 20,
+    paddingTop: 5,
+    paddingLeft: 10,
   },
 });

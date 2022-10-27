@@ -91,7 +91,16 @@ const Journey = ({navigation}) => {
       const journeyInfo =
         await createJourney(origin, destination, userInfo.id, distance);
       console.log('response create journey', journeyInfo);
-      navigation.navigate('JourneyView', {'journey': journeyInfo});
+      navigation.navigate('Viajes', {
+        'id': journeyInfo._id,
+        'status': journeyInfo.status,
+        'idPassenger': journeyInfo.idPassenger,
+        'price': journeyInfo.price,
+        'startOn': journeyInfo.startOn,
+        'finishOn': journeyInfo.__finishOn,
+        'from': journeyInfo.from,
+        'to': journeyInfo.to,
+      });
     } catch (error) {
       console.error(error.message);
       return null;
@@ -172,7 +181,7 @@ const Journey = ({navigation}) => {
           color={Colors.blue800}
           mode="contained"
           onPress={() => {
-            {console.log('Iniciar viaje');
+            {console.log('Solicitar viaje');
               handleCreateJourney();}
           }}>
           <Text style={styles.titleButton}>Iniciar viaje</Text>
