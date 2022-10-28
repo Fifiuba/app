@@ -25,10 +25,12 @@ const RoadTripView = ({navigation, route}) => {
     latitude: journeyInfo.to[0],
     longitude: journeyInfo.to[1],
   });
+  /* eslint-disable no-unused-vars */
   const [routeCoords, setRouteCoords] = useState(coords);
   console.log('origin:', origin);
   console.log('destination:', destination);
 
+  /* eslint-disable no-unused-vars */
   const getLocationPermission = async () => {
     try {
       const {status} = await Location.requestForegroundPermissionsAsync();
@@ -108,11 +110,13 @@ const RoadTripView = ({navigation, route}) => {
           <Marker
             draggable
             coordinate={origin}
-            onDragEnd={(direction) => setOrigin(direction.nativeEvent.coordinate)} />
+            onDragEnd={(direction) =>
+              setOrigin(direction.nativeEvent.coordinate)} />
           <Marker
             draggable
             coordinate={destination}
-            onDragEnd={(direction) => setDestination(direction.nativeEvent.coordinate)} />
+            onDragEnd={(direction) =>
+              setDestination(direction.nativeEvent.coordinate)} />
           <Polyline
             coordinates={routeCoords}
             strokeColor="red"
@@ -146,6 +150,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     height: '10%',
     marginTop: 50,
+    margin: 10,
   },
   profile: {
     alignItems: 'center',

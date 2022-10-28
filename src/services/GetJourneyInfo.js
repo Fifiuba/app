@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {JOURNEY_SERVICE_URL} from '@env';
+// import {JOURNEY_SERVICE_URL} from '@env';
 
 const getJourneyInfo = async (distance) => {
   try {

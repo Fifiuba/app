@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
 
 import {
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
   TouchableHighlight,
 } from 'react-native';
 
-import {Stopwatch, Timer} from 'react-native-stopwatch-timer';
+import {Stopwatch} from 'react-native-stopwatch-timer';
 
 const TimerJourney = () => {
   const [isStopwatchStart, setIsStopwatchStart] = useState(false);
