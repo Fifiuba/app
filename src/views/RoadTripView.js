@@ -1,30 +1,33 @@
 import React, {useContext, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
-import {Avatar, Text, Button, Colors} from 'react-native-paper';
+import {Text, Button, Colors} from 'react-native-paper';
 import * as Location from 'expo-location';
 
 import {UserContext} from '../context/UserContext';
-import {constants} from '../utils/Constants';
 import TimerJourney from '../components/TimerJourney';
+import cancelJourney from '../services/CancelJourney';
 
-const RoadTripView = () => {
-  // const journeyInfo = route.params;
-  // const journeyRoute = journeyInfo.route;
-  // const journeyDestination = journeyInfo.destination;
+const RoadTripView = ({navigation, route}) => {
+  const info = route.params;
+  const coords = info.coords.route;
+  const journeyInfo = info.journeyInfo;
+  console.log('jouney info:', journeyInfo);
 
-  // const user = useContext(UserContext);
-  // const userInfo = user.userInfo;
+  const user = useContext(UserContext);
+  const userInfo = user.userInfo;
 
   const [origin, setOrigin] = useState({
-    latitude: -34.59908,
-    longitude: -58.38186,
+    latitude: journeyInfo.from[0],
+    longitude: journeyInfo.from[1],
   });
   const [destination, setDestination] = useState({
-    latitude: -34.59908,
-    longitude: -58.38186,
+    latitude: journeyInfo.to[0],
+    longitude: journeyInfo.to[1],
   });
-  const [route, setRoute] = useState([origin, destination]);
+  const [routeCoords, setRouteCoords] = useState(coords);
+  console.log('origin:', origin);
+  console.log('destination:', destination);
 
   const getLocationPermission = async () => {
     try {
@@ -48,7 +51,7 @@ const RoadTripView = () => {
   };
 
   React.useEffect(() => {
-    getLocationPermission();
+    // getLocationPermission();
   }, []);
 
   /* const [journeyIsFinished, setJourneyIsFinished] = useState(true);
@@ -67,8 +70,10 @@ const RoadTripView = () => {
       const response = await cancelJourney(journeyInfo);
       console.log('response:', response);
       if (!(response === null)) {
-        alert('Viaje cancelado exitosamente');
-        navigation.navigate('Home');
+        if (response.status == 'cancelled') {
+          alert('Viaje cancelado exitosamente');
+          navigation.navigate('Home');
+        }
       } else {
         alert('Error al cancelar viaje');
       }
@@ -81,8 +86,10 @@ const RoadTripView = () => {
     <>
       <View style={styles.appBar}>
         <View style={styles.profile}>
-          <Avatar.Image size={45} source={constants.DEFAULT_URL_USER_PICTURE} />
-          <Text>Celeste Dituro</Text>
+          <Image
+            style={styles.image}
+            source={{uri: userInfo['picture']}}/>
+          <Text>{userInfo.name}</Text>
         </View>
       </View>
       <View style={styles.container}>
@@ -107,7 +114,7 @@ const RoadTripView = () => {
             coordinate={destination}
             onDragEnd={(direction) => setDestination(direction.nativeEvent.coordinate)} />
           <Polyline
-            coordinates={route}
+            coordinates={routeCoords}
             strokeColor="red"
             strokeWidth={5} />
         </MapView>
@@ -157,6 +164,10 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     color: 'white',
+  },
+  image: {
+    width: 60,
+    height: 60,
   },
 });
 

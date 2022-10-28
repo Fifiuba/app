@@ -1,20 +1,21 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Colors, Text, ActivityIndicator, Button} from 'react-native-paper';
+import {Colors, ActivityIndicator, Button, Text} from 'react-native-paper';
 
 import cancelJourney from '../services/CancelJourney';
 
 export default function JourneyView({route, navigation}) {
-  const journeyInfo = route.params;
+  const [journeyInfo, setJourneyInfo] = useState(route.params);
 
   /* eslint-disable no-unused-vars */
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [text, setText] = useState('Tu chofer está en camino');
   const [cancel, setCancel] = useState(false);
 
   React.useEffect(() => {
     if (!loading) {
       setText('Tu chofer está esperando por tí');
+      navigation.navigate('EnViaje', {'coords': journeyInfo.coords, 'journeyInfo': journeyInfo.journeyInfo});
     }
   }, [loading]);
 
@@ -38,13 +39,6 @@ export default function JourneyView({route, navigation}) {
     <View style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.text}>{text}</Text>
-        { loading &&
-          <ActivityIndicator
-            animating={loading}
-            color="#757575"
-            style={{marginTop: 10}}
-          />
-        };
         <Button
           style={styles.button}
           color={Colors.red800}
@@ -112,3 +106,13 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
 });
+
+/*
+          { loading &&
+          <ActivityIndicator
+            animating={loading}
+            color="#757575"
+            style={{marginTop: 10}}
+          />
+        }
+  */
