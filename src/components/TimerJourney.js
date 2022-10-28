@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 
 const options = {
   container: {
-    backgroundColor: 'grey',
+    backgroundColor: '#bdbdbd',
     padding: 5,
     borderRadius: 5,
     width: 200,

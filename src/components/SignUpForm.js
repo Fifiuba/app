@@ -244,7 +244,7 @@ const SignUpForm = ({navigation}) => {
                       ¿Ya tenes cuenta?{'\n'}
           <Text
             style={styles.link}
-            onPress={() => navigation.navigate('Registrarse')}>
+            onPress={() => navigation.navigate('IniciarSesion')}>
                           Iniciar sesión
           </Text>
         </Text>

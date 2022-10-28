@@ -14,7 +14,7 @@ import SearchBar from './SearchBar';
 import getRoute from '../services/GetRoute';
 import createJourney from '../services/CreateJourney';
 import {UserContext} from '../context/UserContext';
-import getJourneyInfo from '../services/GetInfoJourney';
+import getJourneyInfo from '../services/GetJourneyInfo';
 
 const Journey = ({navigation}) => {
   const user = useContext(UserContext);
@@ -76,9 +76,11 @@ const Journey = ({navigation}) => {
       if (!(response === null)) {
         setJourneyInfo(response[0], response[1]);
         const journeyPrice = await getJourneyInfo(distance);
-        console.log('price', journeyPrice);
-        setPrice(journeyPrice);
-        setPriceSetted(true);
+        if (!(journeyPrice === null)) {
+          console.log('price', journeyPrice);
+          setPrice(journeyPrice);
+          setPriceSetted(true);
+        }
       }
     } catch (error) {
       console.error(error.message);
@@ -90,8 +92,8 @@ const Journey = ({navigation}) => {
     try {
       const journeyInfo =
         await createJourney(origin, destination, userInfo.id, distance);
-      console.log('response create journey', journeyInfo);
-      navigation.navigate('Viajes', {
+      console.log('Response CreateJourney', journeyInfo);
+      navigation.navigate('Viajes', {'journeyInfo': {
         'id': journeyInfo._id,
         'status': journeyInfo.status,
         'idPassenger': journeyInfo.idPassenger,
@@ -100,6 +102,8 @@ const Journey = ({navigation}) => {
         'finishOn': journeyInfo.__finishOn,
         'from': journeyInfo.from,
         'to': journeyInfo.to,
+      },
+      'coords': {route},
       });
     } catch (error) {
       console.error(error.message);
@@ -109,11 +113,10 @@ const Journey = ({navigation}) => {
 
   React.useEffect(() => {
     // getLocationPermission();
+    setSearchOrigin('');
+    setSearchDestination('');
     setPriceSetted(false);
   }, []);
-
-  React.useEffect(() => {
-  }, [origin, destination]);
 
   return (
     <View style={styles.journeyContainer}>
@@ -184,7 +187,7 @@ const Journey = ({navigation}) => {
             {console.log('Solicitar viaje');
               handleCreateJourney();}
           }}>
-          <Text style={styles.titleButton}>Iniciar viaje</Text>
+          <Text style={styles.titleButton}>Solicitar viaje</Text>
         </Button>
       }
     </View>

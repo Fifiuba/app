@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-// import {JOURNEY_SERVICE_URL} from '@env';
+import {JOURNEY_SERVICE_URL} from '@env';
 
 const cancelJourney = async (journeyInfo) => {
   console.log('Cancel journey');
   const id = journeyInfo.id;
+  console.log('Cancel journey id:', id);
   try {
+    const response = await axios.patch(`https://journey-service-solfonte.cloud.okteto.net/journey/cancel/${id}`, {
     // const response = await
-    // axios.post(`${JOURNEY_SERVICE_URL}/journey/cancel/${journeyInfo.id}`, {
-    const response = await
-    axios.patch(`http://192.168.0.76:9000/journey/cancel/${id}`, {
+    // axios.patch(`http://192.168.0.76:9000/journey/cancel/${id}`, {
       'id': journeyInfo.id,
       'status': journeyInfo.status,
       'idPassenger': journeyInfo.idPassenger,
