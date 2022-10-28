@@ -5,6 +5,7 @@ import HomeView from '../views/HomeView';
 import ProfileView from '../views/ProfileView';
 import getProfile from '../services/GetProfile';
 import JourneyView from '../views/JourneyView';
+import RoadTripView from '../views/RoadTripView';
 
 import {UserContext} from '../context/UserContext';
 import {constants} from '../utils/Constants';
@@ -64,6 +65,11 @@ export default function LoggedNav() {
           options={{title: ''}}
           name="Viajes"
           component={JourneyView}
+        />
+        <Stack.Screen
+          options={{title: '', headerShown: false}}
+          name="EnViaje"
+          component={RoadTripView}
         />
       </Stack.Navigator>
     </UserContext.Provider>
