@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import {JOURNEY_SERVICE_KEY} from '@env';
 /* eslint-disable max-len */
 const INVALID_DIRECTIONS_ERROR = 'We are unable to route with the given locations.';

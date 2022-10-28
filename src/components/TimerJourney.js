@@ -9,9 +9,9 @@ import {
 
 import {Stopwatch} from 'react-native-stopwatch-timer';
 
-const TimerJourney = () => {
-  const [isStopwatchStart, setIsStopwatchStart] = useState(false);
-  const [resetStopwatch, setResetStopwatch] = useState(true);
+const TimerJourney = (data) => {
+  // const [isStopwatchStart, setIsStopwatchStart] = useState(false);
+  // const [resetStopwatch, setResetStopwatch] = useState(true);
 
   return (
     <View style={styles.container}>
@@ -19,30 +19,14 @@ const TimerJourney = () => {
         <Stopwatch
           laps
           secs
-          start={isStopwatchStart}
+          start={data.isStopwatchStart}
           // To start
-          reset={resetStopwatch}
+          reset={data.resetStopwatch}
           // To reset
           options={options}
           // Options for the styling
           getTime={() => {}}
         />
-        <TouchableHighlight
-          onPress={() => {
-            setIsStopwatchStart(!isStopwatchStart);
-            setResetStopwatch(false);
-          }}>
-          <Text style={styles.buttonText}>
-            {!isStopwatchStart ? 'START' : 'STOP'}
-          </Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={() => {
-            setIsStopwatchStart(false);
-            setResetStopwatch(true);
-          }}>
-          <Text style={styles.buttonText}>RESET</Text>
-        </TouchableHighlight>
       </View>
     </View>
   );
@@ -76,3 +60,22 @@ const options = {
     color: '#FFF',
   },
 };
+
+/*
+ <TouchableHighlight
+    onPress={() => {
+      data.setIsStopwatchStart(!(data.isStopwatchStar));
+      data.setResetStopwatch(false);
+    }}>
+    <Text style={styles.buttonText}>
+      {!(data.isStopwatchStart) ? 'START' : 'STOP'}
+    </Text>
+  </TouchableHighlight>
+  <TouchableHighlight
+    onPress={() => {
+      data.setIsStopwatchStart(false);
+      data.setResetStopwatch(true);
+    }}>
+    <Text style={styles.buttonText}>RESET</Text>
+  </TouchableHighlight>
+*/

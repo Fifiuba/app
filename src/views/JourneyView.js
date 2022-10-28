@@ -6,10 +6,11 @@ import cancelJourney from '../services/CancelJourney';
 
 export default function JourneyView({route, navigation}) {
   /* eslint-disable no-unused-vars */
-  const [journeyInfo, setJourneyInfo] = useState(route.params.journeyInfo);
+  const journeyInfo = route.params.journeyInfo;
+  const coords = route.params.coords;
 
   /* eslint-disable no-unused-vars */
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [text, setText] = useState('Tu chofer está en camino');
   const [cancel, setCancel] = useState(false);
 
@@ -17,8 +18,8 @@ export default function JourneyView({route, navigation}) {
     if (!loading) {
       setText('Tu chofer está esperando por tí');
       navigation.navigate('EnViaje',
-          {'coords': journeyInfo.coords,
-            'journeyInfo': journeyInfo.journeyInfo},
+          {'coords': coords,
+            'journeyInfo': journeyInfo},
       );
     }
   }, [loading]);

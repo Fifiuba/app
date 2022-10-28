@@ -12,7 +12,6 @@ const RoadTripView = ({navigation, route}) => {
   const info = route.params;
   const coords = info.coords.route;
   const journeyInfo = info.journeyInfo;
-  console.log('jouney info:', journeyInfo);
 
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
@@ -26,9 +25,17 @@ const RoadTripView = ({navigation, route}) => {
     longitude: journeyInfo.to[1],
   });
   /* eslint-disable no-unused-vars */
-  const [routeCoords, setRouteCoords] = useState(coords);
-  console.log('origin:', origin);
-  console.log('destination:', destination);
+  const routeCoords = coords;
+
+  /* const [origin, setOrigin] = useState({
+    latitude: -34.59908,
+    longitude: -58.38186,
+  });
+  const [destination, setDestination] = useState({
+    latitude: -34.59908,
+    longitude: -68.38186,
+  });
+  const [routeCoords, setRouteCoords] = useState([origin, destination]);*/
 
   /* eslint-disable no-unused-vars */
   const getLocationPermission = async () => {
@@ -56,16 +63,15 @@ const RoadTripView = ({navigation, route}) => {
     // getLocationPermission();
   }, []);
 
-  /* const [journeyIsFinished, setJourneyIsFinished] = useState(true);
-    const [isStopwatchStart, setIsStopwatchStart] = useState(true);
-    const [resetStopwatch, setResetStopwatch] = useState(false);
+  const [finished, setFinished] = useState(true);
+  const [startTimer, setStartTimer] = useState(true);
+  const [resetTimer, setResetTimer] = useState(false);
 
-    React.useEffect(() => {
-        if (journeyIsFinished == true) {
-            setIsStopwatchStart(!isStopwatchStart);
-            setResetStopwatch(false);
-        }
-    });*/
+  React.useEffect(() => {
+    if (finished) {
+      setStartTimer(false);
+    }
+  }, [finished]);
 
   const handleCancelJourney = async () => {
     try {
@@ -90,14 +96,14 @@ const RoadTripView = ({navigation, route}) => {
         <View style={styles.profile}>
           <Image
             style={styles.image}
-            source={{uri: userInfo['picture']}}/>
+            source={{uri: userInfo.picture}}/>
           <Text>{userInfo.name}</Text>
         </View>
       </View>
       <View style={styles.container}>
         <TimerJourney
-          // isStopwatchStart={isStopwatchStart}
-          // resetStopwatch={resetStopwatch}
+          isStopwatchStart={startTimer}
+          resetStopwatch={resetTimer}
         />
         <MapView
           style={styles.map}

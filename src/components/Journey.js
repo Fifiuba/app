@@ -60,11 +60,11 @@ const Journey = ({navigation}) => {
     }
   };
 
-  const setJourneyInfo = (route, distance) => {
-    setDistance(distance);
-    setRoute(route);
-    setOrigin(route[0]);
-    setDestination(route[(route.length)-1]);
+  const setJourneyInfo = async (route, distance) => {
+    await setDistance(distance);
+    await setRoute(route);
+    await setOrigin(route[0]);
+    await setDestination(route[(route.length)-1]);
     console.log('distance:', distance);
     console.log('origin:', origin);
     console.log('destination:', destination);
@@ -78,8 +78,11 @@ const Journey = ({navigation}) => {
         const journeyPrice = await getJourneyInfo(distance);
         if (!(journeyPrice === null)) {
           console.log('price', journeyPrice);
-          setPrice(journeyPrice);
-          setPriceSetted(true);
+          if (journeyPrice != 0) {
+            console.log('price distinto de 0');
+            setPrice(journeyPrice);
+            setPriceSetted(true);
+          }
         }
       }
     } catch (error) {
@@ -93,17 +96,18 @@ const Journey = ({navigation}) => {
       const journeyInfo =
         await createJourney(origin, destination, userInfo.id, distance);
       console.log('Response CreateJourney', journeyInfo);
-      navigation.navigate('Viajes', {'journeyInfo': {
-        'id': journeyInfo._id,
-        'status': journeyInfo.status,
-        'idPassenger': journeyInfo.idPassenger,
-        'price': journeyInfo.price,
-        'startOn': journeyInfo.startOn,
-        'finishOn': journeyInfo.__finishOn,
-        'from': journeyInfo.from,
-        'to': journeyInfo.to,
-      },
-      'coords': {route},
+      navigation.navigate('Viajes', {
+        'journeyInfo': {
+          'id': journeyInfo._id,
+          'status': journeyInfo.status,
+          'idPassenger': journeyInfo.idPassenger,
+          'price': journeyInfo.price,
+          'startOn': journeyInfo.startOn,
+          'finishOn': journeyInfo.__finishOn,
+          'from': journeyInfo.from,
+          'to': journeyInfo.to,
+        },
+        'coords': {route},
       });
     } catch (error) {
       console.error(error.message);
