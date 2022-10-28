@@ -245,12 +245,7 @@ export default function Profile({navigation}) {
         onPress={handleSubmit(onSubmit)}>
         <Text style={{fontSize: 20}}>Editar</Text>
       </Button>
-      { edit &&
-        <Text style={styles.successMsg}>{msg}</Text>
-      }
-      { !edit &&
-        <Text style={styles.errorMsg}>{msg}</Text>
-      }
+      { edit && <Text style={styles.successMsg}>{msg}</Text>}
     </View>
   );
 };
@@ -285,20 +280,12 @@ const styles = StyleSheet.create({
     marginLeft: 75,
     alignItems: 'center',
   },
-  errorMsg: {
-    marginTop: 10,
-    textAlign: 'center',
-    fontSize: 18,
-    color: '#e53935',
-    borderRadius: 16,
-    height: 40,
-    paddingTop: 5,
-  },
   successMsg: {
     marginTop: 10,
     textAlign: 'center',
     fontSize: 18,
-    color: '#00796b',
+    color: '#616161',
+    backgroundColor: '#c8e6c9',
     borderRadius: 16,
     height: 40,
     paddingTop: 5,
