@@ -3,6 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {Colors, ActivityIndicator, Button, Text} from 'react-native-paper';
 
 import cancelJourney from '../services/CancelJourney';
+import getJourneyInfo from '../services/GetJourneyInfo';
 
 export default function JourneyView({route, navigation}) {
   /* eslint-disable no-unused-vars */
@@ -23,6 +24,16 @@ export default function JourneyView({route, navigation}) {
       );
     }
   }, [loading]);
+
+  React.useEffect(() => {
+    const handleGetJourneyInfo = async () => {
+      const response = await getJourneyInfo(journeyInfo.id);
+      if (response.status == 'started') {
+        setLoading(false);
+      }
+    }
+    handleGetJourneyInfo();
+  });
 
   const handleCancelJourney = async () => {
     try {

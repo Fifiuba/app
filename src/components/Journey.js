@@ -14,7 +14,7 @@ import SearchBar from './SearchBar';
 import getRoute from '../services/GetRoute';
 import createJourney from '../services/CreateJourney';
 import {UserContext} from '../context/UserContext';
-import getJourneyInfo from '../services/GetJourneyInfo';
+import getJourneyPrice from '../services/GetJourneyPrice';
 
 const Journey = ({navigation}) => {
   const user = useContext(UserContext);
@@ -75,7 +75,7 @@ const Journey = ({navigation}) => {
       const response = await getRoute(searchOrigin, searchDestination);
       if (!(response === null)) {
         setJourneyInfo(response[0], response[1]);
-        const journeyPrice = await getJourneyInfo(distance);
+        const journeyPrice = await getJourneyPrice(distance);
         if (!(journeyPrice === null)) {
           console.log('price', journeyPrice);
           if (journeyPrice != 0) {

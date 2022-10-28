@@ -63,7 +63,7 @@ const RoadTripView = ({navigation, route}) => {
     // getLocationPermission();
   }, []);
 
-  const [finished, setFinished] = useState(true);
+  const [finished, setFinished] = useState(false);
   const [startTimer, setStartTimer] = useState(true);
   const [resetTimer, setResetTimer] = useState(false);
 

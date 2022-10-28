@@ -1,12 +1,10 @@
 import axios from 'axios';
 
-const getJourneyInfo = async (distance) => {
+const getJourneyInfo = async (id) => {
   try {
-    const response = await axios.post('https://journey-service-solfonte.cloud.okteto.net/journey/info', {
-      'modality': 'standar',
-      'distance': distance,
-    });
-    return response.data.price;
+    const response = await axios.get(`https://journey-service-solfonte.cloud.okteto.net/journey/${id}`, {'id': id});
+    console.log('response:', response.data);
+    return response.data;
   } catch (error) {
     console.error(error.message);
     if (error.message == 'Network Error') {
