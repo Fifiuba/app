@@ -21,6 +21,7 @@
     "@react-navigation/native-stack": "^6.8.0",
     "@types/react-native-vector-icons": "^6.4.12",
     "axios": "^0.27.2",
+    "dotenv": "^16.0.3",
     "expo": "~46.0.9",
     "expo-auth-session": "~3.7.1",
     "expo-checkbox": "~2.2.0",

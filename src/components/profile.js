@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {Text, View, Image, StyleSheet,ScrollView} from 'react-native';
+import {Text, View, Image, StyleSheet, ScrollView} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {Colors, Button, TextInput} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';

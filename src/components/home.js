@@ -34,7 +34,7 @@ export default function Home({navigation}) {
 
 const styles = StyleSheet.create({
   categoryContainer: {
-    flex:1,
+    flex: 1,
     flexDirection: 'row',
   },
   categoryBtn: {

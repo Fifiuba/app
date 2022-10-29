@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {USER_SERVICE_URL} from '@env';
+// import {USER_SERVICE_URL} from '@env';
 
 export default async function getProfile() {
   console.log('Get profile');

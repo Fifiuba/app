@@ -35,10 +35,10 @@ export default function LoggedNav() {
 
   const initialRoute = (info) => {
     if (info === 'passenger') {
-      return 'Home'
+      return 'Home';
     }
-    return 'ViajeChofer'
-  }
+    return 'ViajeChofer';
+  };
 
   React.useEffect(() => {
     const handleProfile = async () => {

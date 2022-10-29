@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 
-import {USER_SERVICE_URL} from '@env';
+// import {USER_SERVICE_URL} from '@env';
 
 export default async function loginWithEmailAndPassword(data) {
   console.log('Login with email and password');
@@ -47,7 +47,7 @@ const authUser = async (token) => {
     return response.data;
   } catch (error) {
     alert(error.response);
-    console.error("error en auth user:" + error.response);
+    console.error('error en auth user:' + error.response);
     return null;
   }
 };

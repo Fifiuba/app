@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import DriverJourney from '../components/DriverJourney'
+import {View} from 'react-native';
+import DriverJourney from '../components/DriverJourney';
 
 export default function DriverJourneyView() {
   return (
