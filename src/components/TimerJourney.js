@@ -1,10 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import {
   StyleSheet,
-  Text,
   View,
-  TouchableHighlight,
 } from 'react-native';
 
 import {Stopwatch} from 'react-native-stopwatch-timer';

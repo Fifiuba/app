@@ -31,7 +31,7 @@ export default function JourneyView({route, navigation}) {
       if (response.status == 'started') {
         setLoading(false);
       }
-    }
+    };
     handleGetJourneyInfo();
   });
 
