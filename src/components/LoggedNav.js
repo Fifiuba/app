@@ -9,6 +9,7 @@ import RoadTripView from '../views/RoadTripView';
 
 import {UserContext} from '../context/UserContext';
 import {constants} from '../utils/Constants';
+import DriverJourneyView from '../views/DriverJourneyView';
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +71,11 @@ export default function LoggedNav() {
           options={{title: '', headerShown: false}}
           name="EnViaje"
           component={RoadTripView}
+        />
+        <Stack.Screen
+          options={{title: '', headerShown: false}}
+          name="ViajeChofer"
+          component={DriverJourneyView}
         />
       </Stack.Navigator>
     </UserContext.Provider>
