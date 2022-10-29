@@ -14,7 +14,7 @@ export default async function getProfile() {
       },
       headers: {Authorization: `Bearer ${token}`},
     };
-    const response = await axios.get(`${USER_SERVICE_URL}/users/me/`, config);
+    const response = await axios.get(`https://backend-agustinaa235.cloud.okteto.net/users/me/`, config);
     console.log('response_data:', response.data);
     return response.data;
   } catch (error) {

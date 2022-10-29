@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {Text, View, Image, StyleSheet} from 'react-native';
+import {Text, View, Image, StyleSheet,ScrollView} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {Colors, Button, TextInput} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -84,7 +84,7 @@ export default function Profile({navigation}) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={{alignItems: 'center'}}>
         <Text style={styles.title}>{userInfo.name}</Text>
         <Image
@@ -246,7 +246,7 @@ export default function Profile({navigation}) {
         <Text style={{fontSize: 20}}>Editar</Text>
       </Button>
       { edit && <Text style={styles.successMsg}>{msg}</Text>}
-    </View>
+    </ScrollView>
   );
 };
 

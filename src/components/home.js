@@ -34,10 +34,8 @@ export default function Home({navigation}) {
 
 const styles = StyleSheet.create({
   categoryContainer: {
+    flex:1,
     flexDirection: 'row',
-    width: '90%',
-    marginTop: 100,
-    alignSelf: 'center',
   },
   categoryBtn: {
     flex: 1,

@@ -14,7 +14,7 @@ const getDirections = (data) => {
 
 const getRoute = async (origin, destination) => {
   const params = {
-    'key': JOURNEY_SERVICE_KEY,
+    'key': 'Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo',
     'from': origin,
     'to': destination,
     'unit': 'k',
