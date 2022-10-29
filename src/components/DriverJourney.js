@@ -10,8 +10,8 @@ import MapView,{Marker, Polyline} from 'react-native-maps';
 import PolylineMaker from '../services/PolyLineMaker';
 import * as Location from 'expo-location'
 
-const blueCar = require('../../assets/standar-car.png')
-const proCar = require('../../assets/pro.png')
+const blueCar = require('../../assets/icon-car-standard.png')
+const proCar = require('../../assets/icon-car-vip.png')
 const locationIcon = require('../../assets/location.png')
 
 const DriverJourney = ({from, to,carType}) => {

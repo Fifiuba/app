@@ -33,6 +33,13 @@ export default function LoggedNav() {
     return data;
   };
 
+  const initialRoute = (info) => {
+    if (info === 'passenger') {
+      return 'Home'
+    }
+    return 'ViajeChofer'
+  }
+
   React.useEffect(() => {
     const handleProfile = async () => {
       try {
@@ -51,7 +58,7 @@ export default function LoggedNav() {
 
   return (
     <UserContext.Provider value={{userInfo, userTypeInfo}}>
-      <Stack.Navigator initialRouteName='Home'>
+      <Stack.Navigator initialRouteName= {initialRoute(userTypeInfo)}>
         <Stack.Screen
           options={{title: '', headerShown: false}}
           name="Home"
