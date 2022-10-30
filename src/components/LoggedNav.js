@@ -11,7 +11,7 @@ import {UserContext} from '../context/UserContext';
 import {constants} from '../utils/Constants';
 import DriverJourneyView from '../views/DriverJourneyView';
 import HomeDriverView from '../views/HomeDriverView';
-
+import HomePassengerView from '../views/HomePassengerView';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,14 +35,6 @@ export default function LoggedNav() {
     return data;
   };
 
-  const initialRoute = (info) => {
-    
-    if (info === 'passenger') {
-      return 'Home';
-    }
-    return 'HomeDriver';
-  };
-
   React.useEffect(() => {
     const handleProfile = async () => {
       try {
@@ -61,7 +53,7 @@ export default function LoggedNav() {
 
   return (
     <UserContext.Provider value={{userInfo, userTypeInfo}}>
-      <Stack.Navigator initialRouteName= {initialRoute(userInfo)}>
+      <Stack.Navigator initialRouteName={'Home'}>
         <Stack.Screen
           options={{title: '', headerShown: false}}
           name="Home"
@@ -72,7 +64,11 @@ export default function LoggedNav() {
           name="HomeDriver"
           component={HomeDriverView}
         />
-
+        <Stack.Screen
+          options={{title: '', headerShown: false}}
+          name="HomePassenger"
+          component={HomePassengerView}
+        />
         <Stack.Screen
           options={{title: ''}}
           name="MiPerfil"

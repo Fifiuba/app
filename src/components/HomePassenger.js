@@ -9,7 +9,7 @@ import {Text} from 'react-native-paper';
 
 import {UserContext} from '../context/UserContext';
 
-export default function Home({navigation}) {
+export default function HomePassenger({navigation}) {
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
 

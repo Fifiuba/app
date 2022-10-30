@@ -1,8 +1,8 @@
 import React from 'react';
-import {View,StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
 
-import Home from '../components/Home';
+import Home from '../components/HomePassenger';
 import HomeDriver from '../components/HomeDriver';
 
 export default function HomeDriverView({navigation}) {
@@ -14,11 +14,11 @@ export default function HomeDriverView({navigation}) {
   );
 }
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    flexDirection:'column'
+  container: {
+    flex: 1,
+    flexDirection: 'column',
   },
 
-})
+});
 
 

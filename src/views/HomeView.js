@@ -1,14 +1,30 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import Home from '../components/Home';
-import Journey from '../components/Journey';
+import HomeDriverView from './HomeDriverView';
+import HomePassengerView from './HomePassengerView';
 
-export default function HomeView({navigation}) {
+export default function HomeView() {
+  const [isDriver, setIsDriver] = useState(false);
+
+  React.useEffect(() => {
+    const initialRoute = async () => {
+      try {
+        const userType = await AsyncStorage.getItem('user_type');
+        if (userType == 'driver') {
+          setIsDriver(true);
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    initialRoute();
+  }, []);
+
   return (
     <View style={{flex: 1}}>
-      <Home navigation={navigation}/>
-      <Journey navigation={navigation}/>
+      {isDriver ? <HomeDriverView/> : <HomePassengerView/>}
     </View>
   );
 }
