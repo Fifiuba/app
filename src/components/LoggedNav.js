@@ -89,7 +89,6 @@ export default function LoggedNav() {
           name="ViajeChofer"
           component={DriverJourneyView}
         />
-
       </Stack.Navigator>
     </UserContext.Provider>
   );

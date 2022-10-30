@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import HomeDriverView from './HomeDriverView';
 import HomePassengerView from './HomePassengerView';
 
-export default function HomeView() {
+export default function HomeView({navigation}) {
   const [isDriver, setIsDriver] = useState(false);
 
   React.useEffect(() => {
@@ -24,7 +24,7 @@ export default function HomeView() {
 
   return (
     <View style={{flex: 1}}>
-      {isDriver ? <HomeDriverView/> : <HomePassengerView/>}
+      {isDriver ? <HomeDriverView navigation={navigation}/> : <HomePassengerView navigation={navigation}/>}
     </View>
   );
 }

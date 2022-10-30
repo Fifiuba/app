@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 /* eslint-disable max-len */
-import {View, Text, StyleSheet, SafeAreaView, FlatList, Image} from 'react-native';
-import {Button, Colors, ActivityIndicator} from 'react-native-paper';
+import {View,StyleSheet, SafeAreaView, FlatList, Image} from 'react-native';
+import {Button,Text, Colors, ActivityIndicator, Card, Title, Paragraph} from 'react-native-paper';
 import getAddrsFromCoords from '../services/GetAddressFromCoords';
 
-const HomeDriver = () => {
+const HomeDriver = ({navigation}) => {
   const [avaliableJourneys, setAvaliableJourneys] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
 
   const DATA = [
@@ -22,11 +22,37 @@ const HomeDriver = () => {
       from: [-34.5860531, -58.399662],
       to: [-34.578827, -58.5005147],
     },
+    {
+      _id: '0d59fbc742',
+      status: 'requested',
+      idPassenger: 10,
+      driver: {
+        idDriver: 1,
+        vip: true,
+      },
+      price: 20,
+      from: [-34.5860531, -58.399662],
+      to: [-34.56769920645015, -58.45129259340773],
+    },
+    {
+      _id: 'aadadaddabaq3',
+      status: 'requested',
+      idPassenger: 10,
+      driver: {
+        idDriver: 1,
+        vip: false,
+      },
+      price: 20,
+      from: [-34.567699206, -58.45129259],
+      to: [-34.578827, -58.5005147],
+    },
   ];
 
   function getAddres(items) {
     try {
       const addresses= [];
+      setLoading(true);
+      
       DATA.forEach(async (journey) => {
         console.log('entra');
         const fromStreet = await getAddrsFromCoords(journey.from[0], journey.from[1]);
@@ -36,6 +62,9 @@ const HomeDriver = () => {
           from: fromStreet,
           to: toStreet,
           price: journey.price,
+          vip: journey.driver.vip,
+          fromCoords: journey.from,
+          toCoords: journey.to,
         });
         console.log('andó');
         setLoading(false);
@@ -51,10 +80,10 @@ const HomeDriver = () => {
     if (loading) {
       return (
         <ActivityIndicator
-          style={{justifyContent: 'center', alignSelf: 'center'}}
+          style={{justifyContent: 'center', alignSelf: 'center',padding:5}}
           size={'larger'}
           animating={loading}
-          color={Colors.red800} />
+          color={'#2C3333'} />
       );
     }
     return (
@@ -68,23 +97,30 @@ const HomeDriver = () => {
 
 
   const renderItem = ({item}) => (
-    <View style={styles.item} key={item.key}>
-      <Text> Desde: {item.from}</Text>
-      <Text> Hasta: {item.to}</Text>
-      <Text> Ganancia: $ {item.price}</Text>
-      <Image source={{uri: 'https://reactjs.org/logo-og.png'}}
-        style={{width: 40, height: 40}} />
-    </View>
+
+    <Card style={item.vip ? styles.vip : styles.item} key={item.key}>
+      <Card.Title title={item.vip ? 'VIP': 'Standar'} />
+      <Card.Content>
+        <Text variant="headlineMedium"> Desde: {item.from}</Text>
+        <Text variant="headlineMedium"> Hasta: {item.to}</Text>
+        <Text variant="headlineMedium"> Ganancia: $ {item.price}</Text>
+      </Card.Content>
+      <Card.Actions style={{alignSelf: 'center'}}>
+        <Button color={Colors.blue800}
+          onPress={() => navigation.navigate('ViajeChofer',{'from': item.fromCoords, 'to': item.toCoords, 'carType': item.vip})}
+        >Aceptar</Button>
+      </Card.Actions>
+    </Card>
   );
 
 
   return (
     <View style={styles.container}>
 
+      <Title style={{textAlign: 'center', paddingBottom:5, fontSize:22}}>
+                  Viajes Disponibles
+      </Title>
       <SafeAreaView style={styles.dataContainer}>
-        <Text style={{textAlign: 'center', fontSize: 20}}>
-                    Viajes Disponibles
-        </Text>
         <ShowDataContainer/>
       </SafeAreaView>
       <Button
@@ -102,20 +138,26 @@ const HomeDriver = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 3,
-    backgroundColor: 'green',
+    flex: 3.5,
+    flexDirection:'column',
     alignItems: 'center',
     width: '100%',
   },
   dataContainer: {
-    backgroundColor: 'blue',
     height: '70%',
-    width: '100%',
+    width: '90%',
+    borderColor:'black',
+    borderRadius: '5%',
   },
   item: {
-    backgroundColor: 'red',
+    marginVertical:5
+  },
+  vip: {
+    backgroundColor:'#FFF9B0',
+    marginVertical:5
   },
   button: {
+    marginTop:'5%',
     width: '50%',
   },
 });

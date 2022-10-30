@@ -28,7 +28,7 @@ export default async function setUserTypeInfo(data, userId, userType) {
     };
     console.log('params:', params);
     const response =
-      await axios.patch(`${USER_SERVICE_URL}/users/${userId}`, params);
+      await axios.patch(`https://backend-agustinaa235.cloud.okteto.net/users/${userId}`, params);
     console.log('response data:', response.data);
     return response.data;
   } catch (error) {

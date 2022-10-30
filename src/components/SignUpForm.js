@@ -49,7 +49,7 @@ const SignUpForm = ({navigation}) => {
       }
     } catch (error) {
       console.error(error.message);
-      alert(error.message);
+      alert(error.response.data.detail);
       // alert(error.response.data.detail);
       // console.error(error.response.data.detail);
       return null;
@@ -129,6 +129,7 @@ const SignUpForm = ({navigation}) => {
             mode="outlined"
             label="Teléfono"
             placeholder="Teléfono"
+            keyboardType='numeric'
           />
         )}
         name="phone_number"
@@ -150,6 +151,7 @@ const SignUpForm = ({navigation}) => {
             mode="outlined"
             label="Edad"
             placeholder="Edad"
+            keyboardType='numeric'
           />
         )}
         name="age"
@@ -216,6 +218,7 @@ const SignUpForm = ({navigation}) => {
               mode="outlined"
               label="PIN de activación"
               placeholder="PIN"
+              keyboardType='numeric'
             />
           )}
           name="code"
@@ -255,12 +258,12 @@ const SignUpForm = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex:1,
     justifyContent: 'center',
     alignContent: 'center',
     backgroundColor: 'white',
     padding: 20,
     margin: 10,
-    marginTop: 50,
     height: 720,
     borderRadius: 16,
   },

@@ -11,7 +11,6 @@ export default async function getAddrsFromCoords(lat, long) {
     });
 
     const street = response.data.results[0].locations[0].street;
-    console.log('console:' + street);
     return street;
   } catch (err) {
     console.error(err);

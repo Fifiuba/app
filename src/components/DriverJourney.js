@@ -16,11 +16,11 @@ const proCar = require('../../assets/icon-car-vip.png');
 const locationIcon = require('../../assets/location.png');
 
 /* eslint-disable new-cap */
-const DriverJourney = ({from, to, carType}) => {
+const DriverJourney = ({navigation, route}) => {
+  const journey = route.params
   const [myLocation, setLocation] = useState({latitude: -34.586992, longitude: -60.949984});
-  const [route, setRoute] = useState();
+  const [directions, setDirections] = useState();
   const [arrived, setInplace] = useState(false);
-  // const [pro, setPro] = useState(true);
   const mapRef = React.createRef();
   const [desde, setDesde] = useState(myLocation);
   const [hasta, setHasta] = useState(myLocation);
@@ -46,40 +46,44 @@ const DriverJourney = ({from, to, carType}) => {
 
 
   const goToPassenger = () => {
-    const lanLong = `${myLocation.latitude}, ${myLocation.longitude}`;
-    PolylineMaker(lanLong, 'Chacabuco, Buenos Aires, Argentina')
+    const from = `${myLocation.latitude}, ${myLocation.longitude}`;
+    const to = `${journey.from[0]}, ${journey.from[1]}`;
+
+    PolylineMaker(from, to)
         .then(
             (result) => {
               const end = result[result.length-1];
-              setRoute(result);
+              setDirections(result);
               setDesde(myLocation);
               setHasta(end);
               setInplace(true);
             },
         )
         .catch(
-            (err) => setRoute(err),
+            (err) => setDirections(err),
         );
   };
 
   const startJourney = () => {
-    PolylineMaker('Chacabuco, Buenos Aires, Argentina', 'Junín, Buenos Aires, Argentina')
+    const from = `${journey.from[0]}, ${journey.from[1]}`;
+    const to = `${journey.to[0]}, ${journey.to[1]}`;
+    PolylineMaker(from, to)
         .then(
             (result) => {
               const start = result[0];
               const end = result[result.length -1];
-              setRoute(result);
+              setDirections(result);
               setDesde(start);
               setHasta(end);
             },
         )
         .catch(
-            (err) => setRoute(err),
+            (err) => setDirections(err),
         );
   };
 
   function car() {
-    if (true) {
+    if (journey.carType) {
       return proCar;
     }
     return blueCar;
@@ -93,7 +97,6 @@ const DriverJourney = ({from, to, carType}) => {
   return (
     <View style={styles.container}>
       <View style={styles.appBar}>
-        <Appbar.BackAction onPress={() => {}} />
         <View style={styles.profile}>
           <Avatar.Image size={45} source={require('../../assets/yo.jpg')} />
           <Text>Alejo Villores</Text>
@@ -133,7 +136,7 @@ const DriverJourney = ({from, to, carType}) => {
         </Marker>
 
         <Polyline
-          coordinates={route}
+          coordinates={directions}
           strokeWidth={2}
         />
         <FAB
@@ -165,7 +168,9 @@ const DriverJourney = ({from, to, carType}) => {
           disabled={!arrived}
           style={styles.finishButton}
           onPress={() => {
-            console.log('End trip');
+            setDirections([])
+            setInplace(false)
+            navigation.navigate('HomeDriver')
           }}
         >
           <Text>Terminar</Text>
