@@ -9,7 +9,7 @@ import {Text} from 'react-native-paper';
 
 import {UserContext} from '../context/UserContext';
 
-export default function HomePassenger({navigation}) {
+export default function UserProfile({navigation}) {
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
 
@@ -34,8 +34,8 @@ export default function HomePassenger({navigation}) {
 
 const styles = StyleSheet.create({
   categoryContainer: {
-    flex: 1,
     flexDirection: 'row',
+    marginTop: 100,
   },
   categoryBtn: {
     flex: 1,

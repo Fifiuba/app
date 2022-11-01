@@ -1,14 +1,14 @@
 import React from 'react';
 import {View} from 'react-native';
 
-import Journey from '../components/Journey';
-import HomePassenger from '../components/HomePassenger';
+import PassengerJourney from '../components/PassengerJourney';
+import UserProfile from '../components/UserProfile';
 
 export default function HomePassengerView({navigation}) {
   return (
     <View style={{flex: 1}}>
-      <HomePassenger navigation={navigation}/>
-      <Journey navigation={navigation}/>
+      <UserProfile navigation={navigation}/>
+      <PassengerJourney navigation={navigation}/>
     </View>
   );
 }

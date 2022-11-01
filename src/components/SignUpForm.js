@@ -258,13 +258,12 @@ const SignUpForm = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
     justifyContent: 'center',
-    alignContent: 'center',
     backgroundColor: 'white',
     padding: 20,
     margin: 10,
-    height: 720,
+    marginTop: 45,
+    height: 700,
     borderRadius: 16,
   },
   image: {

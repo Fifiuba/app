@@ -16,7 +16,7 @@ import createJourney from '../services/CreateJourney';
 import {UserContext} from '../context/UserContext';
 import getJourneyPrice from '../services/GetJourneyPrice';
 
-const Journey = ({navigation}) => {
+const PassengerJourney = ({navigation}) => {
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
 
@@ -198,12 +198,13 @@ const Journey = ({navigation}) => {
   );
 };
 
-export default Journey;
+export default PassengerJourney;
 
 const styles = StyleSheet.create({
   journeyContainer: {
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 30,
   },
   title: {
     fontSize: 28,

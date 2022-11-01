@@ -8,7 +8,6 @@ const getJourneyPrice = async (distance) => {
     });
     return response.data.price;
   } catch (error) {
-    console.error('error aca:'+error.message);
     if (error.message == 'Network Error') {
       alert('Problemas de conexión con el servidor');
     }

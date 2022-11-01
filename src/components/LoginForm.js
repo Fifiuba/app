@@ -208,11 +208,10 @@ const LoginForm = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    alignContent: 'center',
     backgroundColor: 'white',
     padding: 20,
     margin: 10,
-    marginTop: 30,
+    marginTop: 70,
     height: 680,
     borderRadius: 16,
   },

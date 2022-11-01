@@ -2,14 +2,13 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
 
-import HomePassenger from '../components/HomePassenger';
+import UserProfile from '../components/UserProfile';
 import HomeDriver from '../components/HomeDriver';
 
 export default function HomeDriverView({navigation}) {
-  console.log('navigation: '+navigation)
   return (
     <View style={styles.container}>
-      <HomePassenger navigation={navigation}/>
+      <UserProfile navigation={navigation}/>
       <HomeDriver navigation={navigation}/>
     </View>
   );
