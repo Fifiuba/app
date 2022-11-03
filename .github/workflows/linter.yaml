@@ -1,9 +1,5 @@
 name: linter
 on:
-  push:
-    branches:
-     - main
-     - develop
   pull_request:
     branches:
      - main
@@ -14,6 +10,6 @@ jobs:
     steps:
      - uses: actions/checkout@v3
      - name: Install dependences
-       run: npm install
+     - run: npm install
      - name: Run ESLint
-       run: npm run eslint
+     - run: npm run eslint

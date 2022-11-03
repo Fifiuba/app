@@ -35,7 +35,7 @@ export default function UserProfile({navigation}) {
 const styles = StyleSheet.create({
   categoryContainer: {
     flexDirection: 'row',
-    marginTop: 100,
+    marginTop: 30,
   },
   categoryBtn: {
     flex: 1,

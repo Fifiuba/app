@@ -18,31 +18,12 @@ const locationIcon = require('../../assets/location.png');
 /* eslint-disable new-cap */
 const DriverJourney = ({navigation, route}) => {
   const journey = route.params
-  const [myLocation, setLocation] = useState({latitude: -34.586992, longitude: -60.949984});
+  const myLocation = journey.myLocation;
   const [directions, setDirections] = useState();
   const [arrived, setInplace] = useState(false);
   const mapRef = React.createRef();
   const [desde, setDesde] = useState(myLocation);
   const [hasta, setHasta] = useState(myLocation);
-
-  useEffect(() => {
-    getLocationPermission();
-  }, []);
-
-  async function getLocationPermission() {
-    const {status} = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') {
-      alert('Permission denied');
-      return;
-    }
-
-    const location = await Location.getCurrentPositionAsync({
-      accuracy: Location.Accuracy.Balanced,
-      enableHighAccuracy: true,
-      timeInterval: 5,
-    });
-    setLocation({latitude: location.coords.latitude, longitude: location.coords.longitude});
-  }
 
 
   const goToPassenger = () => {
@@ -107,11 +88,12 @@ const DriverJourney = ({navigation, route}) => {
         region={{
           latitude: myLocation.latitude,
           longitude: myLocation.longitude,
-          latitudeDelta: 0.0921,
-          longitudeDelta: 0.05,
+          latitudeDelta: 0.004733688902177846,
+          longitudeDelta: 0.004036916859504913,
         }}
         ref={mapRef}
         showsUserLocation={false}
+        loadingEnabled={true}
       >
 
         <Marker

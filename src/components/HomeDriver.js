@@ -1,78 +1,72 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 /* eslint-disable max-len */
-import {View,StyleSheet, SafeAreaView, FlatList, Image} from 'react-native';
-import {Button,Text, Colors, ActivityIndicator, Card, Title, Paragraph} from 'react-native-paper';
+import {View,StyleSheet, SafeAreaView, FlatList} from 'react-native';
+import {Button,Text, Colors, ActivityIndicator, Card, Title} from 'react-native-paper';
 import getAddrsFromCoords from '../services/GetAddressFromCoords';
+import getNearestJourneys from '../services/GetNearestJourneys';
+import * as Location from 'expo-location';
 
 const HomeDriver = ({navigation}) => {
   const [avaliableJourneys, setAvaliableJourneys] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [myLocation, setLocation] = useState();
 
 
-  const DATA = [
-    {
-      _id: '635dab0a3b01330d59fbc742',
-      status: 'requested',
-      idPassenger: 10,
-      driver: {
-        idDriver: 1,
-        vip: false,
-      },
-      price: 20,
-      from: [-34.5860531, -58.399662],
-      to: [-34.578827, -58.5005147],
-    },
-    {
-      _id: '0d59fbc742',
-      status: 'requested',
-      idPassenger: 10,
-      driver: {
-        idDriver: 1,
-        vip: true,
-      },
-      price: 20,
-      from: [-34.5860531, -58.399662],
-      to: [-34.56769920645015, -58.45129259340773],
-    },
-    {
-      _id: 'aadadaddabaq3',
-      status: 'requested',
-      idPassenger: 10,
-      driver: {
-        idDriver: 1,
-        vip: false,
-      },
-      price: 20,
-      from: [-34.567699206, -58.45129259],
-      to: [-34.578827, -58.5005147],
-    },
-  ];
+  useEffect(() => {
+    getLocationPermission();
+  }, []);
 
-  function getAddres(items) {
+  async function getLocationPermission() {
+    const {status} = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Permission denied');
+      return;
+    }
+
+    const location = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Balanced,
+      enableHighAccuracy: true,
+      timeInterval: 5,
+    });
+    setLocation({latitude: location.coords.latitude, longitude: location.coords.longitude});
+  }
+
+
+  const getAddresses = async () => {
     try {
+      const journeys = await getNearestJourneys();
+
       const addresses= [];
       setLoading(true);
-      
-      DATA.forEach(async (journey) => {
-        console.log('entra');
-        const fromStreet = await getAddrsFromCoords(journey.from[0], journey.from[1]);
-        const toStreet = await getAddrsFromCoords(journey.to[0], journey.to[1]);
-        addresses.push({
-          _id: journey._id,
-          from: fromStreet,
-          to: toStreet,
-          price: journey.price,
-          vip: journey.driver.vip,
-          fromCoords: journey.from,
-          toCoords: journey.to,
-        });
-        console.log('andó');
-        setLoading(false);
-        setAvaliableJourneys(addresses);
-      });
-    } catch (err) {
-      setLoading(true);
-      alert(err);
+
+      journeys.forEach(async (journey) => {
+        try {
+          const fromStreet = await  getAddrsFromCoords(journey.from[0], journey.from[1]);
+          const toStreet =  await getAddrsFromCoords(journey.to[0], journey.to[1]);
+          console.log(fromStreet)
+          console.log(toStreet)
+  
+          addresses.push({
+            _id: journey._id,
+            from: fromStreet,
+            to: toStreet,
+            price: journey.price,
+            vip: 'standar',
+            fromCoords: journey.from,
+            toCoords: journey.to,
+          });
+          setLoading(false);
+          setAvaliableJourneys(addresses)
+        }
+        catch (err) {
+          setLoading(true)
+          alert(err)
+        }
+      })
+
+    }catch (error) {
+      alert(error)
+      setLoading(true)
     }
   }
 
@@ -92,6 +86,7 @@ const HomeDriver = ({navigation}) => {
         data={avaliableJourneys}
         keyExtractor={(item) => item._id}
         renderItem={renderItem}
+        ListEmptyComponent={<Text style={{textAlign: 'center', fontSize:16}}>No hay viajes cerca!</Text>}
       />);
   };
 
@@ -107,7 +102,7 @@ const HomeDriver = ({navigation}) => {
       </Card.Content>
       <Card.Actions style={{alignSelf: 'center'}}>
         <Button color={Colors.blue800}
-          onPress={() => navigation.navigate('ViajeChofer',{'from': item.fromCoords, 'to': item.toCoords, 'carType': item.vip})}
+          onPress={() => navigation.navigate('ViajeChofer',{'from': item.fromCoords, 'to': item.toCoords, 'carType': item.vip, 'myLocation':myLocation})}
         >Aceptar</Button>
       </Card.Actions>
     </Card>
@@ -127,7 +122,7 @@ const HomeDriver = ({navigation}) => {
         style={styles.button}
         color={Colors.blue800}
         mode="contained"
-        onPress={getAddres}
+        onPress={() => getAddresses()}
       >
         <Text> Buscar Viajes </Text>
       </Button>

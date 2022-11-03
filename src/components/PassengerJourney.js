@@ -60,19 +60,23 @@ const PassengerJourney = ({navigation}) => {
     }
   };
 
-  const setJourneyInfo = async (route, distance) => {
-    await setDistance(distance);
-    await setRoute(route);
-    await setOrigin(route[0]);
-    await setDestination(route[(route.length)-1]);
+  const setJourneyInfo = (route, distance) => {
+    setDistance(distance);
+    setRoute(route);
+    setOrigin(route[0]);
+    setDestination(route[(route.length)-1]);
     console.log('distance:', distance);
     console.log('origin:', origin);
     console.log('destination:', destination);
   };
 
+
+
   const handleGetInfoJourney = async () => {
+    
     try {
       const response = await getRoute(searchOrigin, searchDestination);
+      setPriceSetted(false)
       if (!(response === null)) {
         setJourneyInfo(response[0], response[1]);
         const journeyPrice = await getJourneyPrice(distance);
@@ -173,27 +177,29 @@ const PassengerJourney = ({navigation}) => {
           <Text style={styles.label}>El precio del viaje es ${price}</Text>
         </View>
       }
-      { !priceSetted &&
+      <View style={styles.buttonHolder}>
         <Button
-          style={styles.button}
-          color={Colors.blue800}
-          mode="contained"
-          onPress={() => handleGetInfoJourney()}>
-          <Text style={styles.titleButton}>Buscar</Text>
+            style={styles.button}
+            color={Colors.blue800}
+            mode="contained"
+            onPress={() => handleGetInfoJourney()}>
+            <Text style={styles.titleButton}>Buscar</Text>
         </Button>
-      }
-      { priceSetted &&
+        
         <Button
-          style={styles.journeyButton}
-          color={Colors.blue800}
-          mode="contained"
-          onPress={() => {
-            {console.log('Solicitar viaje');
-              handleCreateJourney();}
-          }}>
-          <Text style={styles.titleButton}>Solicitar viaje</Text>
+            disabled={!priceSetted}
+            style={styles.journeyButton}
+            color={Colors.green800}
+            mode="contained"
+            onPress={() => {
+              {console.log('Solicitar viaje');
+                handleCreateJourney();}
+            }}>
+            <Text style={styles.titleButton}>Solicitar viaje</Text>
         </Button>
-      }
+        
+      </View>
+      
     </View>
   );
 };
@@ -222,7 +228,7 @@ const styles = StyleSheet.create({
     width: '85%',
   },
   titleButton: {
-    fontSize: 18,
+    fontSize: 14,
     color: 'white',
   },
   priceContainer: {
@@ -241,16 +247,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    padding: 5,
-    width: 170,
-    height: 50,
+    paddingVertical: 3,
+    paddingHorizontal:0,
+    width: 100,
+    height: 40,
     marginTop: 10,
   },
   journeyButton: {
-    padding: 5,
-    width: 220,
-    height: 50,
-    marginTop: 20,
+    paddingVertical: 3,
+    paddingHorizontal:0,
+    width: 170,
+    height: 40,
+    marginTop: 10,
   },
   map: {
     margin: 5,
@@ -264,4 +272,11 @@ const styles = StyleSheet.create({
     width: '95%',
     height: '30%',
   },
+  buttonHolder:{
+    flex:1,
+    width:'100%',
+    flexDirection:'row',
+    justifyContent:'space-around',
+    alignItems:'center',
+  }
 });
