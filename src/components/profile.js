@@ -106,7 +106,6 @@ export default function Profile({navigation}) {
               onChangeText={onChange}
               value={value}
               mode="outlined"
-              label="Nombre"
               placeholder={userInfo.name}
             />
           )}
@@ -140,7 +139,6 @@ export default function Profile({navigation}) {
               onChangeText={onChange}
               value={value}
               mode="outlined"
-              label="Teléfono"
               placeholder={userInfo.phone_number}
             />)}
           name="phone_number"
@@ -158,7 +156,7 @@ export default function Profile({navigation}) {
               value={value}
               mode="outlined"
               label="Edad"
-              placeholder={userInfo.age.toString()}
+              placeholder={ userInfo.age.toString() }
             />
           )}
           name="age"

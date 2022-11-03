@@ -6,14 +6,12 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import {Appbar, Avatar, Button, Colors, FAB} from 'react-native-paper';
+import {Avatar, Button, Colors, FAB} from 'react-native-paper';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import PolylineMaker from '../services/PolyLineMaker';
-import * as Location from 'expo-location';
 
 const blueCar = require('../../assets/icon-car-standard.png');
 const proCar = require('../../assets/icon-car-vip.png');
-const locationIcon = require('../../assets/location.png');
 
 /* eslint-disable new-cap */
 const DriverJourney = ({navigation, route}) => {
@@ -22,8 +20,8 @@ const DriverJourney = ({navigation, route}) => {
   const [directions, setDirections] = useState();
   const [arrived, setInplace] = useState(false);
   const mapRef = React.createRef();
-  const [desde, setDesde] = useState(myLocation);
-  const [hasta, setHasta] = useState(myLocation);
+  const [fromLocation, setFrom] = useState(myLocation);
+  const [toLocation, setTo] = useState(myLocation);
 
 
   const goToPassenger = () => {
@@ -35,8 +33,8 @@ const DriverJourney = ({navigation, route}) => {
             (result) => {
               const end = result[result.length-1];
               setDirections(result);
-              setDesde(myLocation);
-              setHasta(end);
+              setFrom(myLocation);
+              setTo(end);
               setInplace(true);
             },
         )
@@ -54,8 +52,8 @@ const DriverJourney = ({navigation, route}) => {
               const start = result[0];
               const end = result[result.length -1];
               setDirections(result);
-              setDesde(start);
-              setHasta(end);
+              setFrom(start);
+              setTo(end);
             },
         )
         .catch(
@@ -69,11 +67,6 @@ const DriverJourney = ({navigation, route}) => {
     }
     return blueCar;
   }
-
-  const goToMyLocation = async () => {
-    console.log('Pressed!');
-    mapRef.current.animateCamera({center: myLocation});
-  };
 
   return (
     <View style={styles.container}>
@@ -107,12 +100,12 @@ const DriverJourney = ({navigation, route}) => {
           />
         </Marker>
         <Marker
-          coordinate={desde}
+          coordinate={fromLocation}
           title="Aqui estas tú"
         >
         </Marker>
         <Marker
-          coordinate={hasta}
+          coordinate={toLocation}
           title="Aqui estas tú"
         >
         </Marker>
@@ -120,11 +113,6 @@ const DriverJourney = ({navigation, route}) => {
         <Polyline
           coordinates={directions}
           strokeWidth={2}
-        />
-        <FAB
-          icon={locationIcon}
-          style={styles.fab}
-          onPress={goToMyLocation}
         />
       </MapView>
       <View style={styles.buttonsBox}>
@@ -166,12 +154,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#bebeb6',
+    backgroundColor: '#f1faee',
 
   },
   map: {
     width: '100%',
-    height: '80%',
+    height: '75%',
   },
   buttonsBox: {
     flex: 1,

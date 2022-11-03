@@ -51,7 +51,6 @@ const HomeDriver = ({navigation}) => {
             from: fromStreet,
             to: toStreet,
             price: journey.price,
-            vip: 'standar',
             fromCoords: journey.from,
             toCoords: journey.to,
           });
@@ -93,15 +92,15 @@ const HomeDriver = ({navigation}) => {
 
   const renderItem = ({item}) => (
 
-    <Card style={item.vip ? styles.vip : styles.item} key={item.key}>
-      <Card.Title title={item.vip ? 'VIP': 'Standar'} />
+    <Card style={styles.item} key={item.key}>
+      <Card.Title title={'Nuevo Viaje'} />
       <Card.Content>
         <Text variant="headlineMedium"> Desde: {item.from}</Text>
         <Text variant="headlineMedium"> Hasta: {item.to}</Text>
-        <Text variant="headlineMedium"> Ganancia: $ {item.price}</Text>
+        <Text variant="headlineMedium"> Precio: $ {item.price}</Text>
       </Card.Content>
       <Card.Actions style={{alignSelf: 'center'}}>
-        <Button color={Colors.blue800}
+        <Button color={'#073b4c'}
           onPress={() => navigation.navigate('ViajeChofer',{'from': item.fromCoords, 'to': item.toCoords, 'carType': item.vip, 'myLocation':myLocation})}
         >Aceptar</Button>
       </Card.Actions>
@@ -120,7 +119,7 @@ const HomeDriver = ({navigation}) => {
       </SafeAreaView>
       <Button
         style={styles.button}
-        color={Colors.blue800}
+        color={'#0077b6'}
         mode="contained"
         onPress={() => getAddresses()}
       >
@@ -145,7 +144,8 @@ const styles = StyleSheet.create({
     borderRadius: '5%',
   },
   item: {
-    marginVertical:5
+    marginVertical:5,
+    backgroundColor:'#caf0f8',
   },
   vip: {
     backgroundColor:'#FFF9B0',
