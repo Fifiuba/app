@@ -8,6 +8,7 @@ import JourneyView from '../views/JourneyView';
 import RoadTripView from '../views/RoadTripView';
 
 import {UserContext} from '../context/UserContext';
+import {LoginContext} from '../context/LoginContext';
 import {constants} from '../utils/Constants';
 import DriverJourneyView from '../views/DriverJourneyView';
 import HomeDriverView from '../views/HomeDriverView';
@@ -15,7 +16,7 @@ import HomePassengerView from '../views/HomePassengerView';
 
 const Stack = createNativeStackNavigator();
 
-export default function LoggedNav() {
+export default function LoggedNav({onLogin}) {
   const [userInfo, setUserInfo] = useState('');
   const [userTypeInfo, setUserTypeInfo] = useState('');
 
@@ -52,44 +53,46 @@ export default function LoggedNav() {
   }, []);
 
   return (
-    <UserContext.Provider value={{userInfo, userTypeInfo}}>
-      <Stack.Navigator initialRouteName={'Home'}>
-        <Stack.Screen
-          options={{title: '', headerShown: false}}
-          name="Home"
-          component={HomeView}
-        />
-        <Stack.Screen
-          options={{title: '', headerShown: false}}
-          name="HomeDriver"
-          component={HomeDriverView}
-        />
-        <Stack.Screen
-          options={{title: '', headerShown: false}}
-          name="HomePassenger"
-          component={HomePassengerView}
-        />
-        <Stack.Screen
-          options={{title: ''}}
-          name="MiPerfil"
-          component={ProfileView}
-        />
-        <Stack.Screen
-          options={{title: ''}}
-          name="Viajes"
-          component={JourneyView}
-        />
-        <Stack.Screen
-          options={{title: '', headerShown: false}}
-          name="EnViaje"
-          component={RoadTripView}
-        />
-        <Stack.Screen
-          options={{title: '', headerShown: false}}
-          name="ViajeChofer"
-          component={DriverJourneyView}
-        />
-      </Stack.Navigator>
-    </UserContext.Provider>
+    <LoginContext.Provider value={onLogin}>
+      <UserContext.Provider value={{userInfo, userTypeInfo}}>
+        <Stack.Navigator initialRouteName={'Home'}>
+          <Stack.Screen
+            options={{title: '', headerShown: false}}
+            name="Home"
+            component={HomeView}
+          />
+          <Stack.Screen
+            options={{title: '', headerShown: false}}
+            name="HomeDriver"
+            component={HomeDriverView}
+          />
+          <Stack.Screen
+            options={{title: '', headerShown: false}}
+            name="HomePassenger"
+            component={HomePassengerView}
+          />
+          <Stack.Screen
+            options={{title: ''}}
+            name="MiPerfil"
+            component={ProfileView}
+          />
+          <Stack.Screen
+            options={{title: ''}}
+            name="Viajes"
+            component={JourneyView}
+          />
+          <Stack.Screen
+            options={{title: '', headerShown: false}}
+            name="EnViaje"
+            component={RoadTripView}
+          />
+          <Stack.Screen
+            options={{title: '', headerShown: false}}
+            name="ViajeChofer"
+            component={DriverJourneyView}
+          />
+        </Stack.Navigator>
+      </UserContext.Provider>
+    </LoginContext.Provider>
   );
 }

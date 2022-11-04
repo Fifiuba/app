@@ -9,7 +9,7 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <NavigationContainer>
-      {isLoggedIn ? <LoggedNav /> : <UnloggedNav onLogin={setIsLoggedIn}/>}
+      {isLoggedIn ? <LoggedNav onLogin={setIsLoggedIn}/> : <UnloggedNav onLogin={setIsLoggedIn}/>}
     </NavigationContainer>
 )}
     

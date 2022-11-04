@@ -70,13 +70,10 @@ const PassengerJourney = ({navigation}) => {
     console.log('destination:', destination);
   };
 
-
-
   const handleGetInfoJourney = async () => {
-    
     try {
       const response = await getRoute(searchOrigin, searchDestination);
-      setPriceSetted(false)
+      setPriceSetted(false);
       if (!(response === null)) {
         setJourneyInfo(response[0], response[1]);
         const journeyPrice = await getJourneyPrice(distance);
@@ -179,27 +176,26 @@ const PassengerJourney = ({navigation}) => {
       }
       <View style={styles.buttonHolder}>
         <Button
-            style={styles.button}
-            color={Colors.blue800}
-            mode="contained"
-            onPress={() => handleGetInfoJourney()}>
-            <Text style={styles.titleButton}>Buscar</Text>
+          style={styles.button}
+          color={Colors.blue800}
+          mode="contained"
+          onPress={() => handleGetInfoJourney()}>
+          <Text style={styles.titleButton}>Buscar</Text>
         </Button>
-        
         <Button
-            disabled={!priceSetted}
-            style={styles.journeyButton}
-            color={Colors.green800}
-            mode="contained"
-            onPress={() => {
-              {console.log('Solicitar viaje');
-                handleCreateJourney();}
-            }}>
-            <Text style={styles.titleButton}>Solicitar viaje</Text>
+          disabled={!priceSetted}
+          style={styles.journeyButton}
+          color={Colors.grey400}
+          mode="contained"
+          onPress={() => {
+            {console.log('Solicitar viaje');
+              handleCreateJourney();}
+          }}>
+          <Text style={styles.titleButton}>Solicitar viaje</Text>
         </Button>
-        
+
       </View>
-      
+
     </View>
   );
 };
@@ -228,7 +224,7 @@ const styles = StyleSheet.create({
     width: '85%',
   },
   titleButton: {
-    fontSize: 14,
+    fontSize: 17,
     color: 'white',
   },
   priceContainer: {
@@ -248,35 +244,35 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingVertical: 3,
-    paddingHorizontal:0,
-    width: 100,
-    height: 40,
+    paddingHorizontal: 0,
+    width: 170,
+    height: 50,
     marginTop: 10,
   },
   journeyButton: {
     paddingVertical: 3,
-    paddingHorizontal:0,
-    width: 170,
-    height: 40,
+    paddingHorizontal: 0,
+    width: 200,
+    height: 50,
     marginTop: 10,
   },
   map: {
     margin: 5,
     marginTop: 20,
     width: '95%',
-    height: '40%',
+    height: '50%',
   },
   mapReduced: {
     margin: 5,
     marginTop: 20,
     width: '95%',
-    height: '30%',
+    height: '40%',
   },
-  buttonHolder:{
-    flex:1,
-    width:'100%',
-    flexDirection:'row',
-    justifyContent:'space-around',
-    alignItems:'center',
-  }
+  buttonHolder: {
+    flex: 1,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
 });

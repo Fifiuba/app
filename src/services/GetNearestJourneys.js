@@ -1,16 +1,15 @@
 import axios from 'axios';
 
 export default async function getNearestJourneys() {
-    try {
-      const response = await axios.get('https://journey-service-solfonte.cloud.okteto.net/journey/');
-      const journeys = response.data;
-      return journeys;
-      
-    } catch (err) {
-      console.error(err);
-      alert(err);
-    }
+  try {
+    const response = await axios.get('https://journey-service-solfonte.cloud.okteto.net/journey/');
+    const journeys = response.data;
+    return journeys;
+  } catch (err) {
+    console.error(err);
+    alert(err);
   }
+}
 
 /*
   export default async function getNearestJourneys(location) {
@@ -20,10 +19,10 @@ export default async function getNearestJourneys() {
           'location': `${location.latitude}, ${location.longitude}`,
         },
       });
-  
+
       const journeys = response.data;
       return journeys;
-      
+
     } catch (err) {
       console.error(err);
       alert(err);

@@ -1,12 +1,12 @@
 /* eslint-disable max-len */
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Image,
 } from 'react-native';
-import {Avatar, Button, Colors, FAB} from 'react-native-paper';
+import {Avatar, Button, Colors} from 'react-native-paper';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import PolylineMaker from '../services/PolyLineMaker';
 
@@ -15,7 +15,7 @@ const proCar = require('../../assets/icon-car-vip.png');
 
 /* eslint-disable new-cap */
 const DriverJourney = ({navigation, route}) => {
-  const journey = route.params
+  const journey = route.params;
   const myLocation = journey.myLocation;
   const [directions, setDirections] = useState();
   const [arrived, setInplace] = useState(false);
@@ -138,9 +138,9 @@ const DriverJourney = ({navigation, route}) => {
           disabled={!arrived}
           style={styles.finishButton}
           onPress={() => {
-            setDirections([])
-            setInplace(false)
-            navigation.navigate('HomeDriver')
+            setDirections([]);
+            setInplace(false);
+            navigation.navigate('HomeDriver');
           }}
         >
           <Text>Terminar</Text>

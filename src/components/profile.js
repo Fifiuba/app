@@ -21,7 +21,7 @@ export default function Profile({navigation}) {
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       name: '',
-      age: 18,
+      age: '',
       email: '',
       phone_number: '',
       default_address: '',
@@ -106,6 +106,7 @@ export default function Profile({navigation}) {
               onChangeText={onChange}
               value={value}
               mode="outlined"
+              label="Nombre"
               placeholder={userInfo.name}
             />
           )}
@@ -139,14 +140,12 @@ export default function Profile({navigation}) {
               onChangeText={onChange}
               value={value}
               mode="outlined"
+              label="Teléfono"
               placeholder={userInfo.phone_number}
             />)}
           name="phone_number"
         />
         <Controller control={control}
-          rules={{
-            min: constraints.age.min,
-          }}
           render={({field: {onChange, onBlur, value}}) => (
             <TextInput
               theme={{colors: {primary: 'grey'}, roundness: 10}}
@@ -156,15 +155,11 @@ export default function Profile({navigation}) {
               value={value}
               mode="outlined"
               label="Edad"
-              placeholder={ userInfo.age.toString() }
+              placeholder={userInfo.age}
             />
           )}
           name="age"
         />
-        {errors.age?.type === 'min' &&
-        <Text style={{color: 'red'}}>
-          Tienes que ser mayor de {constraints.age.min} años
-        </Text>}
       </View>
       <View>
         { isPassenger &&
@@ -236,14 +231,16 @@ export default function Profile({navigation}) {
           {errors.license_plate?.type === 'minLength' &&
             <Text>Mínimo {constraints.license_plate.min} caracteres</Text>}
         </View></>}
-      <Button
-        style={styles.buttonEdit}
-        color={Colors.blue800}
-        mode="contained"
-        onPress={handleSubmit(onSubmit)}>
-        <Text style={{fontSize: 20}}>Editar</Text>
-      </Button>
-      { edit && <Text style={styles.successMsg}>{msg}</Text>}
+      <View style={styles.buttonContainer}>
+        <Button
+          style={styles.buttonEdit}
+          color={Colors.blue800}
+          mode="contained"
+          onPress={handleSubmit(onSubmit)}>
+          <Text style={{fontSize: 20}}>Editar</Text>
+        </Button>
+        { edit && <Text style={styles.successMsg}>{msg}</Text>}
+      </View>
     </ScrollView>
   );
 };
@@ -251,11 +248,13 @@ export default function Profile({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 30,
+    margin: 20,
     marginTop: 15,
   },
   subcontainer: {
     marginTop: 10,
+    justifyContent: 'center',
+    alignContent: 'center',
   },
   title: {
     fontSize: 28,
@@ -264,28 +263,28 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: 130,
     height: 130,
-    marginLeft: 10,
     borderRadius: 100,
   },
   input: {
     marginTop: 5,
   },
-  buttonEdit: {
-    marginTop: 15,
-    padding: 5,
-    width: 200,
-    height: 50,
-    marginLeft: 75,
+  buttonContainer: {
     alignItems: 'center',
   },
+  buttonEdit: {
+    marginTop: 15,
+    width: 180,
+    height: 45,
+  },
   successMsg: {
-    marginTop: 10,
+    marginTop: 15,
     textAlign: 'center',
     fontSize: 18,
     color: '#616161',
     backgroundColor: '#c8e6c9',
     borderRadius: 16,
-    height: 40,
-    paddingTop: 5,
+    height: 45,
+    width: 250,
+    paddingTop: 10,
   },
 });

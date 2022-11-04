@@ -24,7 +24,8 @@ export default function HomeView({navigation}) {
 
   return (
     <View style={{flex: 1}}>
-      {isDriver ? <HomeDriverView navigation={navigation}/> : <HomePassengerView navigation={navigation}/>}
+      {isDriver ? <HomeDriverView navigation={navigation}/> :
+        <HomePassengerView navigation={navigation}/>}
     </View>
   );
 }

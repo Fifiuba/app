@@ -1,7 +1,7 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 /* eslint-disable max-len */
-import {View,StyleSheet, SafeAreaView, FlatList} from 'react-native';
-import {Button,Text, Colors, ActivityIndicator, Card, Title} from 'react-native-paper';
+import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
+import {Button, Text, ActivityIndicator, Card, Title} from 'react-native-paper';
 import getAddrsFromCoords from '../services/GetAddressFromCoords';
 import getNearestJourneys from '../services/GetNearestJourneys';
 import * as Location from 'expo-location';
@@ -41,11 +41,11 @@ const HomeDriver = ({navigation}) => {
 
       journeys.forEach(async (journey) => {
         try {
-          const fromStreet = await  getAddrsFromCoords(journey.from[0], journey.from[1]);
-          const toStreet =  await getAddrsFromCoords(journey.to[0], journey.to[1]);
-          console.log(fromStreet)
-          console.log(toStreet)
-  
+          const fromStreet = await getAddrsFromCoords(journey.from[0], journey.from[1]);
+          const toStreet = await getAddrsFromCoords(journey.to[0], journey.to[1]);
+          console.log(fromStreet);
+          console.log(toStreet);
+
           addresses.push({
             _id: journey._id,
             from: fromStreet,
@@ -55,25 +55,23 @@ const HomeDriver = ({navigation}) => {
             toCoords: journey.to,
           });
           setLoading(false);
-          setAvaliableJourneys(addresses)
+          setAvaliableJourneys(addresses);
+        } catch (err) {
+          setLoading(true);
+          alert(err);
         }
-        catch (err) {
-          setLoading(true)
-          alert(err)
-        }
-      })
-
-    }catch (error) {
-      alert(error)
-      setLoading(true)
+      });
+    } catch (error) {
+      alert(error);
+      setLoading(true);
     }
-  }
+  };
 
   const ShowDataContainer = () => {
     if (loading) {
       return (
         <ActivityIndicator
-          style={{justifyContent: 'center', alignSelf: 'center',padding:5}}
+          style={{justifyContent: 'center', alignSelf: 'center', padding: 5}}
           size={'larger'}
           animating={loading}
           color={'#2C3333'} />
@@ -85,7 +83,7 @@ const HomeDriver = ({navigation}) => {
         data={avaliableJourneys}
         keyExtractor={(item) => item._id}
         renderItem={renderItem}
-        ListEmptyComponent={<Text style={{textAlign: 'center', fontSize:16}}>No hay viajes cerca!</Text>}
+        ListEmptyComponent={<Text style={{textAlign: 'center', fontSize: 16}}>No hay viajes cerca!</Text>}
       />);
   };
 
@@ -101,7 +99,7 @@ const HomeDriver = ({navigation}) => {
       </Card.Content>
       <Card.Actions style={{alignSelf: 'center'}}>
         <Button color={'#073b4c'}
-          onPress={() => navigation.navigate('ViajeChofer',{'from': item.fromCoords, 'to': item.toCoords, 'carType': item.vip, 'myLocation':myLocation})}
+          onPress={() => navigation.navigate('ViajeChofer', {'from': item.fromCoords, 'to': item.toCoords, 'carType': item.vip, 'myLocation': myLocation})}
         >Aceptar</Button>
       </Card.Actions>
     </Card>
@@ -111,7 +109,7 @@ const HomeDriver = ({navigation}) => {
   return (
     <View style={styles.container}>
 
-      <Title style={{textAlign: 'center', paddingBottom:5, fontSize:22}}>
+      <Title style={{textAlign: 'center', paddingBottom: 5, fontSize: 22}}>
                   Viajes Disponibles
       </Title>
       <SafeAreaView style={styles.dataContainer}>
@@ -133,26 +131,26 @@ const HomeDriver = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 3.5,
-    flexDirection:'column',
+    flexDirection: 'column',
     alignItems: 'center',
     width: '100%',
   },
   dataContainer: {
     height: '70%',
     width: '90%',
-    borderColor:'black',
+    borderColor: 'black',
     borderRadius: '5%',
   },
   item: {
-    marginVertical:5,
-    backgroundColor:'#caf0f8',
+    marginVertical: 5,
+    backgroundColor: '#caf0f8',
   },
   vip: {
-    backgroundColor:'#FFF9B0',
-    marginVertical:5
+    backgroundColor: '#FFF9B0',
+    marginVertical: 5,
   },
   button: {
-    marginTop:'5%',
+    marginTop: '5%',
     width: '50%',
   },
 });

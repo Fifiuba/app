@@ -45,7 +45,6 @@ const authUser = async (token) => {
     const response =
       await axios.post(`https://backend-agustinaa235.cloud.okteto.net/users/login`, params);
     return response.data;
-
   } catch (error) {
     alert(error.response.data.detail);
     console.error('error en auth user:' + error.response.data.detail);

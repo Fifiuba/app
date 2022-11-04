@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {USER_SERVICE_URL} from '@env';
 
 const getFields = (data) => {
   const userInfo = {};
