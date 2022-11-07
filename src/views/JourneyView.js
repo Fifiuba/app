@@ -22,13 +22,13 @@ export default function JourneyView({route, navigation}) {
           {'coords': coords,
             'journeyInfo': journeyInfo},
       );
-    }
+    } 
   }, [loading]);
 
   React.useEffect(() => {
     const handleGetJourneyInfo = async () => {
       const response = await getJourneyInfo(journeyInfo.id);
-      if (response.status == 'started') {
+      if (response.status == 'ongoing') {
         setLoading(false);
       }
     };

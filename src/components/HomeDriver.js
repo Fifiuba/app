@@ -4,6 +4,7 @@ import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
 import {Button, Text, ActivityIndicator, Card, Title} from 'react-native-paper';
 import getAddrsFromCoords from '../services/GetAddressFromCoords';
 import getNearestJourneys from '../services/GetNearestJourneys';
+import acceptJourney from '../services/AcceptJourney';
 import * as Location from 'expo-location';
 
 const HomeDriver = ({navigation}) => {
@@ -34,11 +35,11 @@ const HomeDriver = ({navigation}) => {
 
   const getAddresses = async () => {
     try {
-      const journeys = await getNearestJourneys();
-
+      const journeys = await getNearestJourneys(myLocation);
+      setAvaliableJourneys([])
       const addresses= [];
       setLoading(true);
-
+      if (journeys.length == 0) setLoading(false);
       journeys.forEach(async (journey) => {
         try {
           const fromStreet = await getAddrsFromCoords(journey.from[0], journey.from[1]);
@@ -47,7 +48,7 @@ const HomeDriver = ({navigation}) => {
           console.log(toStreet);
 
           addresses.push({
-            _id: journey._id,
+            id: journey._id,
             from: fromStreet,
             to: toStreet,
             price: journey.price,
@@ -63,9 +64,23 @@ const HomeDriver = ({navigation}) => {
       });
     } catch (error) {
       alert(error);
-      setLoading(true);
     }
   };
+
+  const accept =  async (journey) => {
+    try {
+      const response  = await acceptJourney(journey);
+      console.log(journey)
+      if (response.status === 'accepted'){
+        navigation.navigate('ViajeChofer', {'from': journey.fromCoords, 'to': journey.toCoords, 'carType': journey.vip, 'myLocation': myLocation})
+      }
+      else{
+        alert('El viaje ya fue tomado por otro conductor');
+      }
+    } catch (error) {
+      console.err(error)
+    }
+  }
 
   const ShowDataContainer = () => {
     if (loading) {
@@ -81,7 +96,7 @@ const HomeDriver = ({navigation}) => {
       <FlatList
         extraData={avaliableJourneys}
         data={avaliableJourneys}
-        keyExtractor={(item) => item._id}
+        keyExtractor={(item) => item.id}
         renderItem={renderItem}
         ListEmptyComponent={<Text style={{textAlign: 'center', fontSize: 16}}>No hay viajes cerca!</Text>}
       />);
@@ -99,7 +114,7 @@ const HomeDriver = ({navigation}) => {
       </Card.Content>
       <Card.Actions style={{alignSelf: 'center'}}>
         <Button color={'#073b4c'}
-          onPress={() => navigation.navigate('ViajeChofer', {'from': item.fromCoords, 'to': item.toCoords, 'carType': item.vip, 'myLocation': myLocation})}
+          onPress={() => accept(item)}
         >Aceptar</Button>
       </Card.Actions>
     </Card>
