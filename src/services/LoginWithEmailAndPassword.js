@@ -1,18 +1,14 @@
 import axios from 'axios';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 
-// import {USER_SERVICE_URL} from '@env';
+import {USER_SERVICE_URL} from '@env';
 
-export default async function loginWithEmailAndPassword(data) {
+export default async function loginWithEmailAndPassword(data, userType) {
   console.log('Login with email and password');
   try {
     const token = await authFirebase(data);
     console.log('token firebase:', token);
-    if (token === null) {
-      alert('Usuario no encontrado');
-      return null;
-    }
-    const response = await authUser(token);
+    const response = await authUser(token, userType);
     console.log('response back:', response);
     return response;
   } catch (error) {
@@ -36,18 +32,24 @@ const authFirebase = async (data) => {
   }
 };
 
-const authUser = async (token) => {
+const authUser = async (token, userType) => {
+  console.log('usertype:', userType);
   try {
     console.log('authUser');
     params = {
       'token': token,
+      'user_type': userType
     };
     const response =
-      await axios.post(`https://backend-agustinaa235.cloud.okteto.net/users/login`, params);
+      await axios.post(`${USER_SERVICE_URL}/users/login`, params);
     return response.data;
   } catch (error) {
-    alert(error.response.data.detail);
-    console.error('error en auth user:' + error.response.data.detail);
+    const error_msg = error.response.data.detail;
+    console.error(error_msg);
+    if (error_msg == constants.DRIVER_NOT_EXIST_ERROR || 
+      error_msg == constants.PASSENGER_NOT_EXIST_ERROR){
+      alert(error_msg);
+    }
     return null;
   }
 };

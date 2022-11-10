@@ -37,10 +37,11 @@ const LoginForm = ({navigation}) => {
   const onSubmit = async (data) => {
     try {
       // Send data to users service for signing in
-      const tokenResponse = await loginWithEmailAndPassword(data);
+      const userType = setUserType();
+      const tokenResponse = await loginWithEmailAndPassword(data, userType);
       if (!(tokenResponse === null)) {
         await AsyncStorage.setItem('token', tokenResponse);
-        await AsyncStorage.setItem('user_type', setUserType());
+        await AsyncStorage.setItem('user_type', userType);
         onLogin(true);
       }
     } catch (error) {
@@ -212,7 +213,7 @@ const styles = StyleSheet.create({
     padding: 20,
     margin: 10,
     marginTop: 30,
-    height: 680,
+    height: 700,
     borderRadius: 16,
   },
   image: {
@@ -238,6 +239,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignContent: 'center',
     justifyContent: 'center',
+    marginTop: 5,
   },
   button: {
     padding: 5,
