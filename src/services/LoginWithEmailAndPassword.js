@@ -38,17 +38,17 @@ const authUser = async (token, userType) => {
     console.log('authUser');
     params = {
       'token': token,
-      'user_type': userType
+      'user_type': userType,
     };
     const response =
       await axios.post(`${USER_SERVICE_URL}/users/login`, params);
     return response.data;
   } catch (error) {
-    const error_msg = error.response.data.detail;
-    console.error(error_msg);
-    if (error_msg == constants.DRIVER_NOT_EXIST_ERROR || 
-      error_msg == constants.PASSENGER_NOT_EXIST_ERROR){
-      alert(error_msg);
+    const errorMsg = error.response.data.detail;
+    console.error(errorMsg);
+    if (errorMsg == constants.DRIVER_NOT_EXIST_ERROR ||
+      errorMsg == constants.PASSENGER_NOT_EXIST_ERROR) {
+      alert(errorMsg);
     }
     return null;
   }

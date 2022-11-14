@@ -2,7 +2,10 @@ import axios from 'axios';
 
 const getJourneyInfo = async (id) => {
   try {
-    const response = await axios.get(`https://journey-service-solfonte.cloud.okteto.net/journey/${id}`, {'id': id});
+    const response = await axios.get(
+        `https://api-gateway-solfonte.cloud.okteto.net/journey/${id}`,
+        {id: id},
+    );
     console.log('response:', response.data);
     return response.data;
   } catch (error) {

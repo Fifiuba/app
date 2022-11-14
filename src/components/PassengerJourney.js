@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -38,27 +38,24 @@ const PassengerJourney = ({navigation}) => {
   const [price, setPrice] = useState(0);
   const [priceSetted, setPriceSetted] = useState(false);
 
-  /* eslint-disable no-unused-vars */
-  const getLocationPermission = async () => {
-    try {
-      const {status} = await Location.requestForegroundPermissionsAsync();
+  useEffect(() => {
+    getLocationPermission();
+  }, []);
 
-      if (status !== 'granted') {
-        alert('Permiso denegado');
-        return;
-      }
-
-      const location = await Location.getCurrentPositionAsync({});
-      const current = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      };
-      setOrigin(current);
-    } catch (error) {
-      console.error(error.message);
-      return null;
+  async function getLocationPermission() {
+    const {status} = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Permission denied');
+      return;
     }
-  };
+
+    const location = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Balanced,
+      enableHighAccuracy: true,
+      timeInterval: 5,
+    });
+    setOrigin({latitude: location.coords.latitude, longitude: location.coords.longitude});
+  }
 
   const setJourneyInfo = (route, distance) => {
     setDistance(distance);
@@ -77,6 +74,7 @@ const PassengerJourney = ({navigation}) => {
       if (!(response === null)) {
         setJourneyInfo(response[0], response[1]);
         const journeyPrice = await getJourneyPrice(distance);
+
         if (!(journeyPrice === null)) {
           console.log('price', journeyPrice);
           if (journeyPrice != 0) {

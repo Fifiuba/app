@@ -13,7 +13,7 @@ const getFields = (data) => {
     if (value != '' || value != 0) {
       typeUserInfo[key] = value;
     }
-  };
+  }
   return [userInfo, typeUserInfo];
 };
 
@@ -22,12 +22,14 @@ export default async function setUserTypeInfo(data, userId, userType) {
   try {
     console.log('user_id:', userId);
     const params = {
-      'user_type': userType,
-      'fields': getFields(data),
+      user_type: userType,
+      fields: getFields(data),
     };
     console.log('params:', params);
-    const response =
-      await axios.patch(`https://backend-agustinaa235.cloud.okteto.net/users/${userId}`, params);
+    const response = await axios.patch(
+        `https://api-gateway-solfonte.cloud.okteto.net/users/${userId}`,
+        params,
+    );
     console.log('response data:', response.data);
     return response.data;
   } catch (error) {
@@ -36,4 +38,3 @@ export default async function setUserTypeInfo(data, userId, userType) {
     return null;
   }
 }
-

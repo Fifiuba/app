@@ -11,7 +11,7 @@ export default function JourneyView({route, navigation}) {
   const coords = route.params.coords;
 
   /* eslint-disable no-unused-vars */
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [text, setText] = useState('Tu chofer está en camino');
   const [cancel, setCancel] = useState(false);
 
@@ -22,13 +22,14 @@ export default function JourneyView({route, navigation}) {
           {'coords': coords,
             'journeyInfo': journeyInfo},
       );
-    } 
+    }
   }, [loading]);
 
   React.useEffect(() => {
     const handleGetJourneyInfo = async () => {
       const response = await getJourneyInfo(journeyInfo.id);
-      if (response.status == 'ongoing') {
+      if (response.status == 'accepted') {
+        console.log('respose:' + response.status);
         setLoading(false);
       }
     };
