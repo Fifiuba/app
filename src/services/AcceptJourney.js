@@ -7,7 +7,6 @@ export default async function acceptJourney(journey) {
     );
 
     const journeys = response.data;
-    console.log(journeys);
     return journeys;
   } catch (err) {
     console.error(err);

@@ -5,7 +5,7 @@ import {Avatar, Button, Colors} from 'react-native-paper';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import PolylineMaker from '../services/PolyLineMaker';
 import startJourney from '../services/StartJourney';
-
+import finishJourney from '../services/FinishJourney';
 
 const blueCar = require('../../assets/icon-car-standard.png');
 const proCar = require('../../assets/icon-car-vip.png');
@@ -54,6 +54,17 @@ const DriverJourney = ({navigation, route}) => {
       alert(error);
     }
   };
+
+  const handleFinishJourney = async () => {
+    try {
+      await finishJourney(journey);
+      setDirections([]);
+      setInplace(false);
+      navigation.navigate('HomeDriver');
+    } catch (error) {
+      alert('No se pudo finalizar el viaje')
+    }
+  }
 
   function car() {
     if (journey.carType) {
@@ -117,11 +128,7 @@ const DriverJourney = ({navigation, route}) => {
           color={Colors.red600}
           disabled={!arrived}
           style={styles.finishButton}
-          onPress={() => {
-            setDirections([]);
-            setInplace(false);
-            navigation.navigate('HomeDriver');
-          }}
+          onPress={handleFinishJourney}
         >
           <Text>Terminar</Text>
         </Button>
