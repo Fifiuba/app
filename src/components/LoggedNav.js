@@ -6,13 +6,14 @@ import ProfileView from '../views/ProfileView';
 import getProfile from '../services/GetProfile';
 import JourneyView from '../views/JourneyView';
 import RoadTripView from '../views/RoadTripView';
+import DriverJourneyView from '../views/DriverJourneyView';
+import HomeDriverView from '../views/HomeDriverView';
+import HomePassengerView from '../views/HomePassengerView';
+import MyProfileView from '../views/MyProfileView';
 
 import {UserContext} from '../context/UserContext';
 import {LoginContext} from '../context/LoginContext';
 import {constants} from '../utils/Constants';
-import DriverJourneyView from '../views/DriverJourneyView';
-import HomeDriverView from '../views/HomeDriverView';
-import HomePassengerView from '../views/HomePassengerView';
 
 const Stack = createNativeStackNavigator();
 
@@ -55,7 +56,7 @@ export default function LoggedNav({onLogin}) {
   return (
     <LoginContext.Provider value={onLogin}>
       <UserContext.Provider value={{userInfo, userTypeInfo}}>
-        
+
         <Stack.Navigator initialRouteName={'Home'}>
           <Stack.Screen
             options={{title: '', headerShown: false}}
@@ -74,8 +75,13 @@ export default function LoggedNav({onLogin}) {
           />
           <Stack.Screen
             options={{title: ''}}
-            name="MiPerfil"
+            name="EditarPerfil"
             component={ProfileView}
+          />
+          <Stack.Screen
+            options={{title: ''}}
+            name="MiPerfil"
+            component={MyProfileView}
           />
           <Stack.Screen
             options={{title: ''}}

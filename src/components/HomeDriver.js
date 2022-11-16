@@ -82,8 +82,8 @@ const HomeDriver = ({navigation}) => {
   };
 
   const reject = (id) => {
-    const filteredData = avaliableJourneys.filter(item => item.id !== id);
-    setAvaliableJourneys(filteredData)
+    const filteredData = avaliableJourneys.filter((item) => item.id !== id);
+    setAvaliableJourneys(filteredData);
   };
 
   const ShowDataContainer = () => {

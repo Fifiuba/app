@@ -54,7 +54,8 @@ const PassengerJourney = ({navigation}) => {
       enableHighAccuracy: true,
       timeInterval: 5,
     });
-    setOrigin({latitude: location.coords.latitude, longitude: location.coords.longitude});
+    setOrigin({latitude: location.coords.latitude,
+      longitude: location.coords.longitude});
   }
 
   const setJourneyInfo = (route, distance) => {

@@ -16,7 +16,7 @@ export default function Profile({navigation}) {
 
   const [isPassenger, setIsPassenger] = useState(true);
   const [msg, setMsg] = useState('');
-  const [edit, setEdit] = useState(false);
+  const [save, setSaved] = useState(false);
 
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
@@ -71,7 +71,7 @@ export default function Profile({navigation}) {
   const onSubmit = async (data) => {
     try {
       console.log('data:', data);
-      const response = await editProfile(data, setEdit, setMsg);
+      const response = await editProfile(data, setSaved, setMsg);
       if (response) {
         updateInfo(userInfo, response[0]);
         updateInfo(userTypeInfo, response[1]);
@@ -84,197 +84,199 @@ export default function Profile({navigation}) {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={{alignItems: 'center'}}>
-        <Text style={styles.title}>{userInfo.name}</Text>
-        <Image
-          source={{uri: userInfo.picture}}
-          style={styles.image}
-        />
-      </View>
-
-      <View style={styles.subcontainer}>
-        <Controller control={control}
-          rules={{
-            maxLength: constraints.name.max,
-            minLength: constraints.name.min}}
-          render={({field: {onChange, onBlur, value}}) => (
-            <TextInput
-              theme={{colors: {primary: 'grey'}, roundness: 10}}
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              mode="outlined"
-              label="Nombre"
-              placeholder={userInfo.name}
-            />
-          )}
-          name="name"
-        />
-        {errors.name?.type === 'maxLength' &&
-        <Text style={{color: 'red'}}>
-          Máximo {constraints.name.max} letras
-        </Text>}
-        {errors.name?.type === 'minLength' &&
-        <Text style={{color: 'red'}}>Mínimo {constraints.name.min} letra</Text>}
-        <Controller control={control}
-          render={() => (
-            <TextInput
-              theme={{colors: {primary: 'grey'}, roundness: 10}}
-              style={styles.input}
-              value={userInfo.email}
-              mode="outlined"
-              label="Correo electrónico"
-              placeholder={userInfo.email}
-              disabled="true"
-            />)}
-          name="email"
-        />
-        <Controller control={control}
-          render={({field: {onChange, onBlur, value}}) => (
-            <TextInput
-              theme={{colors: {primary: 'grey'}, roundness: 10}}
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              mode="outlined"
-              label="Teléfono"
-              placeholder={userInfo.phone_number}
-            />)}
-          name="phone_number"
-        />
-        <Controller control={control}
-          render={({field: {onChange, onBlur, value}}) => (
-            <TextInput
-              theme={{colors: {primary: 'grey'}, roundness: 10}}
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              mode="outlined"
-              label="Edad"
-              placeholder={userInfo.age}
-            />
-          )}
-          name="age"
-        />
-      </View>
-      <View>
-        { isPassenger &&
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Image
+            style={styles.avatar}
+            source={{uri: userInfo.picture}}
+          />
+        </View>
+        <View style={styles.subcontainer}>
           <Controller control={control}
             rules={{
-              required: isPassenger,
-            }}
+              maxLength: constraints.name.max,
+              minLength: constraints.name.min}}
             render={({field: {onChange, onBlur, value}}) => (
               <TextInput
                 theme={{colors: {primary: 'grey'}, roundness: 10}}
-                style={styles.input}
+                style={styles.info}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                mode="outlined"
-                label="Dirección"
-                placeholder={userTypeInfo.default_address}
+                label="Nombre"
+                placeholder={userInfo.name}
               />
             )}
-            name="default_address"
+            name="name"
           />
-        }
-        {isPassenger && errors.isPassenger?.type === 'required' &&
-        <Text style={{color: 'red'}}>Campo obligatorio</Text>}
-        {errors.isPassenger?.type === 'maxLength' &&
-        <Text>Máximo {constraints.isPassenger.max} caracteres</Text>}
-        {errors.isPassenger?.type === 'minLength' &&
-        <Text>Mínimo {constraints.isPassenger.min} caracteres</Text>}
-      </View>
-      { !isPassenger &&
-        <><View>
+          {errors.name?.type === 'maxLength' &&
+          <Text style={{color: 'red'}}>
+            Máximo {constraints.name.max} letras
+          </Text>}
+          {errors.name?.type === 'minLength' &&
+          <Text style={{color: 'red'}}>
+            Mínimo {constraints.name.min} letra
+          </Text>}
+          <Controller control={control}
+            render={() => (
+              <TextInput
+                theme={{colors: {primary: 'grey'}, roundness: 10}}
+                style={styles.info}
+                value={userInfo.email}
+                label="Correo electrónico"
+                placeholder={userInfo.email}
+                disabled="true"
+              />)}
+            name="email"
+          />
           <Controller control={control}
             render={({field: {onChange, onBlur, value}}) => (
               <TextInput
                 theme={{colors: {primary: 'grey'}, roundness: 10}}
-                style={styles.input}
+                style={styles.info}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                mode="outlined"
-                label="Modelo del vehículo"
-                placeholder={userTypeInfo.car_model}/>
-            )}
-            name="car_model" />
-          {errors.car_model?.type === 'required' &&
-            <Text style={{color: 'red'}}>Campo obligatorio</Text>}
-          {errors.car_model?.type === 'maxLength' &&
-            <Text>Máximo {constraints.car_model.max} caracteres</Text>}
-          {errors.car_model?.type === 'minLength' &&
-            <Text>Mínimo {constraints.car_model.min} caracteres</Text>}
-        </View><View>
+                label="Teléfono"
+                placeholder={userInfo.phone_number}
+              />)}
+            name="phone_number"
+          />
           <Controller control={control}
             render={({field: {onChange, onBlur, value}}) => (
               <TextInput
                 theme={{colors: {primary: 'grey'}, roundness: 10}}
-                style={styles.input}
+                style={styles.info}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                mode="outlined"
-                label="Patente del vehículo"
-                placeholder={userTypeInfo.license_plate} />
+                label="Edad"
+                placeholder={userInfo.age.toString()}
+              />
             )}
-            name="license_plate" />
-          {errors.license_plate?.type === 'required' &&
-            <Text style={{color: 'red'}}>Campo obligatorio</Text>}
-          {errors.license_plate?.type === 'maxLength' &&
-            <Text>Máximo {constraints.license_plate.max} caracteres</Text>}
-          {errors.license_plate?.type === 'minLength' &&
-            <Text>Mínimo {constraints.license_plate.min} caracteres</Text>}
-        </View></>}
-      <View style={styles.buttonContainer}>
-        <Button
-          style={styles.buttonEdit}
-          color={Colors.blue800}
-          mode="contained"
-          onPress={handleSubmit(onSubmit)}>
-          <Text style={{fontSize: 20}}>Editar</Text>
-        </Button>
-        { edit && <Text style={styles.successMsg}>{msg}</Text>}
+            name="age"
+          />
+          <View>
+            { isPassenger &&
+            <Controller control={control}
+              rules={{
+                required: isPassenger,
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <TextInput
+                  theme={{colors: {primary: 'grey'}, roundness: 10}}
+                  style={styles.info}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  label="Dirección"
+                  placeholder={userTypeInfo.default_address}
+                />
+              )}
+              name="default_address"
+            />
+            }
+            {isPassenger && errors.isPassenger?.type === 'required' &&
+          <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+            {errors.isPassenger?.type === 'maxLength' &&
+          <Text>Máximo {constraints.isPassenger.max} caracteres</Text>}
+            {errors.isPassenger?.type === 'minLength' &&
+          <Text>Mínimo {constraints.isPassenger.min} caracteres</Text>}
+            { !isPassenger &&
+          <><View>
+            <Controller control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <TextInput
+                  theme={{colors: {primary: 'grey'}, roundness: 10}}
+                  style={styles.input}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  mode="outlined"
+                  label="Modelo del vehículo"
+                  placeholder={userTypeInfo.car_model}/>
+              )}
+              name="car_model" />
+            {errors.car_model?.type === 'required' &&
+              <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+            {errors.car_model?.type === 'maxLength' &&
+              <Text>Máximo {constraints.car_model.max} caracteres</Text>}
+            {errors.car_model?.type === 'minLength' &&
+              <Text>Mínimo {constraints.car_model.min} caracteres</Text>}
+          </View><View>
+            <Controller control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <TextInput
+                  theme={{colors: {primary: 'grey'}, roundness: 10}}
+                  style={styles.input}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  mode="outlined"
+                  label="Patente del vehículo"
+                  placeholder={userTypeInfo.license_plate} />
+              )}
+              name="license_plate" />
+            {errors.license_plate?.type === 'required' &&
+              <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+            {errors.license_plate?.type === 'maxLength' &&
+              <Text>Máximo {constraints.license_plate.max} caracteres</Text>}
+            {errors.license_plate?.type === 'minLength' &&
+              <Text>Mínimo {constraints.license_plate.min} caracteres</Text>}
+          </View></>}
+          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            style={styles.saveButton}
+            color={Colors.blue800}
+            mode="contained"
+            onPress={handleSubmit(onSubmit)}>
+            <Text style={styles.buttonText}>Guardar</Text>
+          </Button>
+          { save && <Text style={styles.successMsg}>{msg}</Text>}
+        </View>
       </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    margin: 20,
-    marginTop: 15,
+  header: {
+    height: 170,
+    alignItems: 'center',
+    alignContent: 'center',
+    marginTop: 20,
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: 'white',
+    alignSelf: 'center',
+    position: 'absolute',
+    marginTop: 30,
   },
   subcontainer: {
-    marginTop: 10,
     justifyContent: 'center',
     alignContent: 'center',
-  },
-  title: {
-    fontSize: 28,
-  },
-  image: {
-    marginTop: 10,
-    width: 130,
-    height: 130,
-    borderRadius: 100,
-  },
-  input: {
-    marginTop: 5,
+    marginLeft: 30,
+    marginRight: 30,
   },
   buttonContainer: {
+    marginTop: 25,
     alignItems: 'center',
   },
-  buttonEdit: {
-    marginTop: 15,
-    width: 180,
+  saveButton: {
     height: 45,
+    width: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
+    backgroundColor: Colors.blue700,
+    margin: 10,
   },
   successMsg: {
     marginTop: 15,
@@ -282,9 +284,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#616161',
     backgroundColor: '#c8e6c9',
-    borderRadius: 16,
+    borderRadius: 30,
     height: 45,
     width: 250,
     paddingTop: 10,
+  },
+  buttonText: {
+    fontSize: 16,
+  },
+  info: {
+    fontSize: 16,
+    color: '#00BFFF',
+    height: 55,
+    width: '90%',
+    margin: 10,
   },
 });

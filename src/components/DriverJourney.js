@@ -23,10 +23,10 @@ const DriverJourney = ({navigation, route}) => {
   const mapRef = React.createRef();
   const [fromLocation, setFrom] = useState(myLocation);
   const [toLocation, setTo] = useState(myLocation);
-  const { notification } = useContext(NotificationContext);
+  const {notification} = useContext(NotificationContext);
 
-  
-  const schedulePushNotification = async (title,body,time) => {
+
+  const schedulePushNotification = async (title, body, time) => {
     await Notifications.scheduleNotificationAsync({
       content: {
         title: title,
@@ -66,7 +66,7 @@ const DriverJourney = ({navigation, route}) => {
       setFrom(start);
       setTo(end);
       setStarted(false);
-      schedulePushNotification('Has comenzado un viaje', 'En camino!',2);
+      schedulePushNotification('Has comenzado un viaje', 'En camino!', 2);
       // if(notification) console.log(notification.request.content.title)
     } catch (error) {
       alert(error);
