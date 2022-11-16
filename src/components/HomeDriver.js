@@ -81,13 +81,9 @@ const HomeDriver = ({navigation}) => {
     }
   };
 
-  const reject = (journey) => {
-    const index = avaliableJourneys.indexOf(journey);
-    console.log(index);
-    console.log(avaliableJourneys);
-    avaliableJourneys.splice(index, 1);
-    console.log(avaliableJourneys);
-    setAvaliableJourneys(...avaliableJourneys);
+  const reject = (id) => {
+    const filteredData = avaliableJourneys.filter(item => item.id !== id);
+    setAvaliableJourneys(filteredData)
   };
 
   const ShowDataContainer = () => {
@@ -125,7 +121,7 @@ const HomeDriver = ({navigation}) => {
           onPress={() => accept(item)}
         >Aceptar</Button>
         <Button color={'#e63946'}
-          onPress={() => reject(item)}
+          onPress={() => reject(item.id)}
         >Rechazar</Button>
       </Card.Actions>
     </Card>

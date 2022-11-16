@@ -67,13 +67,8 @@ export default function App() {
       setNotification(notification);
     });
 
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log('notification response:'+ response);
-    });
-
     return () => {
       removeNotificationSubscription(notificationListener.current);
-      removeNotificationSubscription(responseListener.current);
     };
   }, []);
 
