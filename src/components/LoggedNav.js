@@ -55,6 +55,7 @@ export default function LoggedNav({onLogin}) {
   return (
     <LoginContext.Provider value={onLogin}>
       <UserContext.Provider value={{userInfo, userTypeInfo}}>
+        
         <Stack.Navigator initialRouteName={'Home'}>
           <Stack.Screen
             options={{title: '', headerShown: false}}
