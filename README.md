@@ -1,28 +1,36 @@
 Aplicación Móvil
 ===============
 
+
+## For development
+Create an Expo Account [here](https://expo.dev) and login **in** your coomputer using
+```
+$ npm run login
+--> Fill with credentials
+```
+
 ## Install dependencies of the project
 ```
-$ npm install
+$ npm -f install
 ```
----
+
 
 ## Run the app
 ```
 $ npm run start
 ```
----
+
 
 ## Run the linter
 ```
 $ npm run eslint
 ```
----
+
 
 ## Env file
 You can see what its necessary to have in .env file to run the app in .env.example file.
 
----
+
 
 ## Visualizing the app
 
