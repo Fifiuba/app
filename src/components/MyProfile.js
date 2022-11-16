@@ -6,7 +6,7 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import {Colors, TextInput, Button} from 'react-native-paper';
+import {Colors, TextInput, Button, Title, Caption} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {UserContext} from '../context/UserContext';
@@ -95,7 +95,28 @@ const MyProfile = ({navigation}) => {
                   </View>}
           </View>
         </View>
-        <View style={styles.buttonContainer}>
+        { !isDriver &&
+        <View style={styles.walletContainer}>
+          <View style={styles.walletSubcontainer}>
+            <View style={styles.walletInfo}>
+              <Title>$100</Title>
+              <Caption style={styles.caption}>Billetera</Caption>
+            </View>
+            <View style={styles.walletSubcontainer}>
+              <Button
+                style={styles.addMoneyButton}
+                color={Colors.blue800}
+                mode="contained"
+                onPress={() => {
+                  console.log('Addd money');
+                }}>
+                <Text style={styles.addMoneyButtonText}>Agregar</Text>
+              </Button>
+            </View>
+          </View>
+        </View>}
+        <View style={isDriver ?
+          styles.buttonContainerDriver: styles.buttonContainer}>
           <Button
             style={styles.editButton}
             color={Colors.blue800}
@@ -127,7 +148,6 @@ export default MyProfile;
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    height: 900,
   },
   header: {
     height: 100,
@@ -181,9 +201,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonContainer: {
-    marginTop: 30,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonContainerDriver: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 30,
   },
   signOutButton: {
     height: 45,
@@ -203,13 +227,43 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.blue700,
     margin: 10,
   },
-  editButtonText: {
-    color: 'white',
-  },
   buttonText: {
     color: '#696969',
   },
   editButtonText: {
     color: 'white',
+  },
+  walletContainer: {
+    borderWidth: 1,
+    borderColor: '#dddddd',
+    flex: 1,
+    height: 130,
+    marginTop: 30,
+    marginBottom: 10,
+  },
+  walletInfo: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  caption: {
+    fontSize: 18,
+    fontWeight: '500',
+  },
+  walletSubcontainer: {
+    width: '60%',
+    height: '60%',
+    margin: 10,
+  },
+  addMoneyButton: {
+    height: 40,
+    width: 130,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
+    backgroundColor: Colors.green700,
+  },
+  addMoneyButtonText: {
+    color: 'white',
+    fontSize: 14,
   },
 });
