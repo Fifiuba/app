@@ -23,6 +23,15 @@
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./local/assets/icon-app.png",
+          "color": "#ffffff"
+        }
+      ]
+    ]
   }
 }

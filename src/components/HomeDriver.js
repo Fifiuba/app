@@ -36,17 +36,16 @@ const HomeDriver = ({navigation}) => {
   const getAddresses = async () => {
     try {
       const journeys = await getNearestJourneys(myLocation);
-      console.log(journeys);
       setAvaliableJourneys([]);
+
       const addresses= [];
       setLoading(true);
+
       if (journeys.length == 0) setLoading(false);
       journeys.forEach(async (journey) => {
         try {
           const fromStreet = await getAddrsFromCoords(journey.from[0], journey.from[1]);
           const toStreet = await getAddrsFromCoords(journey.to[0], journey.to[1]);
-          console.log(fromStreet);
-          console.log(toStreet);
 
           addresses.push({
             id: journey._id,
@@ -71,7 +70,7 @@ const HomeDriver = ({navigation}) => {
   const accept = async (journey) => {
     try {
       const response = await acceptJourney(journey);
-      console.log(journey);
+
       if (response.status === 'accepted') {
         navigation.navigate('ViajeChofer', {'id': journey.id, 'from': journey.fromCoords, 'to': journey.toCoords, 'carType': journey.vip, 'myLocation': myLocation});
       } else {
@@ -80,6 +79,15 @@ const HomeDriver = ({navigation}) => {
     } catch (error) {
       console.err(error);
     }
+  };
+
+  const reject = (journey) => {
+    const index = avaliableJourneys.indexOf(journey);
+    console.log(index);
+    console.log(avaliableJourneys);
+    avaliableJourneys.splice(index, 1);
+    console.log(avaliableJourneys);
+    setAvaliableJourneys(...avaliableJourneys);
   };
 
   const ShowDataContainer = () => {
@@ -94,8 +102,8 @@ const HomeDriver = ({navigation}) => {
     }
     return (
       <FlatList
-        extraData={avaliableJourneys}
         data={avaliableJourneys}
+        extraData={avaliableJourneys}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         ListEmptyComponent={<Text style={{textAlign: 'center', fontSize: 16}}>No hay viajes cerca!</Text>}
@@ -116,6 +124,9 @@ const HomeDriver = ({navigation}) => {
         <Button color={'#073b4c'}
           onPress={() => accept(item)}
         >Aceptar</Button>
+        <Button color={'#e63946'}
+          onPress={() => reject(item)}
+        >Rechazar</Button>
       </Card.Actions>
     </Card>
   );

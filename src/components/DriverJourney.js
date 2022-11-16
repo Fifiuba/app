@@ -6,6 +6,8 @@ import MapView, {Marker, Polyline} from 'react-native-maps';
 import PolylineMaker from '../services/PolyLineMaker';
 import startJourney from '../services/StartJourney';
 import finishJourney from '../services/FinishJourney';
+// import schedulePushNotification from '../utils/PushNotifications';
+import * as Notifications from 'expo-notifications';
 
 const blueCar = require('../../assets/icon-car-standard.png');
 const proCar = require('../../assets/icon-car-vip.png');
@@ -20,6 +22,17 @@ const DriverJourney = ({navigation, route}) => {
   const mapRef = React.createRef();
   const [fromLocation, setFrom] = useState(myLocation);
   const [toLocation, setTo] = useState(myLocation);
+
+  const schedulePushNotification = async () => {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'Viaje Aceptado!',
+        body: 'El chofer se enceuntra en camino!',
+        data: {data: 'goes here'},
+      },
+      trigger: {seconds: 2},
+    });
+  };
 
   const goToPassenger = () => {
     const from = `${myLocation.latitude}, ${myLocation.longitude}`;
@@ -50,6 +63,7 @@ const DriverJourney = ({navigation, route}) => {
       setFrom(start);
       setTo(end);
       setStarted(false);
+      schedulePushNotification();
     } catch (error) {
       alert(error);
     }
@@ -62,9 +76,9 @@ const DriverJourney = ({navigation, route}) => {
       setInplace(false);
       navigation.navigate('HomeDriver');
     } catch (error) {
-      alert('No se pudo finalizar el viaje')
+      alert('No se pudo finalizar el viaje');
     }
-  }
+  };
 
   function car() {
     if (journey.carType) {

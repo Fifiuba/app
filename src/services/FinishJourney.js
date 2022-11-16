@@ -7,9 +7,7 @@ export default async function finishJourney(journey) {
     );
     const journeys = response.data;
     return journeys;
-  
   } catch (err) {
-    
     console.error(err);
     alert(err);
   }
