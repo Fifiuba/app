@@ -11,7 +11,7 @@ export default function JourneyView({route, navigation}) {
   const coords = route.params.coords;
 
   /* eslint-disable no-unused-vars */
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [text, setText] = useState('Tu chofer está en camino');
   const [cancel, setCancel] = useState(false);
 

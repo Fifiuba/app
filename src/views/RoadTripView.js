@@ -7,6 +7,7 @@ import * as Location from 'expo-location';
 import {UserContext} from '../context/UserContext';
 import TimerJourney from '../components/TimerJourney';
 import cancelJourney from '../services/CancelJourney';
+import getJourneyInfo from '../services/GetJourneyInfo';
 
 const RoadTripView = ({navigation, route}) => {
   const info = route.params;
@@ -26,16 +27,6 @@ const RoadTripView = ({navigation, route}) => {
   });
   /* eslint-disable no-unused-vars */
   const routeCoords = coords;
-
-  /* const [origin, setOrigin] = useState({
-    latitude: -34.59908,
-    longitude: -58.38186,
-  });
-  const [destination, setDestination] = useState({
-    latitude: -34.59908,
-    longitude: -68.38186,
-  });
-  const [routeCoords, setRouteCoords] = useState([origin, destination]);*/
 
   /* eslint-disable no-unused-vars */
   const getLocationPermission = async () => {
@@ -70,6 +61,7 @@ const RoadTripView = ({navigation, route}) => {
   React.useEffect(() => {
     if (finished) {
       setStartTimer(false);
+      navigation.navigate('Home');
     }
   }, [finished]);
 
@@ -79,8 +71,8 @@ const RoadTripView = ({navigation, route}) => {
       console.log('response:', response);
       if (!(response === null)) {
         if (response.status == 'cancelled') {
+          setFinished(true);
           alert('Viaje cancelado exitosamente');
-          navigation.navigate('Home');
         }
       } else {
         alert('Error al cancelar viaje');
@@ -89,6 +81,18 @@ const RoadTripView = ({navigation, route}) => {
       console.error(error.message);
     }
   };
+
+  React.useEffect(() => {
+    const handleGetJourneyInfo = async () => {
+      const response = await getJourneyInfo(journeyInfo.id);
+      if (response.status == 'cancelled') {
+        console.log('response:' + response.status);
+        setFinished(true);
+        alert('Tu viaje ha sido cancelado');
+      }
+    };
+    handleGetJourneyInfo();
+  });
 
   return (
     <>
