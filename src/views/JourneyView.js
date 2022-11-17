@@ -1,10 +1,9 @@
 import React, {useContext, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Colors, ActivityIndicator, Button, Text} from 'react-native-paper';
-import { NotificationContext } from '../context/NotificationContext';
+import {NotificationContext} from '../context/NotificationContext';
 
 import cancelJourney from '../services/CancelJourney';
-import getJourneyInfo from '../services/GetJourneyInfo';
 
 export default function JourneyView({route, navigation}) {
   /* eslint-disable no-unused-vars */
@@ -15,7 +14,7 @@ export default function JourneyView({route, navigation}) {
   const [loading, setLoading] = useState(true);
   const [text, setText] = useState('Esperando un chofer disponible');
   const [cancel, setCancel] = useState(false);
-  const notification = useContext(NotificationContext)
+  const notification = useContext(NotificationContext);
 
   React.useEffect(() => {
     if (!loading) {
@@ -28,18 +27,18 @@ export default function JourneyView({route, navigation}) {
   }, [loading]);
 
   React.useEffect(() => {
-    console.log(notification)
+    console.log(notification);
     if (notification) {
-      let data = notification.request.content.data
-      console.log(data.status)
-      console.log(JSON.stringify(journeyInfo))
-      if (data !== undefined){
-        if (data.status == 'accepted' && data.id == journeyInfo.id){
-          setLoading(false)
+      const data = notification.request.content.data;
+      console.log(data.status);
+      console.log(JSON.stringify(journeyInfo));
+      if (data !== undefined) {
+        if (data.status == 'accepted' && data.id == journeyInfo.id) {
+          setLoading(false);
         }
       }
     }
-  },[notification]);
+  }, [notification]);
 
   const handleCancelJourney = async () => {
     try {

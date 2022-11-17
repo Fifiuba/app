@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {Avatar, Button, Colors} from 'react-native-paper';
 import MapView, {Marker, Polyline} from 'react-native-maps';
@@ -8,7 +8,6 @@ import startJourney from '../services/StartJourney';
 import finishJourney from '../services/FinishJourney';
 // import schedulePushNotification from '../utils/PushNotifications';
 import * as Notifications from 'expo-notifications';
-import {NotificationContext} from '../context/NotificationContext';
 
 const blueCar = require('../../assets/icon-car-standard.png');
 const proCar = require('../../assets/icon-car-vip.png');
@@ -23,7 +22,6 @@ const DriverJourney = ({navigation, route}) => {
   const mapRef = React.createRef();
   const [fromLocation, setFrom] = useState(myLocation);
   const [toLocation, setTo] = useState(myLocation);
-
 
   const schedulePushNotification = async (title, body, time) => {
     await Notifications.scheduleNotificationAsync({

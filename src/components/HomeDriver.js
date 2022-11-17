@@ -41,7 +41,7 @@ const HomeDriver = ({navigation}) => {
 
       const addresses= [];
       setLoading(true);
-      
+
       token = (await Notifications.getExpoPushTokenAsync()).data;
       console.log('token:' +token);
 
