@@ -23,7 +23,6 @@ const DriverJourney = ({navigation, route}) => {
   const mapRef = React.createRef();
   const [fromLocation, setFrom] = useState(myLocation);
   const [toLocation, setTo] = useState(myLocation);
-  const {notification} = useContext(NotificationContext);
 
 
   const schedulePushNotification = async (title, body, time) => {
