@@ -1,13 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+/* eslint-disable max-len */
 import {SafeAreaView, Text, StyleSheet, View, Image, TouchableOpacity} from 'react-native';
 import {Colors, Button} from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {ScoreBar} from '../components/ScoreBar';
-
+import {JourneyContext} from '../context/JourneyContext';
+import scoreUser from '../services/ScoreUser';
 export default function ScoreView({navigation}) {
   const [text, setText] = useState('chofer');
+  const [userType, setUserType] = useState('driver');
+  const [id, setId] = useState(0);
+
+  const {journey, setJourney} = useContext(JourneyContext);
+  setJourney(journey);
+  console.log('info journey: ', journey);
+
   const [defaultRating, setDefaultRating] = useState(2);
+  /* eslint-disable no-unused-vars */
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
+
   const starCornerUrl = 'https://github.com/tranhonghan/images/blob/main/star_corner.png?raw=true';
   const starFilledUrl = 'https://github.com/tranhonghan/images/blob/main/star_filled.png?raw=true';
 
@@ -36,19 +47,33 @@ export default function ScoreView({navigation}) {
     );
   };
 
-  /* React.useEffect(() => {
-      const setUserType = async () => {
-        try {
-          const userType = await AsyncStorage.getItem('user_type');
-          if (userType == 'driver') {
-            setText('chofer');
-          }
-        } catch (error) {
-          console.error(error.message);
+  React.useEffect(() => {
+    const getUserType = async () => {
+      try {
+        const userType = await AsyncStorage.getItem('user_type');
+        if (userType != 'driver') {
+          setText('chofer');
+          setUserType('passenger');
+          setId(journey.driver.id);
+        } else {
+          setId(journey.idPassenger);
         }
-      };
-      setUserType();
-    }, []);*/
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    getUserType();
+  }, []);
+
+  const handleScoreUser = async () => {
+    try {
+      const response = await scoreUser(userType, defaultRating, id);
+      console.log('response score user:', response);
+      navigation.navigate('HomeView');
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -61,11 +86,13 @@ export default function ScoreView({navigation}) {
           mode="contained"
           onPress={() => {
             console.log('score');
-            navigation.navigate('HomeView');
+            handleScoreUser();
           }}>
           <Text style={styles.buttonText}>Calificar {text}</Text>
         </Button>
-        <Text style={styles.textScore}>{defaultRating + '/' + maxRating.length}</Text>
+        <Text style={styles.textScore}>
+          {defaultRating + '/' + maxRating.length}
+        </Text>
       </View>
     </SafeAreaView>
   );

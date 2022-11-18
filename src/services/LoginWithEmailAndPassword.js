@@ -11,6 +11,9 @@ export default async function loginWithEmailAndPassword(data, userType) {
     console.log('token firebase:', token);
     const response = await authUser(token, userType);
     console.log('response back:', response);
+    if (response === null) {
+      alert('User not found');
+    }
     return response;
   } catch (error) {
     console.error(error.message);
@@ -34,9 +37,8 @@ const authFirebase = async (data) => {
 };
 
 const authUser = async (token, userType) => {
-  console.log('usertype:', userType);
+  console.log('authUser');
   try {
-    console.log('authUser');
     params = {
       'token': token,
       'user_type': userType,
@@ -49,6 +51,10 @@ const authUser = async (token, userType) => {
     console.error(errorMsg);
     if (errorMsg == constants.DRIVER_NOT_EXIST_ERROR ||
       errorMsg == constants.PASSENGER_NOT_EXIST_ERROR) {
+      alert(errorMsg);
+    } else if (token === null) {
+      alert('User not found');
+    } else {
       alert(errorMsg);
     }
     return null;

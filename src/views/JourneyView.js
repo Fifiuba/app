@@ -4,14 +4,18 @@ import {Colors, ActivityIndicator, Button, Text} from 'react-native-paper';
 import {NotificationContext} from '../context/NotificationContext';
 
 import cancelJourney from '../services/CancelJourney';
+import {JourneyContext} from '../context/JourneyContext';
 
 export default function JourneyView({route, navigation}) {
   /* eslint-disable no-unused-vars */
   const journeyInfo = route.params.journeyInfo;
   const coords = route.params.coords;
 
-  /* eslint-disable no-unused-vars */
-  const [loading, setLoading] = useState(true);
+  const {journey, setJourney} = useContext(JourneyContext);
+  setJourney(journeyInfo);
+  console.log('journey:', journey);
+
+  const [loading, setLoading] = useState(false);
   const [text, setText] = useState('Esperando un chofer disponible');
   const [cancel, setCancel] = useState(false);
   const notification = useContext(NotificationContext);

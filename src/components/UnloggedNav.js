@@ -6,7 +6,6 @@ import LoginView from '../views/LoginView';
 import ResetPasswordView from '../views/ResetPasswordView';
 import DriverFormView from '../views/DriverFormView';
 import PassengerFormView from '../views/PassengerFormView';
-import ScoreView from '../views/ScoreView';
 
 import {LoginContext} from '../context/LoginContext';
 
@@ -15,12 +14,7 @@ const Stack = createNativeStackNavigator();
 export default function UnloggedNav({onLogin}) {
   return (
     <LoginContext.Provider value={onLogin}>
-      <Stack.Navigator initialRouteName='Calificacion'>
-        <Stack.Screen
-          options={{title: '', headerShown: false}}
-          name="Calificacion"
-          component={ScoreView}
-        />
+      <Stack.Navigator initialRouteName='IniciarSesion'>
         <Stack.Screen
           options={{title: '', headerShown: false}}
           name="IniciarSesion"

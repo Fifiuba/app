@@ -61,7 +61,7 @@ const RoadTripView = ({navigation, route}) => {
   React.useEffect(() => {
     if (finished) {
       setStartTimer(false);
-      navigation.navigate('Home');
+      navigation.navigate('Calificacion');
     }
   }, [finished]);
 
