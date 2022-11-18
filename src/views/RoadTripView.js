@@ -8,14 +8,17 @@ import {UserContext} from '../context/UserContext';
 import TimerJourney from '../components/TimerJourney';
 import cancelJourney from '../services/CancelJourney';
 import getJourneyInfo from '../services/GetJourneyInfo';
+import { NotificationContext } from '../context/NotificationContext';
 
 const RoadTripView = ({navigation, route}) => {
   const info = route.params;
   const coords = info.coords.route;
   const journeyInfo = info.journeyInfo;
-
+  const notification = useContext(NotificationContext)
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
+  const [finished, setFinished] = useState(false);
+  const [startTimer, setStartTimer] = useState(false);
 
   const [origin, setOrigin] = useState({
     latitude: journeyInfo.from[0],
@@ -27,36 +30,31 @@ const RoadTripView = ({navigation, route}) => {
   });
   /* eslint-disable no-unused-vars */
   const routeCoords = coords;
-
-  /* eslint-disable no-unused-vars */
-  const getLocationPermission = async () => {
-    try {
-      const {status} = await Location.requestForegroundPermissionsAsync();
-
-      if (status !== 'granted') {
-        alert('Permiso denegado');
-        return;
-      }
-
-      const location = await Location.getCurrentPositionAsync({});
-      const current = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      };
-      setOrigin(current);
-    } catch (error) {
-      console.error(error.message);
-      return null;
-    }
-  };
+  
 
   React.useEffect(() => {
-    // getLocationPermission();
-  }, []);
+    console.log(notification)
+    if (notification) {
+      let data = notification.request.content.data
+      if (data !== undefined){
+        if (data.status == 'started' && data.id == journeyInfo.id){
+          setStartTimer(true)
+        }
+      }
+    }
+  },[notification]);
 
-  const [finished, setFinished] = useState(false);
-  const [startTimer, setStartTimer] = useState(true);
-  const [resetTimer, setResetTimer] = useState(false);
+  React.useEffect(() => {
+    console.log(notification)
+    if (notification) {
+      let data = notification.request.content.data
+      if (data !== undefined){
+        if (data.status == 'finish' && data.id == journeyInfo.id){
+          setFinished(true)
+        }
+      }
+    }
+  },[notification]);
 
   React.useEffect(() => {
     if (finished) {
@@ -107,7 +105,6 @@ const RoadTripView = ({navigation, route}) => {
       <View style={styles.container}>
         <TimerJourney
           isStopwatchStart={startTimer}
-          resetStopwatch={resetTimer}
         />
         <MapView
           style={styles.map}

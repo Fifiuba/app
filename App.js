@@ -6,6 +6,7 @@ import './FirebaseConfig';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import {NotificationContext} from './src/context/NotificationContext';
+import { TokenContext } from './src/context/TokenContext';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -58,7 +59,9 @@ export default function App() {
    }
    
    useEffect(() => {
-     registerForPushNotificationsAsync().then(token => setExpoPushToken(token))
+     registerForPushNotificationsAsync().then(token => {
+      console.log(token)
+      setExpoPushToken(token)})
      notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
        //console.log(notification)
        setNotification(notification);
@@ -70,8 +73,10 @@ export default function App() {
 
    return (
      <NotificationContext.Provider value={notification}>
-       <NavigationContainer>
-         {isLoggedIn ? <LoggedNav onLogin={setIsLoggedIn}/> : <UnloggedNav onLogin={setIsLoggedIn}/>}
-       </NavigationContainer>
+      <TokenContext.Provider value={expoPushToken}>
+        <NavigationContainer>
+          {isLoggedIn ? <LoggedNav onLogin={setIsLoggedIn}/> : <UnloggedNav onLogin={setIsLoggedIn}/>}
+        </NavigationContainer>
+      </TokenContext.Provider>
      </NotificationContext.Provider>
  )}

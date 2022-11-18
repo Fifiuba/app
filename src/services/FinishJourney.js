@@ -6,7 +6,15 @@ export default async function finishJourney(journey) {
         `https://journey-service-solfonte.cloud.okteto.net/journey/finish/${journey.id}`,
     );
     const journeys = response.data;
+    const noti = await axios.post(
+      'https://notifications-service-alejovillores.cloud.okteto.net/notification',{
+        user_id: journey.user_id,
+        title:'Viaje Terminado!',
+        body:'Has llegado a destino!',
+        data: {id: journey.id, status: journeys.status}
+      });
     return journeys;
+    
   } catch (err) {
     console.error(err);
     alert(err);

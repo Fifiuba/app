@@ -24,18 +24,6 @@ const DriverJourney = ({navigation, route}) => {
   const [fromLocation, setFrom] = useState(myLocation);
   const [toLocation, setTo] = useState(myLocation);
 
-
-  const schedulePushNotification = async (title, body, time) => {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: title,
-        body: body,
-        data: {data: 'goes here'},
-      },
-      trigger: {seconds: time},
-    });
-  };
-
   const goToPassenger = () => {
     const from = `${myLocation.latitude}, ${myLocation.longitude}`;
     const to = `${journey.from[0]}, ${journey.from[1]}`;
@@ -65,7 +53,6 @@ const DriverJourney = ({navigation, route}) => {
       setFrom(start);
       setTo(end);
       setStarted(false);
-      schedulePushNotification('Has comenzado un viaje', 'En camino!', 2);
       // if(notification) console.log(notification.request.content.title)
     } catch (error) {
       alert(error);
@@ -77,8 +64,8 @@ const DriverJourney = ({navigation, route}) => {
       await finishJourney(journey);
       setDirections([]);
       setInplace(false);
-      await schedulePushNotification('Has llegado!', 'Te encuentras en tu destino', 1);
       navigation.navigate('HomeDriver');
+
     } catch (error) {
       alert('No se pudo finalizar el viaje');
     }
