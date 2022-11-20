@@ -9,13 +9,12 @@ import {Text,
 import {useForm, Controller} from 'react-hook-form';
 
 import setUserTypeInfo from '../services/SetUserTypeInfo';
-import sentTokenInfo from '../services/SendTokenInfo';
 import {constraints} from '../utils/Constraints';
 import {constants} from '../utils/Constants';
 
 const PassengerFormView = ({navigation, route}) => {
   const userId = route.params.user_id;
-  const token =  useContext(TokenContext)
+
 
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
@@ -29,7 +28,7 @@ const PassengerFormView = ({navigation, route}) => {
       const response = await setUserTypeInfo(data, userId, constants.PASSENGER);
       console.log(typeof userId);
       console.log(typeof token);
-      const noti = await sentTokenInfo(userId,token);
+      
       if (response) {
         navigation.navigate('IniciarSesion');
       }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import HomeView from '../views/HomeView';
@@ -10,9 +10,10 @@ import DriverJourneyView from '../views/DriverJourneyView';
 import HomeDriverView from '../views/HomeDriverView';
 import HomePassengerView from '../views/HomePassengerView';
 import MyProfileView from '../views/MyProfileView';
-
 import {UserContext} from '../context/UserContext';
+import {TokenContext} from '../context/TokenContext';
 import {LoginContext} from '../context/LoginContext';
+import sentTokenInfo from '../services/SendTokenInfo';
 import {constants} from '../utils/Constants';
 
 const Stack = createNativeStackNavigator();
@@ -20,6 +21,7 @@ const Stack = createNativeStackNavigator();
 export default function LoggedNav({onLogin}) {
   const [userInfo, setUserInfo] = useState('');
   const [userTypeInfo, setUserTypeInfo] = useState('');
+  const token =  useContext(TokenContext)
 
   const setEmpty = (data) => {
     const keys = Object.getOwnPropertyNames(data);
@@ -44,6 +46,7 @@ export default function LoggedNav({onLogin}) {
         if (userInfo) {
           setUserInfo(setEmpty(userInfo[0]));
           setUserTypeInfo(setEmpty(userInfo[1]));
+          const noti = await sentTokenInfo(userInfo[0].id,token);
         }
       } catch (error) {
         console.error(error.message);
