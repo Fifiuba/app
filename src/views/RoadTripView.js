@@ -17,6 +17,9 @@ const RoadTripView = ({navigation, route}) => {
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
 
+  const [id, setId] = useState(0);
+  console.log('id:', id);
+
   const [origin, setOrigin] = useState({
     latitude: journeyInfo.from[0],
     longitude: journeyInfo.from[1],
@@ -50,20 +53,30 @@ const RoadTripView = ({navigation, route}) => {
     }
   };
 
-  React.useEffect(() => {
-    // getLocationPermission();
-  }, []);
-
-  const [finished, setFinished] = useState(false);
   const [startTimer, setStartTimer] = useState(true);
   const [resetTimer, setResetTimer] = useState(false);
 
+  const [finished, setFinished] = useState(true);
+  const [cancelled, setCancelled] = useState(false);
+  console.log('cancelled:', cancelled);
+
   React.useEffect(() => {
-    if (finished) {
-      setStartTimer(false);
-      navigation.navigate('Calificacion');
+    // getLocationPermission();
+    if (cancelled) {
+      navigation.navigate('Home');
     }
-  }, [finished]);
+  });
+
+  const handleFinishJourney = async () => {
+    try {
+      if (finished) {
+        setStartTimer(false);
+        navigation.navigate('Calificacion', {'id': id});
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   const handleCancelJourney = async () => {
     try {
@@ -71,7 +84,7 @@ const RoadTripView = ({navigation, route}) => {
       console.log('response:', response);
       if (!(response === null)) {
         if (response.status == 'cancelled') {
-          setFinished(true);
+          setCancelled(true);
           alert('Viaje cancelado exitosamente');
         }
       } else {
@@ -83,12 +96,23 @@ const RoadTripView = ({navigation, route}) => {
   };
 
   React.useEffect(() => {
+    handleFinishJourney();
+  }, [finished]);
+
+  React.useEffect(() => {
     const handleGetJourneyInfo = async () => {
-      const response = await getJourneyInfo(journeyInfo.id);
-      if (response.status == 'cancelled') {
-        console.log('response:' + response.status);
-        setFinished(true);
-        alert('Tu viaje ha sido cancelado');
+      try {
+        const response = await getJourneyInfo(journeyInfo.id);
+        setId(response.driver.idDriver);
+        if (response.status == 'cancelled') {
+          setCancelled(true);
+          alert('Tu viaje ha sido cancelado');
+        }
+        if (response.status == 'finished') {
+          setFinished(true);
+        }
+      } catch (error) {
+        console.error(error);
       }
     };
     handleGetJourneyInfo();

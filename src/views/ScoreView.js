@@ -1,19 +1,15 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 /* eslint-disable max-len */
 import {SafeAreaView, Text, StyleSheet, View, Image, TouchableOpacity} from 'react-native';
 import {Colors, Button} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {JourneyContext} from '../context/JourneyContext';
 import scoreUser from '../services/ScoreUser';
-export default function ScoreView({navigation}) {
+
+export default function ScoreView({navigation, route}) {
   const [text, setText] = useState('chofer');
   const [userType, setUserType] = useState('driver');
-  const [id, setId] = useState(0);
-
-  const {journey, setJourney} = useContext(JourneyContext);
-  setJourney(journey);
-  console.log('info journey: ', journey);
+  const [id, setId] = useState(route.params.id);
 
   const [defaultRating, setDefaultRating] = useState(2);
   /* eslint-disable no-unused-vars */
@@ -54,9 +50,9 @@ export default function ScoreView({navigation}) {
         if (userType != 'driver') {
           setText('chofer');
           setUserType('passenger');
-          setId(journey.driver.id);
+          setId(id);
         } else {
-          setId(journey.idPassenger);
+          setId(id);
         }
       } catch (error) {
         console.error(error.message);
@@ -69,7 +65,7 @@ export default function ScoreView({navigation}) {
     try {
       const response = await scoreUser(userType, defaultRating, id);
       console.log('response score user:', response);
-      navigation.navigate('HomeView');
+      navigation.navigate('Home');
     } catch (error) {
       console.error(error.message);
     }

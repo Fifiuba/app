@@ -1,12 +1,13 @@
 import axios from 'axios';
 
 const getJourneyInfo = async (id) => {
+  console.log('get journey info service');
   try {
     const response = await axios.get(
-        `https://api-gateway-solfonte.cloud.okteto.net/journey/${id}`,
+        `https://journey-service-solfonte.cloud.okteto.net/journey/${id}`,
         {id: id},
     );
-    console.log('response:', response.data);
+    console.log('response journey info service:', response.data);
     return response.data;
   } catch (error) {
     console.error(error.message);

@@ -4,16 +4,11 @@ import {Colors, ActivityIndicator, Button, Text} from 'react-native-paper';
 import {NotificationContext} from '../context/NotificationContext';
 
 import cancelJourney from '../services/CancelJourney';
-import {JourneyContext} from '../context/JourneyContext';
 
 export default function JourneyView({route, navigation}) {
   /* eslint-disable no-unused-vars */
   const journeyInfo = route.params.journeyInfo;
   const coords = route.params.coords;
-
-  const {journey, setJourney} = useContext(JourneyContext);
-  setJourney(journeyInfo);
-  console.log('journey:', journey);
 
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState('Esperando un chofer disponible');
@@ -22,7 +17,6 @@ export default function JourneyView({route, navigation}) {
 
   React.useEffect(() => {
     if (!loading) {
-      setText('Tu chofer está esperando por tí');
       navigation.navigate('EnViaje',
           {'coords': coords,
             'journeyInfo': journeyInfo},
