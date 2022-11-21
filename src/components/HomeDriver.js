@@ -1,18 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 /* eslint-disable max-len */
 import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
 import {Button, Text, ActivityIndicator, Card, Title} from 'react-native-paper';
+
 import getAddrsFromCoords from '../services/GetAddressFromCoords';
 import getNearestJourneys from '../services/GetNearestJourneys';
 import acceptJourney from '../services/AcceptJourney';
 import * as Location from 'expo-location';
 import * as Notifications from 'expo-notifications';
+import { UserContext } from '../context/UserContext';
 
 const HomeDriver = ({navigation}) => {
   const [avaliableJourneys, setAvaliableJourneys] = useState([]);
   const [loading, setLoading] = useState(false);
   const [myLocation, setLocation] = useState();
-
 
   useEffect(() => {
     getLocationPermission();
@@ -71,9 +72,12 @@ const HomeDriver = ({navigation}) => {
     }
   };
 
+  const user = useContext(UserContext);
+  const userInfo = user.userInfo;
+
   const accept = async (journey) => {
     try {
-      const response = await acceptJourney(journey);
+      const response = await acceptJourney(journey, userInfo.id);
       if (response.status === 'accepted') {
         navigation.navigate('ViajeChofer', {'id': journey.id, 'from': journey.fromCoords, 'to': journey.toCoords, 'carType': journey.vip, 'myLocation': myLocation, 'idPassenger': journey.idPassenger});
       } else {
