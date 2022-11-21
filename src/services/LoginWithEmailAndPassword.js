@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 
-import {USER_SERVICE_URL} from '@env';
+// import {USER_SERVICE_URL} from '@env';
 import {constants} from '../utils/Constants';
 
 export default async function loginWithEmailAndPassword(data, userType) {

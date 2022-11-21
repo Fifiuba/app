@@ -21,7 +21,7 @@ const Stack = createNativeStackNavigator();
 export default function LoggedNav({onLogin}) {
   const [userInfo, setUserInfo] = useState('');
   const [userTypeInfo, setUserTypeInfo] = useState('');
-  const token =  useContext(TokenContext)
+  const token = useContext(TokenContext);
 
   const setEmpty = (data) => {
     const keys = Object.getOwnPropertyNames(data);
@@ -46,7 +46,7 @@ export default function LoggedNav({onLogin}) {
         if (userInfo) {
           setUserInfo(setEmpty(userInfo[0]));
           setUserTypeInfo(setEmpty(userInfo[1]));
-          const noti = await sentTokenInfo(userInfo[0].id,token);
+          await sentTokenInfo(userInfo[0].id, token);
         }
       } catch (error) {
         console.error(error.message);

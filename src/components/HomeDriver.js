@@ -6,7 +6,6 @@ import getAddrsFromCoords from '../services/GetAddressFromCoords';
 import getNearestJourneys from '../services/GetNearestJourneys';
 import acceptJourney from '../services/AcceptJourney';
 import * as Location from 'expo-location';
-import * as Notifications from 'expo-notifications';
 
 const HomeDriver = ({navigation}) => {
   const [avaliableJourneys, setAvaliableJourneys] = useState([]);
@@ -41,7 +40,7 @@ const HomeDriver = ({navigation}) => {
 
       const addresses= [];
       setLoading(true);
-  
+
       if (journeys.length == 0) setLoading(false);
       journeys.forEach(async (journey) => {
         try {
@@ -74,7 +73,7 @@ const HomeDriver = ({navigation}) => {
       const response = await acceptJourney(journey);
 
       if (response.status === 'accepted') {
-        navigation.navigate('ViajeChofer', {'user_id':journey.user_id,'id': journey.id, 'from': journey.fromCoords, 'to': journey.toCoords, 'carType': journey.vip, 'myLocation': myLocation});
+        navigation.navigate('ViajeChofer', {'user_id': journey.user_id, 'id': journey.id, 'from': journey.fromCoords, 'to': journey.toCoords, 'carType': journey.vip, 'myLocation': myLocation});
       } else {
         alert('El viaje ya fue tomado por otro conductor');
       }

@@ -1,5 +1,4 @@
-import React,{ useContext } from 'react';
-import {TokenContext} from '../context/TokenContext';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text,
   TextInput,
@@ -28,7 +27,7 @@ const PassengerFormView = ({navigation, route}) => {
       const response = await setUserTypeInfo(data, userId, constants.PASSENGER);
       console.log(typeof userId);
       console.log(typeof token);
-      
+
       if (response) {
         navigation.navigate('IniciarSesion');
       }

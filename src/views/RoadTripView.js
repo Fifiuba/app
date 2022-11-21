@@ -2,24 +2,23 @@ import React, {useContext, useState} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import {Text, Button, Colors} from 'react-native-paper';
-import * as Location from 'expo-location';
 
 import {UserContext} from '../context/UserContext';
 import TimerJourney from '../components/TimerJourney';
 import cancelJourney from '../services/CancelJourney';
 import getJourneyInfo from '../services/GetJourneyInfo';
-import { NotificationContext } from '../context/NotificationContext';
+import {NotificationContext} from '../context/NotificationContext';
 
 const RoadTripView = ({navigation, route}) => {
   const info = route.params;
   const coords = info.coords.route;
   const journeyInfo = info.journeyInfo;
-  const notification = useContext(NotificationContext)
+  const notification = useContext(NotificationContext);
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
   const [finished, setFinished] = useState(false);
   const [startTimer, setStartTimer] = useState(false);
-  const [cancel,setCancellable] = useState(false)
+  const [cancel, setCancellable] = useState(false);
 
   const [origin, setOrigin] = useState({
     latitude: journeyInfo.from[0],
@@ -31,32 +30,32 @@ const RoadTripView = ({navigation, route}) => {
   });
   /* eslint-disable no-unused-vars */
   const routeCoords = coords;
-  
+
 
   React.useEffect(() => {
-    console.log(notification)
+    console.log(notification);
     if (notification) {
-      let data = notification.request.content.data
-      if (data !== undefined){
-        if (data.status == 'started' && data.id == journeyInfo.id){
-          setStartTimer(true)
-          setCancellable(true)
+      const data = notification.request.content.data;
+      if (data !== undefined) {
+        if (data.status == 'started' && data.id == journeyInfo.id) {
+          setStartTimer(true);
+          setCancellable(true);
         }
       }
     }
-  },[notification]);
+  }, [notification]);
 
   React.useEffect(() => {
-    console.log(notification)
+    console.log(notification);
     if (notification) {
-      let data = notification.request.content.data
-      if (data !== undefined){
-        if (data.status == 'finish' && data.id == journeyInfo.id){
-          setFinished(true)
+      const data = notification.request.content.data;
+      if (data !== undefined) {
+        if (data.status == 'finish' && data.id == journeyInfo.id) {
+          setFinished(true);
         }
       }
     }
-  },[notification]);
+  }, [notification]);
 
   React.useEffect(() => {
     if (finished) {
