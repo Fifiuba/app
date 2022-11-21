@@ -19,6 +19,7 @@ const RoadTripView = ({navigation, route}) => {
   const userInfo = user.userInfo;
   const [finished, setFinished] = useState(false);
   const [startTimer, setStartTimer] = useState(false);
+  const [cancel,setCancellable] = useState(false)
 
   const [origin, setOrigin] = useState({
     latitude: journeyInfo.from[0],
@@ -39,6 +40,7 @@ const RoadTripView = ({navigation, route}) => {
       if (data !== undefined){
         if (data.status == 'started' && data.id == journeyInfo.id){
           setStartTimer(true)
+          setCancellable(true)
         }
       }
     }
@@ -133,6 +135,7 @@ const RoadTripView = ({navigation, route}) => {
           style={styles.button}
           color={Colors.red800}
           mode="contained"
+          disabled={cancel}
           onPress={() => {
             console.log('Cancel journey');
             handleCancelJourney();

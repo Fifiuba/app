@@ -6,9 +6,9 @@ import MapView, {Marker, Polyline} from 'react-native-maps';
 import PolylineMaker from '../services/PolyLineMaker';
 import startJourney from '../services/StartJourney';
 import finishJourney from '../services/FinishJourney';
-// import schedulePushNotification from '../utils/PushNotifications';
-import * as Notifications from 'expo-notifications';
-import {NotificationContext} from '../context/NotificationContext';
+import {UserContext} from '../context/UserContext';
+import { NotificationContext } from '../context/NotificationContext';
+
 
 const blueCar = require('../../assets/icon-car-standard.png');
 const proCar = require('../../assets/icon-car-vip.png');
@@ -23,6 +23,22 @@ const DriverJourney = ({navigation, route}) => {
   const mapRef = React.createRef();
   const [fromLocation, setFrom] = useState(myLocation);
   const [toLocation, setTo] = useState(myLocation);
+  const user = useContext(UserContext);
+  const userInfo = user.userInfo;
+  const notification = useContext(NotificationContext)
+
+  React.useEffect(() => {
+    console.log(notification)
+    if (notification) {
+      let data = notification.request.content.data
+      if (data !== undefined){
+        if (data.status == 'cancelled' && data.id == journeyInfo.id){
+          alert('El viaje ha sido cancelado')
+          navigation.navigate('HomeDriver');
+        }
+      }
+    }
+  },[notification]);
 
   const goToPassenger = () => {
     const from = `${myLocation.latitude}, ${myLocation.longitude}`;
@@ -82,8 +98,8 @@ const DriverJourney = ({navigation, route}) => {
     <View style={styles.container}>
       <View style={styles.appBar}>
         <View style={styles.profile}>
-          <Avatar.Image size={45} source={require('../../assets/yo.jpg')} />
-          <Text>Alejo Villores</Text>
+          <Avatar.Image size={45} source={{uri: userInfo.picture}}/>
+          <Text>{userInfo.name}</Text>
         </View>
       </View>
       <MapView
@@ -172,6 +188,7 @@ const styles = StyleSheet.create({
   },
   profile: {
     alignItems: 'center',
+    justifyContent:'flex-end',
     padding: 5,
   },
   fab: {
