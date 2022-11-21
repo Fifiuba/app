@@ -2,20 +2,22 @@ import React, {useContext, useState} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import {Text, Button, Colors} from 'react-native-paper';
-import * as Location from 'expo-location';
 
 import {UserContext} from '../context/UserContext';
 import TimerJourney from '../components/TimerJourney';
 import cancelJourney from '../services/CancelJourney';
 import getJourneyInfo from '../services/GetJourneyInfo';
+import {NotificationContext} from '../context/NotificationContext';
 
 const RoadTripView = ({navigation, route}) => {
   const info = route.params;
   const coords = info.coords.route;
   const journeyInfo = info.journeyInfo;
-
+  const notification = useContext(NotificationContext);
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
+  const [startTimer, setStartTimer] = useState(false);
+  const [cancel, setCancellable] = useState(false);
 
   const [id, setId] = useState(0);
   console.log('id:', id);
@@ -31,30 +33,30 @@ const RoadTripView = ({navigation, route}) => {
   /* eslint-disable no-unused-vars */
   const routeCoords = coords;
 
-  /* eslint-disable no-unused-vars */
-  const getLocationPermission = async () => {
-    try {
-      const {status} = await Location.requestForegroundPermissionsAsync();
-
-      if (status !== 'granted') {
-        alert('Permiso denegado');
-        return;
+  React.useEffect(() => {
+    console.log(notification);
+    if (notification) {
+      const data = notification.request.content.data;
+      if (data !== undefined) {
+        if (data.status == 'started' && data.id == journeyInfo.id) {
+          setStartTimer(true);
+          setCancellable(true);
+        }
       }
-
-      const location = await Location.getCurrentPositionAsync({});
-      const current = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      };
-      setOrigin(current);
-    } catch (error) {
-      console.error(error.message);
-      return null;
     }
-  };
+  }, [notification]);
 
-  const [startTimer, setStartTimer] = useState(true);
-  const [resetTimer, setResetTimer] = useState(false);
+  React.useEffect(() => {
+    console.log(notification);
+    if (notification) {
+      const data = notification.request.content.data;
+      if (data !== undefined) {
+        if (data.status == 'finish' && data.id == journeyInfo.id) {
+          setFinished(true);
+        }
+      }
+    }
+  }, [notification]);
 
   const [finished, setFinished] = useState(true);
   const [cancelled, setCancelled] = useState(false);
@@ -131,7 +133,6 @@ const RoadTripView = ({navigation, route}) => {
       <View style={styles.container}>
         <TimerJourney
           isStopwatchStart={startTimer}
-          resetStopwatch={resetTimer}
         />
         <MapView
           style={styles.map}
@@ -160,6 +161,7 @@ const RoadTripView = ({navigation, route}) => {
           style={styles.button}
           color={Colors.red800}
           mode="contained"
+          disabled={cancel}
           onPress={() => {
             console.log('Cancel journey');
             handleCancelJourney();

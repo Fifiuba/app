@@ -7,8 +7,7 @@ import getAddrsFromCoords from '../services/GetAddressFromCoords';
 import getNearestJourneys from '../services/GetNearestJourneys';
 import acceptJourney from '../services/AcceptJourney';
 import * as Location from 'expo-location';
-import * as Notifications from 'expo-notifications';
-import { UserContext } from '../context/UserContext';
+import {UserContext} from '../context/UserContext';
 
 const HomeDriver = ({navigation}) => {
   const [avaliableJourneys, setAvaliableJourneys] = useState([]);
@@ -43,9 +42,6 @@ const HomeDriver = ({navigation}) => {
       const addresses= [];
       setLoading(true);
 
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log('token:' +token);
-
       if (journeys.length == 0) setLoading(false);
       journeys.forEach(async (journey) => {
         try {
@@ -56,6 +52,7 @@ const HomeDriver = ({navigation}) => {
             id: journey._id,
             from: fromStreet,
             to: toStreet,
+            user_id: journey.idPassenger,
             price: journey.price,
             fromCoords: journey.from,
             toCoords: journey.to,

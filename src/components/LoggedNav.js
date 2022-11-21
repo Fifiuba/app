@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import HomeView from '../views/HomeView';
@@ -13,8 +13,10 @@ import MyProfileView from '../views/MyProfileView';
 import ScoreView from '../views/ScoreView';
 
 import {UserContext} from '../context/UserContext';
+import {TokenContext} from '../context/TokenContext';
 import {LoginContext} from '../context/LoginContext';
 import {JourneyContext} from '../context/JourneyContext';
+import sentTokenInfo from '../services/SendTokenInfo';
 import {constants} from '../utils/Constants';
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +24,7 @@ const Stack = createNativeStackNavigator();
 export default function LoggedNav({onLogin}) {
   const [userInfo, setUserInfo] = useState('');
   const [userTypeInfo, setUserTypeInfo] = useState('');
+  const token = useContext(TokenContext);
 
   const [journey, setJourney] = useState({});
   const value = useMemo(
@@ -52,6 +55,7 @@ export default function LoggedNav({onLogin}) {
         if (userInfo) {
           setUserInfo(setEmpty(userInfo[0]));
           setUserTypeInfo(setEmpty(userInfo[1]));
+          await sentTokenInfo(userInfo[0].id, token);
         }
       } catch (error) {
         console.error(error.message);

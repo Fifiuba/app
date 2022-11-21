@@ -30,7 +30,7 @@ export default async function setUserTypeInfo(data, userId, userType) {
         `https://api-gateway-solfonte.cloud.okteto.net/users/${userId}`,
         params,
     );
-    console.log('response data:', response.data);
+
     return response.data;
   } catch (error) {
     alert(error.response.data.detail);

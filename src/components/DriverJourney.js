@@ -10,6 +10,8 @@ import PolylineMaker from '../services/PolyLineMaker';
 import startJourney from '../services/StartJourney';
 import finishJourney from '../services/FinishJourney';
 
+import {NotificationContext} from '../context/NotificationContext';
+
 const blueCar = require('../../assets/icon-car-standard.png');
 const proCar = require('../../assets/icon-car-vip.png');
 
@@ -25,6 +27,7 @@ const DriverJourney = ({navigation, route}) => {
   const mapRef = React.createRef();
   const [fromLocation, setFrom] = useState(myLocation);
   const [toLocation, setTo] = useState(myLocation);
+  const notification = useContext(NotificationContext);
 
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
@@ -39,6 +42,18 @@ const DriverJourney = ({navigation, route}) => {
       trigger: {seconds: time},
     });
   };
+  React.useEffect(() => {
+    console.log(notification);
+    if (notification) {
+      const data = notification.request.content.data;
+      if (data !== undefined) {
+        if (data.status == 'cancelled' && data.id == journeyInfo.id) {
+          alert('El viaje ha sido cancelado');
+          navigation.navigate('HomeDriver');
+        }
+      }
+    }
+  }, [notification]);
 
   const goToPassenger = () => {
     const from = `${myLocation.latitude}, ${myLocation.longitude}`;
@@ -69,7 +84,6 @@ const DriverJourney = ({navigation, route}) => {
       setFrom(start);
       setTo(end);
       setStarted(false);
-      schedulePushNotification('Has comenzado un viaje', 'En camino!', 2);
       // if(notification) console.log(notification.request.content.title)
     } catch (error) {
       alert(error);
@@ -190,6 +204,7 @@ const styles = StyleSheet.create({
   },
   profile: {
     alignItems: 'center',
+    justifyContent: 'flex-end',
     padding: 5,
   },
   fab: {

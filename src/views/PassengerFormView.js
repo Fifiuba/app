@@ -13,6 +13,8 @@ import {constants} from '../utils/Constants';
 
 const PassengerFormView = ({navigation, route}) => {
   const userId = route.params.user_id;
+
+
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       default_address: '',
@@ -23,6 +25,9 @@ const PassengerFormView = ({navigation, route}) => {
     try {
       console.log('passengerInfo:', data);
       const response = await setUserTypeInfo(data, userId, constants.PASSENGER);
+      console.log(typeof userId);
+      console.log(typeof token);
+
       if (response) {
         navigation.navigate('IniciarSesion');
       }
