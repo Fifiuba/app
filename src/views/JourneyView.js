@@ -16,6 +16,7 @@ export default function JourneyView({route, navigation}) {
   const notification = useContext(NotificationContext);
 
   React.useEffect(() => {
+    console.log('loading:', loading);
     if (!loading) {
       navigation.navigate('EnViaje',
           {'coords': coords,
@@ -28,7 +29,7 @@ export default function JourneyView({route, navigation}) {
     console.log(notification);
     if (notification) {
       const data = notification.request.content.data;
-      console.log(data.status);
+      console.log('status:', data.status);
       console.log(JSON.stringify(journeyInfo));
       if (data !== undefined) {
         if (data.status == 'accepted' && data.id == journeyInfo.id) {

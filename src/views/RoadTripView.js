@@ -18,8 +18,11 @@ const RoadTripView = ({navigation, route}) => {
   const userInfo = user.userInfo;
   const [startTimer, setStartTimer] = useState(false);
   const [cancel, setCancellable] = useState(false);
+  const [finished, setFinished] = useState(true);
+  const [cancelled, setCancelled] = useState(false);
+  console.log('cancelled:', cancelled);
 
-  const [id, setId] = useState(0);
+  const [id, setId] = useState('0');
   console.log('id:', id);
 
   const [origin, setOrigin] = useState({
@@ -58,10 +61,6 @@ const RoadTripView = ({navigation, route}) => {
     }
   }, [notification]);
 
-  const [finished, setFinished] = useState(true);
-  const [cancelled, setCancelled] = useState(false);
-  console.log('cancelled:', cancelled);
-
   React.useEffect(() => {
     // getLocationPermission();
     if (cancelled) {
@@ -73,7 +72,7 @@ const RoadTripView = ({navigation, route}) => {
     try {
       if (finished) {
         setStartTimer(false);
-        navigation.navigate('Calificacion', {'id': id});
+        navigation.navigate('Calificacion', {'id': id.toString()});
       }
     } catch (error) {
       console.error(error.message);

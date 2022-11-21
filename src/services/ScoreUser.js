@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {USER_SERVICE_URL} from '@env';
 
 export default async function scoreUser(userType, score, userId) {
-  console.log('Score user');
+  console.log('Score user:', userId);
   try {
     const params = {
       'user_type': userType,

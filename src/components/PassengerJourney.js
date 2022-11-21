@@ -40,6 +40,9 @@ const PassengerJourney = ({navigation}) => {
 
   useEffect(() => {
     getLocationPermission();
+    setSearchOrigin('');
+    setSearchDestination('');
+    setPrice(0);
   }, []);
 
   async function getLocationPermission() {
