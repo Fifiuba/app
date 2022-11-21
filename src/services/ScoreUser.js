@@ -17,9 +17,8 @@ export default async function scoreUser(userType, score, userId) {
       headers: {Authorization: `Bearer ${token}`},
     };
     console.log('config:', config);
-
+    /* eslint-disable max-len */
     const response =
-      /* eslint-disable max-len */
       await axios.patch(`${USER_SERVICE_URL}/users/score/${userId}`, params, config);
     console.log('response data:', response.data);
     return response.data;

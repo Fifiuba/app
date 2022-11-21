@@ -75,7 +75,7 @@ const HomeDriver = ({navigation}) => {
     try {
       const response = await acceptJourney(journey);
       if (response.status === 'accepted') {
-        navigation.navigate('ViajeChofer', {'id': journey.id, 'from': journey.fromCoords, 'to': journey.toCoords, 'carType': journey.vip, 'myLocation': myLocation});
+        navigation.navigate('ViajeChofer', {'id': journey.id, 'from': journey.fromCoords, 'to': journey.toCoords, 'carType': journey.vip, 'myLocation': myLocation, 'idPassenger': journey.idPassenger});
       } else {
         alert('El viaje ya fue tomado por otro conductor');
       }

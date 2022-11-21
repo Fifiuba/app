@@ -1,16 +1,19 @@
 /* eslint-disable max-len */
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {Avatar, Button, Colors} from 'react-native-paper';
 import MapView, {Marker, Polyline} from 'react-native-maps';
+import * as Notifications from 'expo-notifications';
+// import schedulePushNotification from '../utils/PushNotifications';
+
 import PolylineMaker from '../services/PolyLineMaker';
 import startJourney from '../services/StartJourney';
 import finishJourney from '../services/FinishJourney';
-// import schedulePushNotification from '../utils/PushNotifications';
-import * as Notifications from 'expo-notifications';
 
 const blueCar = require('../../assets/icon-car-standard.png');
 const proCar = require('../../assets/icon-car-vip.png');
+
+import {UserContext} from '../context/UserContext';
 
 /* eslint-disable new-cap */
 const DriverJourney = ({navigation, route}) => {
@@ -22,6 +25,9 @@ const DriverJourney = ({navigation, route}) => {
   const mapRef = React.createRef();
   const [fromLocation, setFrom] = useState(myLocation);
   const [toLocation, setTo] = useState(myLocation);
+
+  const user = useContext(UserContext);
+  const userInfo = user.userInfo;
 
   const schedulePushNotification = async (title, body, time) => {
     await Notifications.scheduleNotificationAsync({
@@ -76,7 +82,8 @@ const DriverJourney = ({navigation, route}) => {
       setDirections([]);
       setInplace(false);
       await schedulePushNotification('Has llegado!', 'Te encuentras en tu destino', 1);
-      navigation.navigate('HomeDriver');
+      console.log('id passenger:', journey.idPassenger);
+      navigation.navigate('Calificacion', {'id': journey.idPassenger});
     } catch (error) {
       alert('No se pudo finalizar el viaje');
     }
@@ -93,8 +100,8 @@ const DriverJourney = ({navigation, route}) => {
     <View style={styles.container}>
       <View style={styles.appBar}>
         <View style={styles.profile}>
-          <Avatar.Image size={45} source={require('../../assets/yo.jpg')} />
-          <Text>Alejo Villores</Text>
+          <Avatar.Image size={45} source={userInfo.picture} />
+          <Text>{userInfo.name}</Text>
         </View>
       </View>
       <MapView
