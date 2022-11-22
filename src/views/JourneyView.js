@@ -4,13 +4,14 @@ import {Colors, ActivityIndicator, Button, Text} from 'react-native-paper';
 import {NotificationContext} from '../context/NotificationContext';
 
 import cancelJourney from '../services/CancelJourney';
+import getJourneyInfo from '../services/GetJourneyInfo';
 
 export default function JourneyView({route, navigation}) {
   /* eslint-disable no-unused-vars */
   const journeyInfo = route.params.journeyInfo;
   const coords = route.params.coords;
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [cancel, setCancel] = useState(false);
   const notification = useContext(NotificationContext);
 
@@ -37,6 +38,21 @@ export default function JourneyView({route, navigation}) {
       }
     }
   }, [notification]);
+
+  React.useEffect(() => {
+    const handleGetJourneyInfo = async () => {
+      try {
+        const response = await getJourneyInfo(journeyInfo.id);
+        console.log(response);
+        if (response.status == 'accepted') {
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    handleGetJourneyInfo();
+  });
 
   const handleCancelJourney = async () => {
     try {

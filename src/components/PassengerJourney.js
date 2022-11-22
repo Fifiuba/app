@@ -38,6 +38,10 @@ const PassengerJourney = ({navigation}) => {
   const [price, setPrice] = useState(0);
   const [priceSetted, setPriceSetted] = useState(false);
 
+  setSearchOrigin('');
+  setSearchDestination('');
+  setPrice(0);
+
   useEffect(() => {
     getLocationPermission();
     setSearchOrigin('');

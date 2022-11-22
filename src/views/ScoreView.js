@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 /* eslint-disable max-len */
-import {SafeAreaView, Text, StyleSheet, View, Image, TouchableOpacity} from 'react-native';
+import {SafeAreaView, Text, StyleSheet, View, Image, TouchableOpacity, TextInput} from 'react-native';
 import {Colors, Button} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -10,7 +10,6 @@ export default function ScoreView({navigation, route}) {
   const [text, setText] = useState('chofer');
   const [userType, setUserType] = useState('driver');
   const [id, setId] = useState(route.params.id);
-  console.log('route:', route.params.id);
 
   const [defaultRating, setDefaultRating] = useState(2);
   /* eslint-disable no-unused-vars */
@@ -72,11 +71,20 @@ export default function ScoreView({navigation, route}) {
     }
   };
 
+  const [comment, setComment] = useState('');
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.text}>Ayudanos a mejorar tu experiencia</Text>
         <ScoreBar/>
+        <TextInput
+          style={styles.info}
+          mode="outline"
+          label="Comentario"
+          placeholder='Dejá tu comentario aquí ...'
+          onChangeText={(newComment) => setComment(newComment)}
+        />
         <Button
           style={styles.button}
           color={Colors.blue800}
@@ -87,9 +95,6 @@ export default function ScoreView({navigation, route}) {
           }}>
           <Text style={styles.buttonText}>Calificar {text}</Text>
         </Button>
-        <Text style={styles.textScore}>
-          {defaultRating + '/' + maxRating.length}
-        </Text>
       </View>
     </SafeAreaView>
   );
@@ -104,7 +109,7 @@ const styles = StyleSheet.create({
   },
   card: {
     marginTop: 170,
-    height: 340,
+    height: 350,
     width: 350,
     padding: 35,
     backgroundColor: 'white',
@@ -115,6 +120,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 24,
     textAlign: 'center',
+    marginBottom: 10,
   },
   scoreContainer: {
     backgroundColor: 'red',
@@ -134,7 +140,7 @@ const styles = StyleSheet.create({
   subcontainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    margin: 30,
+    margin: 15,
   },
   starImage: {
     width: 30,
@@ -143,5 +149,11 @@ const styles = StyleSheet.create({
   },
   textScore: {
     fontSize: 16,
+  },
+  info: {
+    fontSize: 16,
+    height: 55,
+    width: '90%',
+    margin: 15,
   },
 });

@@ -94,7 +94,7 @@ const RoadTripView = ({navigation, route}) => {
         if (response.status == 'cancelled') {
           setCancelled(true);
           alert('Tu viaje ha sido cancelado');
-        } 
+        }
         if (response.status == 'finish') {
           setFinished(true);
         }
