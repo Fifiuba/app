@@ -7,7 +7,6 @@ const getJourneyInfo = async (id) => {
         `https://journey-service-solfonte.cloud.okteto.net/journey/${id}`,
         {id: id},
     );
-    console.log('response journey info service:', response.data);
     return response.data;
   } catch (error) {
     console.error(error.message);

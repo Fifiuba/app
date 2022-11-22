@@ -10,6 +10,7 @@ export default function ScoreView({navigation, route}) {
   const [text, setText] = useState('chofer');
   const [userType, setUserType] = useState('driver');
   const [id, setId] = useState(route.params.id);
+  console.log('route:', route.params.id);
 
   const [defaultRating, setDefaultRating] = useState(2);
   /* eslint-disable no-unused-vars */

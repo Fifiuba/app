@@ -50,7 +50,8 @@
     "react-native-web": "~0.18.7",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "expo-notifications": "~0.16.1",
-    "expo-device": "~4.3.0"
+    "expo-device": "~4.3.0",
+    "expo-updates": "~0.14.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

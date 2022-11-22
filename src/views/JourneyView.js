@@ -11,7 +11,6 @@ export default function JourneyView({route, navigation}) {
   const coords = route.params.coords;
 
   const [loading, setLoading] = useState(false);
-  const [text, setText] = useState('Esperando un chofer disponible');
   const [cancel, setCancel] = useState(false);
   const notification = useContext(NotificationContext);
 
@@ -57,7 +56,7 @@ export default function JourneyView({route, navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.text}>{text}</Text>
+        <Text style={styles.text}>Esperando un chofer disponible</Text>
         { loading &&
           <ActivityIndicator
             animating={loading}

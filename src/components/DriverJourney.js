@@ -96,7 +96,7 @@ const DriverJourney = ({navigation, route}) => {
       setDirections([]);
       setInplace(false);
       await schedulePushNotification('Has llegado!', 'Te encuentras en tu destino', 1);
-      console.log('id passenger:', journey.idPassenger);
+      console.log('envio a calificacion:', journey.idPassenger);
       navigation.navigate('Calificacion', {'id': journey.idPassenger});
     } catch (error) {
       alert('No se pudo finalizar el viaje');
