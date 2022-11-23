@@ -17,6 +17,7 @@ import {TokenContext} from '../context/TokenContext';
 import {LoginContext} from '../context/LoginContext';
 import sentTokenInfo from '../services/SendTokenInfo';
 import {constants} from '../utils/Constants';
+import UserProfileView from '../views/UserProfileView';
 
 const Stack = createNativeStackNavigator();
 
@@ -107,6 +108,11 @@ export default function LoggedNav({onLogin}) {
             options={{title: '', headerShown: false}}
             name="Calificacion"
             component={ScoreView}
+          />
+          <Stack.Screen
+            options={{title: ''}}
+            name="PerfilUsuario"
+            component={UserProfileView}
           />
         </Stack.Navigator>
       </UserContext.Provider>

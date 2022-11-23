@@ -13,7 +13,6 @@ export default async function getNearestJourneys(location) {
     const journeys = response.data;
     return journeys;
   } catch (err) {
-    console.error(err);
-    alert(err);
+
   }
 }

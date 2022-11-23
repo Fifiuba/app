@@ -52,7 +52,7 @@ const HomeDriver = ({navigation}) => {
             id: journey._id,
             from: fromStreet,
             to: toStreet,
-            user_id: journey.idPassenger,
+            idPassenger: journey.idPassenger,
             price: journey.price,
             fromCoords: journey.from,
             toCoords: journey.to,
@@ -60,11 +60,12 @@ const HomeDriver = ({navigation}) => {
           setLoading(false);
           setAvaliableJourneys(addresses);
         } catch (err) {
-          setLoading(true);
-          alert(err);
+          setLoading(false);
+          alert('Se ha producido un error al intentar buscar los viajes!');
         }
       });
     } catch (error) {
+      setLoading(false);
       alert(error);
     }
   };
@@ -76,7 +77,7 @@ const HomeDriver = ({navigation}) => {
     try {
       const response = await acceptJourney(journey, userInfo.id);
       if (response.status === 'accepted') {
-        navigation.navigate('ViajeChofer', {'id': journey.id, 'from': journey.fromCoords, 'to': journey.toCoords, 'carType': journey.vip, 'myLocation': myLocation, 'idPassenger': response.idPassenger});
+        navigation.navigate('ViajeChofer', {'id': journey.id, 'from': journey.fromCoords, 'to': journey.toCoords, 'carType': journey.vip, 'myLocation': myLocation, 'idPassenger': journey.idPassenger});
       } else {
         alert('El viaje ya fue tomado por otro conductor');
       }
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
     height: '70%',
     width: '90%',
     borderColor: 'black',
-    borderRadius: '5%',
+    borderRadius: 5,
   },
   item: {
     marginVertical: 5,

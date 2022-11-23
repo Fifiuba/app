@@ -13,14 +13,14 @@ export default async function acceptJourney(journey, driverId) {
     console.log('data:', response.data);
     const journeys = response.data;
 
-    /* const noti = await axios.post(
+    const noti = await axios.post(
         'https://notifications-service-alejovillores.cloud.okteto.net/notification', {
-          user_id: journey.user_id,
+          user_id: journey.idPassenger,
           title: 'Viaje Aceptado!',
           body: 'Tu chofer esta en camino',
           data: {id: journey.id, status: journeys.status},
         });
-    console.log('noti response:' + noti);*/
+    console.log('noti response:' + noti);
     return journeys;
   } catch (err) {
     console.error(JSON.stringify(err));

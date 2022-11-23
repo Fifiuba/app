@@ -85,7 +85,6 @@ const DriverJourney = ({navigation, route}) => {
       setFrom(start);
       setTo(end);
       setStarted(false);
-      // if(notification) console.log(notification.request.content.title)
     } catch (error) {
       alert(error);
     }
@@ -95,7 +94,7 @@ const DriverJourney = ({navigation, route}) => {
     try {
       const response = await getUserInfo(journey.idPassenger);
       console.log('response', response);
-      // navigation.navigate('Calificacion', {'id': journey.idPassenger});
+      navigation.navigate('PerfilUsuario', {'data': response});
     } catch (error) {
       console.error(error.message);
     }
@@ -125,8 +124,16 @@ const DriverJourney = ({navigation, route}) => {
     <View style={styles.container}>
       <View style={styles.appBar}>
         <View style={styles.profile}>
-          <Avatar.Image size={45} source={userInfo.picture} />
+          <Avatar.Image size={45} source={{uri: userInfo.picture}} />
           <Text>{userInfo.name}</Text>
+        </View>
+        <View style={styles.profileButton}>
+          <Button
+            mode="contained"
+            color={Colors.blue600}
+            onPress={handleViewUserInfo}>
+            <Text>Ver perfil</Text>
+          </Button>
         </View>
       </View>
       <MapView
@@ -181,13 +188,6 @@ const DriverJourney = ({navigation, route}) => {
           <Text>Terminar</Text>
         </Button>
       </View>
-      <Button
-        mode="contained"
-        color={Colors.blue600}
-        style={styles.finishButton}
-        onPress={handleViewUserInfo}>
-        <Text>Ver perfil</Text>
-      </Button>
     </View>
   );
 };
@@ -231,6 +231,9 @@ const styles = StyleSheet.create({
     margin: 10,
     right: 0,
     bottom: 0,
+  },
+  profileButton: {
+    alignSelf: 'center',
   },
 });
 

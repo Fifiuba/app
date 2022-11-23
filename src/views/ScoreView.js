@@ -7,8 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import scoreUser from '../services/ScoreUser';
 
 export default function ScoreView({navigation, route}) {
-  const [text, setText] = useState('chofer');
-  const [userType, setUserType] = useState('driver');
+  const [text, setText] = useState('pasajero');
+  const [userType, setUserType] = useState('passenger');
   const [id, setId] = useState(route.params.id);
 
   const [defaultRating, setDefaultRating] = useState(2);
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 45,
-    width: 190,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,

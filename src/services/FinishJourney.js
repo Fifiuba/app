@@ -8,7 +8,7 @@ export default async function finishJourney(journey) {
     const journeys = response.data;
     await axios.post(
         'https://notifications-service-alejovillores.cloud.okteto.net/notification', {
-          user_id: journey.user_id,
+          user_id: journey.idPassenger,
           title: 'Viaje Terminado!',
           body: 'Has llegado a destino!',
           data: {id: journey.id, status: journeys.status},

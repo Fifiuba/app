@@ -101,7 +101,7 @@ const PassengerJourney = ({navigation}) => {
       console.log('Response CreateJourney', journeyInfo);
       navigation.navigate('Viajes', {
         'journeyInfo': {
-          'id': journeyInfo._id,
+          'id': journeyInfo.id,
           'status': journeyInfo.status,
           'idPassenger': journeyInfo.idPassenger,
           'price': journeyInfo.price,
@@ -119,7 +119,6 @@ const PassengerJourney = ({navigation}) => {
   };
 
   React.useEffect(() => {
-    // getLocationPermission();
     setSearchOrigin('');
     setSearchDestination('');
     setPriceSetted(false);

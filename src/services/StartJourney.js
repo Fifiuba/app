@@ -10,7 +10,7 @@ export default async function startJourney(journey) {
 
     await axios.post(
         'https://notifications-service-alejovillores.cloud.okteto.net/notification', {
-          user_id: journey.user_id,
+          user_id: journey.idPassenger,
           title: 'Su viaje ha comenzado!',
           body: 'Ya estas en viaje, te avisaremos cuando llegues a destino',
           data: {id: journey.id, status: res.status},
