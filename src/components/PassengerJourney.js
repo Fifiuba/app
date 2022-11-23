@@ -38,10 +38,6 @@ const PassengerJourney = ({navigation}) => {
   const [price, setPrice] = useState(0);
   const [priceSetted, setPriceSetted] = useState(false);
 
-  setSearchOrigin('');
-  setSearchDestination('');
-  setPrice(0);
-
   useEffect(() => {
     getLocationPermission();
     setSearchOrigin('');
@@ -194,14 +190,12 @@ const PassengerJourney = ({navigation}) => {
           color={Colors.grey400}
           mode="contained"
           onPress={() => {
-            {console.log('Solicitar viaje');
-              handleCreateJourney();}
+            console.log('Solicitar viaje');
+            handleCreateJourney();
           }}>
           <Text style={styles.titleButton}>Solicitar viaje</Text>
         </Button>
-
       </View>
-
     </View>
   );
 };

@@ -45,28 +45,28 @@ const MyProfile = ({navigation}) => {
               style={styles.info}
               label="Nombre"
               mode="outline"
-              value={userInfo.name}
+              defaultValue={userInfo.name}
             />
             <TextInput
               disabled={true}
               style={styles.info}
               label="Correo electrónico"
               mode="outline"
-              value={userInfo.email}
+              defaultValue={userInfo.email}
             />
             <TextInput
               disabled={true}
               style={styles.info}
               label="Teléfono"
               mode="outline"
-              value={userInfo.phone_number}
+              defaultValue={userInfo.phone_number}
             />
             <TextInput
               disabled={true}
               style={styles.info}
               label="Edad"
               mode="outline"
-              value={userInfo.age}
+              defaultValue={userInfo.age.toString()}
             />
             { !isDriver &&
                 <TextInput
@@ -74,7 +74,7 @@ const MyProfile = ({navigation}) => {
                   style={styles.info}
                   label="Dirección"
                   mode="outline"
-                  value={userTypeInfo.default_address}
+                  defaultValue={userTypeInfo.default_address}
                 />}
             { isDriver &&
                   <View style={styles.driverContainer}>
@@ -83,14 +83,14 @@ const MyProfile = ({navigation}) => {
                       style={styles.info}
                       label="Patente del vehículo"
                       mode="outline"
-                      value={userTypeInfo.license_plate}
+                      defaultValue={userTypeInfo.license_plate}
                     />
                     <TextInput
                       disabled={true}
                       style={styles.info}
                       label="Modelo del vehículo"
                       mode="outline"
-                      value={userTypeInfo.car_model}
+                      defaultValue={userTypeInfo.car_model}
                     />
                   </View>}
           </View>

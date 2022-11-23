@@ -9,7 +9,6 @@ const getFields = (data) => {
   const userTypeInfo = {};
 
   const keys = Object.getOwnPropertyNames(data);
-  console.log('keys:', keys);
 
   for (let idx = 0; idx < keys.length; idx++) {
     const key = keys[idx];
@@ -33,17 +32,14 @@ export default async function editProfile(data, setSaved, setMsg) {
       'user_type': userType,
       'fields': getFields(data),
     };
-    console.log('params:', params);
 
     const token = await AsyncStorage.getItem('token');
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
-    console.log('config:', config);
 
     const response =
       await axios.patch(`${USER_SERVICE_URL}/users/me/`, params, config);
-    console.log('response data:', response.data);
     setSaved(true);
     setMsg('Edición exitosa');
     return response.data;

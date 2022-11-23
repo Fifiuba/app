@@ -8,6 +8,7 @@ import editProfile from '../services/EditProfile';
 import {UserContext} from '../context/UserContext';
 import {constraints} from '../utils/Constraints';
 import {isValid} from '../utils/ValueIsValid';
+import InfoModal from './InfoModal';
 
 export default function Profile({navigation}) {
   const user = useContext(UserContext);
@@ -22,7 +23,6 @@ export default function Profile({navigation}) {
     defaultValues: {
       name: '',
       age: '',
-      email: '',
       phone_number: '',
       default_address: '',
       car_model: '',
@@ -65,12 +65,10 @@ export default function Profile({navigation}) {
         }
       }
     }
-    console.log('Updated info:', info);
   };
 
   const onSubmit = async (data) => {
     try {
-      console.log('data:', data);
       const response = await editProfile(data, setSaved, setMsg);
       if (response) {
         updateInfo(userInfo, response[0]);
@@ -118,17 +116,11 @@ export default function Profile({navigation}) {
           <Text style={{color: 'red'}}>
             Mínimo {constraints.name.min} letra
           </Text>}
-          <Controller control={control}
-            render={() => (
-              <TextInput
-                theme={{colors: {primary: 'grey'}, roundness: 10}}
-                style={styles.info}
-                value={userInfo.email}
-                label="Correo electrónico"
-                placeholder={userInfo.email}
-                disabled="true"
-              />)}
-            name="email"
+          <TextInput
+            style={styles.info}
+            label="Correo electrónico"
+            defaultValue={userInfo.email}
+            disabled="true"
           />
           <Controller control={control}
             render={({field: {onChange, onBlur, value}}) => (
@@ -140,6 +132,7 @@ export default function Profile({navigation}) {
                 value={value}
                 label="Teléfono"
                 placeholder={userInfo.phone_number}
+                keyboardType='numeric'
               />)}
             name="phone_number"
           />
@@ -153,6 +146,7 @@ export default function Profile({navigation}) {
                 value={value}
                 label="Edad"
                 placeholder={userInfo.age.toString()}
+                keyboardType='numeric'
               />
             )}
             name="age"
@@ -160,9 +154,7 @@ export default function Profile({navigation}) {
           <View>
             { isPassenger &&
             <Controller control={control}
-              rules={{
-                required: isPassenger,
-              }}
+              rules={{minLength: constraints.default_address.min}}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
                   theme={{colors: {primary: 'grey'}, roundness: 10}}
@@ -175,17 +167,16 @@ export default function Profile({navigation}) {
                 />
               )}
               name="default_address"
-            />
-            }
-            {isPassenger && errors.isPassenger?.type === 'required' &&
-          <Text style={{color: 'red'}}>Campo obligatorio</Text>}
-            {errors.isPassenger?.type === 'maxLength' &&
-          <Text>Máximo {constraints.isPassenger.max} caracteres</Text>}
-            {errors.isPassenger?.type === 'minLength' &&
-          <Text>Mínimo {constraints.isPassenger.min} caracteres</Text>}
+            />}
+            {errors.default_address?.type === 'minLength' &&
+          <Text>Mínimo {constraints.default_address.min} caracteres</Text>}
             { !isPassenger &&
           <><View>
             <Controller control={control}
+              rules={{
+                maxLength: constraints.car_model.max,
+                minLength: constraints.car_model.min,
+              }}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
                   theme={{colors: {primary: 'grey'}, roundness: 10}}
@@ -198,14 +189,16 @@ export default function Profile({navigation}) {
                   placeholder={userTypeInfo.car_model}/>
               )}
               name="car_model" />
-            {errors.car_model?.type === 'required' &&
-              <Text style={{color: 'red'}}>Campo obligatorio</Text>}
             {errors.car_model?.type === 'maxLength' &&
               <Text>Máximo {constraints.car_model.max} caracteres</Text>}
             {errors.car_model?.type === 'minLength' &&
               <Text>Mínimo {constraints.car_model.min} caracteres</Text>}
           </View><View>
             <Controller control={control}
+              rules={{
+                maxLength: constraints.license_plate.max,
+                minLength: constraints.license_plate.min,
+              }}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
                   theme={{colors: {primary: 'grey'}, roundness: 10}}
@@ -218,8 +211,6 @@ export default function Profile({navigation}) {
                   placeholder={userTypeInfo.license_plate} />
               )}
               name="license_plate" />
-            {errors.license_plate?.type === 'required' &&
-              <Text style={{color: 'red'}}>Campo obligatorio</Text>}
             {errors.license_plate?.type === 'maxLength' &&
               <Text>Máximo {constraints.license_plate.max} caracteres</Text>}
             {errors.license_plate?.type === 'minLength' &&
@@ -235,7 +226,7 @@ export default function Profile({navigation}) {
             onPress={handleSubmit(onSubmit)}>
             <Text style={styles.buttonText}>Guardar</Text>
           </Button>
-          { save && <Text style={styles.successMsg}>{msg}</Text>}
+          { save && <InfoModal modalText={msg}/>}
         </View>
       </View>
     </ScrollView>

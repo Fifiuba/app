@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import HomeView from '../views/HomeView';
@@ -15,7 +15,6 @@ import ScoreView from '../views/ScoreView';
 import {UserContext} from '../context/UserContext';
 import {TokenContext} from '../context/TokenContext';
 import {LoginContext} from '../context/LoginContext';
-import {JourneyContext} from '../context/JourneyContext';
 import sentTokenInfo from '../services/SendTokenInfo';
 import {constants} from '../utils/Constants';
 
@@ -24,13 +23,8 @@ const Stack = createNativeStackNavigator();
 export default function LoggedNav({onLogin}) {
   const [userInfo, setUserInfo] = useState('');
   const [userTypeInfo, setUserTypeInfo] = useState('');
-  const token = useContext(TokenContext);
 
-  const [journey, setJourney] = useState({});
-  const value = useMemo(
-      () => ({journey, setJourney}),
-      [journey],
-  );
+  const token = useContext(TokenContext);
 
   const setEmpty = (data) => {
     const keys = Object.getOwnPropertyNames(data);
@@ -68,55 +62,53 @@ export default function LoggedNav({onLogin}) {
   return (
     <LoginContext.Provider value={onLogin}>
       <UserContext.Provider value={{userInfo, userTypeInfo}}>
-        <JourneyContext.Provider value={value}>
-          <Stack.Navigator initialRouteName={'Home'}>
-            <Stack.Screen
-              options={{title: '', headerShown: false}}
-              name="Home"
-              component={HomeView}
-            />
-            <Stack.Screen
-              options={{title: '', headerShown: false}}
-              name="HomeDriver"
-              component={HomeDriverView}
-            />
-            <Stack.Screen
-              options={{title: '', headerShown: false}}
-              name="HomePassenger"
-              component={HomePassengerView}
-            />
-            <Stack.Screen
-              options={{title: ''}}
-              name="EditarPerfil"
-              component={ProfileView}
-            />
-            <Stack.Screen
-              options={{title: ''}}
-              name="MiPerfil"
-              component={MyProfileView}
-            />
-            <Stack.Screen
-              options={{title: ''}}
-              name="Viajes"
-              component={JourneyView}
-            />
-            <Stack.Screen
-              options={{title: '', headerShown: false}}
-              name="EnViaje"
-              component={RoadTripView}
-            />
-            <Stack.Screen
-              options={{title: '', headerShown: false}}
-              name="ViajeChofer"
-              component={DriverJourneyView}
-            />
-            <Stack.Screen
-              options={{title: '', headerShown: false}}
-              name="Calificacion"
-              component={ScoreView}
-            />
-          </Stack.Navigator>
-        </JourneyContext.Provider>
+        <Stack.Navigator initialRouteName={'Home'}>
+          <Stack.Screen
+            options={{title: '', headerShown: false}}
+            name="Home"
+            component={HomeView}
+          />
+          <Stack.Screen
+            options={{title: '', headerShown: false}}
+            name="HomeDriver"
+            component={HomeDriverView}
+          />
+          <Stack.Screen
+            options={{title: '', headerShown: false}}
+            name="HomePassenger"
+            component={HomePassengerView}
+          />
+          <Stack.Screen
+            options={{title: ''}}
+            name="EditarPerfil"
+            component={ProfileView}
+          />
+          <Stack.Screen
+            options={{title: ''}}
+            name="MiPerfil"
+            component={MyProfileView}
+          />
+          <Stack.Screen
+            options={{title: ''}}
+            name="Viajes"
+            component={JourneyView}
+          />
+          <Stack.Screen
+            options={{title: '', headerShown: false}}
+            name="EnViaje"
+            component={RoadTripView}
+          />
+          <Stack.Screen
+            options={{title: '', headerShown: false}}
+            name="ViajeChofer"
+            component={DriverJourneyView}
+          />
+          <Stack.Screen
+            options={{title: '', headerShown: false}}
+            name="Calificacion"
+            component={ScoreView}
+          />
+        </Stack.Navigator>
       </UserContext.Provider>
     </LoginContext.Provider>
   );
