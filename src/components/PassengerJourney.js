@@ -101,7 +101,7 @@ const PassengerJourney = ({navigation}) => {
       console.log('Response CreateJourney', journeyInfo);
       navigation.navigate('Viajes', {
         'journeyInfo': {
-          'id': journeyInfo.id,
+          'id': journeyInfo._id,
           'status': journeyInfo.status,
           'idPassenger': journeyInfo.idPassenger,
           'price': journeyInfo.price,

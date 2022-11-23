@@ -18,6 +18,7 @@ import {LoginContext} from '../context/LoginContext';
 import sentTokenInfo from '../services/SendTokenInfo';
 import {constants} from '../utils/Constants';
 import UserProfileView from '../views/UserProfileView';
+import DriverProfileView from '../views/DriverProfileView';
 
 const Stack = createNativeStackNavigator();
 
@@ -114,6 +115,12 @@ export default function LoggedNav({onLogin}) {
             name="PerfilUsuario"
             component={UserProfileView}
           />
+          <Stack.Screen
+            options={{title: ''}}
+            name="PerfilChofer"
+            component={DriverProfileView}
+          />
+
         </Stack.Navigator>
       </UserContext.Provider>
     </LoginContext.Provider>

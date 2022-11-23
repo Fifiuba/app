@@ -33,16 +33,6 @@ const DriverJourney = ({navigation, route}) => {
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
 
-  const schedulePushNotification = async (title, body, time) => {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: title,
-        body: body,
-        data: {data: 'goes here'},
-      },
-      trigger: {seconds: time},
-    });
-  };
   React.useEffect(() => {
     console.log(notification);
     if (notification) {
@@ -55,6 +45,8 @@ const DriverJourney = ({navigation, route}) => {
       }
     }
   }, [notification]);
+
+  
 
   const goToPassenger = () => {
     const from = `${myLocation.latitude}, ${myLocation.longitude}`;
@@ -105,7 +97,6 @@ const DriverJourney = ({navigation, route}) => {
       await finishJourney(journey);
       setDirections([]);
       setInplace(false);
-      await schedulePushNotification('Has llegado!', 'Te encuentras en tu destino', 1);
       console.log('envio a calificacion:', journey.idPassenger);
       navigation.navigate('Calificacion', {'id': journey.idPassenger});
     } catch (error) {

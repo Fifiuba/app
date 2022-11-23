@@ -7,7 +7,11 @@ import {UserContext} from '../context/UserContext';
 import TimerJourney from '../components/TimerJourney';
 import cancelJourney from '../services/CancelJourney';
 import getJourneyInfo from '../services/GetJourneyInfo';
+import getDriverInfo from '../services/GetDriverInfo';
+
 import {NotificationContext} from '../context/NotificationContext';
+import getUserInfo from '../services/GetUserInfo';
+
 
 const RoadTripView = ({navigation, route}) => {
   const info = route.params;
@@ -45,6 +49,8 @@ const RoadTripView = ({navigation, route}) => {
     }
   }, [notification]);
 
+  
+
   React.useEffect(() => {
     console.log(notification);
     if (notification) {
@@ -58,16 +64,12 @@ const RoadTripView = ({navigation, route}) => {
   }, [notification]);
 
   React.useEffect(() => {
-    // getLocationPermission();
-    if (cancelled) {
-      navigation.navigate('Home');
-    }
-
     if (finished) {
       setStartTimer(false);
-      navigation.navigate('Calificacion', {'id': id});
+      navigation.navigate('Home');
     }
-  });
+  }, [finished]);
+
 
   const handleCancelJourney = async () => {
     try {
@@ -86,31 +88,30 @@ const RoadTripView = ({navigation, route}) => {
     }
   };
 
-  React.useEffect(() => {
-    const handleGetJourneyInfo = async () => {
-      try {
-        const response = await getJourneyInfo(journeyInfo.id);
-        setId(response.driver.idDriver);
-        if (response.status == 'cancelled') {
-          setCancelled(true);
-          alert('Tu viaje ha sido cancelado');
-        }
-        if (response.status == 'finish') {
-          setFinished(true);
-        }
-        if (response.status == 'started') {
-          setStartTimer(true);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    handleGetJourneyInfo();
-  });
+  const handleViewDriverInfo = async () => {
+    try {
+      var response = await getJourneyInfo(journeyInfo.id);
+      let user = await getUserInfo(response.driver.idDriver)
+      response = await getDriverInfo(response.driver.idDriver);
+      console.log('response:'+ response);
+      navigation.navigate('PerfilChofer', {'data': response,'user':user});
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
 
   return (
     <>
       <View style={styles.appBar}>
+        <View style={styles.profileButton}>
+          <Button
+            mode="contained"
+            color={Colors.blue600}
+            onPress={handleViewDriverInfo}>
+            <Text>Ver perfil</Text>
+          </Button>
+        </View>
         <View style={styles.profile}>
           <Image
             style={styles.image}
@@ -129,7 +130,10 @@ const RoadTripView = ({navigation, route}) => {
             longitude: origin.longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
-          }}>
+          }}
+          showsUserLocation={true}
+          loadingEnabled={true}
+          >
           <Marker
             draggable
             coordinate={origin}
@@ -169,12 +173,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   appBar: {
-    display: 'flex',
+    flexDirection:'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    height: '10%',
-    marginTop: 50,
-    margin: 10,
+    marginTop:50
   },
   profile: {
     alignItems: 'center',
@@ -197,6 +199,9 @@ const styles = StyleSheet.create({
   image: {
     width: 60,
     height: 60,
+  },
+  profileButton: {
+    alignSelf: 'flex-end',
   },
 });
 

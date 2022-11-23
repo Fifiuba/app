@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Card, Title, Paragraph} from 'react-native-paper';
 
@@ -7,6 +7,7 @@ const fondo = require('../../assets/icon-app.png');
 export default function UserProfileView({route, navigation}) {
   const user = route.params.data;
   console.log(route.params);
+  const [userType, setUserType] = useState('passenger');
 
   return (
     <View style={styles.container}>

@@ -2,9 +2,7 @@ import React, {useContext, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Colors, ActivityIndicator, Button, Text} from 'react-native-paper';
 import {NotificationContext} from '../context/NotificationContext';
-
 import cancelJourney from '../services/CancelJourney';
-import getJourneyInfo from '../services/GetJourneyInfo';
 
 export default function JourneyView({route, navigation}) {
   /* eslint-disable no-unused-vars */
@@ -30,7 +28,11 @@ export default function JourneyView({route, navigation}) {
     if (notification) {
       const data = notification.request.content.data;
       console.log('status:', data.status);
-      console.log(JSON.stringify(journeyInfo));
+      console.log('data id:', data.id);
+      console.log(journeyInfo)
+      console.log('journey id:',journeyInfo.id);
+
+
       if (data !== undefined) {
         if (data.status == 'accepted' && data.id == journeyInfo.id) {
           setLoading(false);
@@ -39,20 +41,6 @@ export default function JourneyView({route, navigation}) {
     }
   }, [notification]);
 
-  React.useEffect(() => {
-    const handleGetJourneyInfo = async () => {
-      try {
-        const response = await getJourneyInfo(journeyInfo.id);
-        console.log(response);
-        if (response.status == 'accepted') {
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    handleGetJourneyInfo();
-  });
 
   const handleCancelJourney = async () => {
     try {
