@@ -32,7 +32,6 @@ const getRoute = async (origin, destination) => {
     } else if (response.data.info.messages == 'At least two locations must be provided.') {
       alert('At least two locations must be provided.');
     } else {
-      console.log('response:', response.data);
       const shapePoints = response.data.route.shape.shapePoints;
       const routeCoords = getDirections(shapePoints);
       const distance = response.data.route.distance;

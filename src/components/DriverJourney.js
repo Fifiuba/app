@@ -9,6 +9,7 @@ import * as Notifications from 'expo-notifications';
 import PolylineMaker from '../services/PolyLineMaker';
 import startJourney from '../services/StartJourney';
 import finishJourney from '../services/FinishJourney';
+import getUserInfo from '../services/GetUserInfo';
 
 import {NotificationContext} from '../context/NotificationContext';
 
@@ -87,6 +88,16 @@ const DriverJourney = ({navigation, route}) => {
       // if(notification) console.log(notification.request.content.title)
     } catch (error) {
       alert(error);
+    }
+  };
+
+  const handleViewUserInfo = async () => {
+    try {
+      const response = await getUserInfo(journey.idPassenger);
+      console.log('response', response);
+      // navigation.navigate('Calificacion', {'id': journey.idPassenger});
+    } catch (error) {
+      console.error(error.message);
     }
   };
 
@@ -170,6 +181,13 @@ const DriverJourney = ({navigation, route}) => {
           <Text>Terminar</Text>
         </Button>
       </View>
+      <Button
+        mode="contained"
+        color={Colors.blue600}
+        style={styles.finishButton}
+        onPress={handleViewUserInfo}>
+        <Text>Ver perfil</Text>
+      </Button>
     </View>
   );
 };

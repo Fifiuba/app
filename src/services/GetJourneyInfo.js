@@ -4,7 +4,7 @@ const getJourneyInfo = async (id) => {
   console.log('get journey info service');
   try {
     const response = await axios.get(
-        `https://journey-service-solfonte.cloud.okteto.net/journey/${id}`,
+        `https://api-gateway-solfonte.cloud.okteto.net/journey/${id}`,
         {id: id},
     );
     return response.data;

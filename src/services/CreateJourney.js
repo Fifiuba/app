@@ -3,7 +3,7 @@ import axios from 'axios';
 const createJourney = async (origin, destination, userId, distance) => {
   try {
     const response = await axios.post(
-        'https://journey-service-solfonte.cloud.okteto.net/journey/',
+        'https://api-gateway-solfonte.cloud.okteto.net/journey/',
         {
           modality: 'standar',
           distance: distance,
