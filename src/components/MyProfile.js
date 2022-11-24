@@ -81,16 +81,16 @@ const MyProfile = ({navigation}) => {
                     <TextInput
                       disabled={true}
                       style={styles.info}
-                      label="Patente del vehículo"
+                      label="Modelo del vehículo"
                       mode="outline"
-                      defaultValue={userTypeInfo.license_plate}
+                      defaultValue={userTypeInfo.car_model}
                     />
                     <TextInput
                       disabled={true}
                       style={styles.info}
-                      label="Modelo del vehículo"
+                      label="Patente del vehículo"
                       mode="outline"
-                      defaultValue={userTypeInfo.car_model}
+                      defaultValue={userTypeInfo.license_plate}
                     />
                   </View>}
           </View>

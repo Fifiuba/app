@@ -20,8 +20,12 @@ export default function DriverProfileView({route, navigation}) {
           <Paragraph>
             Edad: { user.age != null ? user.age : 'No especificado!'}
           </Paragraph>
-          <Paragraph>Modelo de auto: { data.car_model != null ? data.car_model : 'No especificado!'}</Paragraph>
-          <Paragraph>Matricula: { data.license_plate != null ? data.license_plate : 'No especificado!' }</Paragraph>
+          <Paragraph>Modelo de auto:
+            { data.car_model != null ? data.car_model : 'No especificado!'}
+          </Paragraph>
+          <Paragraph>
+            Matricula: { data.license_plate != null ? data.license_plate : 'No especificado!' }
+          </Paragraph>
           <Paragraph>Calificacion: { data.score}</Paragraph>
 
         </Card.Content>

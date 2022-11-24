@@ -6,7 +6,7 @@ export default async function finishJourney(journey) {
         `https://journey-service-solfonte.cloud.okteto.net/journey/finish/${journey.id}`,
     );
     const journeys = response.data;
-    
+
     await axios.post(
         'https://notifications-service-alejovillores.cloud.okteto.net/notification', {
           user_id: journey.idPassenger,

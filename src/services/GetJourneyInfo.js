@@ -7,7 +7,7 @@ const getJourneyInfo = async (id) => {
         `https://api-gateway-solfonte.cloud.okteto.net/journey/${id}`,
         {id: id},
     );
-    console.log(response.data)
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error.message);

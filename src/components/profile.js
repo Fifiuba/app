@@ -45,7 +45,7 @@ export default function Profile({navigation}) {
   };
 
   const updateInfo = (info, data) => {
-    console.log('Updatting info');
+    console.log('Updatting info:', info);
 
     const keys = Object.getOwnPropertyNames(data);
     for (let idx = 0; idx < keys.length; idx++) {
@@ -60,16 +60,21 @@ export default function Profile({navigation}) {
             newValue = value;
           }
           if (newValue) {
+            console.log('info[key]:', info[key]);
             info[key] = newValue;
           }
         }
       }
     }
+
+    console.log('info:', info);
   };
 
   const onSubmit = async (data) => {
     try {
+      console.log('data:', data);
       const response = await editProfile(data, setSaved, setMsg);
+      console.log('response:', response);
       if (response) {
         updateInfo(userInfo, response[0]);
         updateInfo(userTypeInfo, response[1]);
@@ -180,15 +185,16 @@ export default function Profile({navigation}) {
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
                   theme={{colors: {primary: 'grey'}, roundness: 10}}
-                  style={styles.input}
+                  style={styles.info}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
-                  mode="outlined"
                   label="Modelo del vehículo"
-                  placeholder={userTypeInfo.car_model}/>
+                  placeholder={userTypeInfo.car_model}
+                />
               )}
-              name="car_model" />
+              name="car_model"
+            />
             {errors.car_model?.type === 'maxLength' &&
               <Text>Máximo {constraints.car_model.max} caracteres</Text>}
             {errors.car_model?.type === 'minLength' &&
@@ -202,15 +208,16 @@ export default function Profile({navigation}) {
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
                   theme={{colors: {primary: 'grey'}, roundness: 10}}
-                  style={styles.input}
+                  style={styles.info}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
-                  mode="outlined"
                   label="Patente del vehículo"
-                  placeholder={userTypeInfo.license_plate} />
+                  placeholder={userTypeInfo.license_plate}
+                />
               )}
-              name="license_plate" />
+              name="license_plate"
+            />
             {errors.license_plate?.type === 'maxLength' &&
               <Text>Máximo {constraints.license_plate.max} caracteres</Text>}
             {errors.license_plate?.type === 'minLength' &&

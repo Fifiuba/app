@@ -6,11 +6,11 @@ const getDriverInfo = async (id) => {
   try {
     const token = await AsyncStorage.getItem('token');
     const response = await axios.get(
-        `https://backend-agustinaa235.cloud.okteto.net/users/${id}`,{
-            params:{
-                user_type: 'driver',
-            },
-            headers: {Authorization: `Bearer ${token}`},
+        `https://backend-agustinaa235.cloud.okteto.net/users/${id}`, {
+          params: {
+            user_type: 'driver',
+          },
+          headers: {Authorization: `Bearer ${token}`},
         },
     );
     return response.data;

@@ -3,7 +3,6 @@ import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {Avatar, Button, Colors} from 'react-native-paper';
 import MapView, {Marker, Polyline} from 'react-native-maps';
-import * as Notifications from 'expo-notifications';
 // import schedulePushNotification from '../utils/PushNotifications';
 
 import PolylineMaker from '../services/PolyLineMaker';
@@ -46,7 +45,6 @@ const DriverJourney = ({navigation, route}) => {
     }
   }, [notification]);
 
-  
 
   const goToPassenger = () => {
     const from = `${myLocation.latitude}, ${myLocation.longitude}`;

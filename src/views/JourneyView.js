@@ -29,8 +29,8 @@ export default function JourneyView({route, navigation}) {
       const data = notification.request.content.data;
       console.log('status:', data.status);
       console.log('data id:', data.id);
-      console.log(journeyInfo)
-      console.log('journey id:',journeyInfo.id);
+      console.log(journeyInfo);
+      console.log('journey id:', journeyInfo.id);
 
 
       if (data !== undefined) {

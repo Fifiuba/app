@@ -23,7 +23,6 @@ const RoadTripView = ({navigation, route}) => {
   const [startTimer, setStartTimer] = useState(false);
   const [finished, setFinished] = useState(false);
   const [cancelled, setCancelled] = useState(false);
-  const [id, setId] = useState('');
 
   const [origin, setOrigin] = useState({
     latitude: journeyInfo.from[0],
@@ -49,7 +48,6 @@ const RoadTripView = ({navigation, route}) => {
     }
   }, [notification]);
 
-  
 
   React.useEffect(() => {
     console.log(notification);
@@ -90,11 +88,11 @@ const RoadTripView = ({navigation, route}) => {
 
   const handleViewDriverInfo = async () => {
     try {
-      var response = await getJourneyInfo(journeyInfo.id);
-      let user = await getUserInfo(response.driver.idDriver)
+      let response = await getJourneyInfo(journeyInfo.id);
+      const user = await getUserInfo(response.driver.idDriver);
       response = await getDriverInfo(response.driver.idDriver);
       console.log('response:'+ response);
-      navigation.navigate('PerfilChofer', {'data': response,'user':user});
+      navigation.navigate('PerfilChofer', {'data': response, 'user': user});
     } catch (error) {
       console.error(error.message);
     }
@@ -133,7 +131,7 @@ const RoadTripView = ({navigation, route}) => {
           }}
           showsUserLocation={true}
           loadingEnabled={true}
-          >
+        >
           <Marker
             draggable
             coordinate={origin}
@@ -173,10 +171,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   appBar: {
-    flexDirection:'row',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    marginTop:50
+    marginTop: 50,
   },
   profile: {
     alignItems: 'center',

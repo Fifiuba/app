@@ -14,7 +14,8 @@ const getFields = (data) => {
     const key = keys[idx];
     const value = data[key];
     if (isValid(value)) {
-      if (key == 'default_address') {
+      if (key == 'default_address' || key == 'car_model' ||
+      key == 'license_plate') {
         userTypeInfo[key] = value;
       } else {
         userInfo[key] = value;
