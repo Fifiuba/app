@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import LoggedNav from './src/components/LoggedNav';
 import UnloggedNav from './src/components/UnloggedNav';
-import './FirebaseConfig';
+import './firebaseConfig';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import {NotificationContext} from './src/context/NotificationContext';
