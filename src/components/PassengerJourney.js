@@ -76,15 +76,14 @@ const PassengerJourney = ({navigation}) => {
       const response = await getRoute(searchOrigin, searchDestination);
       setPriceSetted(false);
       if (!(response === null)) {
-        setJourneyInfo(response[0], response[1]);
-        const journeyPrice = await getJourneyPrice(distance);
-
+        const distance = response[1];
+        setJourneyInfo(response[0], distance);
+        const journeyPrice = await getJourneyPrice(distance);       
         if (!(journeyPrice === null)) {
-          console.log('price', journeyPrice);
           if (journeyPrice != 0) {
-            console.log('price distinto de 0');
             setPrice(journeyPrice);
             setPriceSetted(true);
+            console.log('price distinto de 0');
           }
         }
       }
@@ -180,7 +179,7 @@ const PassengerJourney = ({navigation}) => {
           style={styles.button}
           color={Colors.blue800}
           mode="contained"
-          onPress={() => handleGetInfoJourney()}>
+          onPress={handleGetInfoJourney}>
           <Text style={styles.titleButton}>Buscar</Text>
         </Button>
         <Button
