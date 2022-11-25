@@ -2,11 +2,12 @@ import React, {useState, useEffect, useRef} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import LoggedNav from './src/components/LoggedNav';
 import UnloggedNav from './src/components/UnloggedNav';
-import './firebaseConfig';
+import './FirebaseConfig';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import {NotificationContext} from './src/context/NotificationContext';
 import { TokenContext } from './src/context/TokenContext';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -72,6 +73,7 @@ export default function App() {
    }, [])
 
    return (
+    <PaperProvider>
      <NotificationContext.Provider value={notification}>
       <TokenContext.Provider value={expoPushToken}>
         <NavigationContainer>
@@ -79,4 +81,5 @@ export default function App() {
         </NavigationContainer>
       </TokenContext.Provider>
      </NotificationContext.Provider>
+    </PaperProvider>
  )}

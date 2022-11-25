@@ -48,7 +48,8 @@
     "expo-notifications": "~0.16.1",
     "expo-device": "~4.3.0",
     "expo-updates": "~0.14.7",
-    "react-native-maps": "0.31.1"
+    "react-native-maps": "0.31.1",
+    "expo-font": "~10.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

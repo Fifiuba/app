@@ -63,6 +63,10 @@ export default function ScoreView({navigation, route}) {
 
   const handleScoreUser = async () => {
     try {
+      console.log('user_type:' + userType);
+      console.log('score:' + defaultRating);
+      console.log('comment:' + comment);
+
       const response = await scoreUser(userType, defaultRating, id, comment);
       navigation.navigate('Home');
     } catch (error) {

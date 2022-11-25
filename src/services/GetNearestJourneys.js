@@ -8,11 +8,12 @@ export default async function getNearestJourneys(location) {
           params: {
             location: `${location.latitude}, ${location.longitude}`,
           },
+          headers: {Authorization: `Bearer testig`},
         },
     );
     const journeys = response.data;
     return journeys;
   } catch (err) {
-
+    console.error(err);
   }
 }

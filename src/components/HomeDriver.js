@@ -158,8 +158,9 @@ const HomeDriver = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 3.5,
+    flex: 1,
     flexDirection: 'column',
+    justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
   },
