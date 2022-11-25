@@ -9,7 +9,7 @@ export default async function startJourney(journey) {
         `https://journey-service-solfonte.cloud.okteto.net/journey/start/${journey.id}`,
         {
           headers: {Authorization: `Bearer ${token}`},
-        }
+        },
     );
     const res = response.data;
 

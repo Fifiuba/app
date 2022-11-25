@@ -8,7 +8,7 @@ export default async function finishJourney(journey) {
         `https://journey-service-solfonte.cloud.okteto.net/journey/finish/${journey.id}`,
         {
           headers: {Authorization: `Bearer ${token}`},
-        }
+        },
     );
     const journeys = response.data;
 

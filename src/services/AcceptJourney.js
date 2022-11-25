@@ -13,7 +13,7 @@ export default async function acceptJourney(journey, driverId) {
         },
         {
           headers: {Authorization: `Bearer ${token}`},
-        }
+        },
     );
     const journeys = response.data;
 

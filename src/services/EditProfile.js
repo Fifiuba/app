@@ -44,9 +44,7 @@ export default async function editProfile(data, setSaved, setMsg) {
     setSaved(true);
     setMsg('Edición exitosa');
     return response.data;
-
   } catch (error) {
-    
     setSaved(false);
     setMsg('Edición fallida');
     console.error(error);
