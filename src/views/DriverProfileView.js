@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet,FlatList,Text} from 'react-native';
+import {View, StyleSheet, FlatList, Text} from 'react-native';
 import {Card, Title, Paragraph} from 'react-native-paper';
 
 const fondo = require('../../assets/icon-app.png');
@@ -9,8 +9,8 @@ export default function DriverProfileView({route, navigation}) {
   const data = route.params.data;
   const opinions = route.params.opinions;
 
-  const item = ({ item, key }) => (
-    <View style={{margin:2}} >
+  const item = ({item, key}) => (
+    <View style={{margin: 2}} >
       <Paragraph>Puntaje: {item.rating}</Paragraph>
       <Paragraph>Comentarios: {item.opinion}</Paragraph>
     </View>
@@ -37,11 +37,11 @@ export default function DriverProfileView({route, navigation}) {
 
         <Title>Comentarios</Title>
         <FlatList
-        data={opinions}
-        renderItem={item}
-        ListEmptyComponent={<Text style={{textAlign: 'center', fontSize: 16}}>
+          data={opinions}
+          renderItem={item}
+          ListEmptyComponent={<Text style={{textAlign: 'center', fontSize: 16}}>
           No hay opiniones de esta persona
-        </Text>}/>
+          </Text>}/>
       </Card>
     </View>
   );

@@ -12,7 +12,6 @@ import getUserInfo from '../services/GetUserInfo';
 import getOpinion from '../services/GetOpinions';
 
 
-
 import {NotificationContext} from '../context/NotificationContext';
 
 const blueCar = require('../../assets/icon-car-standard.png');
@@ -86,7 +85,7 @@ const DriverJourney = ({navigation, route}) => {
   const handleViewUserInfo = async () => {
     try {
       const response = await getUserInfo(journey.idPassenger);
-      const comments = await getOpinion(journey.idPassenger,'passenger')
+      const comments = await getOpinion(journey.idPassenger, 'passenger');
       console.log('response', response);
       navigation.navigate('PerfilUsuario', {'data': response, 'opinions': comments});
     } catch (error) {

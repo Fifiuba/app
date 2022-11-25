@@ -13,7 +13,6 @@ export default async function scoreUser(userType, score, userId, comment) {
     console.log(userId);
 
 
-
     const response =
       await axios.patch(`https://backend-agustinaa235.cloud.okteto.net/users/score/${userId}`,
           {
