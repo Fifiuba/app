@@ -83,6 +83,7 @@ const HomeDriver = ({navigation}) => {
       }
     } catch (error) {
       console.error(error);
+      alert('No pudimos realizar la request correctamente');
     }
   };
 

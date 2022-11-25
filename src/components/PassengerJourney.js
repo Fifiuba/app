@@ -78,7 +78,7 @@ const PassengerJourney = ({navigation}) => {
       if (!(response === null)) {
         const distance = response[1];
         setJourneyInfo(response[0], distance);
-        const journeyPrice = await getJourneyPrice(distance);       
+        const journeyPrice = await getJourneyPrice(distance);
         if (!(journeyPrice === null)) {
           if (journeyPrice != 0) {
             setPrice(journeyPrice);

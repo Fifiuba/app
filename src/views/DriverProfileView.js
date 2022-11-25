@@ -9,7 +9,7 @@ export default function DriverProfileView({route, navigation}) {
   const data = route.params.data;
 
   console.log(route.params);
-
+  /* eslint-disable max-len */
   return (
     <View style={styles.container}>
       <Card style={styles.card}>
@@ -24,6 +24,7 @@ export default function DriverProfileView({route, navigation}) {
             { data.car_model != null ? data.car_model : 'No especificado!'}
           </Paragraph>
           <Paragraph>
+
             Matricula: { data.license_plate != null ? data.license_plate : 'No especificado!' }
           </Paragraph>
           <Paragraph>Calificacion: { data.score}</Paragraph>
