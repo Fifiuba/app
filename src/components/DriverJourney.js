@@ -9,6 +9,9 @@ import PolylineMaker from '../services/PolyLineMaker';
 import startJourney from '../services/StartJourney';
 import finishJourney from '../services/FinishJourney';
 import getUserInfo from '../services/GetUserInfo';
+import getOpinion from '../services/GetOpinions';
+
+
 
 import {NotificationContext} from '../context/NotificationContext';
 
@@ -83,8 +86,9 @@ const DriverJourney = ({navigation, route}) => {
   const handleViewUserInfo = async () => {
     try {
       const response = await getUserInfo(journey.idPassenger);
+      const comments = await getOpinion(journey.idPassenger,'passenger')
       console.log('response', response);
-      navigation.navigate('PerfilUsuario', {'data': response});
+      navigation.navigate('PerfilUsuario', {'data': response, 'opinions': comments});
     } catch (error) {
       console.error(error.message);
     }

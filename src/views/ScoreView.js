@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import scoreUser from '../services/ScoreUser';
 export default function ScoreView({navigation, route}) {
   const [text, setText] = useState('pasajero');
-  const id = useState(route.params.id);
+  const id = route.params.id;
 
   const [defaultRating, setDefaultRating] = useState(2);
   /* eslint-disable no-unused-vars */
@@ -57,7 +57,6 @@ export default function ScoreView({navigation, route}) {
   const [comment, setComment] = useState('');
   const [visible, setVisible] = React.useState(false);
 
-  const onToggleSnackBar = () => setVisible(!visible);
   const handleScoreUser = async () => {
     try {
       const userType = await AsyncStorage.getItem('user_type');
