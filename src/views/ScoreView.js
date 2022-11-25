@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 /* eslint-disable max-len */
 import {SafeAreaView, Text, StyleSheet, View, Image, TouchableOpacity, TextInput} from 'react-native';
-import {Colors, Button} from 'react-native-paper';
+import {Colors, Button,Snackbar} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import scoreUser from '../services/ScoreUser';
-
 export default function ScoreView({navigation, route}) {
   const [text, setText] = useState('pasajero');
   const [userType, setUserType] = useState('passenger');
@@ -46,29 +45,25 @@ export default function ScoreView({navigation, route}) {
   React.useEffect(() => {
     const getUserType = async () => {
       try {
-        const userType = await AsyncStorage.getItem('user_type');
-        if (userType != 'driver') {
+        let user = await AsyncStorage.getItem('user_type');
+        if (user !== 'driver') {
           setText('chofer');
-          setUserType('passenger');
-          setId(id);
-        } else {
-          setId(id);
-        }
+        } 
       } catch (error) {
         console.error(error.message);
       }
     };
     getUserType();
   }, []);
+  const [comment, setComment] = useState('');
+  const [visible, setVisible] = React.useState(false);
 
+  const onToggleSnackBar = () => setVisible(!visible);
   const handleScoreUser = async () => {
     try {
-      console.log('user_type:' + userType);
-      console.log('score:' + defaultRating);
-      console.log('comment:' + comment);
-
+      let userType = await AsyncStorage.getItem('user_type');
       const response = await scoreUser(userType, defaultRating, id, comment);
-      navigation.navigate('Home');
+      setVisible(true)
     } catch (error) {
       alert('No se pudo puntuar correctamente al conductor');
       console.error(error.message);
@@ -76,9 +71,8 @@ export default function ScoreView({navigation, route}) {
     }
   };
 
-  const [comment, setComment] = useState('');
-
   return (
+    
     <SafeAreaView style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.text}>Ayudanos a mejorar tu experiencia</Text>
@@ -101,6 +95,17 @@ export default function ScoreView({navigation, route}) {
           <Text style={styles.buttonText}>Calificar {text}</Text>
         </Button>
       </View>
+      <Snackbar
+      visible={visible}
+      onDismiss={() => navigation.navigate('Home')}
+      action={{
+        label: 'Ok',
+        onPress: () => {
+          navigation.navigate('Home');
+        },
+      }}>
+      El comentario se ha enviado correctamente
+    </Snackbar>
     </SafeAreaView>
   );
 };

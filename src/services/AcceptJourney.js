@@ -1,14 +1,19 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default async function acceptJourney(journey, driverId) {
-  console.log('Accept journey');
   try {
+    const token = await AsyncStorage.getItem('token');
     const response = await axios.patch(
         `https://journey-service-solfonte.cloud.okteto.net/journey/accept/${journey.id}`,
         {
           'idDriver': driverId,
           'vip': false,
         },
+        {
+          headers: {Authorization: `Bearer ${token}`},
+        }
     );
     const journeys = response.data;
 

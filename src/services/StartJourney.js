@@ -1,10 +1,15 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default async function startJourney(journey) {
   try {
-    console.log(journey.id);
+    const token = await AsyncStorage.getItem('token');
     const response = await axios.patch(
         `https://journey-service-solfonte.cloud.okteto.net/journey/start/${journey.id}`,
+        {
+          headers: {Authorization: `Bearer ${token}`},
+        }
     );
     const res = response.data;
 
