@@ -1,9 +1,15 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import HomeDriverView from './HomeDriverView';
-import HomePassengerView from './HomePassengerView';
+import PassengerJourney from '../components/PassengerJourney';
+import MyProfileView from './MyProfileView';
+import HomePassenger from '../components/HomePassenger';
+import HomeDriver from '../components/HomeDriver';
+
+/* eslint-disable max-len */
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+
+const Tab = createMaterialBottomTabNavigator();
 
 export default function HomeView({navigation}) {
   const [isDriver, setIsDriver] = useState(false);
@@ -23,10 +29,12 @@ export default function HomeView({navigation}) {
   }, []);
 
   return (
-    <View style={{flex: 1}}>
-      {isDriver ? <HomeDriverView navigation={navigation}/> :
-        <HomePassengerView navigation={navigation}/>}
-    </View>
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={isDriver ? HomeDriver : HomePassenger} navigation={navigation}/>
+      {!isDriver &&
+        <Tab.Screen name="Viajes" component={PassengerJourney} navigation={navigation}/>
+      }
+      <Tab.Screen name="Perfil" component={MyProfileView} navigation={navigation}/>
+    </Tab.Navigator>
   );
 }
-

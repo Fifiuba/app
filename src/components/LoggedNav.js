@@ -7,8 +7,6 @@ import getProfile from '../services/GetProfile';
 import JourneyView from '../views/JourneyView';
 import RoadTripView from '../views/RoadTripView';
 import DriverJourneyView from '../views/DriverJourneyView';
-import HomeDriverView from '../views/HomeDriverView';
-import HomePassengerView from '../views/HomePassengerView';
 import MyProfileView from '../views/MyProfileView';
 import ScoreView from '../views/ScoreView';
 import PassengerJourneyView from '../views/PassengerJourneyView';
@@ -70,16 +68,6 @@ export default function LoggedNav({onLogin}) {
             options={{title: '', headerShown: false}}
             name="Home"
             component={HomeView}
-          />
-          <Stack.Screen
-            options={{title: '', headerShown: false}}
-            name="HomeDriver"
-            component={HomeDriverView}
-          />
-          <Stack.Screen
-            options={{title: '', headerShown: false}}
-            name="HomePassenger"
-            component={HomePassengerView}
           />
           <Stack.Screen
             options={{title: ''}}

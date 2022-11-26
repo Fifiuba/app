@@ -33,7 +33,6 @@ const HomeDriver = ({navigation}) => {
     setLocation({latitude: location.coords.latitude, longitude: location.coords.longitude});
   }
 
-
   const getAddresses = async () => {
     try {
       const journeys = await getNearestJourneys(myLocation);

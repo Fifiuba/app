@@ -7,7 +7,7 @@ import getAddressFromCoords from '../services/GetAddressFromCoords';
 import {UserContext} from '../context/UserContext';
 import getLastJourneysInfo from '../services/GetLastJourneysInfo';
 
-const HomePassenger = ({navigation}) => {
+const HomePassenger = () => {
   const [lastJourneys, setLastJourneys] = useState([]);
   const [loading, setLoading] = useState(false);
 
