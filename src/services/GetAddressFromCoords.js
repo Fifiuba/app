@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default async function getAddrsFromCoords(lat, long) {
+export default async function getAddressFromCoords(lat, long) {
   try {
     const response = await axios.get('http://www.mapquestapi.com/geocoding/v1/reverse', {
       params: {

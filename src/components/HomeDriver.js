@@ -3,7 +3,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
 import {Button, Text, ActivityIndicator, Card, Title} from 'react-native-paper';
 
-import getAddrsFromCoords from '../services/GetAddressFromCoords';
+import getAddressFromCoords from '../services/GetAddressFromCoords';
 import getNearestJourneys from '../services/GetNearestJourneys';
 import acceptJourney from '../services/AcceptJourney';
 import * as Location from 'expo-location';
@@ -45,8 +45,8 @@ const HomeDriver = ({navigation}) => {
       if (journeys.length == 0) setLoading(false);
       journeys.forEach(async (journey) => {
         try {
-          const fromStreet = await getAddrsFromCoords(journey.from[0], journey.from[1]);
-          const toStreet = await getAddrsFromCoords(journey.to[0], journey.to[1]);
+          const fromStreet = await getAddressFromCoords(journey.from[0], journey.from[1]);
+          const toStreet = await getAddressFromCoords(journey.to[0], journey.to[1]);
 
           addresses.push({
             id: journey._id,

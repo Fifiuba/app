@@ -11,6 +11,7 @@ import HomeDriverView from '../views/HomeDriverView';
 import HomePassengerView from '../views/HomePassengerView';
 import MyProfileView from '../views/MyProfileView';
 import ScoreView from '../views/ScoreView';
+import PassengerJourneyView from '../views/PassengerJourneyView';
 
 import {UserContext} from '../context/UserContext';
 import {TokenContext} from '../context/TokenContext';
@@ -104,6 +105,11 @@ export default function LoggedNav({onLogin}) {
             options={{title: '', headerShown: false}}
             name="ViajeChofer"
             component={DriverJourneyView}
+          />
+          <Stack.Screen
+            options={{title: '', headerShown: false}}
+            name="ViajePasajero"
+            component={PassengerJourneyView}
           />
           <Stack.Screen
             options={{title: '', headerShown: false}}
