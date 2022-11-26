@@ -181,6 +181,7 @@ const DriverJourney = ({navigation, route}) => {
         </Button>
       </View>
     </View>
+
   );
 };
 

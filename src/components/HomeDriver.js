@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 /* eslint-disable max-len */
 import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
-import {Button, Text, ActivityIndicator, Card, Title} from 'react-native-paper';
+import {Button, Text, ActivityIndicator, Card, Title, Snackbar} from 'react-native-paper';
 
 import getAddressFromCoords from '../services/GetAddressFromCoords';
 import getNearestJourneys from '../services/GetNearestJourneys';
@@ -13,6 +13,9 @@ const HomeDriver = ({navigation}) => {
   const [avaliableJourneys, setAvaliableJourneys] = useState([]);
   const [loading, setLoading] = useState(false);
   const [myLocation, setLocation] = useState();
+  const [visible, setVisible] = React.useState(false);
+  const [text, setText] = React.useState('');
+
 
   useEffect(() => {
     getLocationPermission();
@@ -60,12 +63,14 @@ const HomeDriver = ({navigation}) => {
           setAvaliableJourneys(addresses);
         } catch (err) {
           setLoading(false);
-          alert('Se ha producido un error al intentar buscar los viajes!');
+          setText('Se ha producido un error al intentar buscar los viajes!.Reitente');
+          setVisible(true);
         }
       });
     } catch (error) {
       setLoading(false);
-      alert(error);
+      setText('Se ha producido un error al realizar la request!.Reitente');
+      setVisible(true);
     }
   };
 
@@ -78,11 +83,12 @@ const HomeDriver = ({navigation}) => {
       if (response.status === 'accepted') {
         navigation.navigate('ViajeChofer', {'id': journey.id, 'from': journey.fromCoords, 'to': journey.toCoords, 'carType': journey.vip, 'myLocation': myLocation, 'idPassenger': journey.idPassenger});
       } else {
-        alert('El viaje ya fue tomado por otro conductor');
+        setText('El viaje ya fue tomado por otro conductor');
+        setVisible(true);
       }
     } catch (error) {
-      console.error(error);
-      alert('No pudimos realizar la request correctamente');
+      setText('No pudimos realizar la request correctamente');
+      setVisible(true);
     }
   };
 
@@ -135,7 +141,6 @@ const HomeDriver = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-
       <Title style={{textAlign: 'center', paddingBottom: 5, fontSize: 22}}>
                   Viajes Disponibles
       </Title>
@@ -150,7 +155,17 @@ const HomeDriver = ({navigation}) => {
       >
         <Text> Buscar Viajes </Text>
       </Button>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        action={{
+          label: 'Ok',
+          onPress: () => {
 
+          },
+        }}>
+        {text}
+      </Snackbar>
     </View>
   );
 };

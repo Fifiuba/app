@@ -30,7 +30,12 @@ export default function HomeView({navigation}) {
 
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={isDriver ? HomeDriver : HomePassenger} navigation={navigation}/>
+      {isDriver &&
+        <Tab.Screen name="Chofer" component={HomeDriver} navigation={navigation}/>
+      }
+      {!isDriver &&
+        <Tab.Screen name="Chofer" component={HomePassenger} navigation={navigation}/>
+      }
       {!isDriver &&
         <Tab.Screen name="Viajes" component={PassengerJourney} navigation={navigation}/>
       }
