@@ -79,12 +79,10 @@ const PassengerJourney = ({navigation}) => {
         const distance = response[1];
         setJourneyInfo(response[0], distance);
         const journeyPrice = await getJourneyPrice(distance);
-        if (!(journeyPrice === null)) {
-          if (journeyPrice != 0) {
-            setPrice(journeyPrice);
-            setPriceSetted(true);
-            console.log('price distinto de 0');
-          }
+        if (journeyPrice != 0) {
+          setPrice(journeyPrice);
+          setPriceSetted(true);
+          console.log('price distinto de 0');
         }
       }
     } catch (error) {
@@ -124,9 +122,9 @@ const PassengerJourney = ({navigation}) => {
   }, []);
 
   return (
-    <View style={styles.journeyContainer}>
+    <View style={styles.container}>
       <Text style={styles.title}>¿Deseas iniciar un viaje?</Text>
-      <View style={styles.container}>
+      <View style={styles.searchBarContainer}>
         <SearchBar
           searchPhrase={searchOrigin}
           setSearchPhrase={setSearchOrigin}
@@ -135,7 +133,7 @@ const PassengerJourney = ({navigation}) => {
           placeholderValue="Buscar origen"
         />
       </View>
-      <View style={styles.container}>
+      <View style={styles.searchBarContainer}>
         <SearchBar
           searchPhrase={searchDestination}
           setSearchPhrase={setSearchDestination}
@@ -177,21 +175,21 @@ const PassengerJourney = ({navigation}) => {
       <View style={styles.buttonHolder}>
         <Button
           style={styles.button}
-          color={Colors.blue800}
+          color={Colors.blue700}
           mode="contained"
           onPress={handleGetInfoJourney}>
           <Text style={styles.titleButton}>Buscar</Text>
         </Button>
         <Button
           disabled={!priceSetted}
-          style={styles.journeyButton}
-          color={Colors.grey400}
+          style={styles.button}
+          color={!priceSetted ? Colors.grey400 : Colors.blue700}
           mode="contained"
           onPress={() => {
             console.log('Solicitar viaje');
             handleCreateJourney();
           }}>
-          <Text style={styles.titleButton}>Solicitar viaje</Text>
+          <Text style={!priceSetted ? styles.buttonjourneyButtonText : styles.titleButton}>Solicitar viaje</Text>
         </Button>
       </View>
     </View>
@@ -201,15 +199,16 @@ const PassengerJourney = ({navigation}) => {
 export default PassengerJourney;
 
 const styles = StyleSheet.create({
-  journeyContainer: {
-    flex: 1,
+  container: {
     alignItems: 'center',
-    marginTop: 30,
+    justifyContent: 'center',
+    height: '85%',
+    marginTop: 100,
   },
   title: {
-    fontSize: 28,
+    fontSize: 22,
   },
-  container: {
+  searchBarContainer: {
     flexDirection: 'row',
     width: '95%',
     marginTop: 25,
@@ -222,7 +221,6 @@ const styles = StyleSheet.create({
     width: '85%',
   },
   titleButton: {
-    fontSize: 17,
     color: 'white',
   },
   priceContainer: {
@@ -241,18 +239,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    paddingVertical: 3,
-    paddingHorizontal: 0,
-    width: 170,
-    height: 50,
-    marginTop: 10,
-  },
-  journeyButton: {
-    paddingVertical: 3,
-    paddingHorizontal: 0,
+    height: 45,
     width: 200,
-    height: 50,
-    marginTop: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
   },
   map: {
     margin: 5,
@@ -272,5 +263,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+  },
+  journeyButtonText: {
+    color: '#696969',
   },
 });

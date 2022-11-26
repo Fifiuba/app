@@ -118,8 +118,8 @@ const MyProfile = ({navigation}) => {
         <View style={isDriver ?
           styles.buttonContainerDriver: styles.buttonContainer}>
           <Button
-            style={styles.editButton}
-            color={Colors.blue800}
+            style={styles.button}
+            color={Colors.blue700}
             mode="contained"
             onPress={() => {
               console.log('navigate to editProfile');
@@ -128,14 +128,14 @@ const MyProfile = ({navigation}) => {
             <Text style={styles.editButtonText}>Editar</Text>
           </Button>
           <Button
-            style={styles.signOutButton}
-            color={Colors.blue800}
+            style={styles.button}
+            color={Colors.grey300}
             mode="contained"
             onPress={() => {
               console.log('PressOn SignOut');
               onLogin(false);
             }}>
-            <Text style={styles.buttonText}>Cerrar sesión</Text>
+            <Text style={styles.signOutButtonText}>Cerrar sesión</Text>
           </Button>
         </View>
       </View>
@@ -209,25 +209,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 30,
   },
-  signOutButton: {
+  button: {
     height: 45,
     width: 250,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
-    backgroundColor: Colors.grey300,
     margin: 10,
   },
-  editButton: {
-    height: 45,
-    width: 250,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 30,
-    backgroundColor: Colors.blue700,
-    margin: 10,
-  },
-  buttonText: {
+  signOutButtonText: {
     color: '#696969',
   },
   editButtonText: {

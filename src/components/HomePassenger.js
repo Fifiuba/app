@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 /* eslint-disable max-len */
 import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
-import {Button, Text, ActivityIndicator, Card, Title} from 'react-native-paper';
+import {Button, Text, ActivityIndicator, Card, Title, Colors} from 'react-native-paper';
 
 import getAddressFromCoords from '../services/GetAddressFromCoords';
 import {UserContext} from '../context/UserContext';
@@ -13,7 +13,6 @@ const HomePassenger = () => {
 
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
-  console.log('id user context:', userInfo.id);
 
   const isNotInLatestJourneys = (journey) => {
     for (let idx = 0; idx < lastJourneys.length; idx++) {
@@ -25,17 +24,14 @@ const HomePassenger = () => {
   };
 
   const getLastJourneys = async () => {
-    console.log('get last journeys');
     try {
       const journeys = await getLastJourneysInfo();
       setLoading(true);
-      console.log('cant viajes:', journeys.length);
       if (journeys.length == 0) setLoading(false);
       journeys.forEach(async (journey) => {
         try {
           const fromStreet = await getAddressFromCoords(journey.from[0], journey.from[1]);
           const toStreet = await getAddressFromCoords(journey.to[0], journey.to[1]);
-          console.log('journey passenger id:', journey.idPassenger);
           if (journey.idPassenger == userInfo.id) {
             if (isNotInLatestJourneys(journey)) {
               lastJourneys.push({
@@ -76,6 +72,7 @@ const HomePassenger = () => {
         extraData={lastJourneys}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
+        style={styles.flatList}
         ListEmptyComponent={
           <Text style={styles.emptyListText}>
             No has realizado ningún viaje aún!
@@ -105,7 +102,7 @@ const HomePassenger = () => {
       </SafeAreaView>
       <Button
         style={styles.button}
-        color={'#0077b6'}
+        color={Colors.blue700}
         mode="contained"
         onPress={getLastJourneys}
       >
@@ -123,6 +120,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '95%',
     marginLeft: 10,
+    marginTop: 100,
   },
   title: {
     textAlign: 'center',
@@ -141,16 +139,21 @@ const styles = StyleSheet.create({
     width: '93%',
   },
   button: {
-    marginTop: '5%',
-    width: '60%',
-    height: '5%',
+    height: 45,
+    width: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
+    margin: 10,
   },
   buttonText: {
     color: 'white',
   },
   emptyListText: {
     textAlign: 'center',
-    fontSize: 16},
+    fontSize: 16,
+    margin: 40,
+  },
 });
 
 export default HomePassenger;
