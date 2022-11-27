@@ -13,8 +13,7 @@ const HomeDriver = ({navigation}) => {
   const [avaliableJourneys, setAvaliableJourneys] = useState([]);
   const [loading, setLoading] = useState(false);
   const [myLocation, setLocation] = useState();
-  const [visible, setVisible] = React.useState(false);
-  const [text, setText] = React.useState('');
+
 
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {ActivityIndicator, Text} from 'react-native-paper';
+import {ActivityIndicator, Text,Snackbar} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {getAuth, GoogleAuthProvider, signInWithCredential} from 'firebase/auth';
@@ -9,8 +9,10 @@ import loginWithGoogle from '../services/LoginWithGoogle';
 
 import {LoginContext} from '../context/LoginContext';
 
-export default function WaitingView({route}) {
+export default function WaitingView({navigation,route}) {
   const isPassenger = route.params.user_type;
+  const [visible, setVisible] = React.useState(false);
+  const [text, setText] = React.useState('');
 
   const onLogin = useContext(LoginContext);
 
@@ -34,6 +36,7 @@ export default function WaitingView({route}) {
           const result = await signInWithCredential(auth, credential);
           const accessToken = result.user.stsTokenManager.accessToken;
           const userType = setUserType();
+    
           const tokenResponse =
             await loginWithGoogle(accessToken, userType);
           if (tokenResponse) {
@@ -43,8 +46,8 @@ export default function WaitingView({route}) {
           }
         }
       } catch (error) {
-        console.error(error.message);
-        alert(error.message);
+        setText(error.response.data.detail)
+        setVisible(true)
       }
     };
     handleResponse();
@@ -60,6 +63,18 @@ export default function WaitingView({route}) {
           style={{marginTop: 10}}
         />
       </View>
+      <Snackbar
+        visible={visible}
+        duration={10000}
+        onDismiss={() => setVisible(false)}
+        action={{
+          label: 'Ok',
+          onPress: () => {
+            
+          },
+        }}>
+        {text}
+      </Snackbar>
     </View>
   );
 }
