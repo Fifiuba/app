@@ -10,7 +10,7 @@ import loginWithGoogle from '../services/LoginWithGoogle';
 import {LoginContext} from '../context/LoginContext';
 
 export default function WaitingView({route}) {
-  const isPassenger = true;
+  const isPassenger = route.params.user_type;
 
   const onLogin = useContext(LoginContext);
 
@@ -25,7 +25,6 @@ export default function WaitingView({route}) {
   React.useEffect(() => {
     const handleResponse = async () => {
       try {
-        console.log('route params:', route.params);
         const response = route.params.response;
         if (response?.type === 'success') {
           /* eslint-disable camelcase */
@@ -40,7 +39,6 @@ export default function WaitingView({route}) {
           if (tokenResponse) {
             await AsyncStorage.setItem('token', tokenResponse);
             await AsyncStorage.setItem('user_type', userType);
-            console.log('Hola');
             onLogin(true);
           }
         }
