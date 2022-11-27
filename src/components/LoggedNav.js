@@ -114,7 +114,6 @@ export default function LoggedNav({onLogin}) {
             name="PerfilChofer"
             component={DriverProfileView}
           />
-
         </Stack.Navigator>
       </UserContext.Provider>
     </LoginContext.Provider>

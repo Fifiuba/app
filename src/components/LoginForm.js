@@ -3,9 +3,6 @@ import {View, StyleSheet, Text, Switch, Image} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
-import {getAuth, GoogleAuthProvider, signInWithCredential} from 'firebase/auth';
-
-import loginWithGoogle from '../services/LoginWithGoogle';
 import {constraints} from '../utils/Constraints';
 import {isValidEmail} from '../utils/EmailValidation';
 
@@ -69,22 +66,8 @@ const LoginForm = ({navigation}) => {
   React.useEffect(() => {
     const handleResponse = async (response) => {
       try {
-        if (response?.type === 'success') {
-          /* eslint-disable camelcase */
-          const {id_token} = response.params;
-          const auth = getAuth();
-          const credential = GoogleAuthProvider.credential(id_token);
-          const result = await signInWithCredential(auth, credential);
-          const accessToken = result.user.stsTokenManager.accessToken;
-          const userType = setUserType();
-          const tokenResponse =
-            await loginWithGoogle(accessToken, userType);
-          if (tokenResponse) {
-            await AsyncStorage.setItem('token', tokenResponse);
-            await AsyncStorage.setItem('user_type', userType);
-            onLogin(true);
-          }
-        }
+        console.log('response en login form:', response);
+        navigation.navigate('EnEspera', {'response': response});
       } catch (error) {
         console.error(error.message);
         alert(error.message);
@@ -213,7 +196,7 @@ const styles = StyleSheet.create({
     padding: 20,
     margin: 10,
     marginTop: 30,
-    height: 700,
+    height: 720,
     borderRadius: 16,
   },
   image: {
