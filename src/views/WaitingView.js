@@ -70,7 +70,7 @@ export default function WaitingView({navigation,route}) {
         action={{
           label: 'Ok',
           onPress: () => {
-            
+            navigation.navigate('IniciarSesion')
           },
         }}>
         {text}
