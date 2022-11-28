@@ -8,6 +8,7 @@ import HomeDriver from '../components/HomeDriver';
 
 /* eslint-disable max-len */
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import WalletView from './WalletView';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -39,6 +40,7 @@ export default function HomeView({navigation}) {
       {!isDriver &&
         <Tab.Screen name="Viajes" component={PassengerJourney} navigation={navigation}/>
       }
+      <Tab.Screen name="Billetera" component={WalletView}/>
       <Tab.Screen name="Perfil" component={MyProfileView} navigation={navigation}/>
     </Tab.Navigator>
   );

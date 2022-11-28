@@ -19,6 +19,7 @@ import {constants} from '../utils/Constants';
 import UserProfileView from '../views/UserProfileView';
 import DriverProfileView from '../views/DriverProfileView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import WalletView from '../views/WalletView';
 
 const Stack = createNativeStackNavigator();
 
@@ -115,6 +116,11 @@ export default function LoggedNav({onLogin}) {
             options={{title: ''}}
             name="PerfilChofer"
             component={DriverProfileView}
+          />
+          <Stack.Screen
+            options={{title: ''}}
+            name="Billetera"
+            component={WalletView}
           />
         </Stack.Navigator>
       </UserContext.Provider>
