@@ -189,6 +189,7 @@ const PassengerJourney = ({navigation}) => {
             console.log('Solicitar viaje');
             handleCreateJourney();
           }}>
+          {/* eslint-disable max-len */}
           <Text style={!priceSetted ? styles.buttonjourneyButtonText : styles.titleButton}>Solicitar viaje</Text>
         </Button>
       </View>

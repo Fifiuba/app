@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export default async function loginWithGoogle(token, userType) {
   console.log('Login with google');
-  
+
   console.log('token from firebase:', token);
   const response = await axios.post('https://backend-agustinaa235.cloud.okteto.net/users/loginGoogle', {
     'user_type': userType,

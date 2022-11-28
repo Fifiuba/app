@@ -67,8 +67,9 @@ const LoginForm = ({navigation}) => {
     const handleResponse = async (response) => {
       try {
         console.log('response en login form:', response);
-        if (response?.type === 'success'){
-          navigation.navigate('EnEspera',{'response': response,'user_type': isPassenger});
+        /* eslint-disable max-len */
+        if (response?.type === 'success') {
+          navigation.navigate('EnEspera', {'response': response, 'user_type': isPassenger});
         }
       } catch (error) {
         console.error(error.message);

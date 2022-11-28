@@ -4,7 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // import {USER_SERVICE_URL} from '@env';
 
 export default async function getProfile() {
-  console.log('Get profile');
   try {
     const token = await AsyncStorage.getItem('token');
     const userType = await AsyncStorage.getItem('user_type');

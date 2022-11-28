@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {ActivityIndicator, Text,Snackbar} from 'react-native-paper';
+import {ActivityIndicator, Text, Snackbar} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {getAuth, GoogleAuthProvider, signInWithCredential} from 'firebase/auth';
@@ -9,7 +9,7 @@ import loginWithGoogle from '../services/LoginWithGoogle';
 
 import {LoginContext} from '../context/LoginContext';
 
-export default function WaitingView({navigation,route}) {
+export default function WaitingView({navigation, route}) {
   const isPassenger = route.params.user_type;
   const [visible, setVisible] = React.useState(false);
   const [text, setText] = React.useState('');
@@ -36,7 +36,7 @@ export default function WaitingView({navigation,route}) {
           const result = await signInWithCredential(auth, credential);
           const accessToken = result.user.stsTokenManager.accessToken;
           const userType = setUserType();
-    
+
           const tokenResponse =
             await loginWithGoogle(accessToken, userType);
           if (tokenResponse) {
@@ -46,8 +46,8 @@ export default function WaitingView({navigation,route}) {
           }
         }
       } catch (error) {
-        setText(error.response.data.detail)
-        setVisible(true)
+        setText(error.response.data.detail);
+        setVisible(true);
       }
     };
     handleResponse();
@@ -70,7 +70,7 @@ export default function WaitingView({navigation,route}) {
         action={{
           label: 'Ok',
           onPress: () => {
-            navigation.navigate('IniciarSesion')
+            navigation.navigate('IniciarSesion');
           },
         }}>
         {text}

@@ -7,7 +7,7 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import {NotificationContext} from './src/context/NotificationContext';
 import { TokenContext } from './src/context/TokenContext';
-import { Provider as PaperProvider } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -24,7 +24,7 @@ export default function App() {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   
-   const registerForPushNotificationsAsync = async () => {
+  const registerForPushNotificationsAsync = async () => {
        let token
        if (Platform.OS === 'android') {
          await Notifications.setNotificationChannelAsync('default', {
@@ -55,31 +55,52 @@ export default function App() {
        return token;
       }
     }
-   const removeNotificationSubscription = (subs) => {
-       Notifications.removeNotificationSubscription(subs);
-   }
+
+    const checkAlreadyLoggedUser = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        const userType = await AsyncStorage.getItem('user_type');
+        console.log('token en async:' + token)
+        console.log('usertype en async:' + token)
+
+        if (token && userType) {
+          setIsLoggedIn(true)
+        }          
+      } catch (error) {
+        setIsLoggedIn(false)
+        console.error('No token saved')
+      }
+    }
+
+    const removeNotificationSubscription = (subs) => {
+     Notifications.removeNotificationSubscription(subs);
+    }
    
-   useEffect(() => {
-     registerForPushNotificationsAsync().then(token => {
-      console.log(token)
-      setExpoPushToken(token)})
-     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-       //console.log(notification)
-       setNotification(notification);
-     })
-     return () => {
-       removeNotificationSubscription(notificationListener.current);
-     };
-   }, [])
+    useEffect(() => {
+      registerForPushNotificationsAsync().then(token => {
+       console.log(token)
+       setExpoPushToken(token)})
+      notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+        //console.log(notification)
+        setNotification(notification);
+      })
+      return () => {
+        removeNotificationSubscription(notificationListener.current);
+      };
+    }, [])
+
+
+    useEffect(() => {
+      checkAlreadyLoggedUser();
+    },[])
 
    return (
-    <PaperProvider>
-     <NotificationContext.Provider value={notification}>
-      <TokenContext.Provider value={expoPushToken}>
-        <NavigationContainer>
-          {isLoggedIn ? <LoggedNav onLogin={setIsLoggedIn}/> : <UnloggedNav onLogin={setIsLoggedIn}/>}
-        </NavigationContainer>
-      </TokenContext.Provider>
-     </NotificationContext.Provider>
-    </PaperProvider>
+    
+    <NotificationContext.Provider value={notification}>
+     <TokenContext.Provider value={expoPushToken}>
+       <NavigationContainer>
+         {isLoggedIn ? <LoggedNav onLogin={setIsLoggedIn}/> : <UnloggedNav onLogin={setIsLoggedIn}/>}
+       </NavigationContainer>
+     </TokenContext.Provider>
+    </NotificationContext.Provider>
  )}

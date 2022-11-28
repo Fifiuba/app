@@ -31,6 +31,15 @@ const MyProfile = ({navigation}) => {
     setUserType();
   }, []);
 
+  const logOut = async () => {
+    try {
+      await AsyncStorage.multiRemove(await AsyncStorage.getAllKeys());
+      onLogin(false);
+    } catch (error) {
+      alert('No se pudo cerrar sesión correctamente');
+    }
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -131,10 +140,7 @@ const MyProfile = ({navigation}) => {
             style={styles.button}
             color={Colors.grey300}
             mode="contained"
-            onPress={() => {
-              console.log('PressOn SignOut');
-              onLogin(false);
-            }}>
+            onPress={logOut}>
             <Text style={styles.signOutButtonText}>Cerrar sesión</Text>
           </Button>
         </View>
