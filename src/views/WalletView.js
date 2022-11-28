@@ -1,13 +1,33 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 
 import {Text, StyleSheet, View, Image, ScrollView} from 'react-native';
-import {TextInput} from 'react-native-paper';
+import {TextInput,Snackbar} from 'react-native-paper';
 import {UserContext} from '../context/UserContext';
+import getWalletAmount from '../services/GetWalletAmount';
 
 
 export default function WalletView() {
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
+  const [amount, setAmount] = useState('0 ETH')
+  const [visible, setVisible] = React.useState(false);
+  const [text, setText] = React.useState('');
+  
+  const getWallet = async () => {
+    try {
+        const response = await getWalletAmount(userInfo.id);
+        setAmount(`${response.amount} ETH`)
+    } catch (error) {
+        setVisible(true)
+        setText('No se ha podido obtener informacion sobre la billetera')
+    }
+  }
+
+  useEffect(() =>{
+    getWallet()
+  },[])
+
+
 
   return (
     <ScrollView>
@@ -36,11 +56,25 @@ export default function WalletView() {
               disabled={true}
               style={styles.info}
               mode="outline"
-              value={'0.00785 ETH'}
+              value={amount}
             />
           </View>
         </View>
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => {
+            setVisible(false);
+            setAmount('0 ETH')
+        }}
+        action={{
+          label: 'Ok',
+          onPress: () => {
+            setAmount('0 ETH')
+          },
+        }}>
+        {text}
+      </Snackbar>
     </ScrollView>
   );
 }
