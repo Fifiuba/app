@@ -18,6 +18,7 @@ import sentTokenInfo from '../services/SendTokenInfo';
 import {constants} from '../utils/Constants';
 import UserProfileView from '../views/UserProfileView';
 import DriverProfileView from '../views/DriverProfileView';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 
@@ -53,8 +54,9 @@ export default function LoggedNav({onLogin}) {
           await sentTokenInfo(userInfo[0].id, token);
         }
       } catch (error) {
-        console.error(error.message);
-        alert(error.message);
+        alert('Se ha producido un error al buscar el usuario');
+        await AsyncStorage.multiRemove(await AsyncStorage.getAllKeys());
+        onLogin(false);
       }
     };
     handleProfile();

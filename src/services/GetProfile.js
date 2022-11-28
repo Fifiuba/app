@@ -17,8 +17,6 @@ export default async function getProfile() {
     console.log('response_data:', response.data);
     return response.data;
   } catch (error) {
-    alert(error.response.data.detail);
-    console.error(error.response.data.detail);
-    return null;
+    return error
   }
 }
