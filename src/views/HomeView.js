@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MaterialCommunityIcons
+  from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import PassengerJourney from '../components/PassengerJourney';
 import MyProfileView from './MyProfileView';
@@ -30,7 +32,8 @@ export default function HomeView({navigation}) {
   }, []);
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      shifting={false}>
       {isDriver &&
         <Tab.Screen name="Chofer" component={HomeDriver} navigation={navigation}/>
       }
@@ -40,7 +43,15 @@ export default function HomeView({navigation}) {
       {!isDriver &&
         <Tab.Screen name="Viajes" component={PassengerJourney} navigation={navigation}/>
       }
-      <Tab.Screen name="Billetera" component={WalletView}/>
+      <Tab.Screen
+        name="Billetera"
+        component={WalletView}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons name="account" color={color} size={size} />
+          ),
+        }}/>
       <Tab.Screen name="Perfil" component={MyProfileView} navigation={navigation}/>
     </Tab.Navigator>
   );

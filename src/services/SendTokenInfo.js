@@ -11,7 +11,7 @@ const sentTokenInfo = async (userId, token) => {
     );
     return response.data;
   } catch (error) {
-    alert('Su dispositivo no puede recibir notificaciones en esta version.')
+    alert('Su dispositivo no puede recibir notificaciones en esta version.');
     console.error(error.message);
     return null;
   }

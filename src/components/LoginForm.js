@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   switchContainer: {
     flex: 1,
     flexDirection: 'row',
-    alignContent: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
     marginTop: 5,
   },
