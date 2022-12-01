@@ -19,7 +19,7 @@ export default function Profile({navigation}) {
   const [msg, setMsg] = useState('');
   const [save, setSaved] = useState(false);
 
-  const {control, handleSubmit, formState: {errors}} = useForm({
+  const {control, handleSubmit, setValue, formState: {errors}} = useForm({
     defaultValues: {
       name: '',
       age: '',
@@ -31,10 +31,17 @@ export default function Profile({navigation}) {
   });
 
   React.useEffect(() => {
+    setValue('name', userInfo.name);
+    setValue('age', userInfo.age.toString());
+    setValue('phone_number', userInfo.phone_number);
     const setUserType = async () => {
       const userType = await AsyncStorage.getItem('user_type');
       if (userType == 'driver') {
+        setValue('car_model', userTypeInfo.car_model);
+        setValue('license_plate', userTypeInfo.license_plate);
         setIsPassenger(false);
+      } else {
+        setValue('default_address', userTypeInfo.default_address);
       }
     };
     setUserType();
@@ -78,7 +85,7 @@ export default function Profile({navigation}) {
       if (response) {
         updateInfo(userInfo, response[0]);
         updateInfo(userTypeInfo, response[1]);
-        navigation.navigate('Home');
+        navigation.navigate('MiPerfil');
       }
     } catch (error) {
       alert(error.message);

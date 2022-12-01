@@ -23,10 +23,14 @@ export default async function setUserTypeInfo(data, userId, userType) {
       user_type: userType,
       fields: getFields(data),
     };
+    console.log('params:', params);
+    console.log('userId:', userId);
+
     const response = await axios.patch(
-        `https://api-gateway-solfonte.cloud.okteto.net/users/${userId}`,
+        `https://backend-agustinaa235.cloud.okteto.net/users/${userId}`,
         params,
     );
+    console.log('response:', response.data);
     return response.data;
   } catch (error) {
     alert(error.response.data.detail);

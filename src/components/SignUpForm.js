@@ -31,25 +31,17 @@ const SignUpForm = ({navigation}) => {
 
   const onSubmit = async (data) => {
     try {
-      if (!code) {
-        // Send PIN of activation
-        setCode(true);
-      } else {
-        // Send data to users service for signing up
-        const response = await signUp(data, userType());
-        if (response) {
-          if (isPassenger) {
-            navigation.navigate('PasajeroForm', {'user_id': response.id});
-          } else {
-            navigation.navigate('ChoferForm', {'user_id': response.id});
-          }
+      const response = await signUp(data, userType());
+      if (response) {
+        if (isPassenger) {
+          navigation.navigate('PasajeroForm', {'user_id': response.id});
+        } else {
+          navigation.navigate('ChoferForm', {'user_id': response.id});
         }
       }
     } catch (error) {
       console.error(error.message);
       alert(error.response.data.detail);
-      // alert(error.response.data.detail);
-      // console.error(error.response.data.detail);
       return null;
     }
   };

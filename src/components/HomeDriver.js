@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 /* eslint-disable max-len */
 import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
-import {Button, Text, ActivityIndicator, Card, Title, Snackbar} from 'react-native-paper';
+import {Button, Text, ActivityIndicator, Card, Title, Snackbar, Colors} from 'react-native-paper';
 
 import getAddressFromCoords from '../services/GetAddressFromCoords';
 import getNearestJourneys from '../services/GetNearestJourneys';
@@ -15,7 +15,6 @@ const HomeDriver = ({navigation}) => {
   const [myLocation, setLocation] = useState();
   const [visible, setVisible] = React.useState(false);
   const [text, setText] = React.useState('');
-
 
   useEffect(() => {
     getLocationPermission();
@@ -101,10 +100,10 @@ const HomeDriver = ({navigation}) => {
     if (loading) {
       return (
         <ActivityIndicator
-          style={{justifyContent: 'center', alignSelf: 'center', padding: 5}}
-          size={'larger'}
           animating={loading}
-          color={'#2C3333'} />
+          color="#757575"
+          style={{marginTop: 10}}
+        />
       );
     }
     return (
@@ -149,11 +148,11 @@ const HomeDriver = ({navigation}) => {
       </SafeAreaView>
       <Button
         style={styles.button}
-        color={'#0077b6'}
+        color={Colors.blue700}
         mode="contained"
         onPress={() => getAddresses()}
       >
-        <Text> Buscar Viajes </Text>
+        <Text style={{color: 'white'}}> Buscar Viajes </Text>
       </Button>
       <Snackbar
         visible={visible}
@@ -193,8 +192,11 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   button: {
-    marginTop: '5%',
-    width: '50%',
+    height: 45,
+    width: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
   },
 });
 
