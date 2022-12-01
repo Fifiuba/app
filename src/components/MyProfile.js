@@ -6,7 +6,7 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import {Colors, TextInput, Button, Title, Caption} from 'react-native-paper';
+import {Colors, TextInput, Button} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {UserContext} from '../context/UserContext';
@@ -104,26 +104,6 @@ const MyProfile = ({navigation}) => {
                   </View>}
           </View>
         </View>
-        { !isDriver &&
-        <View style={styles.walletContainer}>
-          <View style={styles.walletSubcontainer}>
-            <View style={styles.walletInfo}>
-              <Title>$100</Title>
-              <Caption style={styles.caption}>Billetera</Caption>
-            </View>
-            <View style={styles.walletSubcontainer}>
-              <Button
-                style={styles.addMoneyButton}
-                color={Colors.blue800}
-                mode="contained"
-                onPress={() => {
-                  console.log('Addd money');
-                }}>
-                <Text style={styles.addMoneyButtonText}>Agregar</Text>
-              </Button>
-            </View>
-          </View>
-        </View>}
         <View style={isDriver ?
           styles.buttonContainerDriver: styles.buttonContainer}>
           <Button
@@ -229,18 +209,6 @@ const styles = StyleSheet.create({
   editButtonText: {
     color: 'white',
   },
-  walletContainer: {
-    borderWidth: 1,
-    borderColor: '#dddddd',
-    flex: 1,
-    height: 130,
-    marginTop: 30,
-    marginBottom: 10,
-  },
-  walletInfo: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   caption: {
     fontSize: 18,
     fontWeight: '500',
@@ -249,17 +217,4 @@ const styles = StyleSheet.create({
     width: '60%',
     height: '60%',
     margin: 10,
-  },
-  addMoneyButton: {
-    height: 40,
-    width: 130,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 30,
-    backgroundColor: Colors.green700,
-  },
-  addMoneyButtonText: {
-    color: 'white',
-    fontSize: 14,
-  },
-});
+  }});
