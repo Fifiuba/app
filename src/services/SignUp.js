@@ -6,7 +6,7 @@ export default async function signUp(data, userType) {
   try {
     console.log('data:', data);
     const response = await axios.post(
-        `https://api-gateway-solfonte.cloud.okteto.net/users`,
+        'https://api-gateway-solfonte.cloud.okteto.net/users',
         {
           user_type: userType,
           name: data.name,

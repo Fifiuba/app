@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import MaterialCommunityIcons
-  from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Ionicons} from '@expo/vector-icons';
 
 import PassengerJourney from '../components/PassengerJourney';
 import MyProfileView from './MyProfileView';
@@ -35,24 +34,92 @@ export default function HomeView({navigation}) {
     <Tab.Navigator
       shifting={false}>
       {isDriver &&
-        <Tab.Screen name="Chofer" component={HomeDriver} navigation={navigation}/>
+        <Tab.Screen
+          name="Chofer"
+          component={HomeDriver}
+          navigation={navigation}
+          options={{
+            tabBarLabel: 'Chofer',
+            tabBarIcon: () => {
+              return (
+                <Ionicons
+                  name="md-home"
+                  size={20}
+                  color={'white'}
+                />
+              );
+            },
+          }}
+        />
       }
       {!isDriver &&
-        <Tab.Screen name="Pasajero" component={HomePassenger} navigation={navigation}/>
+        <Tab.Screen
+          name="Pasajero"
+          component={HomePassenger}
+          navigation={navigation}
+          options={{
+            tabBarLabel: 'Pasajero',
+            tabBarIcon: () => {
+              return (
+                <Ionicons
+                  name="md-home"
+                  size={20}
+                  color={'white'}
+                />
+              );
+            },
+          }}
+        />
       }
       {!isDriver &&
-        <Tab.Screen name="Viajes" component={PassengerJourney} navigation={navigation}/>
+        <Tab.Screen
+          name="Viajes"
+          component={PassengerJourney}
+          navigation={navigation}
+          options={{
+            tabBarLabel: 'Viajes',
+            tabBarIcon: () => {
+              return (
+                <Ionicons
+                  name="car"
+                  size={20}
+                  color={'white'}
+                />
+              );
+            },
+          }}/>
       }
       <Tab.Screen
         name="Billetera"
         component={WalletView}
         options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
-          ),
+          tabBarLabel: 'Billetera',
+          tabBarIcon: () => {
+            return (
+              <Ionicons
+                name="wallet"
+                size={20}
+                color={'white'}
+              />
+            );
+          },
         }}/>
-      <Tab.Screen name="Perfil" component={MyProfileView} navigation={navigation}/>
+      <Tab.Screen
+        name="Perfil"
+        component={MyProfileView}
+        navigation={navigation}
+        options={{
+          tabBarLabel: 'Perfil',
+          tabBarIcon: () => {
+            return (
+              <Ionicons
+                name="md-person-circle-outline"
+                size={20}
+                color={'white'}
+              />
+            );
+          },
+        }}/>
     </Tab.Navigator>
   );
 }
