@@ -52,7 +52,6 @@ const DriverFormView = ({navigation, route}) => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              mode="outlined"
               label="Patente del vehículo"
               placeholder="Patente"
             />
@@ -81,7 +80,6 @@ const DriverFormView = ({navigation, route}) => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              mode="outlined"
               label="Modelo del vehículo"
               placeholder="Modelo"
             />
@@ -100,10 +98,10 @@ const DriverFormView = ({navigation, route}) => {
             </Text>}
         <Button
           style={styles.button}
-          color={Colors.blue800}
+          color={Colors.blue700}
           mode="contained"
           onPress={handleSubmit(onSubmit)}>
-          <Text style={{fontSize: 20, color: 'white'}}>Registrarse</Text>
+          <Text style={{color: 'white'}}>Registrarse</Text>
         </Button>
       </View>
     </View>
@@ -145,11 +143,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   button: {
-    padding: 5,
-    width: 215,
-    height: 50,
-    marginLeft: 30,
-    marginTop: 20,
+    height: 45,
+    width: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
+    margin: 10,
   },
 });
 

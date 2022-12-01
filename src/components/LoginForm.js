@@ -96,7 +96,6 @@ const LoginForm = ({navigation}) => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            mode="outlined"
             label="Correo electrónico"
             placeholder="Correo electrónico"
             right={<TextInput.Affix text={'/' + constraints.email.max} />}
@@ -105,9 +104,9 @@ const LoginForm = ({navigation}) => {
         name="email"
       />
       {errors.email?.type === 'required' &&
-      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+      <Text style={styles.errorText}>Campo obligatorio</Text>}
       {errors.email?.type === 'validate' &&
-      <Text style={{color: 'red'}}>Ingrese un correo electrónico válido</Text>}
+      <Text style={styles.errorText}>Ingrese un correo electrónico válido</Text>}
       <Controller control={control}
         rules={{
           required: true,
@@ -120,7 +119,6 @@ const LoginForm = ({navigation}) => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            mode="outlined"
             label="Contraseña"
             placeholder="Contraseña"
             secureTextEntry={true}
@@ -129,7 +127,7 @@ const LoginForm = ({navigation}) => {
         name="password"
       />
       {errors.password?.type === 'required' &&
-      <Text style={{color: 'red'}}>Campo obligatorio</Text>}
+      <Text style={styles.errorText}>Campo obligatorio</Text>}
       {errors.password?.type === 'maxLength' &&
       <Text>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
@@ -147,10 +145,10 @@ const LoginForm = ({navigation}) => {
       </View>
       <Button
         style={styles.button}
-        color={Colors.blue800}
+        color={Colors.blue700}
         mode="contained"
         onPress={handleSubmit(onSubmit)}>
-        <Text style={{fontSize: 20}}>Iniciar sesión</Text>
+        <Text>Iniciar sesión</Text>
       </Button>
       <View style={{marginTop: 10}}>
         <Text
@@ -168,14 +166,14 @@ const LoginForm = ({navigation}) => {
           O iniciar sesión con
         </Text>
         <Button
-          style={styles.googleButton}
+          style={styles.button}
           color={Colors.red800}
           mode="contained"
           onPress={() => {
             promptAsync();
           }}
         >
-          <Text style={{fontSize: 18}}>Google</Text>
+          <Text>Google</Text>
         </Button>
         <View style={styles.bottomContainer}>
           <Text style={{textAlign: 'center', fontSize: 18, color: '#282829'}}>
@@ -199,7 +197,7 @@ const styles = StyleSheet.create({
     padding: 20,
     margin: 10,
     marginTop: 30,
-    height: 720,
+    height: 750,
     borderRadius: 16,
   },
   image: {
@@ -228,11 +226,12 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   button: {
-    padding: 5,
-    width: 210,
-    height: 50,
-    marginTop: 10,
-    marginBottom: 10,
+    height: 45,
+    width: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
+    margin: 10,
     alignSelf: 'center',
   },
   bottomContainer: {
@@ -244,11 +243,9 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     marginTop: 10,
   },
-  googleButton: {
-    justifyContent: 'center',
-    margin: 5,
-    width: 150,
-    height: 50,
+  errorText: {
+    color: 'red',
+    paddingLeft: 5,
   },
 });
 

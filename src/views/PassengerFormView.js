@@ -14,7 +14,6 @@ import {constants} from '../utils/Constants';
 const PassengerFormView = ({navigation, route}) => {
   const userId = route.params.user_id;
 
-
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       default_address: '',
@@ -54,7 +53,6 @@ const PassengerFormView = ({navigation, route}) => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              mode="outlined"
               label="Ubicación"
               placeholder="Ubicación"
             />
@@ -69,10 +67,10 @@ const PassengerFormView = ({navigation, route}) => {
             </Text>}
         <Button
           style={styles.button}
-          color={Colors.blue800}
+          color={Colors.blue700}
           mode="contained"
           onPress={handleSubmit(onSubmit)}>
-          <Text style={{fontSize: 20, color: 'white'}}>Registrarse</Text>
+          <Text>Registrarse</Text>
         </Button>
       </View>
     </View>
@@ -108,11 +106,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   button: {
-    padding: 5,
-    width: 215,
-    height: 50,
-    marginLeft: 35,
-    marginTop: 20,
+    height: 45,
+    width: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
+    margin: 10,
   },
 });
 

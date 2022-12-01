@@ -8,7 +8,6 @@ import {constraints} from '../utils/Constraints';
 import {isValidEmail} from '../utils/EmailValidation';
 
 const SignUpForm = ({navigation}) => {
-  const [code, setCode] = useState(false);
   const [isPassenger, setIsPassenger] = useState(true);
   const toggleSwitch = () => setIsPassenger((previousState) => !previousState);
 
@@ -19,7 +18,6 @@ const SignUpForm = ({navigation}) => {
       phone_number: '',
       age: 0,
       password: '',
-      code: '',
     },
   });
 
@@ -73,7 +71,6 @@ const SignUpForm = ({navigation}) => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            mode="outlined"
             label="Nombre"
             placeholder="Nombre"
             right={<TextInput.Affix text={'/' + constraints.name.max} />}
@@ -103,7 +100,6 @@ const SignUpForm = ({navigation}) => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            mode="outlined"
             label="Correo electrónico"
             placeholder="Correo electrónico"
             right={<TextInput.Affix text={'/' + constraints.email.max} />}
@@ -126,7 +122,6 @@ const SignUpForm = ({navigation}) => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            mode="outlined"
             label="Teléfono"
             placeholder="Teléfono"
             keyboardType='numeric'
@@ -148,7 +143,6 @@ const SignUpForm = ({navigation}) => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            mode="outlined"
             label="Edad"
             placeholder="Edad"
             keyboardType='numeric'
@@ -174,7 +168,6 @@ const SignUpForm = ({navigation}) => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            mode="outlined"
             label="Contraseña"
             placeholder="Contraseña"
             secureTextEntry={true}
@@ -203,44 +196,13 @@ const SignUpForm = ({navigation}) => {
         />
         <Text style={styles.text}>Pasajero</Text>
       </View>
-      { code &&
-        <Controller control={control}
-          rules={{
-            required: code,
-          }}
-          render={({field: {onChange, onBlur, value}}) => (
-            <TextInput
-              theme={{colors: {primary: 'grey'}, roundness: 10}}
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              mode="outlined"
-              label="PIN de activación"
-              placeholder="PIN"
-              keyboardType='numeric'
-            />
-          )}
-          name="code"
-        />
-      }
-      {code && errors.code?.type === 'required' &&
-      <Text style={styles.errorText}>Campo obligatorio</Text>}
-      {errors.code?.type === 'maxLength' &&
-      <Text style={styles.errorText}>
-        Máximo {constraints.code.max} dígitos
-      </Text>}
-      {errors.code?.type === 'minLength' &&
-      <Text style={styles.errorText}>
-        Mínimo {constraints.code.min} dígitos
-      </Text>}
       <Button
-        color={Colors.blue800}
+        color={Colors.blue700}
         style={styles.button}
         mode="contained"
         onPress={handleSubmit(onSubmit)}
       >
-        <Text style={{fontSize: 20}}>Registrarse</Text>
+        <Text>Continuar</Text>
       </Button>
       <View style={styles.bottomContainer}>
         <Text style={{textAlign: 'center', fontSize: 18, color: '#282829'}}>
@@ -263,7 +225,7 @@ const styles = StyleSheet.create({
     padding: 20,
     margin: 10,
     marginTop: 45,
-    height: 700,
+    height: 830,
     borderRadius: 16,
   },
   image: {
@@ -271,7 +233,7 @@ const styles = StyleSheet.create({
     height: 90,
   },
   input: {
-    marginTop: 5,
+    margin: 10,
   },
   text: {
     margin: 8,
@@ -280,9 +242,10 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
+    paddingLeft: 15,
   },
   switchContainer: {
-    marginTop: 10,
+    margin: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -293,11 +256,13 @@ const styles = StyleSheet.create({
     color: '#0D516B',
   },
   button: {
-    height: 55,
+    height: 45,
     width: 200,
-    marginLeft: 70,
-    marginTop: 15,
     justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
+    margin: 10,
+    alignSelf: 'center',
   },
   bottomContainer: {
     margin: 10,
