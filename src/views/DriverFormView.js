@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#dddddd',
   },
   card: {
-    height: 410,
+    height: 380,
     width: 350,
     padding: 35,
     backgroundColor: 'white',
@@ -124,11 +124,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    marginTop: 5,
-    fontSize: 26,
-    marginBottom: 10,
+    fontSize: 24,
+    marginBottom: 30,
     textAlign: 'center',
-    fontWeight: 'bold',
     color: '#263238',
   },
   subtitle: {
@@ -144,11 +142,11 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 45,
-    width: 250,
+    width: 180,
     justifyContent: 'center',
-    alignItems: 'center',
     borderRadius: 30,
-    margin: 10,
+    marginTop: 15,
+    alignSelf: 'center'  
   },
 });
 

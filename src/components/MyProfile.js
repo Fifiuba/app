@@ -107,7 +107,7 @@ const MyProfile = ({navigation}) => {
         <View style={isDriver ?
           styles.buttonContainerDriver: styles.buttonContainer}>
           <Button
-            style={styles.button}
+            style={[styles.button, styles.editButton]}
             color={Colors.blue700}
             mode="contained"
             onPress={() => {
@@ -217,4 +217,7 @@ const styles = StyleSheet.create({
     width: '60%',
     height: '60%',
     margin: 10,
+  },
+  editButton: {
+    marginTop: 30,
   }});
