@@ -1,5 +1,5 @@
 import {useState, useContext} from 'react';
-import {View, StyleSheet, Text, Switch, Image} from 'react-native';
+import {View, StyleSheet, Text, Switch, Image, ScrollView} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
@@ -80,7 +80,7 @@ const LoginForm = ({navigation}) => {
   }, [response]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image
         source={require('../../assets/icon-app.png')}
         style={styles.image} />
@@ -186,18 +186,17 @@ const LoginForm = ({navigation}) => {
           </Text>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
     backgroundColor: 'white',
     padding: 20,
     margin: 10,
     marginTop: 30,
-    height: 750,
+    height: 720,
     borderRadius: 16,
   },
   image: {
