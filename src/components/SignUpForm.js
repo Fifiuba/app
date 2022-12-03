@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, Switch, Image, ScrollView} from 'react-native';
+import {View, StyleSheet, Text, Switch, Image} from 'react-native';
 import {TextInput, Button, Colors} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
@@ -47,7 +47,7 @@ const SignUpForm = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Image
         source={require('../../assets/icon-app.png')}
         style={styles.image} />
@@ -206,7 +206,7 @@ const SignUpForm = ({navigation}) => {
           </Text>
         </Text>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -218,6 +218,7 @@ const styles = StyleSheet.create({
     marginTop: 45,
     height: 830,
     borderRadius: 16,
+    justifyContent: 'center'
   },
   image: {
     width: 310,
