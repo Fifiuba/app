@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 30,
     marginTop: 15,
-    alignSelf: 'center'  
+    alignSelf: 'center',
   },
 });
 

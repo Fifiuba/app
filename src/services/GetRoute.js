@@ -30,7 +30,7 @@ const getRoute = async (origin, destination) => {
       alert('No se encontraron resultados para esas direcciones');
       return null;
     } else if (response.data.info.messages == 'At least two locations must be provided.') {
-      alert('At least two locations must be provided.');
+      alert('Debes ingresar una dirección origen y una dirección destino');
     } else {
       const shapePoints = response.data.route.shape.shapePoints;
       const routeCoords = getDirections(shapePoints);

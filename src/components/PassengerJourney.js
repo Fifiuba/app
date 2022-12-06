@@ -190,7 +190,7 @@ const PassengerJourney = ({navigation}) => {
             handleCreateJourney();
           }}>
           {/* eslint-disable max-len */}
-          <Text style={!priceSetted ? styles.buttonjourneyButtonText : styles.titleButton}>Solicitar viaje</Text>
+          <Text style={!priceSetted ? styles.journeyButtonText : styles.titleButton}>Solicitar viaje</Text>
         </Button>
       </View>
     </View>
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: '85%',
-    marginTop: 100,
+    marginTop: 50,
   },
   title: {
     fontSize: 22,
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 45,
-    width: 200,
+    width: '45%',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,

@@ -70,7 +70,7 @@ const PassengerFormView = ({navigation, route}) => {
           color={Colors.blue700}
           mode="contained"
           onPress={handleSubmit(onSubmit)}>
-          <Text style={{color:"white"}}>Registrarse</Text>
+          <Text style={{color: 'white'}}>Registrarse</Text>
         </Button>
       </View>
     </View>
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 30,
     marginTop: 15,
-    alignSelf: 'center'  
+    alignSelf: 'center',
   },
 });
 
