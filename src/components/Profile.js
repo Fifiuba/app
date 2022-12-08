@@ -85,7 +85,7 @@ export default function Profile({navigation}) {
       if (response) {
         updateInfo(userInfo, response[0]);
         updateInfo(userTypeInfo, response[1]);
-        navigation.navigate('MiPerfil');
+        navigation.navigate('Home');
       }
     } catch (error) {
       alert(error.message);

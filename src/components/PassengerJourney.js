@@ -82,7 +82,7 @@ const PassengerJourney = ({navigation}) => {
         if (journeyPrice != 0) {
           setPrice(journeyPrice);
           setPriceSetted(true);
-          console.log('price distinto de 0');
+          console.log('price distinto es de ' + journeyPrice);
         }
       }
     } catch (error) {
@@ -96,7 +96,7 @@ const PassengerJourney = ({navigation}) => {
       const journeyInfo =
         await createJourney(origin, destination, userInfo.id, distance);
       console.log('Response CreateJourney', journeyInfo);
-      navigation.navigate('Viajes', {
+      navigation.navigate('ViajePasajero', {
         'journeyInfo': {
           'id': journeyInfo._id,
           'status': journeyInfo.status,

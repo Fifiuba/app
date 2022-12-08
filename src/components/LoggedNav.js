@@ -84,7 +84,7 @@ export default function LoggedNav({onLogin}) {
           />
           <Stack.Screen
             options={{title: ''}}
-            name="Viajes"
+            name="ViajePasajero"
             component={JourneyView}
           />
           <Stack.Screen
@@ -96,11 +96,6 @@ export default function LoggedNav({onLogin}) {
             options={{title: '', headerShown: false}}
             name="ViajeChofer"
             component={DriverJourneyView}
-          />
-          <Stack.Screen
-            options={{title: '', headerShown: false}}
-            name="ViajePasajero"
-            component={PassengerJourneyView}
           />
           <Stack.Screen
             options={{title: '', headerShown: false}}
