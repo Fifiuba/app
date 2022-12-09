@@ -98,8 +98,7 @@ const DriverJourney = ({navigation, route}) => {
       await finishJourney(journey);
       setDirections([]);
       setInplace(false);
-      console.log('envio a calificacion:', journey.idPassenger);
-      navigation.navigate('Calificacion', {'id': journey.idPassenger});
+      navigation.navigate('Pago', {'id': userInfo.id, 'score_id':journey.idPassenger});
     } catch (error) {
       alert('No se pudo finalizar el viaje');
     }

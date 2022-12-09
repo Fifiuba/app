@@ -6,7 +6,7 @@ export default async function startJourney(journey) {
   try {
     const token = await AsyncStorage.getItem('token');
     const response = await axios.patch(
-        `https://journey-service-solfonte.cloud.okteto.net/journey/start/${journey.id}`,
+        `https://api-gateway-solfonte.cloud.okteto.net/journey/start/${journey.id}`,{},
         {
           headers: {Authorization: `Bearer ${token}`},
         },

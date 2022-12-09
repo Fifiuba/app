@@ -26,6 +26,6 @@ export default async function acceptJourney(journey, driverId) {
         });
     return journeys;
   } catch (err) {
-    throw err;
+    alert(err)
   }
 }

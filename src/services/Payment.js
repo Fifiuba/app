@@ -1,16 +1,16 @@
 import axios from 'axios';
 
-const deposit = async (id) => {
-    const senderId = id;
+const pay = async (id) => {
+    const receiverId = id;
     const eth = '0.0005'
     const response = await axios.post(
-        'https://payment-service-solfonte.cloud.okteto.net/payment/deposit',
+        'https://payment-service-solfonte.cloud.okteto.net/payment/pay',
         {
-          senderId: senderId,
+          receiverId: receiverId,
           amountInEthers: eth,
         },
     );
     return response.data;
 };
 
-export default deposit;
+export default pay;

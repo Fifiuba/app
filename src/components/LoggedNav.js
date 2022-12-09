@@ -20,6 +20,7 @@ import DriverProfileView from '../views/DriverProfileView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import WalletView from '../views/WalletView';
 import DepositView from '../views/DepositView';
+import PaymentView from '../views/PaymentView';
 
 const Stack = createNativeStackNavigator();
 
@@ -121,6 +122,11 @@ export default function LoggedNav({onLogin}) {
           options={{title: '', headerShown: false}}
           name="Deposito"
           component={DepositView}
+          />
+          <Stack.Screen
+          options={{title: '', headerShown: false}}
+          name="Pago"
+          component={PaymentView}
           />
         </Stack.Navigator>
       </UserContext.Provider>

@@ -1,14 +1,15 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {ActivityIndicator, Text, Snackbar, Button} from 'react-native-paper';
-import deposit from '../services/Deposit';
 import {Ionicons} from '@expo/vector-icons';
+import pay from '../services/Payment';
 
 
 
-export default function DepositView({navigation, route}) {
-  const idPassenger = route.params.id;
-  const idDriver = route.params.score_id;
+export default function PaymentView({navigation, route}) {
+  const idDriver = route.params.id;
+  const idPassanger = route.params.score_id;
+
   const [visible, setVisible] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [text, setText] = React.useState('');
@@ -17,7 +18,7 @@ export default function DepositView({navigation, route}) {
   React.useEffect(() => {
     const handleResponse = async () => {
       try {
-        const response = await deposit(idPassenger);
+        const response = await pay(idDriver);
         setLoading(false)
       } catch (error) {
         setVisible(true);
@@ -31,7 +32,7 @@ export default function DepositView({navigation, route}) {
     if (loading) {
       return (
         <View style={styles.card}>
-          <Text style={styles.text}>Depositando ...</Text>
+          <Text style={styles.text}>Recibiendo transaccion ...</Text>
           <ActivityIndicator
             animating={loading}
             color="#757575"
@@ -49,7 +50,7 @@ export default function DepositView({navigation, route}) {
           color={'black'}
         />
         <Button
-          onPress={() => navigation.navigate('Calificacion', {'id': idDriver})}
+          onPress={() => navigation.navigate('Calificacion', {'id': idPassanger})}
         >Calificar</Button>
       </View>
     );
