@@ -50,7 +50,6 @@ export default function DriverProfileView({route, navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -58,7 +57,7 @@ const styles = StyleSheet.create({
   },
   card: {
     padding: 15,
-    height: '50%',
+    height: '90%',
     width: '90%',
   },
 });

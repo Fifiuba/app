@@ -8,6 +8,8 @@ import TimerJourney from '../components/TimerJourney';
 import cancelJourney from '../services/CancelJourney';
 import getJourneyInfo from '../services/GetJourneyInfo';
 import getDriverInfo from '../services/GetDriverInfo';
+import getOpinion from '../services/GetOpinions';
+
 
 import {NotificationContext} from '../context/NotificationContext';
 import getUserInfo from '../services/GetUserInfo';
@@ -62,10 +64,18 @@ const RoadTripView = ({navigation, route}) => {
   }, [notification]);
 
   React.useEffect(() => {
-    if (finished) {
-      setStartTimer(false);
-      navigation.navigate('Home');
+    const handleResponse = async () => {
+      if (finished) {
+        setStartTimer(false);
+        try {
+          let response = await getJourneyInfo(journeyInfo.id);
+          navigation.navigate('Deposito', {'id': response.driver.idDriver});
+        } catch (error) {
+          alert('No se pudo iniciar el deposito');     
+        }
+      }
     }
+    handleResponse();
   }, [finished]);
 
 
@@ -88,11 +98,11 @@ const RoadTripView = ({navigation, route}) => {
 
   const handleViewDriverInfo = async () => {
     try {
-      let response = await getJourneyInfo(journeyInfo.id);
-      const user = await getUserInfo(response.driver.idDriver);
-      response = await getDriverInfo(response.driver.idDriver);
-      console.log('response:'+ response);
-      navigation.navigate('PerfilChofer', {'data': response, 'user': user});
+      let journey = await getJourneyInfo(journeyInfo.id);
+      const user = await getUserInfo(journey.driver.idDriver);
+      let response = await getDriverInfo(journey.driver.idDriver);
+      const comments = await getOpinion(journey.driver.idDriver, 'driver');
+      navigation.navigate('PerfilChofer', {'data': response, 'user': user,'opinions':comments});
     } catch (error) {
       console.error(error.message);
     }

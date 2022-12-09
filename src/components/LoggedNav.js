@@ -9,7 +9,6 @@ import RoadTripView from '../views/RoadTripView';
 import DriverJourneyView from '../views/DriverJourneyView';
 import MyProfileView from '../views/MyProfileView';
 import ScoreView from '../views/ScoreView';
-import PassengerJourneyView from '../views/PassengerJourneyView';
 
 import {UserContext} from '../context/UserContext';
 import {TokenContext} from '../context/TokenContext';
@@ -20,6 +19,7 @@ import UserProfileView from '../views/UserProfileView';
 import DriverProfileView from '../views/DriverProfileView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import WalletView from '../views/WalletView';
+import DepositView from '../views/DepositView';
 
 const Stack = createNativeStackNavigator();
 
@@ -116,6 +116,11 @@ export default function LoggedNav({onLogin}) {
             options={{title: ''}}
             name="Billetera"
             component={WalletView}
+          />
+          <Stack.Screen
+          options={{title: '', headerShown: false}}
+          name="Deposito"
+          component={DepositView}
           />
         </Stack.Navigator>
       </UserContext.Provider>
