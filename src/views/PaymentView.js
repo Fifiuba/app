@@ -13,6 +13,8 @@ export default function PaymentView({navigation, route}) {
   const [visible, setVisible] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [text, setText] = React.useState('');
+  const [paytext, setPayText] = React.useState('');
+  const [errorPayment, setError] = React.useState(false);
 
 
   React.useEffect(() => {
@@ -20,7 +22,10 @@ export default function PaymentView({navigation, route}) {
       try {
         const response = await pay(idDriver);
         setLoading(false)
+        setPayText('Pago realizado!')
       } catch (error) {
+        setPayText('Hubo un error!')
+        setError(true)
         setVisible(true);
         setText('No se ha podido realizar el deposito, contáctese con soporte.')
       }
@@ -43,11 +48,11 @@ export default function PaymentView({navigation, route}) {
     }
     return (
       <View style={styles.card}>
-        <Text style={styles.text}>Pago realizado!</Text>
+        <Text style={styles.text}>{paytext}</Text>
         <Ionicons
-          name="checkmark-done-outline"
+          name={errorPayment? "close-outline":"checkmark-circle-outline"}
           size={40}
-          color={'black'}
+          color={errorPayment ? 'red':'green'}
         />
         <Button
           onPress={() => navigation.navigate('Calificacion', {'id': idPassanger})}

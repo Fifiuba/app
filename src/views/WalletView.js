@@ -9,25 +9,26 @@ export default function WalletView() {
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
   const [amount, setAmount] = useState('0 ETH');
-  const [hash, setHash] = useState('No encontrado');
+  const [address, setAddress] = useState('No encontrado');
   const [visible, setVisible] = React.useState(false);
   const [text, setText] = React.useState('');
 
   const getWallet = async () => {
     try {
       const response = await getWalletAmount(userInfo.id);
-      setAmount(`${response.amount} ETH`);
-      setHash(response.hash);
+      console.log(response)
+      setAmount('0.0002 ETH');
+      setAddress(response.address);
     } catch (error) {
       setVisible(true);
       setText('No se ha podido obtener informacion sobre la billetera');
-      setHash('No encontrado');
+      setAddress('');
     }
   };
 
   useEffect(() =>{
     getWallet();
-  }, []);
+  }, [address]);
 
 
   return (
@@ -51,7 +52,7 @@ export default function WalletView() {
                     Saldo disponible
             </Text>
             <Text>
-              {`${hash.substring(0, 6)}...${hash.substring(hash.length -6, hash.length -1)}`}
+              {`${address.substring(0, 6)}...${address.substring(address.length -6, address.length -1)}`}
             </Text>
             <TextInput
               disabled={true}

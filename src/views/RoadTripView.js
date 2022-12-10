@@ -69,7 +69,7 @@ const RoadTripView = ({navigation, route}) => {
         setStartTimer(false);
         try {
           let response = await getJourneyInfo(journeyInfo.id);
-          navigation.navigate('Deposito', {'id': userInfo.id,'score_id': response.driver.idDriver});
+          navigation.navigate('Deposito', {'id': userInfo.id,'score_id': response.driver.idDriver,'eth':journeyInfo.price});
         } catch (error) {
           alert('No se pudo iniciar el deposito');     
         }

@@ -9,18 +9,25 @@ import {Ionicons} from '@expo/vector-icons';
 export default function DepositView({navigation, route}) {
   const idPassenger = route.params.id;
   const idDriver = route.params.score_id;
+  const eth = route.params.eth;
+
   const [visible, setVisible] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [text, setText] = React.useState('');
+  const [depositText, setDepositText] = React.useState('');
+  const [errorDeposit, setError] = React.useState(false);
 
 
   React.useEffect(() => {
     const handleResponse = async () => {
       try {
-        const response = await deposit(idPassenger);
+        const response = await deposit(idPassenger,eth.toString());
         setLoading(false)
+        setDepositText('Pago realizado!')
       } catch (error) {
         setVisible(true);
+        setDepositText('Hubo un error!')
+        setError(true)
         setText('No se ha podido realizar el deposito, contáctese con soporte.')
       }
     };
@@ -42,11 +49,11 @@ export default function DepositView({navigation, route}) {
     }
     return (
       <View style={styles.card}>
-        <Text style={styles.text}>Pago realizado!</Text>
+        <Text style={styles.text}>{depositText}</Text>
         <Ionicons
-          name="checkmark-done-outline"
+          name={errorDeposit? "close-outline":"checkmark-circle-outline"}
           size={40}
-          color={'black'}
+          color={errorDeposit ? 'red':'green'}
         />
         <Button
           onPress={() => navigation.navigate('Calificacion', {'id': idDriver})}
