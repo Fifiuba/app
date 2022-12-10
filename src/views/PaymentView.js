@@ -5,7 +5,6 @@ import {Ionicons} from '@expo/vector-icons';
 import pay from '../services/Payment';
 
 
-
 export default function PaymentView({navigation, route}) {
   const idDriver = route.params.id;
   const idPassanger = route.params.score_id;
@@ -21,13 +20,13 @@ export default function PaymentView({navigation, route}) {
     const handleResponse = async () => {
       try {
         const response = await pay(idDriver);
-        setLoading(false)
-        setPayText('Pago realizado!')
+        setLoading(false);
+        setPayText('Pago realizado!');
       } catch (error) {
-        setPayText('Hubo un error!')
-        setError(true)
+        setPayText('Hubo un error!');
+        setError(true);
         setVisible(true);
-        setText('No se ha podido realizar el deposito, contáctese con soporte.')
+        setText('No se ha podido realizar el deposito, contáctese con soporte.');
       }
     };
     handleResponse();
@@ -50,13 +49,16 @@ export default function PaymentView({navigation, route}) {
       <View style={styles.card}>
         <Text style={styles.text}>{paytext}</Text>
         <Ionicons
-          name={errorPayment? "close-outline":"checkmark-circle-outline"}
+          name={errorPayment? 'close-outline':'checkmark-circle-outline'}
           size={40}
           color={errorPayment ? 'red':'green'}
         />
         <Button
           onPress={() => navigation.navigate('Calificacion', {'id': idPassanger})}
         >Calificar</Button>
+        <Button
+          onPress={() => navigation.navigate('Home')}
+        >Inicio</Button>
       </View>
     );
   };

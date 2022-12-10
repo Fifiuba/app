@@ -43,11 +43,8 @@ export default function App() {
         if (finalStatus !== 'granted') {
           alert('Failed to get push token for push notification!');
           return;
-        }
-         
+        }         
         token = (await Notifications.getExpoPushTokenAsync()).data;
-
-        console.log('token:' +token);
         
       } else {
         alert('Must use physical device for Push Notifications');
@@ -60,15 +57,11 @@ export default function App() {
       try {
         const token = await AsyncStorage.getItem('token');
         const userType = await AsyncStorage.getItem('user_type');
-        console.log('token en async:' + token)
-        console.log('usertype en async:' + token)
-
         if (token && userType) {
           setIsLoggedIn(true)
         }          
       } catch (error) {
         setIsLoggedIn(false)
-        console.error('No token saved')
       }
     }
 
@@ -81,7 +74,6 @@ export default function App() {
        console.log(token)
        setExpoPushToken(token)})
       notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-        //console.log(notification)
         setNotification(notification);
       })
       return () => {

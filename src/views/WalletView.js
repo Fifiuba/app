@@ -16,7 +16,7 @@ export default function WalletView() {
   const getWallet = async () => {
     try {
       const response = await getWalletAmount(userInfo.id);
-      console.log(response)
+      console.log(response);
       setAmount('0.0002 ETH');
       setAddress(response.address);
     } catch (error) {

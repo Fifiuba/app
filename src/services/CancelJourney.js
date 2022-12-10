@@ -19,8 +19,8 @@ const cancelJourney = async (journeyInfo) => {
           to: journeyInfo.to,
         },
         {
-          headers: {Authorization: `Bearer ${token}`}
-        }
+          headers: {Authorization: `Bearer ${token}`},
+        },
     );
     console.log('response cancel journey:', response.data);
     return response.data;

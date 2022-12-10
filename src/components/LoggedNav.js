@@ -30,6 +30,7 @@ export default function LoggedNav({onLogin}) {
 
   const token = useContext(TokenContext);
 
+
   const setEmpty = (data) => {
     const keys = Object.getOwnPropertyNames(data);
     for (let idx = 0; idx < keys.length; idx++) {
@@ -53,7 +54,7 @@ export default function LoggedNav({onLogin}) {
         if (userInfo) {
           setUserInfo(setEmpty(userInfo[0]));
           setUserTypeInfo(setEmpty(userInfo[1]));
-          await sentTokenInfo(userInfo[0].id, token);
+          if (token != '') await sentTokenInfo(userInfo[0].id, token);
         }
       } catch (error) {
         alert('Se ha producido un error al buscar el usuario');
@@ -62,7 +63,7 @@ export default function LoggedNav({onLogin}) {
       }
     };
     handleProfile();
-  }, []);
+  }, [token]);
 
   return (
     <LoginContext.Provider value={onLogin}>
@@ -119,14 +120,14 @@ export default function LoggedNav({onLogin}) {
             component={WalletView}
           />
           <Stack.Screen
-          options={{title: '', headerShown: false}}
-          name="Deposito"
-          component={DepositView}
+            options={{title: '', headerShown: false}}
+            name="Deposito"
+            component={DepositView}
           />
           <Stack.Screen
-          options={{title: '', headerShown: false}}
-          name="Pago"
-          component={PaymentView}
+            options={{title: '', headerShown: false}}
+            name="Pago"
+            component={PaymentView}
           />
         </Stack.Navigator>
       </UserContext.Provider>

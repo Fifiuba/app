@@ -10,7 +10,7 @@ const getJourneyInfo = async (id) => {
         `https://api-gateway-solfonte.cloud.okteto.net/journey/${id}`,
         {
           headers: {Authorization: `Bearer ${token}`},
-        }
+        },
     );
     console.log(response.data);
     return response.data;

@@ -15,7 +15,7 @@ const createJourney = async (origin, destination, userId, distance) => {
         },
         {
           headers: {Authorization: `Bearer ${token}`},
-        }
+        },
     );
     return response.data;
   } catch (error) {

@@ -68,13 +68,13 @@ const RoadTripView = ({navigation, route}) => {
       if (finished) {
         setStartTimer(false);
         try {
-          let response = await getJourneyInfo(journeyInfo.id);
-          navigation.navigate('Deposito', {'id': userInfo.id,'score_id': response.driver.idDriver,'eth':journeyInfo.price});
+          const response = await getJourneyInfo(journeyInfo.id);
+          navigation.navigate('Deposito', {'id': userInfo.id, 'score_id': response.driver.idDriver, 'eth': journeyInfo.price});
         } catch (error) {
-          alert('No se pudo iniciar el deposito');     
+          alert('No se pudo iniciar el deposito');
         }
       }
-    }
+    };
     handleResponse();
   }, [finished]);
 
@@ -98,11 +98,11 @@ const RoadTripView = ({navigation, route}) => {
 
   const handleViewDriverInfo = async () => {
     try {
-      let journey = await getJourneyInfo(journeyInfo.id);
+      const journey = await getJourneyInfo(journeyInfo.id);
       const user = await getUserInfo(journey.driver.idDriver);
-      let response = await getDriverInfo(journey.driver.idDriver);
+      const response = await getDriverInfo(journey.driver.idDriver);
       const comments = await getOpinion(journey.driver.idDriver, 'driver');
-      navigation.navigate('PerfilChofer', {'data': response, 'user': user,'opinions':comments});
+      navigation.navigate('PerfilChofer', {'data': response, 'user': user, 'opinions': comments});
     } catch (error) {
       console.error(error.message);
     }
