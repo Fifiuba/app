@@ -11,7 +11,7 @@ export default function DepositView({navigation, route}) {
   const eth = route.params.eth;
 
   const [visible, setVisible] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
   const [text, setText] = React.useState('');
   const [depositText, setDepositText] = React.useState('');
   const [errorDeposit, setError] = React.useState(false);
@@ -27,6 +27,7 @@ export default function DepositView({navigation, route}) {
         setVisible(true);
         setDepositText('Hubo un error!');
         setError(true);
+        setLoading(false);
         setText('No se ha podido realizar el deposito, contáctese con soporte.');
       }
     };

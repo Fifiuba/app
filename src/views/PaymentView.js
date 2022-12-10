@@ -8,9 +8,11 @@ import pay from '../services/Payment';
 export default function PaymentView({navigation, route}) {
   const idDriver = route.params.id;
   const idPassanger = route.params.score_id;
+  const eth = route.params.eth;
+
 
   const [visible, setVisible] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
   const [text, setText] = React.useState('');
   const [paytext, setPayText] = React.useState('');
   const [errorPayment, setError] = React.useState(false);
@@ -19,11 +21,12 @@ export default function PaymentView({navigation, route}) {
   React.useEffect(() => {
     const handleResponse = async () => {
       try {
-        const response = await pay(idDriver);
+        const response = await pay(idDriver,eth.toString());
         setLoading(false);
         setPayText('Pago realizado!');
       } catch (error) {
         setPayText('Hubo un error!');
+        setLoading(false);
         setError(true);
         setVisible(true);
         setText('No se ha podido realizar el deposito, contáctese con soporte.');
