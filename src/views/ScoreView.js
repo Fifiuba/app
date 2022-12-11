@@ -6,7 +6,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import scoreUser from '../services/ScoreUser';
 export default function ScoreView({navigation, route}) {
-  const [text, setText] = useState('pasajero');
   const id = route.params.id;
 
   const [defaultRating, setDefaultRating] = useState(2);
@@ -41,19 +40,6 @@ export default function ScoreView({navigation, route}) {
     );
   };
 
-  React.useEffect(() => {
-    const getUserType = async () => {
-      try {
-        const user = await AsyncStorage.getItem('user_type');
-        if (user !== 'driver') {
-          setText('chofer');
-        }
-      } catch (error) {
-        console.error(error.message);
-      }
-    };
-    getUserType();
-  }, []);
   const [comment, setComment] = useState('');
   const [visible, setVisible] = React.useState(false);
 
@@ -90,7 +76,7 @@ export default function ScoreView({navigation, route}) {
             console.log('score');
             handleScoreUser();
           }}>
-          <Text style={styles.buttonText}>Calificar {text}</Text>
+          <Text style={styles.buttonText}>Aceptar</Text>
         </Button>
       </View>
       <Snackbar

@@ -17,20 +17,33 @@ export default function WalletView() {
   const getWallet = async () => {
     try {
       const wallet = await getWalletAmount(userInfo.id);
-      const balance = await getWalletBalance(userInfo.id)
-      setAmount(` ${balance.balance} ETH`);
       setAddress(wallet.address);
     } catch (error) {
       setVisible(true);
       setText('No se ha podido obtener informacion sobre la billetera');
       setAddress('');
-      setAmount('No encontrado');
     }
   };
 
+  const getBalance = async () =>{
+    try {
+      const balance = await getWalletBalance(userInfo.id)
+      setAmount(` ${balance.balance} ETH`);
+    } catch (error) {
+      setVisible(true);
+      setText('No se ha podido obtener informacion sobre el balance');
+      setAmount('No encontrado');
+    }
+
+  }
+
   useEffect(() =>{
     getWallet();
-  }, [address,amount]);
+  }, [address]);
+
+  useEffect(() =>{
+    getBalance();
+  }, []);
 
 
   return (

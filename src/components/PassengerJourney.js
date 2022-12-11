@@ -66,9 +66,6 @@ const PassengerJourney = ({navigation}) => {
     setRoute(route);
     setOrigin(route[0]);
     setDestination(route[(route.length)-1]);
-    console.log('distance:', distance);
-    console.log('origin:', origin);
-    console.log('destination:', destination);
   };
 
   const handleGetInfoJourney = async () => {
@@ -82,7 +79,6 @@ const PassengerJourney = ({navigation}) => {
         if (journeyPrice != 0) {
           setPrice(journeyPrice);
           setPriceSetted(true);
-          console.log('price distinto es de ' + journeyPrice);
         }
       }
     } catch (error) {
@@ -108,6 +104,7 @@ const PassengerJourney = ({navigation}) => {
           'to': journeyInfo.to,
         },
         'coords': {route},
+        'streets': {'from':searchOrigin,'to':searchDestination}
       });
     } catch (error) {
       console.error(error.message);
@@ -130,7 +127,7 @@ const PassengerJourney = ({navigation}) => {
           setSearchPhrase={setSearchOrigin}
           clicked={clicked}
           setClicked={setClicked}
-          placeholderValue="Buscar origen"
+          placeholderValue="Calle origen, localidad origen"
         />
       </View>
       <View style={styles.searchBarContainer}>
@@ -139,7 +136,7 @@ const PassengerJourney = ({navigation}) => {
           setSearchPhrase={setSearchDestination}
           clicked={clicked}
           setClicked={setClicked}
-          placeholderValue="Buscar destino"
+          placeholderValue="Calle destino, localidad destino"
         />
       </View>
       <MapView

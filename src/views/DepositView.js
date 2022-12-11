@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {ActivityIndicator, Text, Snackbar, Button} from 'react-native-paper';
+import {ActivityIndicator, Text, Snackbar, Button,Colors} from 'react-native-paper';
 import deposit from '../services/Deposit';
 import {Ionicons} from '@expo/vector-icons';
 
@@ -56,11 +56,16 @@ export default function DepositView({navigation, route}) {
           color={errorDeposit ? 'red':'green'}
         />
         <Button
+          color={Colors.green800}
+          mode="contained"
           onPress={() => navigation.navigate('Calificacion', {'id': idDriver})}
-        >Calificar</Button>
+        >Calificar chofer</Button>
         <Button
+          color={Colors.blue800}
+          style={{marginVertical: 10}}
+          mode="contained"
           onPress={() => navigation.navigate('Home')}
-        >Inicio</Button>
+        >Ir a inicio</Button>
       </View>
     );
   };

@@ -8,6 +8,7 @@ export default function JourneyView({route, navigation}) {
   /* eslint-disable no-unused-vars */
   const journeyInfo = route.params.journeyInfo;
   const coords = route.params.coords;
+  const streets = route.params.streets
 
   const [loading, setLoading] = useState(true);
   const [cancel, setCancel] = useState(false);
@@ -60,6 +61,10 @@ export default function JourneyView({route, navigation}) {
     <View style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.text}>Esperando un chofer disponible</Text>
+        <Text style={styles.streetText}>Datos del viaje</Text>
+        <Text style={styles.streetText}>Desde: {streets.from} </Text>
+        <Text style={styles.streetText}>Hasta: {streets.to} </Text>
+        <Text style={styles.streetText}>Precio: {journeyInfo.price} </Text>
         { loading &&
           <ActivityIndicator
             animating={loading}
@@ -96,7 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#dddddd',
   },
   card: {
-    height: 270,
+    height: '80%',
     width: 360,
     padding: 15,
     backgroundColor: 'white',
@@ -133,4 +138,8 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingLeft: 10,
   },
+  streetText: {
+    color: '#282829',
+    textAlign: 'left',
+  }
 });

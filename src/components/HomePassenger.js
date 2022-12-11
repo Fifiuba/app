@@ -75,7 +75,7 @@ const HomePassenger = () => {
         style={styles.flatList}
         ListEmptyComponent={
           <Text style={styles.emptyListText}>
-            No has realizado ningún viaje aún!
+            Toca para ver tus ultimos viajes!
           </Text>}
       />);
   };

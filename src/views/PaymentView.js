@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {ActivityIndicator, Text, Snackbar, Button} from 'react-native-paper';
+import {ActivityIndicator, Text, Snackbar, Button,Colors} from 'react-native-paper';
 import {Ionicons} from '@expo/vector-icons';
 import pay from '../services/Payment';
 
@@ -57,11 +57,15 @@ export default function PaymentView({navigation, route}) {
           color={errorPayment ? 'red':'green'}
         />
         <Button
+          color={Colors.green800}
+          mode="contained"
           onPress={() => navigation.navigate('Calificacion', {'id': idPassanger})}
-        >Calificar</Button>
+        >Calificar pasajero</Button>
         <Button
+          color={Colors.blue800}
+          mode="contained"
           onPress={() => navigation.navigate('Home')}
-        >Inicio</Button>
+        >Ir a inicio</Button>
       </View>
     );
   };

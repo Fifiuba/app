@@ -24,7 +24,6 @@ const RoadTripView = ({navigation, route}) => {
   const userInfo = user.userInfo;
   const [startTimer, setStartTimer] = useState(false);
   const [finished, setFinished] = useState(false);
-  const [cancelled, setCancelled] = useState(false);
 
   const [origin, setOrigin] = useState({
     latitude: journeyInfo.from[0],
@@ -44,7 +43,6 @@ const RoadTripView = ({navigation, route}) => {
       if (data !== undefined) {
         if (data.status == 'started' && data.id == journeyInfo.id) {
           setStartTimer(true);
-          setCancelled(true);
         }
       }
     }
@@ -77,24 +75,6 @@ const RoadTripView = ({navigation, route}) => {
     };
     handleResponse();
   }, [finished]);
-
-
-  const handleCancelJourney = async () => {
-    try {
-      const response = await cancelJourney(journeyInfo);
-      console.log('response:', response);
-      if (!(response === null)) {
-        if (response.status == 'cancelled') {
-          setCancelled(true);
-          alert('Viaje cancelado exitosamente');
-        }
-      } else {
-        alert('Error al cancelar viaje');
-      }
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
 
   const handleViewDriverInfo = async () => {
     try {
@@ -157,17 +137,6 @@ const RoadTripView = ({navigation, route}) => {
             strokeColor="red"
             strokeWidth={5} />
         </MapView>
-        <Button
-          style={styles.button}
-          color={Colors.red800}
-          mode="contained"
-          disabled={cancelled}
-          onPress={() => {
-            console.log('Cancel journey');
-            handleCancelJourney();
-          }}>
-          <Text style={styles.buttonText}>Cancelar viaje</Text>
-        </Button>
       </View>
     </>
   );
