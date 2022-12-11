@@ -58,11 +58,12 @@ export default function DepositView({navigation, route}) {
         <Button
           color={Colors.green800}
           mode="contained"
+          style={{ borderRadius:30}}
           onPress={() => navigation.navigate('Calificacion', {'id': idDriver})}
         >Calificar chofer</Button>
         <Button
           color={Colors.blue800}
-          style={{marginVertical: 10}}
+          style={{marginVertical: 10, borderRadius:30}}
           mode="contained"
           onPress={() => navigation.navigate('Home')}
         >Ir a inicio</Button>

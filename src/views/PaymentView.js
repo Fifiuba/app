@@ -59,12 +59,13 @@ export default function PaymentView({navigation, route}) {
         <Button
           color={Colors.green800}
           mode="contained"
+          style={{borderRadius: 30}}
           onPress={() => navigation.navigate('Calificacion', {'id': idPassanger})}
         >Calificar pasajero</Button>
         <Button
           color={Colors.blue800}
           mode="contained"
-          style={{marginVertical: 10}}
+          style={{marginVertical: 10, borderRadius:30}}
           onPress={() => navigation.navigate('Home')}
         >Ir a inicio</Button>
       </View>
