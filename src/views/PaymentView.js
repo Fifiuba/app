@@ -64,6 +64,7 @@ export default function PaymentView({navigation, route}) {
         <Button
           color={Colors.blue800}
           mode="contained"
+          style={{marginVertical: 10}}
           onPress={() => navigation.navigate('Home')}
         >Ir a inicio</Button>
       </View>
