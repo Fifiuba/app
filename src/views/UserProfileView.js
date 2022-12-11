@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   card: {
     padding: 15,
-    height: '60%',
+    height: '80%',
     width: '90%',
   },
 });

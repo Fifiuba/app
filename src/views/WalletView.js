@@ -4,6 +4,7 @@ import {Text, StyleSheet, View, Image, ScrollView} from 'react-native';
 import {TextInput, Snackbar} from 'react-native-paper';
 import {UserContext} from '../context/UserContext';
 import getWalletAmount from '../services/GetWalletAmount';
+import getWalletBalance from '../services/GetWalletBalance';
 
 export default function WalletView() {
   const user = useContext(UserContext);
@@ -15,20 +16,21 @@ export default function WalletView() {
 
   const getWallet = async () => {
     try {
-      const response = await getWalletAmount(userInfo.id);
-      console.log(response);
-      setAmount('0.0002 ETH');
-      setAddress(response.address);
+      const wallet = await getWalletAmount(userInfo.id);
+      const balance = await getWalletBalance(userInfo.id)
+      setAmount(` ${balance.balance} ETH`);
+      setAddress(wallet.address);
     } catch (error) {
       setVisible(true);
       setText('No se ha podido obtener informacion sobre la billetera');
       setAddress('');
+      setAmount('No encontrado');
     }
   };
 
   useEffect(() =>{
     getWallet();
-  }, [address]);
+  }, [address,amount]);
 
 
   return (
