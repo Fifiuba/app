@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const sentTokenInfo = async (userId, token) => {
   try {
-    console.log('token:' + token)
+    console.log('token:' + token);
     const response = await axios.post(
         'https://api-gateway-solfonte.cloud.okteto.net/notification/new_user',
         {

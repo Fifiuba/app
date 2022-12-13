@@ -1,7 +1,6 @@
 import axios from 'axios';
 export default async function sendPushNotification(notification) {
-    
-    await axios.post(
+  await axios.post(
       'https://api-gateway-solfonte.cloud.okteto.net/notification',
       {
         user_id: notification.user_id,

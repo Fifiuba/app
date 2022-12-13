@@ -5,7 +5,6 @@ import {Text, Button, Colors} from 'react-native-paper';
 
 import {UserContext} from '../context/UserContext';
 import TimerJourney from '../components/TimerJourney';
-import cancelJourney from '../services/CancelJourney';
 import getJourneyInfo from '../services/GetJourneyInfo';
 import getDriverInfo from '../services/GetDriverInfo';
 import getOpinion from '../services/GetOpinions';
@@ -67,7 +66,10 @@ const RoadTripView = ({navigation, route}) => {
         setStartTimer(false);
         try {
           const response = await getJourneyInfo(journeyInfo.id);
-          navigation.navigate('Deposito', {'id': userInfo.id, 'score_id': response.driver.idDriver, 'eth': journeyInfo.price});
+          navigation.navigate('Deposito',
+              {'id': userInfo.id,
+                'score_id': response.driver.idDriver,
+                'eth': journeyInfo.price});
         } catch (error) {
           alert('No se pudo iniciar el deposito');
         }
@@ -82,7 +84,10 @@ const RoadTripView = ({navigation, route}) => {
       const user = await getUserInfo(journey.driver.idDriver);
       const response = await getDriverInfo(journey.driver.idDriver);
       const comments = await getOpinion(journey.driver.idDriver, 'driver');
-      navigation.navigate('PerfilChofer', {'data': response, 'user': user, 'opinions': comments});
+      navigation.navigate('PerfilChofer',
+          {'data': response,
+            'user': user,
+            'opinions': comments});
     } catch (error) {
       console.error(error.message);
     }

@@ -1,11 +1,14 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {ActivityIndicator, Text, Snackbar, Button,Colors} from 'react-native-paper';
+import {
+  ActivityIndicator,
+  Text,
+  Snackbar,
+  Button,
+  Colors} from 'react-native-paper';
 import deposit from '../services/Deposit';
 import {Ionicons} from '@expo/vector-icons';
 import sendPushNotification from '../services/SendPushNotification';
-
-
 
 export default function DepositView({navigation, route}) {
   const idPassenger = route.params.id;
@@ -18,11 +21,10 @@ export default function DepositView({navigation, route}) {
   const [depositText, setDepositText] = React.useState('');
   const [errorDeposit, setError] = React.useState(false);
 
-
   React.useEffect(() => {
     const handleResponse = async () => {
       try {
-        const response = await deposit(idPassenger, eth.toString());
+        await deposit(idPassenger, eth.toString());
         setLoading(false);
         setDepositText('Deposito realizado!');
       } catch (error) {
@@ -37,14 +39,14 @@ export default function DepositView({navigation, route}) {
   React.useEffect(() => {
     const handleResponseNotification = async () => {
       try {
-        if (!loading){
+        if (!loading) {
           const notificacion = {
             'user_id': idPassenger,
             'title': 'Deposito realizado!',
             'body': 'Se ha realizado el pago correctamente!',
-            'data': {}
-          }
-          const res = await sendPushNotification(notificacion)
+            'data': {},
+          };
+          await sendPushNotification(notificacion);
         }
       } catch (error) {
         setVisible(true);
@@ -78,12 +80,12 @@ export default function DepositView({navigation, route}) {
         <Button
           color={Colors.green800}
           mode="contained"
-          style={{marginVertical: 10,borderRadius:30}}
+          style={{marginVertical: 10, borderRadius: 30}}
           onPress={() => navigation.navigate('Calificacion', {'id': idDriver})}
         >Calificar chofer</Button>
         <Button
           color={Colors.blue800}
-          style={{marginVertical: 10, borderRadius:30}}
+          style={{marginVertical: 10, borderRadius: 30}}
           mode="contained"
           onPress={() => navigation.navigate('Home')}
         >Ir a inicio</Button>

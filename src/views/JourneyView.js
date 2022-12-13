@@ -8,7 +8,7 @@ export default function JourneyView({route, navigation}) {
   /* eslint-disable no-unused-vars */
   const journeyInfo = route.params.journeyInfo;
   const coords = route.params.coords;
-  const streets = route.params.streets
+  const streets = route.params.streets;
 
   const [loading, setLoading] = useState(true);
   const [cancel, setCancel] = useState(false);
@@ -141,5 +141,5 @@ const styles = StyleSheet.create({
   streetText: {
     color: '#282829',
     textAlign: 'left',
-  }
+  },
 });

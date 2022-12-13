@@ -1,6 +1,11 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {ActivityIndicator, Text, Snackbar, Button,Colors} from 'react-native-paper';
+import {
+  ActivityIndicator,
+  Text,
+  Snackbar,
+  Button,
+  Colors} from 'react-native-paper';
 import {Ionicons} from '@expo/vector-icons';
 import pay from '../services/Payment';
 import sendPushNotification from '../services/SendPushNotification';
@@ -22,7 +27,7 @@ export default function PaymentView({navigation, route}) {
   React.useEffect(() => {
     const handleResponse = async () => {
       try {
-        const response = await pay(idDriver,eth.toString());
+        await pay(idDriver, eth.toString());
         setLoading(false);
         setPayText('Pago realizado!');
       } catch (error) {
@@ -37,14 +42,14 @@ export default function PaymentView({navigation, route}) {
   React.useEffect(() => {
     const handleResponseNotification = async () => {
       try {
-        if (!loading){
+        if (!loading) {
           const notificacion = {
             'user_id': idDriver,
             'title': 'Pago recibido!',
             'body': 'Se ha realizado el pago correctamente!',
-            'data': {}
-          }
-          const res = await sendPushNotification(notificacion)
+            'data': {},
+          };
+          await sendPushNotification(notificacion);
         }
       } catch (error) {
         setVisible(true);
@@ -78,13 +83,15 @@ export default function PaymentView({navigation, route}) {
         <Button
           color={Colors.green800}
           mode="contained"
-          style={{marginVertical: 10,borderRadius: 30}}
-          onPress={() => navigation.navigate('Calificacion', {'id': idPassanger})}
+          style={{marginVertical: 10, borderRadius: 30}}
+          onPress={() =>
+            navigation.navigate('Calificacion',
+                {'id': idPassanger})}
         >Calificar pasajero</Button>
         <Button
           color={Colors.blue800}
           mode="contained"
-          style={{marginVertical: 10, borderRadius:30}}
+          style={{marginVertical: 10, borderRadius: 30}}
           onPress={() => navigation.navigate('Home')}
         >Ir a inicio</Button>
       </View>
