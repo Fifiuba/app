@@ -5,16 +5,19 @@ import {Text,
   Button,
   ActivityIndicator,
   Colors,
+  Snackbar,
 } from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
 import resetPassword from '../services/ResetPassword';
 import {constraints} from '../utils/Constraints';
 import {isValidEmail} from '../utils/EmailValidation';
+import InfoModal from '../components/InfoModal';
 
 const ResetPasswordView = () => {
   const [send, setSend] = useState(false);
   const [msg, setMsg] = useState('');
+  const [visible, setVisible] = React.useState(false);
   const [loading, setLoading] = useState(false);
 
   const {control, handleSubmit, formState: {errors}} = useForm({
@@ -27,10 +30,8 @@ const ResetPasswordView = () => {
     try {
       console.log('email:', data.email);
       setLoading(true);
-      await resetPassword(data.email, setSend, setMsg, setLoading);
+      await resetPassword(data.email, setSend, setMsg, setLoading, setVisible);
     } catch (error) {
-      console.error(error.message);
-      alert(error.message);
       return null;
     }
   };
@@ -51,7 +52,6 @@ const ResetPasswordView = () => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              mode="outlined"
               label="Correo electrónico"
               placeholder="Correo electrónico"
             />
@@ -71,15 +71,23 @@ const ResetPasswordView = () => {
         />}
         <Button
           style={styles.button}
-          color={Colors.blue800}
+          color={Colors.green600}
           mode="contained"
           onPress={handleSubmit(onSubmit)}>
-          <Text style={{fontSize: 20, color: 'white'}}>Enviar link</Text>
+          <Text style={styles.textButton}>Enviar link</Text>
         </Button>
-        { send &&
-            <Text style={styles.successMsg}>{msg}</Text>
-        }
+        { send && <InfoModal modalText={msg}/>}
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        action={{
+          label: 'Ok',
+          onPress: () => {
+          },
+        }}>
+        {msg}
+      </Snackbar>
     </View>
   );
 };
@@ -87,13 +95,12 @@ const ResetPasswordView = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#dddddd',
   },
   card: {
-    marginTop: 170,
-    height: 340,
+    height: 350,
     width: 350,
     padding: 35,
     backgroundColor: 'white',
@@ -101,32 +108,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    marginTop: 20,
     fontSize: 23,
-    marginBottom: 25,
     textAlign: 'center',
+    marginBottom: 25,
   },
   input: {
-    marginTop: 5,
-    marginBottom: 5,
+    marginTop: 10,
+    marginBottom: 10,
   },
   button: {
-    padding: 5,
-    width: 215,
-    height: 50,
-    marginLeft: 30,
-    marginTop: 40,
-    marginBottom: 15,
+    height: 45,
+    width: 180,
+    justifyContent: 'center',
+    borderRadius: 30,
+    marginTop: 15,
+    alignSelf: 'center',
   },
-  successMsg: {
-    marginTop: 10,
-    textAlign: 'center',
-    fontSize: 18,
-    color: '#616161',
-    backgroundColor: '#c8e6c9',
-    borderRadius: 16,
-    height: 40,
-    paddingTop: 5,
+  textButton: {
+    color: 'white',
   },
 });
 
