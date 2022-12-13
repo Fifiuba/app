@@ -93,7 +93,6 @@ const RoadTripView = ({navigation, route}) => {
     }
   };
 
-
   return (
     <>
       <View style={styles.appBar}>

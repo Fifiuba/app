@@ -21,7 +21,7 @@ const InfoModal = ({modalText}) => {
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}
             >
-              <Text style={styles.textStyle}>Entendido</Text>
+              <Text style={styles.textStyle}>Ok</Text>
             </Pressable>
           </View>
         </View>
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 20,
+    width: 70,
     padding: 10,
     elevation: 2,
   },

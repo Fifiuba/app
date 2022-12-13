@@ -85,7 +85,6 @@ export default function Profile({navigation}) {
       if (response) {
         updateInfo(userInfo, response[0]);
         updateInfo(userTypeInfo, response[1]);
-        navigation.navigate('Home');
       }
     } catch (error) {
       alert(error.message);
@@ -234,11 +233,11 @@ export default function Profile({navigation}) {
         </View>
         <View style={styles.buttonContainer}>
           <Button
-            style={styles.saveButton}
+            style={styles.button}
             color={Colors.blue800}
             mode="contained"
             onPress={handleSubmit(onSubmit)}>
-            <Text style={styles.buttonText}>Guardar</Text>
+            <Text>Guardar</Text>
           </Button>
           { save && <InfoModal modalText={msg}/>}
         </View>
@@ -274,28 +273,13 @@ const styles = StyleSheet.create({
     marginTop: 25,
     alignItems: 'center',
   },
-  saveButton: {
+  button: {
     height: 45,
-    width: 250,
+    width: 200,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
-    backgroundColor: Colors.blue700,
     margin: 10,
-  },
-  successMsg: {
-    marginTop: 15,
-    textAlign: 'center',
-    fontSize: 18,
-    color: '#616161',
-    backgroundColor: '#c8e6c9',
-    borderRadius: 30,
-    height: 45,
-    width: 250,
-    paddingTop: 10,
-  },
-  buttonText: {
-    fontSize: 16,
   },
   info: {
     fontSize: 16,
