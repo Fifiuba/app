@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const sentTokenInfo = async (userId, token) => {
+const sendTokenInfo = async (userId, token) => {
   try {
     console.log('token:' + token);
     const response = await axios.post(
@@ -13,9 +13,8 @@ const sentTokenInfo = async (userId, token) => {
     return response.data;
   } catch (error) {
     alert('Su dispositivo no puede recibir notificaciones en esta version.');
-    console.error(error.message);
     return null;
   }
 };
 
-export default sentTokenInfo;
+export default sendTokenInfo;

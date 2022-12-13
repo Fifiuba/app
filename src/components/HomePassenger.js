@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 /* eslint-disable max-len */
 import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
-import {Button, Text, ActivityIndicator, Card, Title, Colors} from 'react-native-paper';
+import {Button, Text, ActivityIndicator, Card, Title, Colors, Snackbar} from 'react-native-paper';
 
 import getAddressFromCoords from '../services/GetAddressFromCoords';
 import {UserContext} from '../context/UserContext';
@@ -11,6 +11,9 @@ const HomePassenger = () => {
   const [lastJourneys, setLastJourneys] = useState([]);
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState('Toca para ver tus ultimos viajes!');
+
+  const [visible, setVisible] = useState(false);
+  const [msg, setMsg] = useState('');
 
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
@@ -48,13 +51,14 @@ const HomePassenger = () => {
           if (lastJourneys.length == 0) setText('No se han encontrado últimos viajes!');
         } catch (error) {
           setLoading(false);
-          console.error(error.message);
-          alert('Se ha producido un error al intentar buscar los viajes!');
+          setVisible(true);
+          setMsg('Se ha producido un error al intentar buscar los viajes');
         }
       });
     } catch (error) {
       setLoading(false);
-      alert(error);
+      setVisible(true);
+      setMsg('Se ha producido un error al intentar buscar los viajes');
     }
   };
 
@@ -63,7 +67,7 @@ const HomePassenger = () => {
       return (
         <ActivityIndicator
           style={{justifyContent: 'center', alignSelf: 'center', padding: 5}}
-          size={'medium'}
+          size="small"
           animating={loading}
           color={'#2C3333'} />
       );
@@ -110,6 +114,16 @@ const HomePassenger = () => {
       >
         <Text style={styles.buttonText}> Buscar últimos viajes </Text>
       </Button>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        action={{
+          label: 'Ok',
+          onPress: () => {
+          },
+        }}>
+        {msg}
+      </Snackbar>
     </View>
   );
 };

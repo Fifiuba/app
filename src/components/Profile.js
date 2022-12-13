@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {Text, View, Image, StyleSheet, ScrollView} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
-import {Colors, Button, TextInput} from 'react-native-paper';
+import {Colors, Button, TextInput, Snackbar} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import editProfile from '../services/EditProfile';
@@ -77,6 +77,9 @@ export default function Profile({navigation}) {
     console.log('info:', info);
   };
 
+  const [visible, setVisible] = React.useState(false);
+  const [text, setText] = React.useState('');
+
   const onSubmit = async (data) => {
     try {
       console.log('data:', data);
@@ -87,8 +90,8 @@ export default function Profile({navigation}) {
         updateInfo(userTypeInfo, response[1]);
       }
     } catch (error) {
-      alert(error.message);
-      console.error(error.message);
+      setVisible(true);
+      setText('Se ha producido un error al editar el perfil');
     }
   };
 
@@ -242,6 +245,18 @@ export default function Profile({navigation}) {
           { save && <InfoModal modalText={msg}/>}
         </View>
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => {
+          setVisible(false);
+        }}
+        action={{
+          label: 'Ok',
+          onPress: () => {
+          },
+        }}>
+        {text}
+      </Snackbar>
     </ScrollView>
   );
 };

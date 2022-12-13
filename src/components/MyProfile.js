@@ -6,7 +6,7 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import {Colors, TextInput, Button} from 'react-native-paper';
+import {Colors, TextInput, Button, Snackbar} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {UserContext} from '../context/UserContext';
@@ -31,12 +31,16 @@ const MyProfile = ({navigation}) => {
     setUserType();
   }, []);
 
+  const [visible, setVisible] = useState(false);
+  const [msg, setMsg] = useState('');
+
   const logOut = async () => {
     try {
       await AsyncStorage.multiRemove(await AsyncStorage.getAllKeys());
       onLogin(false);
     } catch (error) {
-      alert('No se pudo cerrar sesión correctamente');
+      setVisible(true);
+      setMsg('No se pudo cerrar sesión correctamente');
     }
   };
 
@@ -124,6 +128,16 @@ const MyProfile = ({navigation}) => {
           </Button>
         </View>
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        action={{
+          label: 'Ok',
+          onPress: () => {
+          },
+        }}>
+        {msg}
+      </Snackbar>
     </ScrollView>
   );
 };

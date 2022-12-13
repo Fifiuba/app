@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
-import {Avatar, Button, Colors} from 'react-native-paper';
+import {Avatar, Button, Colors, Snackbar} from 'react-native-paper';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 // import schedulePushNotification from '../utils/PushNotifications';
 
@@ -11,11 +11,12 @@ import finishJourney from '../services/FinishJourney';
 import getUserInfo from '../services/GetUserInfo';
 import getOpinion from '../services/GetOpinions';
 
-
 import {NotificationContext} from '../context/NotificationContext';
 
 const blueCar = require('../../assets/icon-car-standard.png');
 const proCar = require('../../assets/icon-car-vip.png');
+
+import InfoModal from './InfoModal';
 
 import {UserContext} from '../context/UserContext';
 
@@ -34,19 +35,25 @@ const DriverJourney = ({navigation, route}) => {
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
 
+  const [cancelled, setCancelled] = useState(false);
+  const [text, setText] = useState('');
+
+  const [visible, setVisible] = useState(false);
+  const [msg, setMsg] = useState('');
+
   React.useEffect(() => {
     console.log(notification);
     if (notification) {
       const data = notification.request.content.data;
       if (data !== undefined) {
         if (data.status == 'cancelled' && data.id == journeyInfo.id) {
-          alert('El viaje ha sido cancelado');
+          setCancelled(true);
+          setText('El viaje ha sido cancelado');
           navigation.navigate('HomeDriver');
         }
       }
     }
   }, [notification]);
-
 
   const goToPassenger = () => {
     const from = `${myLocation.latitude}, ${myLocation.longitude}`;
@@ -78,7 +85,8 @@ const DriverJourney = ({navigation, route}) => {
       setTo(end);
       setStarted(false);
     } catch (error) {
-      alert(error);
+      setVisible(true);
+      setMsg('Se ha producido un error al buscar la ruta');
     }
   };
 
@@ -100,7 +108,8 @@ const DriverJourney = ({navigation, route}) => {
       setInplace(false);
       navigation.navigate('Pago', {'id': userInfo.id, 'score_id': journey.idPassenger, 'eth': journey.price});
     } catch (error) {
-      alert('No se pudo finalizar el viaje');
+      setVisible(true);
+      setMsg('No se pudo finalizar el viaje');
     }
   };
 
@@ -179,8 +188,18 @@ const DriverJourney = ({navigation, route}) => {
           <Text>Terminar</Text>
         </Button>
       </View>
+      { cancelled && <InfoModal modalText={text}/>}
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        action={{
+          label: 'Ok',
+          onPress: () => {
+          },
+        }}>
+        {msg}
+      </Snackbar>
     </View>
-
   );
 };
 

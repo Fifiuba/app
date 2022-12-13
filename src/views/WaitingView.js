@@ -61,6 +61,7 @@ export default function WaitingView({navigation, route}) {
           animating={true}
           color="#757575"
           style={{marginTop: 10}}
+          size="small"
         />
       </View>
       <Snackbar

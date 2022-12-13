@@ -13,8 +13,10 @@ const HomeDriver = ({navigation}) => {
   const [avaliableJourneys, setAvaliableJourneys] = useState([]);
   const [loading, setLoading] = useState(false);
   const [myLocation, setLocation] = useState();
+
   const [visible, setVisible] = React.useState(false);
   const [text, setText] = React.useState('');
+
   const [textInfo, setTextInfo] = React.useState('Toca para ver los viajes cerca!');
 
   useEffect(() => {
@@ -24,7 +26,8 @@ const HomeDriver = ({navigation}) => {
   async function getLocationPermission() {
     const {status} = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
-      alert('Permiso denegado');
+      setVisible(true);
+      setText('Permiso de localización denegado');
       return;
     }
 
@@ -101,7 +104,7 @@ const HomeDriver = ({navigation}) => {
       return (
         <ActivityIndicator
           animating={loading}
-          size={'medium'}
+          size="small"
           color="#757575"
           style={{marginTop: 10}}
         />

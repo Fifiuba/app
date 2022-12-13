@@ -13,7 +13,7 @@ import ScoreView from '../views/ScoreView';
 import {UserContext} from '../context/UserContext';
 import {TokenContext} from '../context/TokenContext';
 import {LoginContext} from '../context/LoginContext';
-import sentTokenInfo from '../services/SendTokenInfo';
+import sendTokenInfo from '../services/SendTokenInfo';
 import {constants} from '../utils/Constants';
 import UserProfileView from '../views/UserProfileView';
 import DriverProfileView from '../views/DriverProfileView';
@@ -29,7 +29,6 @@ export default function LoggedNav({onLogin}) {
   const [userTypeInfo, setUserTypeInfo] = useState('');
 
   const token = useContext(TokenContext);
-
 
   const setEmpty = (data) => {
     const keys = Object.getOwnPropertyNames(data);
@@ -54,7 +53,7 @@ export default function LoggedNav({onLogin}) {
         if (userInfo) {
           setUserInfo(setEmpty(userInfo[0]));
           setUserTypeInfo(setEmpty(userInfo[1]));
-          if (token != '') await sentTokenInfo(userInfo[0].id, token);
+          if (token != '') await sendTokenInfo(userInfo[0].id, token);
         }
       } catch (error) {
         alert('Se ha producido un error al buscar el usuario');
@@ -67,68 +66,56 @@ export default function LoggedNav({onLogin}) {
 
   return (
     <LoginContext.Provider value={onLogin}>
-      <UserContext.Provider value={{userInfo, userTypeInfo}}>
+      <UserContext.Provider value={{ userInfo, userTypeInfo }}>
         <Stack.Navigator initialRouteName={'Home'}>
           <Stack.Screen
-            options={{title: '', headerShown: false}}
+            options={{ title: '', headerShown: false }}
             name="Home"
-            component={HomeView}
-          />
+            component={HomeView} />
           <Stack.Screen
-            options={{title: ''}}
+            options={{ title: '' }}
             name="EditarPerfil"
-            component={ProfileView}
-          />
+            component={ProfileView} />
           <Stack.Screen
-            options={{title: ''}}
+            options={{ title: '' }}
             name="MiPerfil"
-            component={MyProfileView}
-          />
+            component={MyProfileView} />
           <Stack.Screen
-            options={{title: ''}}
+            options={{ title: '' }}
             name="ViajePasajero"
-            component={JourneyView}
-          />
+            component={JourneyView} />
           <Stack.Screen
-            options={{title: '', headerShown: false}}
+            options={{ title: '', headerShown: false }}
             name="EnViaje"
-            component={RoadTripView}
-          />
+            component={RoadTripView} />
           <Stack.Screen
-            options={{title: '', headerShown: false}}
+            options={{ title: '', headerShown: false }}
             name="ViajeChofer"
-            component={DriverJourneyView}
-          />
+            component={DriverJourneyView} />
           <Stack.Screen
-            options={{title: '', headerShown: false}}
+            options={{ title: '', headerShown: false }}
             name="Calificacion"
-            component={ScoreView}
-          />
+            component={ScoreView} />
           <Stack.Screen
-            options={{title: ''}}
+            options={{ title: '' }}
             name="PerfilUsuario"
-            component={UserProfileView}
-          />
+            component={UserProfileView} />
           <Stack.Screen
-            options={{title: ''}}
+            options={{ title: '' }}
             name="PerfilChofer"
-            component={DriverProfileView}
-          />
+            component={DriverProfileView} />
           <Stack.Screen
-            options={{title: ''}}
+            options={{ title: '' }}
             name="Billetera"
-            component={WalletView}
-          />
+            component={WalletView} />
           <Stack.Screen
-            options={{title: '', headerShown: false}}
+            options={{ title: '', headerShown: false }}
             name="Deposito"
-            component={DepositView}
-          />
+            component={DepositView} />
           <Stack.Screen
-            options={{title: '', headerShown: false}}
+            options={{ title: '', headerShown: false }}
             name="Pago"
-            component={PaymentView}
-          />
+            component={PaymentView} />
         </Stack.Navigator>
       </UserContext.Provider>
     </LoginContext.Provider>

@@ -55,7 +55,8 @@ const PassengerJourney = ({navigation}) => {
   async function getLocationPermission() {
     const {status} = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
-      alert('Permiso denegado');
+      setVisible(true);
+      setText('Permiso de localización denegado');
       return;
     }
 

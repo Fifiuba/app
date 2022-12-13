@@ -72,7 +72,7 @@ export default function WalletView() {
             />
 
             <Text style={{fontSize: 22}}>
-                    Saldo disponible
+              Saldo disponible
             </Text>
             <Text>
               {`${address.substring(0, 6)}...${address.substring(address.length -6, address.length -1)}`}
@@ -85,7 +85,7 @@ export default function WalletView() {
             />
             <ActivityIndicator
               animating={loading}
-              size={'small'}
+              size="small"
               color="#757575"
               style={{marginBottom: 25}}
             />

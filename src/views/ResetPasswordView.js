@@ -68,6 +68,7 @@ const ResetPasswordView = () => {
           animating={loading}
           color="#757575"
           style={{marginTop: 10}}
+          size="small"
         />}
         <Button
           style={styles.button}

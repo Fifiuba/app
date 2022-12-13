@@ -65,6 +65,7 @@ export default function DepositView({navigation, route}) {
             animating={loading}
             color="#757575"
             style={{marginTop: 10}}
+            size="small"
           />
         </View>
       );
