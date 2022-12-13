@@ -10,6 +10,7 @@ import getLastJourneysInfo from '../services/GetLastJourneysInfo';
 const HomePassenger = () => {
   const [lastJourneys, setLastJourneys] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [text, setText] = useState('Toca para ver tus ultimos viajes!');
 
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
@@ -44,6 +45,7 @@ const HomePassenger = () => {
           }
           setLoading(false);
           setLastJourneys(lastJourneys);
+          if (lastJourneys.length == 0) setText('No se han encontrado últimos viajes!');
         } catch (error) {
           setLoading(false);
           console.error(error.message);
@@ -61,7 +63,7 @@ const HomePassenger = () => {
       return (
         <ActivityIndicator
           style={{justifyContent: 'center', alignSelf: 'center', padding: 5}}
-          size={'larger'}
+          size={'medium'}
           animating={loading}
           color={'#2C3333'} />
       );
@@ -75,7 +77,7 @@ const HomePassenger = () => {
         style={styles.flatList}
         ListEmptyComponent={
           <Text style={styles.emptyListText}>
-            Toca para ver tus ultimos viajes!
+            {text}
           </Text>}
       />);
   };
