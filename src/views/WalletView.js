@@ -1,7 +1,11 @@
 import React, {useContext, useState, useEffect} from 'react';
 
 import {Text, StyleSheet, View, Image, ScrollView} from 'react-native';
-import {TextInput, Snackbar, Button, Colors} from 'react-native-paper';
+import {TextInput,
+  Snackbar,
+  Button,
+  Colors,
+  ActivityIndicator} from 'react-native-paper';
 import {UserContext} from '../context/UserContext';
 import getWalletInfo from '../services/GetWalletInfo';
 import getWalletBalance from '../services/GetWalletBalance';
@@ -15,6 +19,8 @@ export default function WalletView() {
 
   const [visible, setVisible] = React.useState(false);
   const [text, setText] = React.useState('');
+
+  const [loading, setLoading] = useState(false);
 
   const getWallet = async () => {
     try {
@@ -30,6 +36,7 @@ export default function WalletView() {
   const getBalance = async () =>{
     try {
       const balance = await getWalletBalance(userInfo.id);
+      setLoading(false);
       setAmount(` ${balance.balance} ETH`);
     } catch (error) {
       setVisible(true);
@@ -76,13 +83,22 @@ export default function WalletView() {
               mode="outline"
               value={amount}
             />
+            <ActivityIndicator
+              animating={loading}
+              size={'small'}
+              color="#757575"
+              style={{marginBottom: 25}}
+            />
+            <Button
+              color={Colors.green800}
+              mode="contained"
+              style={styles.button}
+              onPress={() => {
+                setLoading(true);
+                getBalance();
+              }}>
+              Actualizar balance</Button>
           </View>
-          <Button
-            color={Colors.green800}
-            mode="contained"
-            style={styles.button}
-            onPress={getBalance}>
-            Actualizar balance</Button>
         </View>
       </View>
       <Snackbar
@@ -117,9 +133,10 @@ const styles = StyleSheet.create({
     marginTop: 60,
   },
   subcontainer: {
-    height: 350,
+    height: 450,
     justifyContent: 'center',
     alignItems: 'center',
+    alignContent: 'center',
   },
   name: {
     fontSize: 28,
