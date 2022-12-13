@@ -6,6 +6,7 @@ import {
 import {Text,
   Button,
   Colors,
+  Snackbar,
 } from 'react-native-paper';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -15,10 +16,16 @@ import getRoute from '../services/GetRoute';
 import createJourney from '../services/CreateJourney';
 import {UserContext} from '../context/UserContext';
 import getJourneyPrice from '../services/GetJourneyPrice';
+import getWalletBalance from '../services/GetWalletBalance';
 
 const PassengerJourney = ({navigation}) => {
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
+
+  const [amount, setAmount] = useState(0);
+
+  const [visible, setVisible] = React.useState(false);
+  const [text, setText] = React.useState('');
 
   const [origin, setOrigin] = useState({
     latitude: -34.59908,
@@ -48,7 +55,7 @@ const PassengerJourney = ({navigation}) => {
   async function getLocationPermission() {
     const {status} = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
-      alert('Permission denied');
+      alert('Permiso denegado');
       return;
     }
 
@@ -87,25 +94,44 @@ const PassengerJourney = ({navigation}) => {
     }
   };
 
+  const getBalance = async () =>{
+    try {
+      const balance = await getWalletBalance(userInfo.id);
+      setAmount(balance.balance);
+    } catch (error) {
+      setVisible(true);
+      setText('No se ha podido obtener información sobre el balance');
+    }
+  };
+
+  useEffect(() =>{
+    getBalance();
+  }, [amount]);
+
   const handleCreateJourney = async () => {
     try {
-      const journeyInfo =
-        await createJourney(origin, destination, userInfo.id, distance);
-      console.log('Response CreateJourney', journeyInfo);
-      navigation.navigate('ViajePasajero', {
-        'journeyInfo': {
-          'id': journeyInfo._id,
-          'status': journeyInfo.status,
-          'idPassenger': journeyInfo.idPassenger,
-          'price': journeyInfo.price,
-          'startOn': journeyInfo.startOn,
-          'finishOn': journeyInfo.__finishOn,
-          'from': journeyInfo.from,
-          'to': journeyInfo.to,
-        },
-        'coords': {route},
-        'streets': {'from':searchOrigin,'to':searchDestination}
-      });
+      if (amount != 0) {
+        const journeyInfo =
+          await createJourney(origin, destination, userInfo.id, distance);
+        console.log('Response CreateJourney', journeyInfo);
+        navigation.navigate('ViajePasajero', {
+          'journeyInfo': {
+            'id': journeyInfo._id,
+            'status': journeyInfo.status,
+            'idPassenger': journeyInfo.idPassenger,
+            'price': journeyInfo.price,
+            'startOn': journeyInfo.startOn,
+            'finishOn': journeyInfo.__finishOn,
+            'from': journeyInfo.from,
+            'to': journeyInfo.to,
+          },
+          'coords': {route},
+          'streets': {'from': searchOrigin, 'to': searchDestination},
+        });
+      } else {
+        setVisible(true);
+        setText('No tienes dinero suficiente para realizar el viaje');
+      }
     } catch (error) {
       console.error(error.message);
       return null;
@@ -190,6 +216,18 @@ const PassengerJourney = ({navigation}) => {
           <Text style={!priceSetted ? styles.journeyButtonText : styles.titleButton}>Solicitar viaje</Text>
         </Button>
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => {
+          setVisible(false);
+        }}
+        action={{
+          label: 'Ok',
+          onPress: () => {
+          },
+        }}>
+        {text}
+      </Snackbar>
     </View>
   );
 };
