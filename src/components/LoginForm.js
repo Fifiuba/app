@@ -1,6 +1,6 @@
 import {useState, useContext} from 'react';
 import {View, StyleSheet, Text, Switch, Image} from 'react-native';
-import {TextInput, Button, Colors} from 'react-native-paper';
+import {TextInput, Button, Colors, Snackbar} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
 import {constraints} from '../utils/Constraints';
@@ -24,6 +24,9 @@ const LoginForm = ({navigation}) => {
   const [isPassenger, setIsPassenger] = useState(true);
   const toggleSwitch = () => setIsPassenger((previousState) => !previousState);
 
+  const [visible, setVisible] = useState(false);
+  const [text, setText] = useState('');
+
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       email: '',
@@ -36,14 +39,15 @@ const LoginForm = ({navigation}) => {
       // Send data to users service for signing in
       const userType = setUserType();
       const tokenResponse = await loginWithEmailAndPassword(data, userType);
-      if (!(tokenResponse === null)) {
+      if (tokenResponse === null) {
+        setText('Usuario no encontrado');
+        setVisible(true);
+      } else {
         await AsyncStorage.setItem('token', tokenResponse);
         await AsyncStorage.setItem('user_type', userType);
         onLogin(true);
       }
     } catch (error) {
-      console.error(error.message);
-      alert(error.message);
       return null;
     }
   };
@@ -104,9 +108,9 @@ const LoginForm = ({navigation}) => {
         name="email"
       />
       {errors.email?.type === 'required' &&
-      <Text style={styles.errorText}>Campo obligatorio</Text>}
+        <Text style={styles.errorText}>Campo obligatorio</Text>}
       {errors.email?.type === 'validate' &&
-      <Text style={styles.errorText}>Ingrese un correo electrónico válido</Text>}
+        <Text style={styles.errorText}>Ingrese un correo electrónico válido</Text>}
       <Controller control={control}
         rules={{
           required: true,
@@ -127,11 +131,11 @@ const LoginForm = ({navigation}) => {
         name="password"
       />
       {errors.password?.type === 'required' &&
-      <Text style={styles.errorText}>Campo obligatorio</Text>}
+        <Text style={styles.errorText}>Campo obligatorio</Text>}
       {errors.password?.type === 'maxLength' &&
-      <Text>Máximo {constraints.password.max}</Text>}
+        <Text>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
-      <Text>Mínimo {constraints.password.min}</Text>}
+        <Text>Mínimo {constraints.password.min}</Text>}
       <View style={styles.switchContainer}>
         <Text style={styles.text}>Chofer</Text>
         <Switch
@@ -158,12 +162,12 @@ const LoginForm = ({navigation}) => {
             color: '#0D516B',
             textDecorationLine: 'underline',
           }}>
-          ¿Has olvidado la contraseña?
+            ¿Has olvidado la contraseña?
         </Text>
       </View>
       <View style={styles.googleContainer}>
         <Text style={styles.text}>
-          O iniciar sesión con
+            O iniciar sesión con
         </Text>
         <Button
           style={styles.button}
@@ -177,15 +181,25 @@ const LoginForm = ({navigation}) => {
         </Button>
         <View style={styles.bottomContainer}>
           <Text style={{textAlign: 'center', fontSize: 18, color: '#282829'}}>
-                      ¿No tenes cuenta?{'\n'}
+                        ¿No tenes cuenta?{'\n'}
             <Text
               style={styles.link}
               onPress={() => navigation.navigate('Registrarse')}>
-                          Registrate
+                            Registrate
             </Text>
           </Text>
         </View>
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        action={{
+          label: 'Ok',
+          onPress: () => {
+          },
+        }}>
+        {text}
+      </Snackbar>
     </View>
   );
 };
@@ -195,8 +209,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
     margin: 10,
-    marginTop: 30,
-    height: 720,
+    marginTop: 45,
+    height: 830,
     borderRadius: 16,
     justifyContent: 'center',
   },
@@ -205,8 +219,8 @@ const styles = StyleSheet.create({
     height: 100,
   },
   input: {
-    marginTop: 15,
-    marginBottom: 15,
+    marginTop: 10,
+    marginBottom: 10,
   },
   text: {
     margin: 8,
@@ -219,11 +233,10 @@ const styles = StyleSheet.create({
     color: '#0D516B',
   },
   switchContainer: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 5,
+    margin: 10,
   },
   button: {
     height: 45,
@@ -245,7 +258,6 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
-    paddingLeft: 5,
   },
 });
 

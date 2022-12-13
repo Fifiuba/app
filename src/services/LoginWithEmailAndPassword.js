@@ -2,7 +2,6 @@ import axios from 'axios';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 
 // import {USER_SERVICE_URL} from '@env';
-import {constants} from '../utils/Constants';
 
 export default async function loginWithEmailAndPassword(data, userType) {
   console.log('Login with email and password');
@@ -11,12 +10,8 @@ export default async function loginWithEmailAndPassword(data, userType) {
     console.log('token firebase:', token);
     const response = await authUser(token, userType);
     console.log('response back:', response);
-    if (response === null) {
-      alert('User not found');
-    }
     return response;
   } catch (error) {
-    console.error(error.message);
     return null;
   }
 }
@@ -34,7 +29,6 @@ const authFirebase = async (data) => {
     const token = await user.getIdToken();
     return token;
   } catch (error) {
-    console.error(error.message);
     return null;
   }
 };
@@ -42,7 +36,7 @@ const authFirebase = async (data) => {
 const authUser = async (token, userType) => {
   console.log('authUser');
   try {
-    params = {
+    const params = {
       token: token,
       user_type: userType,
     };
@@ -52,16 +46,7 @@ const authUser = async (token, userType) => {
     );
     return response.data;
   } catch (error) {
-    const errorMsg = error.response.data.detail;
-    console.error(errorMsg);
-    if (errorMsg == constants.DRIVER_NOT_EXIST_ERROR ||
-      errorMsg == constants.PASSENGER_NOT_EXIST_ERROR) {
-      alert(errorMsg);
-    } else if (token === null) {
-      alert('User not found');
-    } else {
-      alert(errorMsg);
-    }
+    console.log('error:', error);
     return null;
   }
 };
