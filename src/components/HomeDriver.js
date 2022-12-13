@@ -79,7 +79,6 @@ const HomeDriver = ({navigation}) => {
   const accept = async (journey) => {
     try {
       const response = await acceptJourney(journey, userInfo.id);
-      reject(journey.id)
       if (response.status === 'accepted') {
         navigation.navigate('ViajeChofer', {'id': journey.id,'price':response.price ,'from': journey.fromCoords, 'to': journey.toCoords, 'carType': journey.vip, 'myLocation': myLocation, 'idPassenger': journey.idPassenger});
       } else {
