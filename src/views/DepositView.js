@@ -3,6 +3,8 @@ import {View, StyleSheet} from 'react-native';
 import {ActivityIndicator, Text, Snackbar, Button,Colors} from 'react-native-paper';
 import deposit from '../services/Deposit';
 import {Ionicons} from '@expo/vector-icons';
+import sendPushNotification from '../services/SendPushNotification';
+
 
 
 export default function DepositView({navigation, route}) {
@@ -22,16 +24,34 @@ export default function DepositView({navigation, route}) {
       try {
         const response = await deposit(idPassenger, eth.toString());
         setLoading(false);
-        setDepositText('Pago realizado!');
+        setDepositText('Deposito realizado!');
       } catch (error) {
-        setVisible(true);
         setDepositText('Hubo un error!');
         setError(true);
         setLoading(false);
-        setText('No se ha podido realizar el deposito, contáctese con soporte.');
       }
     };
     handleResponse();
+  }, [loading]);
+
+  React.useEffect(() => {
+    const handleResponseNotification = async () => {
+      try {
+        if (!loading){
+          const notificacion = {
+            'user_id': idPassenger,
+            'title': 'Deposito realizado!',
+            'body': 'Se ha realizado el pago correctamente!',
+            'data': {}
+          }
+          const res = await sendPushNotification(notificacion)
+        }
+      } catch (error) {
+        setVisible(true);
+        setText('No se ha podido enviar la notificacion');
+      }
+    };
+    handleResponseNotification();
   }, [loading]);
 
   const ShowDataContainer = () => {
@@ -58,7 +78,7 @@ export default function DepositView({navigation, route}) {
         <Button
           color={Colors.green800}
           mode="contained"
-          style={{ borderRadius:30}}
+          style={{marginVertical: 10,borderRadius:30}}
           onPress={() => navigation.navigate('Calificacion', {'id': idDriver})}
         >Calificar chofer</Button>
         <Button

@@ -3,6 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {ActivityIndicator, Text, Snackbar, Button,Colors} from 'react-native-paper';
 import {Ionicons} from '@expo/vector-icons';
 import pay from '../services/Payment';
+import sendPushNotification from '../services/SendPushNotification';
 
 
 export default function PaymentView({navigation, route}) {
@@ -28,11 +29,29 @@ export default function PaymentView({navigation, route}) {
         setPayText('Hubo un error!');
         setLoading(false);
         setError(true);
-        setVisible(true);
-        setText('No se ha podido realizar el deposito, contáctese con soporte.');
       }
     };
     handleResponse();
+  }, [loading]);
+
+  React.useEffect(() => {
+    const handleResponseNotification = async () => {
+      try {
+        if (!loading){
+          const notificacion = {
+            'user_id': idDriver,
+            'title': 'Pago recibido!',
+            'body': 'Se ha realizado el pago correctamente!',
+            'data': {}
+          }
+          const res = await sendPushNotification(notificacion)
+        }
+      } catch (error) {
+        setVisible(true);
+        setText('No se ha podido enviar la notificacion');
+      }
+    };
+    handleResponseNotification();
   }, [loading]);
 
   const ShowDataContainer = () => {
@@ -59,7 +78,7 @@ export default function PaymentView({navigation, route}) {
         <Button
           color={Colors.green800}
           mode="contained"
-          style={{borderRadius: 30}}
+          style={{marginVertical: 10,borderRadius: 30}}
           onPress={() => navigation.navigate('Calificacion', {'id': idPassanger})}
         >Calificar pasajero</Button>
         <Button

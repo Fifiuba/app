@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect} from 'react';
 
 import {Text, StyleSheet, View, Image, ScrollView} from 'react-native';
-import {TextInput, Snackbar} from 'react-native-paper';
+import {TextInput, Snackbar,Button,Colors} from 'react-native-paper';
 import {UserContext} from '../context/UserContext';
 import getWalletAmount from '../services/GetWalletAmount';
 import getWalletBalance from '../services/GetWalletBalance';
@@ -43,7 +43,7 @@ export default function WalletView() {
 
   useEffect(() =>{
     getBalance();
-  }, []);
+  }, [amount]);
 
 
   return (
@@ -75,6 +75,13 @@ export default function WalletView() {
               mode="outline"
               value={amount}
             />
+            <Button
+              color={Colors.green800}
+              mode="contained"
+              style={{marginVertical: 10,borderRadius: 30}}
+              onPress={getBalance}
+              >Actualizar balance</Button>
+            
           </View>
         </View>
       </View>

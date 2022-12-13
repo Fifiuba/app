@@ -34,7 +34,6 @@ export default function App() {
            lightColor: '#FF231F7C',
          });
        
-       if (Device.isDevice) {
         const { status: existingStatus } = await Notifications.getPermissionsAsync();
         let finalStatus = existingStatus;
         if (existingStatus !== 'granted') {
@@ -45,10 +44,6 @@ export default function App() {
           return;
         }         
         token = (await Notifications.getExpoPushTokenAsync()).data;
-        
-      } else {
-        alert('Must use physical device for Push Notifications');
-       }
        return token;
       }
     }
