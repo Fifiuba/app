@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getWalletAmount = async (id) => {
+const getWalletInfo = async (id) => {
   try {
     const response = await axios.get(`https://payment-service-solfonte.cloud.okteto.net/payment/wallet/${id}`);
     return response.data;
@@ -9,4 +9,4 @@ const getWalletAmount = async (id) => {
   }
 };
 
-export default getWalletAmount;
+export default getWalletInfo;

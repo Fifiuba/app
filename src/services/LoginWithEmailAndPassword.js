@@ -54,10 +54,8 @@ const authUser = async (token, userType) => {
   } catch (error) {
     const errorMsg = error.response.data.detail;
     console.error(errorMsg);
-    if (
-      errorMsg == constants.DRIVER_NOT_EXIST_ERROR ||
-			errorMsg == constants.PASSENGER_NOT_EXIST_ERROR
-    ) {
+    if (errorMsg == constants.DRIVER_NOT_EXIST_ERROR ||
+      errorMsg == constants.PASSENGER_NOT_EXIST_ERROR) {
       alert(errorMsg);
     } else if (token === null) {
       alert('User not found');

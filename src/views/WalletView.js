@@ -1,22 +1,24 @@
 import React, {useContext, useState, useEffect} from 'react';
 
 import {Text, StyleSheet, View, Image, ScrollView} from 'react-native';
-import {TextInput, Snackbar,Button,Colors} from 'react-native-paper';
+import {TextInput, Snackbar, Button, Colors} from 'react-native-paper';
 import {UserContext} from '../context/UserContext';
-import getWalletAmount from '../services/GetWalletAmount';
+import getWalletInfo from '../services/GetWalletInfo';
 import getWalletBalance from '../services/GetWalletBalance';
 
 export default function WalletView() {
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
+
   const [amount, setAmount] = useState('0 ETH');
   const [address, setAddress] = useState('No encontrado');
+
   const [visible, setVisible] = React.useState(false);
   const [text, setText] = React.useState('');
 
   const getWallet = async () => {
     try {
-      const wallet = await getWalletAmount(userInfo.id);
+      const wallet = await getWalletInfo(userInfo.id);
       setAddress(wallet.address);
     } catch (error) {
       setVisible(true);
@@ -27,15 +29,14 @@ export default function WalletView() {
 
   const getBalance = async () =>{
     try {
-      const balance = await getWalletBalance(userInfo.id)
+      const balance = await getWalletBalance(userInfo.id);
       setAmount(` ${balance.balance} ETH`);
     } catch (error) {
       setVisible(true);
-      setText('No se ha podido obtener informacion sobre el balance');
+      setText('No se ha podido obtener información sobre el balance');
       setAmount('No encontrado');
     }
-
-  }
+  };
 
   useEffect(() =>{
     getWallet();
@@ -52,9 +53,9 @@ export default function WalletView() {
         <View style={styles.header}></View>
         <Image style={styles.avatar}
           source={{uri: userInfo.picture}}/>
-        <View style={ styles.bodyReduced}>
-          <Text style={styles.name}>{userInfo.name}</Text>
-          <View style={styles.bodyContent}>
+        <Text style={styles.name}>{userInfo.name}</Text>
+        <View style={ styles.subcontainer}>
+          <View style={styles.subcontainerContent}>
             <TextInput
               disabled={true}
               style={styles.info}
@@ -75,14 +76,13 @@ export default function WalletView() {
               mode="outline"
               value={amount}
             />
-            <Button
-              color={Colors.green800}
-              mode="contained"
-              style={{marginVertical: 10,borderRadius: 30}}
-              onPress={getBalance}
-              >Actualizar balance</Button>
-            
           </View>
+          <Button
+            color={Colors.green800}
+            mode="contained"
+            style={styles.button}
+            onPress={getBalance}>
+            Actualizar balance</Button>
         </View>
       </View>
       <Snackbar
@@ -107,23 +107,17 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
   },
-  header: {
-    height: 100,
-  },
   avatar: {
     width: 100,
     height: 100,
     borderRadius: 63,
     borderWidth: 4,
     borderColor: 'white',
-    marginBottom: 10,
     alignSelf: 'center',
-    position: 'absolute',
     marginTop: 60,
   },
-  bodyReduced: {
-    marginTop: 65,
-    height: 400,
+  subcontainer: {
+    height: 350,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -132,9 +126,8 @@ const styles = StyleSheet.create({
     color: '#696969',
     fontWeight: '600',
     height: '10%',
-    marginBottom: 20,
   },
-  bodyContent: {
+  subcontainerContent: {
     height: '90%',
     width: 350,
     justifyContent: 'center',
@@ -145,6 +138,13 @@ const styles = StyleSheet.create({
     color: '#00BFFF',
     height: 55,
     width: '90%',
-    margin: 10,
+    margin: 20,
+  },
+  button: {
+    height: 50,
+    width: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
   },
 });
