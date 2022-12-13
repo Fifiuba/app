@@ -43,11 +43,10 @@ const MyProfile = ({navigation}) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={styles.header}></View>
         <Image style={styles.avatar}
           source={{uri: userInfo.picture}}/>
+        <Text style={styles.name}>{userInfo.name}</Text>
         <View style={isDriver ? styles.body: styles.bodyReduced}>
-          <Text style={styles.name}>{userInfo.name}</Text>
           <View style={styles.bodyContent}>
             <TextInput
               disabled={true}
@@ -135,29 +134,22 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
   },
-  header: {
-    height: 100,
-  },
   avatar: {
     width: 100,
     height: 100,
     borderRadius: 63,
     borderWidth: 4,
     borderColor: 'white',
-    marginBottom: 10,
     alignSelf: 'center',
-    position: 'absolute',
     marginTop: 60,
   },
   bodyReduced: {
-    marginTop: 65,
     height: 400,
     justifyContent: 'center',
     alignItems: 'center',
   },
   body: {
-    marginTop: 65,
-    height: 450,
+    height: 400,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -166,7 +158,6 @@ const styles = StyleSheet.create({
     color: '#696969',
     fontWeight: '600',
     height: '10%',
-    marginBottom: 20,
   },
   bodyContent: {
     height: '90%',
