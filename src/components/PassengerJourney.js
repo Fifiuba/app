@@ -82,7 +82,7 @@ const PassengerJourney = ({navigation}) => {
       /* eslint-disable max-len */
       const response = await getRoute(searchOrigin, searchDestination, setText, setVisible);
       setPriceSetted(false);
-      if (!(response === null)) {
+      if (!(response === undefined)) {
         const distance = response[1];
         setJourneyInfo(response[0], distance);
         const journeyPrice = await getJourneyPrice(distance);
@@ -92,10 +92,7 @@ const PassengerJourney = ({navigation}) => {
         }
       }
     } catch (err) {
-      if (text == '') {
-        setText(error.GENERAL_ERROR);
-        setVisible(true);
-      }
+      console.err(err);
       return null;
     }
   };
@@ -116,28 +113,28 @@ const PassengerJourney = ({navigation}) => {
 
   const handleCreateJourney = async () => {
     try {
-      // if (amount != 0) {
-      const journeyInfo =
-          await createJourney(origin, destination, userInfo.id, distance);
-      console.log('Response CreateJourney', journeyInfo);
-      navigation.navigate('ViajePasajero', {
-        'journeyInfo': {
-          'id': journeyInfo._id,
-          'status': journeyInfo.status,
-          'idPassenger': journeyInfo.idPassenger,
-          'price': journeyInfo.price,
-          'startOn': journeyInfo.startOn,
-          'finishOn': journeyInfo.__finishOn,
-          'from': journeyInfo.from,
-          'to': journeyInfo.to,
-        },
-        'coords': {route},
-        'streets': {'from': searchOrigin, 'to': searchDestination},
-      });
-      /* } else {
+      if (amount != 0) {
+        const journeyInfo =
+            await createJourney(origin, destination, userInfo.id, distance);
+        console.log('Response CreateJourney', journeyInfo);
+        navigation.navigate('ViajePasajero', {
+          'journeyInfo': {
+            'id': journeyInfo._id,
+            'status': journeyInfo.status,
+            'idPassenger': journeyInfo.idPassenger,
+            'price': journeyInfo.price,
+            'startOn': journeyInfo.startOn,
+            'finishOn': journeyInfo.__finishOn,
+            'from': journeyInfo.from,
+            'to': journeyInfo.to,
+          },
+          'coords': {route},
+          'streets': {'from': searchOrigin, 'to': searchDestination},
+        });
+      } else {
         setVisible(true);
-        setText('error.NOT_ENOUGH_MONET_ERROR');
-      }*/
+        setText(error.NOT_ENOUGH_MONET_ERROR);
+      }
     } catch (error) {
       console.error(error.message);
       return null;

@@ -6,11 +6,11 @@ import {Button, Text, ActivityIndicator, Card, Title, Colors, Snackbar} from 're
 import getAddressFromCoords from '../services/GetAddressFromCoords';
 import {UserContext} from '../context/UserContext';
 import getLastJourneysInfo from '../services/GetLastJourneysInfo';
+import {error} from '../utils/HandleError';
 
 const HomePassenger = () => {
   const [lastJourneys, setLastJourneys] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [text, setText] = useState('Toca para ver tus ultimos viajes!');
 
   const [visible, setVisible] = useState(false);
   const [msg, setMsg] = useState('');
@@ -27,38 +27,42 @@ const HomePassenger = () => {
     return true;
   };
 
+  const setJourneys = async (journey) => {
+    try {
+      const fromStreet = await getAddressFromCoords(journey.from[0], journey.from[1]);
+      const toStreet = await getAddressFromCoords(journey.to[0], journey.to[1]);
+      if (journey.idPassenger == userInfo.id) {
+        if (isNotInLatestJourneys(journey)) {
+          lastJourneys.push({
+            id: journey._id,
+            from: fromStreet,
+            to: toStreet,
+            price: journey.price,
+          });
+        }
+      }
+    } catch (err) {
+      console.log(err.message);
+      setLoading(false);
+      setMsg(error.GENERAL_ERROR);
+      setVisible(true);
+    }
+  };
+
   const getLastJourneys = async () => {
     try {
       const journeys = await getLastJourneysInfo();
       setLoading(true);
       if (journeys.length == 0) setLoading(false);
       journeys.forEach(async (journey) => {
-        try {
-          const fromStreet = await getAddressFromCoords(journey.from[0], journey.from[1]);
-          const toStreet = await getAddressFromCoords(journey.to[0], journey.to[1]);
-          if (journey.idPassenger == userInfo.id) {
-            if (isNotInLatestJourneys(journey)) {
-              lastJourneys.push({
-                id: journey._id,
-                from: fromStreet,
-                to: toStreet,
-                price: journey.price,
-              });
-            }
-          }
-          setLoading(false);
-          setLastJourneys(lastJourneys);
-          if (lastJourneys.length == 0) setText('No se han encontrado últimos viajes!');
-        } catch (error) {
-          setLoading(false);
-          setVisible(true);
-          setMsg('Se ha producido un error al intentar buscar los viajes');
-        }
+        await setJourneys(journey);
       });
-    } catch (error) {
       setLoading(false);
+      setLastJourneys(lastJourneys);
+    } catch (err) {
+      setLoading(false);
+      setMsg(error.GENERAL_ERROR);
       setVisible(true);
-      setMsg('Se ha producido un error al intentar buscar los viajes');
     }
   };
 
@@ -81,7 +85,7 @@ const HomePassenger = () => {
         style={styles.flatList}
         ListEmptyComponent={
           <Text style={styles.emptyListText}>
-            {text}
+            No has realizado viajes!
           </Text>}
       />);
   };

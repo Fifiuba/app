@@ -14,7 +14,8 @@ export const error = {
   SHOW_ROUTE_ERROR: 'Se ha producido un error al mostrar la ruta',
   USER_NOT_FOUND_ERROR: 'Usuario no encontrado',
   BALANCE_ERROR: 'No se ha podido obtener información sobre el balance',
-  NOT_ENOUGH_MONET_ERROR: 'No tienes dinero suficiente para realizar el viaje',
+  NOT_ENOUGH_MONET_ERROR: 'No tienes suficiente dinero para realizar el viaje',
   JOURNEY_ALREADY_ACCEPTED_ERROR: 'El viaje ya fue tomado por otro conductor',
   JOURNEY_FINISHED_ERROR: 'Se ha producido un error al finalizar el viaje',
+  EDIT_PROFILE_ERROR: 'Se ha producido un error al editar el perfil',
 };

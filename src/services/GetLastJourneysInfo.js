@@ -12,7 +12,6 @@ const getLastJourneysInfo = async () => {
     const response = await axios.get(
         'https://api-gateway-solfonte.cloud.okteto.net/journey', config,
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error.message);

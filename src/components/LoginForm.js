@@ -39,13 +39,13 @@ const LoginForm = ({navigation}) => {
     try {
       const userType = setUserType();
       const tokenResponse = await loginWithEmailAndPassword(data, userType);
-      if (tokenResponse === null) {
-        setText(error.USER_NOT_FOUND_ERROR);
-        setVisible(true);
-      } else {
+      if (!(tokenResponse === null)) {
         await AsyncStorage.setItem('token', tokenResponse);
         await AsyncStorage.setItem('user_type', userType);
         onLogin(true);
+      } else {
+        setText(error.USER_NOT_FOUND_ERROR);
+        setVisible(true);
       }
     } catch (error) {
       console.log('error:', error.message);

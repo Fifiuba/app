@@ -20,7 +20,7 @@ const getRoute = async (origin, destination, setText, setVisible) => {
     'unit': 'k',
     'generalize': 0,
   };
-  console.log('params:', params);
+
   try {
     const response = await axios.get('http://www.mapquestapi.com/directions/v2/route', {
       params,
