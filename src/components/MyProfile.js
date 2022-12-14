@@ -6,7 +6,7 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import {Colors, TextInput, Button, Snackbar} from 'react-native-paper';
+import {Colors, TextInput, Button} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {UserContext} from '../context/UserContext';
@@ -31,26 +31,23 @@ const MyProfile = ({navigation}) => {
     setUserType();
   }, []);
 
-  const [visible, setVisible] = useState(false);
-  const [msg, setMsg] = useState('');
-
   const logOut = async () => {
     try {
       await AsyncStorage.multiRemove(await AsyncStorage.getAllKeys());
       onLogin(false);
     } catch (error) {
-      setVisible(true);
-      setMsg('No se pudo cerrar sesión correctamente');
+      alert('No se pudo cerrar sesión correctamente');
     }
   };
 
   return (
     <ScrollView>
       <View style={styles.container}>
+        <View style={styles.header}></View>
         <Image style={styles.avatar}
           source={{uri: userInfo.picture}}/>
-        <Text style={styles.name}>{userInfo.name}</Text>
         <View style={isDriver ? styles.body: styles.bodyReduced}>
+          <Text style={styles.name}>{userInfo.name}</Text>
           <View style={styles.bodyContent}>
             <TextInput
               disabled={true}
@@ -128,16 +125,6 @@ const MyProfile = ({navigation}) => {
           </Button>
         </View>
       </View>
-      <Snackbar
-        visible={visible}
-        onDismiss={() => setVisible(false)}
-        action={{
-          label: 'Ok',
-          onPress: () => {
-          },
-        }}>
-        {msg}
-      </Snackbar>
     </ScrollView>
   );
 };
@@ -148,22 +135,29 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
   },
+  header: {
+    height: 100,
+  },
   avatar: {
     width: 100,
     height: 100,
     borderRadius: 63,
     borderWidth: 4,
     borderColor: 'white',
+    marginBottom: 10,
     alignSelf: 'center',
+    position: 'absolute',
     marginTop: 60,
   },
   bodyReduced: {
+    marginTop: 65,
     height: 400,
     justifyContent: 'center',
     alignItems: 'center',
   },
   body: {
-    height: 400,
+    marginTop: 65,
+    height: 450,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -172,6 +166,7 @@ const styles = StyleSheet.create({
     color: '#696969',
     fontWeight: '600',
     height: '10%',
+    marginBottom: 20,
   },
   bodyContent: {
     height: '90%',
