@@ -19,6 +19,7 @@ const proCar = require('../../assets/icon-car-vip.png');
 import InfoModal from './InfoModal';
 
 import {UserContext} from '../context/UserContext';
+import {error} from '../utils/HandleError';
 
 /* eslint-disable new-cap */
 const DriverJourney = ({navigation, route}) => {
@@ -84,9 +85,9 @@ const DriverJourney = ({navigation, route}) => {
       setFrom(start);
       setTo(end);
       setStarted(false);
-    } catch (error) {
+    } catch (err) {
       setVisible(true);
-      setMsg('Se ha producido un error al buscar la ruta');
+      setMsg(error.SHOW_ROUTE_ERROR);
     }
   };
 
@@ -96,8 +97,9 @@ const DriverJourney = ({navigation, route}) => {
       const comments = await getOpinion(journey.idPassenger, 'passenger');
       console.log('response', response);
       navigation.navigate('PerfilUsuario', {'data': response, 'opinions': comments});
-    } catch (error) {
-      console.error(error.message);
+    } catch (err) {
+      console.log(err.message);
+      setText(error.GENERAL_ERROR);
     }
   };
 
@@ -107,9 +109,10 @@ const DriverJourney = ({navigation, route}) => {
       setDirections([]);
       setInplace(false);
       navigation.navigate('Pago', {'id': userInfo.id, 'score_id': journey.idPassenger, 'eth': journey.price});
-    } catch (error) {
+    } catch (err) {
+      console.log(err);
+      setMsg(error.JOURNEY_FINISHED_ERROR);
       setVisible(true);
-      setMsg('No se pudo finalizar el viaje');
     }
   };
 
@@ -130,8 +133,9 @@ const DriverJourney = ({navigation, route}) => {
         <View style={styles.profileButton}>
           <Button
             mode="contained"
-            color={Colors.blue600}
-            onPress={handleViewUserInfo}>
+            color={Colors.blue700}
+            onPress={handleViewUserInfo}
+            style={styles.button}>
             <Text>Ver perfil</Text>
           </Button>
         </View>
@@ -163,7 +167,8 @@ const DriverJourney = ({navigation, route}) => {
       <View style={styles.buttonsBox}>
         <Button
           mode="contained"
-          style={styles.startButton}
+          color={Colors.green700}
+          style={styles.button}
           disabled={!started}
           onPress={handleStartJourney}
         >
@@ -171,18 +176,18 @@ const DriverJourney = ({navigation, route}) => {
         </Button>
         <Button
           mode="contained"
-          style={styles.startButton}
+          style={styles.button}
           onPress={goToPassenger}
           disabled={arrived}
-          color={Colors.green600}
+          color={Colors.green700}
         >
           <Text>ir</Text>
         </Button>
         <Button
           mode="contained"
-          color={Colors.red600}
+          color={Colors.red700}
           disabled={!arrived}
-          style={styles.finishButton}
+          style={styles.button}
           onPress={handleFinishJourney}
         >
           <Text>Terminar</Text>
@@ -219,11 +224,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
   },
-  finishButton: {
+  button: {
     paddingHorizontal: 2,
-  },
-  startButton: {
-    paddingHorizontal: 2,
+    borderRadius: 20,
   },
   appBar: {
     flex: 1,

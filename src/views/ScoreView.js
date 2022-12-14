@@ -5,8 +5,12 @@ import {Colors, Button, Snackbar} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import scoreUser from '../services/ScoreUser';
+import {error} from '../utils/HandleError';
+import InfoModal from '../components/InfoModal';
+
 export default function ScoreView({navigation, route}) {
   const id = route.params.id;
+  console.log(route.params);
 
   const [defaultRating, setDefaultRating] = useState(2);
   /* eslint-disable no-unused-vars */
@@ -43,15 +47,20 @@ export default function ScoreView({navigation, route}) {
   const [comment, setComment] = useState('');
   const [visible, setVisible] = React.useState(false);
 
+  const [scored, setScored] = React.useState(false);
+  const [text, setText] = useState('');
+
   const handleScoreUser = async () => {
     try {
       const userType = await AsyncStorage.getItem('user_type');
-      const response = await scoreUser(userType, defaultRating, id, comment);
-      setVisible(true);
-    } catch (error) {
-      alert('No se pudo puntuar correctamente al conductor');
-      console.error(error.message);
+      await scoreUser(userType, defaultRating, id, comment);
+      setScored(true);
+      setText('Calificación exitosa');
       navigation.navigate('Home');
+    } catch (err) {
+      console.log(err.message);
+      setText(error.SCORE_USER_ERROR);
+      setVisible(true);
     }
   };
 
@@ -70,7 +79,7 @@ export default function ScoreView({navigation, route}) {
         />
         <Button
           style={styles.button}
-          color={Colors.blue800}
+          color={Colors.blue700}
           mode="contained"
           onPress={() => {
             console.log('score');
@@ -88,8 +97,9 @@ export default function ScoreView({navigation, route}) {
             navigation.navigate('Home');
           },
         }}>
-      El comentario se ha enviado correctamente
+        {text}
       </Snackbar>
+      { scored && <InfoModal modalText={text}/>}
     </SafeAreaView>
   );
 };

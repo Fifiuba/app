@@ -1,8 +1,13 @@
 import React, {useContext, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Colors, ActivityIndicator, Button, Text} from 'react-native-paper';
+import {Colors,
+  ActivityIndicator,
+  Button, Text, Snackbar} from 'react-native-paper';
+
 import {NotificationContext} from '../context/NotificationContext';
 import cancelJourney from '../services/CancelJourney';
+
+import {error} from '../utils/HandleError';
 
 export default function JourneyView({route, navigation}) {
   /* eslint-disable no-unused-vars */
@@ -13,6 +18,9 @@ export default function JourneyView({route, navigation}) {
   const [loading, setLoading] = useState(true);
   const [cancel, setCancel] = useState(false);
   const notification = useContext(NotificationContext);
+
+  const [visible, setVisible] = useState(false);
+  const [text, setText] = useState('');
 
   React.useEffect(() => {
     console.log('loading:', loading);
@@ -50,21 +58,24 @@ export default function JourneyView({route, navigation}) {
         setCancel(true);
         navigation.navigate('Home');
       } else {
-        alert('Error al cancelar viaje');
+        setText(error.CANCEL_JOURNEY_ERROR);
+        setVisible(true);
       }
     } catch (error) {
-      console.error(error.message);
+      console.log(error.message);
     }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.text}>Esperando un chofer disponible</Text>
-        <Text style={styles.streetText}>Datos del viaje</Text>
-        <Text style={styles.streetText}>Desde: {streets.from} </Text>
-        <Text style={styles.streetText}>Hasta: {streets.to} </Text>
-        <Text style={styles.streetText}>Precio: {journeyInfo.price} </Text>
+        <Text style={styles.title}>Esperando un chofer disponible</Text>
+        <View style={styles.bodyContainer}>
+          <Text style={styles.textTitle}>Datos del viaje</Text>
+          <Text style={styles.text}>Desde: {streets.from} </Text>
+          <Text style={styles.text}>Hasta: {streets.to} </Text>
+          <Text style={styles.text}>Precio: {journeyInfo.price} </Text>
+        </View>
         { loading &&
           <ActivityIndicator
             animating={loading}
@@ -75,7 +86,7 @@ export default function JourneyView({route, navigation}) {
         }
         <Button
           style={styles.button}
-          color={Colors.red800}
+          color={Colors.red700}
           mode="contained"
           onPress={() => {
             console.log('Cancel journey');
@@ -89,6 +100,16 @@ export default function JourneyView({route, navigation}) {
           </Text>
         }
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        action={{
+          label: 'Ok',
+          onPress: () => {
+          },
+        }}>
+        {text}
+      </Snackbar>
     </View>
   );
 }
@@ -96,35 +117,34 @@ export default function JourneyView({route, navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#dddddd',
   },
   card: {
-    height: '80%',
+    height: '45%',
     width: 360,
-    padding: 15,
     backgroundColor: 'white',
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  text: {
-    marginTop: 15,
+  title: {
+    margin: 15,
     marginBottom: 20,
     fontSize: 20,
     color: '#282829',
-    textAlign: 'center',
+    textAlign: 'left',
   },
   button: {
-    padding: 5,
-    width: 210,
-    height: 50,
-    marginTop: 30,
+    height: 45,
+    width: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
+    margin: 20,
   },
   buttonText: {
-    fontSize: 16,
     color: 'white',
   },
   successMsg: {
@@ -139,8 +159,20 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingLeft: 10,
   },
-  streetText: {
+  bodyContainer: {
+    height: 80,
+    marginBottom: 20,
+    width: '75%',
+  },
+  textTitle: {
+    fontWeight: 'bold',
+    fontSize: 17,
+    margin: 5,
+  },
+  text: {
     color: '#282829',
     textAlign: 'left',
+    fontSize: 16,
+    marginBottom: 5,
   },
 });

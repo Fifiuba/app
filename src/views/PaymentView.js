@@ -82,7 +82,7 @@ export default function PaymentView({navigation, route}) {
           color={errorPayment ? 'red':'green'}
         />
         <Button
-          color={Colors.green800}
+          color={Colors.green700}
           mode="contained"
           style={{marginVertical: 10, borderRadius: 30}}
           onPress={() =>
@@ -90,7 +90,7 @@ export default function PaymentView({navigation, route}) {
                 {'id': idPassanger})}
         >Calificar pasajero</Button>
         <Button
-          color={Colors.blue800}
+          color={Colors.blue700}
           mode="contained"
           style={{marginVertical: 10, borderRadius: 30}}
           onPress={() => navigation.navigate('Home')}

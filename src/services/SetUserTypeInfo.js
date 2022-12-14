@@ -33,8 +33,7 @@ export default async function setUserTypeInfo(data, userId, userType) {
     console.log('response:', response.data);
     return response.data;
   } catch (error) {
-    alert(error.response.data.detail);
-    console.error(error.response.data.detail);
+    console.log(error.message);
     return null;
   }
 }

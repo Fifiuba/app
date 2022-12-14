@@ -16,10 +16,7 @@ const getDriverInfo = async (id) => {
     );
     return response.data;
   } catch (error) {
-    console.error(error.message);
-    if (error.message == 'Network Error') {
-      alert('Problemas de conexión con el servidor');
-    }
+    console.log(error.message);
     return null;
   }
 };

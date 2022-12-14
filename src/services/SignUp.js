@@ -21,8 +21,7 @@ export default async function signUp(data, userType) {
     console.log('response data:', response.data);
     return response.data;
   } catch (error) {
-    alert(error.response);
-    console.error(error.response.data.detail);
+    console.log(error.response);
     return null;
   }
 }

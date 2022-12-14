@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Text, Switch, Image} from 'react-native';
-import {TextInput, Button, Colors} from 'react-native-paper';
+import {TextInput, Button, Colors, Snackbar} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
 import signUp from '../services/SignUp';
 import {constraints} from '../utils/Constraints';
 import {isValidEmail} from '../utils/EmailValidation';
+import {error} from '../utils/HandleError';
 
 const SignUpForm = ({navigation}) => {
   const [isPassenger, setIsPassenger] = useState(true);
@@ -29,6 +30,9 @@ const SignUpForm = ({navigation}) => {
     }
   };
 
+  const [visible, setVisible] = useState(false);
+  const [text, setText] = useState('');
+
   const onSubmit = async (data) => {
     try {
       const response = await signUp(data, userType());
@@ -39,10 +43,10 @@ const SignUpForm = ({navigation}) => {
           navigation.navigate('ChoferForm', {'user_id': response.id});
         }
       }
-    } catch (error) {
-      console.error(error.message);
-      alert(error.response.data.detail);
-      return null;
+    } catch (err) {
+      console.log(err.message);
+      setText(error.GENERAL_ERROR);
+      setVisible(true);
     }
   };
 
@@ -206,6 +210,16 @@ const SignUpForm = ({navigation}) => {
           </Text>
         </Text>
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        action={{
+          label: 'Ok',
+          onPress: () => {
+          },
+        }}>
+        {text}
+      </Snackbar>
     </View>
   );
 };

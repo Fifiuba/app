@@ -4,6 +4,7 @@ import {Text,
   TextInput,
   Button,
   Colors,
+  Snackbar,
 } from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 
@@ -31,8 +32,9 @@ const PassengerFormView = ({navigation, route}) => {
         navigation.navigate('IniciarSesion');
       }
     } catch (error) {
-      console.error(error.message);
-      alert(error.message);
+      console.log(error.message);
+      setText(error.CANCEL_JOURNEY_ERROR);
+      setVisible(true);
       return null;
     }
   };
@@ -73,6 +75,16 @@ const PassengerFormView = ({navigation, route}) => {
           <Text style={{color: 'white'}}>Registrarse</Text>
         </Button>
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        action={{
+          label: 'Ok',
+          onPress: () => {
+          },
+        }}>
+        {text}
+      </Snackbar>
     </View>
   );
 };

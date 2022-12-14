@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
-import {Text, Button, Colors} from 'react-native-paper';
+import {Text, Button, Colors, Snackbar} from 'react-native-paper';
 
 import {UserContext} from '../context/UserContext';
 import TimerJourney from '../components/TimerJourney';
@@ -9,18 +9,22 @@ import getJourneyInfo from '../services/GetJourneyInfo';
 import getDriverInfo from '../services/GetDriverInfo';
 import getOpinion from '../services/GetOpinions';
 
-
 import {NotificationContext} from '../context/NotificationContext';
 import getUserInfo from '../services/GetUserInfo';
-
+import {error} from '../utils/HandleError';
 
 const RoadTripView = ({navigation, route}) => {
   const info = route.params;
   const coords = info.coords.route;
   const journeyInfo = info.journeyInfo;
   const notification = useContext(NotificationContext);
+
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
+
+  const [visible, setVisible] = useState(false);
+  const [text, setText] = useState('');
+
   const [startTimer, setStartTimer] = useState(false);
   const [finished, setFinished] = useState(false);
 
@@ -47,7 +51,6 @@ const RoadTripView = ({navigation, route}) => {
     }
   }, [notification]);
 
-
   React.useEffect(() => {
     console.log(notification);
     if (notification) {
@@ -70,8 +73,9 @@ const RoadTripView = ({navigation, route}) => {
               {'id': userInfo.id,
                 'score_id': response.driver.idDriver,
                 'eth': journeyInfo.price});
-        } catch (error) {
-          alert('No se pudo iniciar el deposito');
+        } catch (err) {
+          setVisible(true);
+          setText(error.GENERAL_ERROR);
         }
       }
     };
@@ -88,8 +92,9 @@ const RoadTripView = ({navigation, route}) => {
           {'data': response,
             'user': user,
             'opinions': comments});
-    } catch (error) {
-      console.error(error.message);
+    } catch (err) {
+      setMsg(err.GENERAL_ERROR);
+      setVisible(true);
     }
   };
 
@@ -99,9 +104,10 @@ const RoadTripView = ({navigation, route}) => {
         <View style={styles.profileButton}>
           <Button
             mode="contained"
-            color={Colors.blue600}
-            onPress={handleViewDriverInfo}>
-            <Text>Ver perfil</Text>
+            color={Colors.blue700}
+            onPress={handleViewDriverInfo}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Ver perfil</Text>
           </Button>
         </View>
         <View style={styles.profile}>
@@ -142,6 +148,16 @@ const RoadTripView = ({navigation, route}) => {
             strokeWidth={5} />
         </MapView>
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        action={{
+          label: 'Ok',
+          onPress: () => {
+          },
+        }}>
+        {text}
+      </Snackbar>
     </>
   );
 };
@@ -168,18 +184,20 @@ const styles = StyleSheet.create({
     height: '70%',
   },
   button: {
-    padding: 5,
-    width: 210,
-    height: 50,
-    marginTop: 30,
+    height: 45,
+    width: '85%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
+    margin: 20,
   },
   buttonText: {
-    fontSize: 16,
     color: 'white',
   },
   image: {
     width: 60,
     height: 60,
+    borderRadius: 30,
   },
   profileButton: {
     alignSelf: 'flex-end',

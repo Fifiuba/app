@@ -25,7 +25,6 @@ export default async function startJourney(journey) {
 
     return res;
   } catch (err) {
-    console.error(err);
-    alert(err);
+    console.log(err);
   }
 }

@@ -17,6 +17,7 @@ import createJourney from '../services/CreateJourney';
 import {UserContext} from '../context/UserContext';
 import getJourneyPrice from '../services/GetJourneyPrice';
 import getWalletBalance from '../services/GetWalletBalance';
+import {error} from '../utils/HandleError';
 
 const PassengerJourney = ({navigation}) => {
   const user = useContext(UserContext);
@@ -56,7 +57,7 @@ const PassengerJourney = ({navigation}) => {
     const {status} = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
       setVisible(true);
-      setText('Permiso de localización denegado');
+      setText(error.PERMISSION_DENIED_ERROR);
       return;
     }
 
@@ -78,7 +79,8 @@ const PassengerJourney = ({navigation}) => {
 
   const handleGetInfoJourney = async () => {
     try {
-      const response = await getRoute(searchOrigin, searchDestination);
+      /* eslint-disable max-len */
+      const response = await getRoute(searchOrigin, searchDestination, setText, setVisible);
       setPriceSetted(false);
       if (!(response === null)) {
         const distance = response[1];
@@ -89,8 +91,11 @@ const PassengerJourney = ({navigation}) => {
           setPriceSetted(true);
         }
       }
-    } catch (error) {
-      console.error(error.message);
+    } catch (err) {
+      if (text == '') {
+        setText(error.GENERAL_ERROR);
+        setVisible(true);
+      }
       return null;
     }
   };
@@ -99,9 +104,9 @@ const PassengerJourney = ({navigation}) => {
     try {
       const balance = await getWalletBalance(userInfo.id);
       setAmount(balance.balance);
-    } catch (error) {
+    } catch (err) {
+      setText(error.BALANCE_ERROR);
       setVisible(true);
-      setText('No se ha podido obtener información sobre el balance');
     }
   };
 
@@ -111,28 +116,28 @@ const PassengerJourney = ({navigation}) => {
 
   const handleCreateJourney = async () => {
     try {
-      if (amount != 0) {
-        const journeyInfo =
+      // if (amount != 0) {
+      const journeyInfo =
           await createJourney(origin, destination, userInfo.id, distance);
-        console.log('Response CreateJourney', journeyInfo);
-        navigation.navigate('ViajePasajero', {
-          'journeyInfo': {
-            'id': journeyInfo._id,
-            'status': journeyInfo.status,
-            'idPassenger': journeyInfo.idPassenger,
-            'price': journeyInfo.price,
-            'startOn': journeyInfo.startOn,
-            'finishOn': journeyInfo.__finishOn,
-            'from': journeyInfo.from,
-            'to': journeyInfo.to,
-          },
-          'coords': {route},
-          'streets': {'from': searchOrigin, 'to': searchDestination},
-        });
-      } else {
+      console.log('Response CreateJourney', journeyInfo);
+      navigation.navigate('ViajePasajero', {
+        'journeyInfo': {
+          'id': journeyInfo._id,
+          'status': journeyInfo.status,
+          'idPassenger': journeyInfo.idPassenger,
+          'price': journeyInfo.price,
+          'startOn': journeyInfo.startOn,
+          'finishOn': journeyInfo.__finishOn,
+          'from': journeyInfo.from,
+          'to': journeyInfo.to,
+        },
+        'coords': {route},
+        'streets': {'from': searchOrigin, 'to': searchDestination},
+      });
+      /* } else {
         setVisible(true);
-        setText('No tienes dinero suficiente para realizar el viaje');
-      }
+        setText('error.NOT_ENOUGH_MONET_ERROR');
+      }*/
     } catch (error) {
       console.error(error.message);
       return null;
@@ -146,7 +151,7 @@ const PassengerJourney = ({navigation}) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <><View style={styles.container}>
       <Text style={styles.title}>¿Deseas iniciar un viaje?</Text>
       <View style={styles.searchBarContainer}>
         <SearchBar
@@ -154,8 +159,7 @@ const PassengerJourney = ({navigation}) => {
           setSearchPhrase={setSearchOrigin}
           clicked={clicked}
           setClicked={setClicked}
-          placeholderValue="Calle origen, localidad origen"
-        />
+          placeholderValue="Calle origen, localidad origen" />
       </View>
       <View style={styles.searchBarContainer}>
         <SearchBar
@@ -163,8 +167,7 @@ const PassengerJourney = ({navigation}) => {
           setSearchPhrase={setSearchDestination}
           clicked={clicked}
           setClicked={setClicked}
-          placeholderValue="Calle destino, localidad destino"
-        />
+          placeholderValue="Calle destino, localidad destino" />
       </View>
       <MapView
         style={priceSetted ? styles.mapReduced : styles.map}
@@ -177,25 +180,20 @@ const PassengerJourney = ({navigation}) => {
         <Marker
           draggable
           coordinate={origin}
-          onDragEnd={(direction) => setOrigin(direction.nativeEvent.coordinate)}
-        />
+          onDragEnd={(direction) => setOrigin(direction.nativeEvent.coordinate)} />
         <Marker
           draggable
           coordinate={destination}
-          onDragEnd={(direction) =>
-            setDestination(direction.nativeEvent.coordinate)}
-        />
+          onDragEnd={(direction) => setDestination(direction.nativeEvent.coordinate)} />
         <Polyline
           coordinates={route}
           strokeColor="red"
-          strokeWidth={5}
-        />
+          strokeWidth={5} />
       </MapView>
-      { priceSetted &&
+      {priceSetted &&
         <View style={styles.priceContainer}>
           <Text style={styles.label}>El precio del viaje es ${price}</Text>
-        </View>
-      }
+        </View>}
       <View style={styles.buttonHolder}>
         <Button
           style={styles.button}
@@ -207,29 +205,28 @@ const PassengerJourney = ({navigation}) => {
         <Button
           disabled={!priceSetted}
           style={styles.button}
-          color={!priceSetted ? Colors.grey400 : Colors.blue700}
+          color={!priceSetted ? Colors.grey300 : Colors.blue700}
           mode="contained"
           onPress={() => {
             console.log('Solicitar viaje');
             handleCreateJourney();
-          }}>
+          } }>
           {/* eslint-disable max-len */}
           <Text style={!priceSetted ? styles.journeyButtonText : styles.titleButton}>Solicitar viaje</Text>
         </Button>
       </View>
-      <Snackbar
-        visible={visible}
-        onDismiss={() => {
-          setVisible(false);
-        }}
-        action={{
-          label: 'Ok',
-          onPress: () => {
-          },
-        }}>
-        {text}
-      </Snackbar>
-    </View>
+    </View><Snackbar
+      visible={visible}
+      onDismiss={() => {
+        setVisible(false);
+      } }
+      action={{
+        label: 'Ok',
+        onPress: () => {
+        },
+      }}>
+      {text}
+    </Snackbar></>
   );
 };
 
@@ -237,10 +234,11 @@ export default PassengerJourney;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     height: '85%',
-    marginTop: 50,
+    marginTop: 80,
   },
   title: {
     fontSize: 22,

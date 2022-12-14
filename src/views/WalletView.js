@@ -90,7 +90,7 @@ export default function WalletView() {
               style={{marginBottom: 25}}
             />
             <Button
-              color={Colors.green800}
+              color={Colors.green700}
               mode="contained"
               style={styles.button}
               onPress={() => {

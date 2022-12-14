@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {error} from '../utils/HandleError';
 
 const sendTokenInfo = async (userId, token) => {
   try {
@@ -11,8 +12,8 @@ const sendTokenInfo = async (userId, token) => {
         },
     );
     return response.data;
-  } catch (error) {
-    alert('Su dispositivo no puede recibir notificaciones en esta version.');
+  } catch (err) {
+    alert(error.RECEIVE_NOTIFICATIONS_ERROR);
     return null;
   }
 };

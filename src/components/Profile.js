@@ -237,7 +237,7 @@ export default function Profile({navigation}) {
         <View style={styles.buttonContainer}>
           <Button
             style={styles.button}
-            color={Colors.blue800}
+            color={Colors.blue700}
             mode="contained"
             onPress={handleSubmit(onSubmit)}>
             <Text>Guardar</Text>

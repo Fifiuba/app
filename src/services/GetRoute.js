@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import {JOURNEY_SERVICE_KEY} from '@env';
-/* eslint-disable max-len */
-const INVALID_DIRECTIONS_ERROR = 'We are unable to route with the given locations.';
+import {errors} from '../utils/Errors';
+import {error} from '../utils/HandleError';
 
 const getDirections = (data) => {
   const coords = [];
@@ -12,7 +12,7 @@ const getDirections = (data) => {
   return coords;
 };
 
-const getRoute = async (origin, destination) => {
+const getRoute = async (origin, destination, setText, setVisible) => {
   const params = {
     'key': 'Plqx1ppoa0ARGH2Oo2uU5olizfNPb0Fo',
     'from': origin,
@@ -25,12 +25,14 @@ const getRoute = async (origin, destination) => {
     const response = await axios.get('http://www.mapquestapi.com/directions/v2/route', {
       params,
     });
-    if (response.data.info.messages == INVALID_DIRECTIONS_ERROR) {
-      console.error('Direcciones inválidas');
-      alert('No se encontraron resultados para esas direcciones');
-      return null;
-    } else if (response.data.info.messages == 'At least two locations must be provided.') {
-      alert('Debes ingresar una dirección origen y una dirección destino');
+
+    const errorMessage = response.data.info.messages[0];
+    if (errorMessage == errors.INVALID_LOCATION_ERROR) {
+      setText(error.INVALID_LOCATION_ERROR);
+      setVisible(true);
+    } else if (errorMessage == errors.LESS_THAN_TWO_LOCATIONS_ERROR) {
+      setText(error.LESS_THAN_TWO_LOCATIONS_ERROR);
+      setVisible(true);
     } else {
       const shapePoints = response.data.route.shape.shapePoints;
       const routeCoords = getDirections(shapePoints);
@@ -38,7 +40,7 @@ const getRoute = async (origin, destination) => {
       return [routeCoords, distance];
     }
   } catch (error) {
-    console.error(error.message);
+    console.log(error.message);
     return null;
   }
 };

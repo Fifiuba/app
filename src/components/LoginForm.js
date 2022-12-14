@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 /* eslint-disable-next-line max-len */
 import loginWithEmailAndPassword from '../services/LoginWithEmailAndPassword';
 import {LoginContext} from '../context/LoginContext';
+import {error} from '../utils/HandleError';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -36,11 +37,10 @@ const LoginForm = ({navigation}) => {
 
   const onSubmit = async (data) => {
     try {
-      // Send data to users service for signing in
       const userType = setUserType();
       const tokenResponse = await loginWithEmailAndPassword(data, userType);
       if (tokenResponse === null) {
-        setText('Usuario no encontrado');
+        setText(error.USER_NOT_FOUND_ERROR);
         setVisible(true);
       } else {
         await AsyncStorage.setItem('token', tokenResponse);
@@ -48,6 +48,9 @@ const LoginForm = ({navigation}) => {
         onLogin(true);
       }
     } catch (error) {
+      console.log('error:', error.message);
+      setText('Se ha producido un error, intente más tarde');
+      setVisible(true);
       return null;
     }
   };
@@ -68,19 +71,10 @@ const LoginForm = ({navigation}) => {
   };
 
   React.useEffect(() => {
-    const handleResponse = async (response) => {
-      try {
-        console.log('response en login form:', response);
-        /* eslint-disable max-len */
-        if (response?.type === 'success') {
-          navigation.navigate('EnEspera', {'response': response, 'user_type': isPassenger});
-        }
-      } catch (error) {
-        console.error(error.message);
-        alert(error.message);
-      }
-    };
-    handleResponse(response);
+    /* eslint-disable max-len */
+    if (response?.type === 'success') {
+      navigation.navigate('EnEspera', {'response': response, 'user_type': isPassenger});
+    }
   }, [response]);
 
   return (
@@ -133,9 +127,9 @@ const LoginForm = ({navigation}) => {
       {errors.password?.type === 'required' &&
         <Text style={styles.errorText}>Campo obligatorio</Text>}
       {errors.password?.type === 'maxLength' &&
-        <Text>Máximo {constraints.password.max}</Text>}
+        <Text style={styles.errorText}>Máximo {constraints.password.max}</Text>}
       {errors.password?.type === 'minLength' &&
-        <Text>Mínimo {constraints.password.min}</Text>}
+        <Text style={styles.errorText}>Mínimo {constraints.password.min}</Text>}
       <View style={styles.switchContainer}>
         <Text style={styles.text}>Chofer</Text>
         <Switch
@@ -171,7 +165,7 @@ const LoginForm = ({navigation}) => {
         </Text>
         <Button
           style={styles.button}
-          color={Colors.red800}
+          color={Colors.red700}
           mode="contained"
           onPress={() => {
             promptAsync();

@@ -8,17 +8,14 @@ const getLastJourneysInfo = async () => {
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
-    console.log('token:', token);
+
     const response = await axios.get(
         'https://api-gateway-solfonte.cloud.okteto.net/journey', config,
     );
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error(error.message);
-    if (error.message == 'Network Error') {
-      alert('Problemas de conexión con el servidor');
-    }
+    console.log(error.message);
     return null;
   }
 };

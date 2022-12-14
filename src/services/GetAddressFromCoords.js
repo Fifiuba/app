@@ -9,11 +9,10 @@ export default async function getAddressFromCoords(lat, long) {
         'thumbMaps': false,
       },
     });
-
     const street = response.data.results[0].locations[0].street;
     return street;
   } catch (err) {
-    console.error(err);
-    alert(err);
+    console.log('error:', error.message);
+    return null;
   }
 }

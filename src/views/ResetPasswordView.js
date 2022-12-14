@@ -32,6 +32,7 @@ const ResetPasswordView = () => {
       setLoading(true);
       await resetPassword(data.email, setSend, setMsg, setLoading, setVisible);
     } catch (error) {
+      console.log(error);
       return null;
     }
   };
@@ -72,7 +73,7 @@ const ResetPasswordView = () => {
         />}
         <Button
           style={styles.button}
-          color={Colors.green600}
+          color={Colors.green700}
           mode="contained"
           onPress={handleSubmit(onSubmit)}>
           <Text style={styles.textButton}>Enviar link</Text>

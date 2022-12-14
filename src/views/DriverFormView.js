@@ -29,8 +29,7 @@ const DriverFormView = ({navigation, route}) => {
         navigation.navigate('IniciarSesion');
       }
     } catch (error) {
-      console.error(error.message);
-      alert(error.message);
+      console.log(error.message);
       return null;
     }
   };

@@ -1,6 +1,7 @@
 import {getAuth, sendPasswordResetEmail} from 'firebase/auth';
 
-import {constants} from '../utils/Constants';
+import {errors} from '../utils/Errors';
+import {error} from '../utils/HandleError';
 
 /* eslint-disable max-len */
 const resetPassword = async (email, setSend, setMsg, setLoading, setVisible) => {
@@ -12,15 +13,17 @@ const resetPassword = async (email, setSend, setMsg, setLoading, setVisible) => 
     setLoading(false);
     setMsg('Email enviado éxitosamente');
     console.log('Email enviado éxitosamente');
-  } catch (error) {
+  } catch (err) {
+    console.log(err.message);
+    console.log(errors.USER_NOT_FOUND_ERROR);
     setSend(false);
     setLoading(false);
     setVisible(true);
 
-    if (error.message == constants.USER_NOT_FOUND_ERROR) {
-      setMsg('Usuario no encontrado');
+    if (err.message == errors.USER_NOT_FOUND_ERROR) {
+      setMsg(error.USER_NOT_FOUND_ERROR);
     } else {
-      setMsg(error.message);
+      setMsg(err.message);
     }
     return null;
   }

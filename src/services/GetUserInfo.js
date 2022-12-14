@@ -13,14 +13,9 @@ const getUserInfo = async (id) => {
         `https://api-gateway-solfonte.cloud.okteto.net/users/info/${id}`,
         config,
     );
-    console.log('get user info service:' + response.data);
-
     return response.data;
   } catch (error) {
-    console.error(error.message);
-    if (error.message == 'Network Error') {
-      alert('Problemas de conexión con el servidor');
-    }
+    console.log(error.message);
     return null;
   }
 };

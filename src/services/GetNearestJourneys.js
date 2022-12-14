@@ -8,7 +8,8 @@ export default async function getNearestJourneys(location) {
         'https://api-gateway-solfonte.cloud.okteto.net/journey/requested',
         {
           params: {
-            location: `${location.latitude}, ${location.longitude}`,
+            // location: `${location.latitude}, ${location.longitude}`,
+            location: '-34.586992, -60.949984',
           },
           headers: {Authorization: `Bearer ${token}`},
         },
@@ -16,6 +17,6 @@ export default async function getNearestJourneys(location) {
     const journeys = response.data;
     return journeys;
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 }

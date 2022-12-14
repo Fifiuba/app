@@ -26,7 +26,7 @@ export default function DepositView({navigation, route}) {
       try {
         await deposit(idPassenger, eth.toString());
         setLoading(false);
-        setDepositText('Deposito realizado!');
+        setDepositText('Depósito realizado!');
       } catch (error) {
         setDepositText('Hubo un error!');
         setError(true);
@@ -79,17 +79,18 @@ export default function DepositView({navigation, route}) {
           color={errorDeposit ? 'red':'green'}
         />
         <Button
-          color={Colors.green800}
+          color={Colors.green700}
           mode="contained"
           style={{marginVertical: 10, borderRadius: 30}}
-          onPress={() => navigation.navigate('Calificacion', {'id': idDriver})}
-        >Calificar chofer</Button>
+          onPress={() => navigation.navigate('Calificacion', {'id': idDriver})}>
+          Calificar chofer
+        </Button>
         <Button
-          color={Colors.blue800}
+          color={Colors.blue700}
           style={{marginVertical: 10, borderRadius: 30}}
           mode="contained"
-          onPress={() => navigation.navigate('Home')}
-        >Ir a inicio</Button>
+          onPress={() => navigation.navigate('Home')}>
+          Ir a inicio</Button>
       </View>
     );
   };
