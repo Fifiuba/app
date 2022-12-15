@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 /* eslint-disable max-len */
 import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
-import {Button, Text, ActivityIndicator, Card, Title, Colors, Snackbar} from 'react-native-paper';
+import {Button, Text, ActivityIndicator, Card, Title, Colors,Snackbar} from 'react-native-paper';
 
 import getAddressFromCoords from '../services/GetAddressFromCoords';
 import {UserContext} from '../context/UserContext';
@@ -11,10 +11,8 @@ import {error} from '../utils/HandleError';
 const HomePassenger = () => {
   const [lastJourneys, setLastJourneys] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const [visible, setVisible] = useState(false);
   const [msg, setMsg] = useState('');
-
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
 
@@ -27,39 +25,34 @@ const HomePassenger = () => {
     return true;
   };
 
-  const setJourneys = async (journey) => {
-    try {
-      const fromStreet = await getAddressFromCoords(journey.from[0], journey.from[1]);
-      const toStreet = await getAddressFromCoords(journey.to[0], journey.to[1]);
-      if (journey.idPassenger == userInfo.id) {
-        if (isNotInLatestJourneys(journey)) {
-          lastJourneys.push({
-            id: journey._id,
-            from: fromStreet,
-            to: toStreet,
-            price: journey.price,
-          });
-        }
-      }
-    } catch (err) {
-      console.log(err.message);
-      setLoading(false);
-      setMsg(error.GENERAL_ERROR);
-      setVisible(true);
-    }
-  };
-
   const getLastJourneys = async () => {
     try {
       const journeys = await getLastJourneysInfo();
       setLoading(true);
       if (journeys.length == 0) setLoading(false);
       journeys.forEach(async (journey) => {
-        await setJourneys(journey);
+        try {
+          const fromStreet = await getAddressFromCoords(journey.from[0], journey.from[1]);
+          const toStreet = await getAddressFromCoords(journey.to[0], journey.to[1]);
+          if (journey.idPassenger == userInfo.id) {
+            if (isNotInLatestJourneys(journey)) {
+              lastJourneys.push({
+                id: journey._id,
+                from: fromStreet,
+                to: toStreet,
+                price: journey.price,
+              });
+            }
+          }
+          setLoading(false);
+          setLastJourneys(lastJourneys);
+        } catch (error) {
+          setLoading(false);
+          setMsg(error.GENERAL_ERROR);
+          setVisible(true);
+        }
       });
-      setLoading(false);
-      setLastJourneys(lastJourneys);
-    } catch (err) {
+    } catch (e) {
       setLoading(false);
       setMsg(error.GENERAL_ERROR);
       setVisible(true);
@@ -71,7 +64,7 @@ const HomePassenger = () => {
       return (
         <ActivityIndicator
           style={{justifyContent: 'center', alignSelf: 'center', padding: 5}}
-          size="small"
+          size={'small'}
           animating={loading}
           color={'#2C3333'} />
       );
@@ -85,7 +78,7 @@ const HomePassenger = () => {
         style={styles.flatList}
         ListEmptyComponent={
           <Text style={styles.emptyListText}>
-            No has realizado viajes!
+            Toca para ver tus ultimos viajes!
           </Text>}
       />);
   };
