@@ -13,11 +13,8 @@ const HomeDriver = ({navigation}) => {
   const [avaliableJourneys, setAvaliableJourneys] = useState([]);
   const [loading, setLoading] = useState(false);
   const [myLocation, setLocation] = useState();
-
   const [visible, setVisible] = React.useState(false);
   const [text, setText] = React.useState('');
-
-  const [textInfo, setTextInfo] = React.useState('Toca para ver los viajes cerca!');
 
   useEffect(() => {
     getLocationPermission();
@@ -26,8 +23,7 @@ const HomeDriver = ({navigation}) => {
   async function getLocationPermission() {
     const {status} = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
-      setVisible(true);
-      setText('Permiso de localización denegado');
+      alert('Permission denied');
       return;
     }
 
@@ -46,8 +42,10 @@ const HomeDriver = ({navigation}) => {
 
       const addresses= [];
       setLoading(true);
-      try {
-        journeys.forEach(async (journey) => {
+
+      if (journeys.length == 0) setLoading(false);
+      journeys.forEach(async (journey) => {
+        try {
           const fromStreet = await getAddressFromCoords(journey.from[0], journey.from[1]);
           const toStreet = await getAddressFromCoords(journey.to[0], journey.to[1]);
 
@@ -60,15 +58,15 @@ const HomeDriver = ({navigation}) => {
             fromCoords: journey.from,
             toCoords: journey.to,
           });
-        });
-        setLoading(false);
-        setAvaliableJourneys(addresses);
-        if (addresses.length == 0) setTextInfo('No hay viajes cerca!');
-      } catch (err) {
-        setLoading(false);
-        setText('Se ha producido un error al intentar buscar los viajes!.\n Reitente');
-        setVisible(true);
-      }
+          setLoading(false);
+          setAvaliableJourneys(addresses);
+        
+        } catch (err) {
+          setLoading(false);
+          setText('Se ha producido un error al intentar buscar los viajes!.\n Reitente');
+          setVisible(true);
+        }
+      });
     } catch (error) {
       setLoading(false);
       setText('Se ha producido un error al intentar buscar los viajes!.\n Reitente');
@@ -83,7 +81,7 @@ const HomeDriver = ({navigation}) => {
     try {
       const response = await acceptJourney(journey, userInfo.id);
       if (response.status === 'accepted') {
-        navigation.navigate('ViajeChofer', {'id': journey.id, 'price': response.price, 'from': journey.fromCoords, 'to': journey.toCoords, 'carType': journey.vip, 'myLocation': myLocation, 'idPassenger': journey.idPassenger});
+        navigation.navigate('ViajeChofer', {'id': journey.id,'price':response.price ,'from': journey.fromCoords, 'to': journey.toCoords, 'carType': journey.vip, 'myLocation': myLocation, 'idPassenger': journey.idPassenger});
       } else {
         setText('El viaje ya fue tomado por otro conductor');
         setVisible(true);
@@ -104,7 +102,6 @@ const HomeDriver = ({navigation}) => {
       return (
         <ActivityIndicator
           animating={loading}
-          size="small"
           color="#757575"
           style={{marginTop: 10}}
         />
@@ -116,9 +113,10 @@ const HomeDriver = ({navigation}) => {
         extraData={avaliableJourneys}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
-        ListEmptyComponent={<Text style={{textAlign: 'center', fontSize: 16}}>{textInfo}</Text>}
+        ListEmptyComponent={<Text style={{textAlign: 'center', fontSize: 16}}>No hay viajes cerca!</Text>}
       />);
   };
+
 
   const renderItem = ({item}) => (
 
@@ -196,11 +194,12 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 45,
-    width: 250,
+    width: 200,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
   },
 });
+
 
 export default HomeDriver;

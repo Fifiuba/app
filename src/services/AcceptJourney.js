@@ -15,7 +15,7 @@ export default async function acceptJourney(journey, driverId) {
         },
     );
     const journeys = response.data;
-    /* await axios.post(
+    await axios.post(
         'https://api-gateway-solfonte.cloud.okteto.net/notification',
         {
           user_id: journey.idPassenger,
@@ -23,7 +23,7 @@ export default async function acceptJourney(journey, driverId) {
           body: 'Tu chofer esta en camino',
           data: {id: journey.id, status: journeys.status},
         },
-    );*/
+    );
     return journeys;
   } catch (err) {
     console.log(err);

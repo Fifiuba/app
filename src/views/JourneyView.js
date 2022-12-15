@@ -36,11 +36,6 @@ export default function JourneyView({route, navigation}) {
     console.log(notification);
     if (notification) {
       const data = notification.request.content.data;
-      console.log('status:', data.status);
-      console.log('data id:', data.id);
-      console.log(journeyInfo);
-      console.log('journey id:', journeyInfo.id);
-
       if (data !== undefined) {
         if (data.status == 'accepted' && data.id == journeyInfo.id) {
           setLoading(false);

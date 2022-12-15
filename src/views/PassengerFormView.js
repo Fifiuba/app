@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text,
   TextInput,
@@ -14,6 +14,8 @@ import {constants} from '../utils/Constants';
 
 const PassengerFormView = ({navigation, route}) => {
   const userId = route.params.user_id;
+  const [visible, setVisible] = useState(false);
+  const [text, setText] = useState('');
 
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {

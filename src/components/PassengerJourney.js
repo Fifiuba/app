@@ -23,7 +23,6 @@ const PassengerJourney = ({navigation}) => {
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
 
-  const [amount, setAmount] = useState(0);
 
   const [visible, setVisible] = React.useState(false);
   const [text, setText] = React.useState('');
@@ -100,20 +99,21 @@ const PassengerJourney = ({navigation}) => {
   const getBalance = async () =>{
     try {
       const balance = await getWalletBalance(userInfo.id);
-      setAmount(balance.balance);
+      let amount = balance.balance
+      return amount
     } catch (err) {
       setText(error.BALANCE_ERROR);
       setVisible(true);
     }
   };
 
-  useEffect(() =>{
-    getBalance();
-  }, [amount]);
-
   const handleCreateJourney = async () => {
     try {
-      if (amount != 0) {
+      const amount = await getBalance(userInfo.id);
+      console.log(amount)
+      console.log(price)
+
+      if (amount >= price) {
         const journeyInfo =
             await createJourney(origin, destination, userInfo.id, distance);
         console.log('Response CreateJourney', journeyInfo);
