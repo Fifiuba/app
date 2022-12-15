@@ -2,13 +2,14 @@ import {getAuth, sendPasswordResetEmail} from 'firebase/auth';
 
 import {errors} from '../utils/Errors';
 import {error} from '../utils/HandleError';
+import sendResetEvent from './SendResetPassword';
 
 /* eslint-disable max-len */
 const resetPassword = async (email, setSend, setMsg, setLoading, setVisible) => {
-  console.log('Reset password');
   try {
     const auth = getAuth();
     await sendPasswordResetEmail(auth, email);
+    await sendResetEvent(email);
     setSend(true);
     setLoading(false);
     setMsg('Email enviado éxitosamente');
