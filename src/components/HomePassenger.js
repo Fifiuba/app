@@ -12,7 +12,7 @@ const HomePassenger = () => {
   const [lastJourneys, setLastJourneys] = useState([]);
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [msg, setMsg] = useState('');
+  const [msg, setMsg] = useState('Hubo un error en cargar los viajes. Reintente');
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
 
@@ -46,7 +46,7 @@ const HomePassenger = () => {
           }
           setLoading(false);
           setLastJourneys(lastJourneys);
-        } catch (error) {
+        } catch (err) {
           setLoading(false);
           setMsg(error.GENERAL_ERROR);
           setVisible(true);
