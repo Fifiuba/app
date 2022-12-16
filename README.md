@@ -3,7 +3,7 @@ Aplicación Móvil
 
 ## App deployed
 
-[App](exp://exp.host/@celedituro/app?release-channel=default)
+exp://exp.host/@celedituro/app?release-channel=default
 
 ## For development
 Create an Expo Account [here](https://expo.dev) and login **in** your coomputer using
