@@ -192,6 +192,15 @@ const DriverJourney = ({navigation, route}) => {
         >
           <Text>Terminar</Text>
         </Button>
+        <Button
+          style={styles.cancelButton}
+          color={Colors.red700}
+          mode="contained"
+          onPress={() => {
+            console.log('Cancel journey');
+          }}>
+          <Text style={styles.buttonText}>Cancelar viaje</Text>
+        </Button>
       </View>
       { cancelled && <InfoModal modalText={text}/>}
       <Snackbar
@@ -227,6 +236,17 @@ const styles = StyleSheet.create({
   button: {
     paddingHorizontal: 2,
     borderRadius: 20,
+  },
+  cancelButton: {
+    height: 45,
+    width: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
+    margin: 20,
+  },
+  buttonText: {
+    color: 'white',
   },
   appBar: {
     flex: 1,
