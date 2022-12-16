@@ -1,7 +1,8 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import {Text, Button, Colors, Snackbar} from 'react-native-paper';
+import * as Location from 'expo-location';
 
 import {UserContext} from '../context/UserContext';
 import TimerJourney from '../components/TimerJourney';
@@ -13,7 +14,11 @@ import {NotificationContext} from '../context/NotificationContext';
 import getUserInfo from '../services/GetUserInfo';
 import {error} from '../utils/HandleError';
 
+const car = require('../../assets/icon-car-standard.png');
+
 const RoadTripView = ({navigation, route}) => {
+  const mapRef = React.createRef();
+
   const info = route.params;
   const coords = info.coords.route;
   const journeyInfo = info.journeyInfo;
@@ -38,6 +43,32 @@ const RoadTripView = ({navigation, route}) => {
   });
   /* eslint-disable no-unused-vars */
   const routeCoords = coords;
+
+  const [myLocation, setMyLocation] = useState({
+    latitude: -34.59908,
+    longitude: -58.38186,
+  });
+
+  async function getLocationPermission() {
+    const {status} = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setVisible(true);
+      setText(error.PERMISSION_DENIED_ERROR);
+      return;
+    }
+
+    const location = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Balanced,
+      enableHighAccuracy: true,
+      timeInterval: 5,
+    });
+    setMyLocation({latitude: location.coords.latitude,
+      longitude: location.coords.longitude});
+  }
+
+  useEffect(() => {
+    getLocationPermission();
+  }, []);
 
   React.useEffect(() => {
     console.log(notification);
@@ -129,23 +160,20 @@ const RoadTripView = ({navigation, route}) => {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-          showsUserLocation={true}
+          ref={mapRef}
+          showsUserLocation={false}
           loadingEnabled={true}
         >
-          <Marker
-            draggable
-            coordinate={origin}
-            onDragEnd={(direction) =>
-              setOrigin(direction.nativeEvent.coordinate)} />
-          <Marker
-            draggable
-            coordinate={destination}
-            onDragEnd={(direction) =>
-              setDestination(direction.nativeEvent.coordinate)} />
-          <Polyline
-            coordinates={routeCoords}
-            strokeColor="red"
-            strokeWidth={5} />
+          <Marker coordinate={myLocation} title="Aqui estas tú">
+            <Image
+              source={car}
+              style={{width: 70, height: 70}}
+              resizeMode="contain"
+            />
+          </Marker>
+          <Marker coordinate={origin} title="Aqui estas tú"></Marker>
+          <Marker coordinate={destination} title="Aqui estas tú"></Marker>
+          <Polyline coordinates={routeCoords} strokeWidth={2} />
         </MapView>
       </View>
       <Snackbar

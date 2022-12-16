@@ -12,6 +12,7 @@ import {LoginContext} from '../context/LoginContext';
 export default function WaitingView({navigation, route}) {
   const isPassenger = route.params.user_type;
   const [visible, setVisible] = React.useState(false);
+  /* eslint-disable max-len */
   const [text, setText] = React.useState('Se ha producido un error en el login');
 
   const onLogin = useContext(LoginContext);

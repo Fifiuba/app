@@ -60,7 +60,6 @@ const HomeDriver = ({navigation}) => {
           });
           setLoading(false);
           setAvaliableJourneys(addresses);
-        
         } catch (err) {
           setLoading(false);
           setText('Se ha producido un error al intentar buscar los viajes!.\n Reitente');
@@ -81,7 +80,7 @@ const HomeDriver = ({navigation}) => {
     try {
       const response = await acceptJourney(journey, userInfo.id);
       if (response.status === 'accepted') {
-        navigation.navigate('ViajeChofer', {'id': journey.id,'price':response.price ,'from': journey.fromCoords, 'to': journey.toCoords, 'carType': journey.vip, 'myLocation': myLocation, 'idPassenger': journey.idPassenger});
+        navigation.navigate('ViajeChofer', {'id': journey.id, 'price': response.price, 'from': journey.fromCoords, 'to': journey.toCoords, 'carType': journey.vip, 'myLocation': myLocation, 'idPassenger': journey.idPassenger});
       } else {
         setText('El viaje ya fue tomado por otro conductor');
         setVisible(true);

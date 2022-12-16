@@ -9,7 +9,6 @@ import {Text,
   Snackbar,
 } from 'react-native-paper';
 import MapView, {Marker, Polyline} from 'react-native-maps';
-import * as Location from 'expo-location';
 
 import SearchBar from './SearchBar';
 import getRoute from '../services/GetRoute';
@@ -22,7 +21,6 @@ import {error} from '../utils/HandleError';
 const PassengerJourney = ({navigation}) => {
   const user = useContext(UserContext);
   const userInfo = user.userInfo;
-
 
   const [visible, setVisible] = React.useState(false);
   const [text, setText] = React.useState('');
@@ -46,28 +44,10 @@ const PassengerJourney = ({navigation}) => {
   const [priceSetted, setPriceSetted] = useState(false);
 
   useEffect(() => {
-    getLocationPermission();
     setSearchOrigin('');
     setSearchDestination('');
     setPrice(0);
   }, []);
-
-  async function getLocationPermission() {
-    const {status} = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') {
-      setVisible(true);
-      setText(error.PERMISSION_DENIED_ERROR);
-      return;
-    }
-
-    const location = await Location.getCurrentPositionAsync({
-      accuracy: Location.Accuracy.Balanced,
-      enableHighAccuracy: true,
-      timeInterval: 5,
-    });
-    setOrigin({latitude: location.coords.latitude,
-      longitude: location.coords.longitude});
-  }
 
   const setJourneyInfo = (route, distance) => {
     setDistance(distance);
@@ -99,8 +79,8 @@ const PassengerJourney = ({navigation}) => {
   const getBalance = async () =>{
     try {
       const balance = await getWalletBalance(userInfo.id);
-      let amount = balance.balance
-      return amount
+      const amount = balance.balance;
+      return amount;
     } catch (err) {
       setText(error.BALANCE_ERROR);
       setVisible(true);
@@ -110,8 +90,8 @@ const PassengerJourney = ({navigation}) => {
   const handleCreateJourney = async () => {
     try {
       const amount = await getBalance(userInfo.id);
-      console.log(amount)
-      console.log(price)
+      console.log(amount);
+      console.log(price);
 
       if (amount >= price) {
         const journeyInfo =

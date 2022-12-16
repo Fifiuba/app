@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 /* eslint-disable max-len */
 import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
-import {Button, Text, ActivityIndicator, Card, Title, Colors,Snackbar} from 'react-native-paper';
+import {Button, Text, ActivityIndicator, Card, Title, Colors, Snackbar} from 'react-native-paper';
 
 import getAddressFromCoords from '../services/GetAddressFromCoords';
 import {UserContext} from '../context/UserContext';
