@@ -210,14 +210,7 @@ const DriverJourney = ({navigation, route}) => {
         >
           <Text>Terminar</Text>
         </Button>
-        <Button
-          style={styles.cancelButton}
-          color={Colors.red700}
-          mode="contained"
-          onPress={() => {
-            console.log('Cancel journey');
-          }}>
-        </Button>
+
       </View>
       { cancelled && <InfoModal modalText={text}/>}
       <Snackbar

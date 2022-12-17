@@ -176,15 +176,6 @@ const RoadTripView = ({navigation, route}) => {
           <Marker coordinate={destination} title="Aqui estas tú"></Marker>
           <Polyline coordinates={routeCoords} strokeWidth={2} />
         </MapView>
-        <Button
-          style={styles.cancelButton}
-          color={Colors.red700}
-          mode="contained"
-          onPress={() => {
-            console.log('Cancel journey');
-          }}>
-          <Text style={styles.buttonText}>Cancelar viaje</Text>
-        </Button>
       </View>
       <Snackbar
         visible={visible}
