@@ -3,7 +3,8 @@ import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {Avatar, Button, Colors, Snackbar} from 'react-native-paper';
 import MapView, {Marker, Polyline} from 'react-native-maps';
-// import schedulePushNotification from '../utils/PushNotifications';
+import * as Location from 'expo-location';
+
 
 import PolylineMaker from '../services/PolyLineMaker';
 import startJourney from '../services/StartJourney';
@@ -24,7 +25,7 @@ import {error} from '../utils/HandleError';
 /* eslint-disable new-cap */
 const DriverJourney = ({navigation, route}) => {
   const journey = route.params;
-  const myLocation = journey.myLocation;
+  const [myLocation,setMyLocation] = useState(journey.myLocation);
   const [directions, setDirections] = useState([]);
   const [arrived, setInplace] = useState(false);
   const [started, setStarted] = useState(false);
@@ -55,6 +56,22 @@ const DriverJourney = ({navigation, route}) => {
       }
     }
   }, [notification]);
+
+  React.useEffect(() => {
+    const interval = setInterval(async () => {
+
+      const location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Balanced,
+        enableHighAccuracy: true,
+        timeInterval: 5,
+      });
+
+      setMyLocation({latitude: location.coords.latitude,
+        longitude: location.coords.longitude});
+      console.log('actualizo')
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const goToPassenger = () => {
     const from = `${myLocation.latitude}, ${myLocation.longitude}`;
@@ -142,7 +159,7 @@ const DriverJourney = ({navigation, route}) => {
       </View>
       <MapView
         style={styles.map}
-        region={{
+        initialRegion={{
           latitude: myLocation.latitude,
           longitude: myLocation.longitude,
           latitudeDelta: 0.004733688902177846,
@@ -151,6 +168,7 @@ const DriverJourney = ({navigation, route}) => {
         ref={mapRef}
         showsUserLocation={false}
         loadingEnabled={true}
+        followsUserLocation={true}
       >
         <Marker coordinate={myLocation} title="Aqui estas tú">
           <Image
@@ -199,7 +217,6 @@ const DriverJourney = ({navigation, route}) => {
           onPress={() => {
             console.log('Cancel journey');
           }}>
-          <Text style={styles.buttonText}>Cancelar viaje</Text>
         </Button>
       </View>
       { cancelled && <InfoModal modalText={text}/>}

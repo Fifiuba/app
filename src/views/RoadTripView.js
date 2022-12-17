@@ -154,14 +154,15 @@ const RoadTripView = ({navigation, route}) => {
         />
         <MapView
           style={styles.map}
-          region={{
+          initialRegion={{
             latitude: origin.latitude,
             longitude: origin.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitudeDelta: 0.004733688902177846,
+            longitudeDelta: 0.004036916859504913,
           }}
           ref={mapRef}
           showsUserLocation={false}
+          followsUserLocation={true}
           loadingEnabled={true}
         >
           <Marker coordinate={myLocation} title="Aqui estas tú">
